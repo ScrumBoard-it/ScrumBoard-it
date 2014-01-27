@@ -17,6 +17,8 @@ configure app/config/parameters.yml
 ```yaml
 parameters:
     jira_url:          http://your.jira
+    jira_login:        login
+    jira_password:     password
     sprint_id:         50
     jira_tag:          Post-it
 ```
