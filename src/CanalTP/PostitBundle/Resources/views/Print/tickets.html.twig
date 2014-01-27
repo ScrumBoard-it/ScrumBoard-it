@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Post-it Manager - Base Print{% endblock %}</title>
+		{% stylesheets '@CanalTPPostitBundle/Resources/public/css/print.css' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div class="container">
+            {% for issue in issues %}
+                {% set i = (loop.index0 % 6) + 1 %}
+                <div class="post-it item{{ i }} {{ issue.fields.issuetype.name }}">
+                    <div class="header">
+                        <div class="id">{{ issue._id }}</div>
+                        <div class="comp">{{ issue.fields.customfield_11108|default(' ') }}</div>
+                        {{ issue._projet }}
+                    </div>
+                    <div class="summary">{{ issue.fields.summary|raw }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

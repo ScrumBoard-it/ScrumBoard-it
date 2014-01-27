@@ -1,0 +1,96 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <img src="{{ asset('bundles/canaltppostit/images/header.png') }}" />
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        A imprimer
+                        {% if issues.notprint is defined %}
+                            <span class="badge">{{ issues.notprint|length }}</span>
+                        {% else %}
+                            <span class="badge">0</span>
+                        {% endif %}
+                    </div>
+                    <ul class="list-group selectable">
+                        {% for issue in issues.notprint %}
+                            {% block issue %}
+                            <li class="list-group-item {{ issue.fields.issuetype.name }}">
+                                <input type="checkbox" name="issues[]" value="{{ issue.self }}" />
+                                <span>{{ issue.key }}</span>
+                                <span>{{ issue.fields.summary }}</span>
+                                <span class="badge">{{ issue.fields.customfield_11108|default('') }}</span>
+                            </li>
+                            {% endblock %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form action="{{ path('canal_tp_postit_print') }}" method="POST">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">
+                            File d'impression
+                            <span class="badge">0</span>
+                        </div>
+                            <ul class="list-group" id="printQueue"></ul>
+                            <input type="submit" value="imprimer" id="submitPrint" class="btn btn-default">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        Deja imprimé
+                        {% if issues.print is defined %}
+                            <span class="badge">{{ issues.print|length }}</span>
+                        {% else %}
+                            <span class="badge">0</span>
+                        {% endif %}
+                    </div>
+                    <ul class="list-group selectable">
+                        {% for issue in issues.print %}
+                            {{ block('issue') }}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+     <script>
+    $(function() {
+        $( ".selectable" ).selectable({ filter: "li" });
+        $.contextMenu({
+            // define which elements trigger this menu
+            selector: "li.ui-selected",
+            // define the elements of the menu
+            items: {
+                opt: {
+                    name: "Envoyer à l'impression",
+                    callback: function(key, opt){
+                        panel = opt.$trigger.parents(".panel");
+                        list = opt.$trigger.parent();
+                        selected = list.children("li.ui-selected");
+                        selected.removeClass("ui-selected").appendTo("#printQueue");
+                        panel.find(".panel-heading .badge").text(list.children("li").length);
+                        $("#printQueue").parents(".panel").find(".panel-heading .badge").text($("#printQueue li").length);
+                    }
+                },
+            }
+        });
+        $( "form" ).submit(function() {
+            $(this).find(':checkbox').prop('checked', true);
+        });
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,23 @@
+canal_tp_postit_homepage:
+    pattern:  /
+    defaults: { _controller: CanalTPPostitBundle:Default:index }
+
+canal_tp_postit_add_label:
+    pattern:  /label/add
+    defaults: { _controller: CanalTPPostitBundle:Default:addLabel }
+
+canal_tp_postit_export_ps:
+    pattern:  /export/photoshop
+    defaults: { _controller: CanalTPPostitBundle:Default:exportData }
+
+canal_tp_postit_print:
+    pattern:  /print
+    defaults: { _controller: CanalTPPostitBundle:Default:print }
+
+canal_tp_postit_print_patron:
+    pattern:  /print/base
+    defaults: { _controller: CanalTPPostitBundle:Print:base }
+
+canal_tp_postit_print_tickets:
+    pattern:  /print/tickets
+    defaults: { _controller: CanalTPPostitBundle:Print:tickets }

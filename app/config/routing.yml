@@ -1,0 +1,4 @@
+canal_tp_postit:
+    resource: "@CanalTPPostitBundle/Resources/config/routing.yml"
+    prefix:   /
+

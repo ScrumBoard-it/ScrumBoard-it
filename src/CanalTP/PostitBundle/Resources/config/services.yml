@@ -1,0 +1,7 @@
+parameters:
+#    canal_tp_postit.example.class: CanalTP\PostitBundle\Example
+
+services:
+#    canal_tp_postit.example:
+#        class: %canal_tp_postit.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

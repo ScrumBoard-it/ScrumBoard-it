@@ -1,0 +1,38 @@
+.selectable .ui-selecting { background: #f9f9f9; }
+.selectable .ui-selected { background: #ADADAD; }
+
+#submitPrint {
+    border-radius: 0 0 4px 4px;
+    display: block;
+    width: 100%;
+}
+
+.list-group-item:before {
+    /*background-color: #ccff33;*/
+    /*background-color: #fcdf03;*/
+    background-color: #b4cf4a;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 6px;
+}
+.list-group-item.Sous-tâche:before {
+    background-color: #ff2282;
+}
+.list-group-item input {
+    display: none;
+}
+.list-group-item .badge {
+    position: absolute;
+    right: 1em;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.header {
+    margin: 15px 0;
+}
