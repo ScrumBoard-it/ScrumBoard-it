@@ -118,11 +118,14 @@ class DefaultController extends Controller
 
     public function callApi($url, $options = array())
     {
+        $login = $this->container->getParameter('jira_login');
+        $password = $this->container->getParameter('jira_password');
+
         $curl = curl_init();
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
-            'Authorization: Basic anJvdXZlOmVwcXdpdV84Nw=='
+            'Authorization: Basic '.base64_encode($login.':'.$password)
         );
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
