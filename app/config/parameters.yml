@@ -13,9 +13,3 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
-
-    jira_url:          http://jira.canaltp.fr
-    jira_login:        ~
-    jira_password:     ~
-    sprint_id:         50
-    jira_tag:          Post-it

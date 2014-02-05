@@ -64,3 +64,9 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+canal_tp_postit:
+    jira_url:          http://your.jira.fr
+    jira_login:        ~
+    jira_password:     ~
+    sprint_id:         69
