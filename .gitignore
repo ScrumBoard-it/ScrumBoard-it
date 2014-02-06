@@ -1,8 +1,0 @@
-/vendor/
-/bin/
-/web/bundles/
-/web/css/
-/web/js/
-/app/logs/
-/app/cache/
-/app/bootstrap.php.cache
