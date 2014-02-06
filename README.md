@@ -1,30 +1,16 @@
-ScrumBoard-it
+ScrumBoardItBundle
 =============
 
-A tool to facilitate Scrum card printing from Atlassian Jira
+A tool to facilitate Scrum card printing on sticky notes from Atlassian Jira
+
+Documentation
+-------------
+
+The documentation is stored in the `Resources/doc/index.rst` file in this bundle:
+
+[Read the Documentation](https://github.com/CanalTP/ScrumBoard-it/blob/master/Resources/doc/index.rst)
 
 Installation
-------
+------------
 
-```
-php composer.phar install
-```
-
-Usage
-------
-
-configure app/config/parameters.yml
-```yaml
-parameters:
-    jira_url:          http://your.jira
-    jira_login:        login
-    jira_password:     password
-    sprint_id:         50
-    jira_tag:          Post-it
-```
-
-http://your.jira/rest/greenhopper/latest/rapidview
-get id of your board
-
-http://your.jira/rest/greenhopper/latest/sprints/6
-get id of your sprint
+All the installation instructions are located in  the documentation.
