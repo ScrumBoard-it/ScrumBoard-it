@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\PostitBundle\Controller;
+namespace CanalTP\ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
