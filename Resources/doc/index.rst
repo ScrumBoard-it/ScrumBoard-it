@@ -1,8 +1,8 @@
 Installation
 ============
 
-1. Using Composer (recommended)
--------------------------------
+1. Using Composer
+-----------------
 
 To install ScrumBoardItBundle with Composer just add the following to your
 `composer.json` file:
