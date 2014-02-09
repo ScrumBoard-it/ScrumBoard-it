@@ -45,12 +45,31 @@ register the new bundle:
         // ...
     }
 
-Then configure the bundle with the required parameters :
+Then configure the bundle with the required parameters in ``config_dev.yml`` :
 
 .. code-block :: yaml
+
+    assetic:
+        // ...
+        bundles:
+            - CanalTPScrumBoardItBundle
 
     canal_tp_scrum_board_it:
         jira_url: "http://your.jira"
         jira_login: "your_login"
         jira_password: "your_password"
         sprint_id: "your_sprint_id"
+
+Then, you to have import routes in ``routing_dev.yml`` and add optionally a prefix :
+
+.. code-block :: yaml
+
+    _scrum_board_it:
+        resource: "@CanalTPScrumBoardItBundle/Resources/config/routing.yml"
+        prefix:   /_scrum
+
+Finally you need to install assets
+
+.. code-block :: bash
+
+    php app/console assets:install --symlink
