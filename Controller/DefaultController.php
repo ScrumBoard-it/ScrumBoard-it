@@ -11,7 +11,7 @@ class DefaultController extends Controller
     {
         $issues = $this->getIssues();
         return $this->render(
-            'CanalTPPostitBundle:Default:index.html.twig',
+            'CanalTPScrumBoardItBundle:Default:index.html.twig',
             array(
                 'issues' => $issues
             )
@@ -39,7 +39,7 @@ class DefaultController extends Controller
         }
         $this->setIssues($addLabel);
         $response = $this->render(
-            'CanalTPPostitBundle:Download:index.html.twig',
+            'CanalTPScrumBoardItBundle:Download:index.html.twig',
             array(
                 'issues' => $issues
             )
@@ -72,7 +72,7 @@ class DefaultController extends Controller
         }
         $this->setIssues($addLabel);
         return $this->render(
-            'CanalTPPostitBundle:Print:tickets.html.twig',
+            'CanalTPScrumBoardItBundle:Print:tickets.html.twig',
             array(
                 'issues' => $issues
             )
