@@ -44,3 +44,13 @@ register the new bundle:
         $bundles[] = new CanalTP\ScrumBoardItBundle\CanalTPScrumBoardItBundle();
         // ...
     }
+
+Then configure the bundle with the required parameters :
+
+.. code-block :: yaml
+
+    canal_tp_scrum_board_it:
+        jira_url: "http://your.jira"
+        jira_login: "your_login"
+        jira_password: "your_password"
+        sprint_id: "your_sprint_id"
