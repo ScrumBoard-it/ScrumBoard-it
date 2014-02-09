@@ -12,7 +12,7 @@ To install ScrumBoardItBundle with Composer just add the following to your
     // composer.json
     {
         // ...
-        require-dev: {
+        "require-dev": {
             // ...
             "canaltp/scrum-board-it-bundle": "dev-master"
         }
