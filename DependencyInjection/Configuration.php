@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('canal_tp_postit');
+        $rootNode = $treeBuilder->root('canal_tp_scrum_board_it');
 
         $rootNode
             ->children()
