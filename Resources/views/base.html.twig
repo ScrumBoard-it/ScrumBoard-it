@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    <!-- Bootstrap -->
+    {% stylesheets
+        '@CanalTPScrumBoardItBundle/Resources/public/css/bootstrap.min.css'
+        '@CanalTPScrumBoardItBundle/Resources/public/css/style.css'
+        '@CanalTPScrumBoardItBundle/Resources/public/css/jquery.contextMenu.css'
+    filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    {% javascripts
+        '@CanalTPScrumBoardItBundle/Resources/public/js/bootstrap.min.js'
+        '@CanalTPScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
