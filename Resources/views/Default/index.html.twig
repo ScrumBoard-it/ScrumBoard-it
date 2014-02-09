@@ -1,9 +1,9 @@
-{% extends "::base.html.twig" %}
+{% extends "CanalTPScrumBoardItBundle::base.html.twig" %}
 
 {% block body %}
     <div class="container">
         <div class="header">
-            <img src="{{ asset('bundles/canaltppostit/images/header.png') }}" />
+            <img src="{{ asset('bundles/canaltpscrumboardit/images/header.png') }}" />
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -67,6 +67,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
      <script>
     $(function() {
         $( ".selectable" ).selectable({ filter: "li" });
