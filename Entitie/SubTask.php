@@ -10,6 +10,10 @@ namespace CanalTP\ScrumBoardItBundle\Entitie;
 class SubTask extends AbstractIssue {
     private $task;
     
+    public function __construct() {
+        $this->setType('subtask');
+    }
+    
     public function getTask() {
         return $this->task;
     }

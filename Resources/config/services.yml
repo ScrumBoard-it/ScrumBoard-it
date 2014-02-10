@@ -1,5 +1,6 @@
 parameters:
     canal_tp_scrum_board_it.jira.provider.class: CanalTP\ScrumBoardItBundle\IssuesProvider\JiraIssuesProvider
+    canal_tp_scrum_board_it.jira.search.processor.class: CanalTP\ScrumBoardItBundle\Processor\JiraSearchProcessor
 
 services:
     canal_tp_scrum_board_it.jira.provider:
@@ -7,3 +8,8 @@ services:
         arguments: [%jira_url%, %jira_login%, %jira_password%]
         calls:
             - [setSprint, [%sprint_id%]]
+            - [setSearchProcessor, [@canal_tp_scrum_board_it.jira.search.processor]]
+    canal_tp_scrum_board_it.jira.search.processor:
+        class: %canal_tp_scrum_board_it.jira.search.processor.class%
+        calls:
+            - [setPrintedTag, [%jira_tag%]]

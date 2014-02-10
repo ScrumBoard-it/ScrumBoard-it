@@ -8,7 +8,7 @@ namespace CanalTP\ScrumBoardItBundle\IssuesProvider;
 interface IssuesProviderInterface {
     /**
      * Retrieve issues
-     * @return \CanalTP\PostitBundle\Collection\IssuesCollectionInterface
+     * @return \CanalTP\ScrumBoardItBundle\Collection\IssuesCollectionInterface
      */
     public function getIssues();
 }

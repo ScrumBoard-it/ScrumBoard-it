@@ -2,7 +2,7 @@
 
 namespace CanalTP\ScrumBoardItBundle\Collection;
 
-use CanalTP\PostitBundle\Entitie\IssueInterface;
+use CanalTP\ScrumBoardItBundle\Entitie\IssueInterface;
 
 /**
  * Description of IssuesCollection
@@ -46,6 +46,6 @@ class IssuesCollection implements IssuesCollectionInterface, \Iterator {
     }
 
     public function valid() {
-        return isset($this->position[$this->position]);
+        return isset($this->collection[$this->position]);
     }
 }

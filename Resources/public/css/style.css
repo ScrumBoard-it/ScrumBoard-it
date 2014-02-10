@@ -18,7 +18,7 @@
     top: 0;
     width: 6px;
 }
-.list-group-item.Sous-tâche:before {
+.list-group-item.subtask:before {
     background-color: #ff2282;
 }
 .list-group-item input {

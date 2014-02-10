@@ -2,6 +2,8 @@
 
 namespace CanalTP\ScrumBoardItBundle\IssuesProvider;
 
+use CanalTP\ScrumBoardItBundle\Processor\ApiProcessorInterface;
+
 /**
  * Description of JiraIssuesProvider
  * @author Johan Rouve <johan.rouve@gmail.com>
@@ -11,6 +13,8 @@ class JiraIssuesProvider implements IssuesProviderInterface {
     private $login;
     private $password;
     private $sprint;
+    /** @var $searchProcessor CanalTP\ScrumBoardItBundle\Processor\JiraSearchProcessor **/
+    private $searchProcessor;
     
     public function __construct($host, $login, $password)
     {
@@ -32,18 +36,19 @@ class JiraIssuesProvider implements IssuesProviderInterface {
 
     public function getIssues()
     {
-        $result = array();
-        $url = "/rest/api/latest/search?jql=project%20in%20%28SQWAL%2C%20IUS%2C%20CMS%29%20AND%20sprint%20%3D%20" . $this->getSprint() . "%20AND%20%28labels%20is%20EMPTY%20OR%20labels%20!%3D%20post-it%29%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
-        $notprint = $this->callApi($url);
-        if (isset($notprint->issues)) {
-            $result['notprint'] = $notprint->issues;
-        }
-        $url = "/rest/api/latest/search?jql=project%20in%20%28SQWAL%2C%20IUS%2C%20CMS%29%20AND%20sprint%20%3D%20" . $this->getSprint() . "%20AND%20labels%20%3D%20post-it%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
-        $print = $this->callApi($url);
-        if (isset($print->issues)) {
-            $result['print'] = $print->issues;
-        }
-        return $result;
+        $url = "/rest/api/latest/search?jql=Sprint%20%3D%2075%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
+        $result = $this->callApi($url);
+        $processor = $this->getSearchProcessor();
+        return $processor->handle($result);
+    }
+    
+    public function getSearchProcessor() {
+        return $this->searchProcessor;
+    }
+
+    public function setSearchProcessor(ApiProcessorInterface $searchProcessor) {
+        $this->searchProcessor = $searchProcessor;
+        return $this;
     }
 
     private function callApi($url, $options = array())
