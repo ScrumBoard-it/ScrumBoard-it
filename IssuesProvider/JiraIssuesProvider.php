@@ -15,7 +15,7 @@ class JiraIssuesProvider implements IssuesProviderInterface {
     private $sprint;
     /** @var $searchProcessor CanalTP\ScrumBoardItBundle\Processor\JiraSearchProcessor **/
     private $searchProcessor;
-    
+
     public function __construct($host, $login, $password)
     {
         $this->host = $host;
@@ -36,12 +36,12 @@ class JiraIssuesProvider implements IssuesProviderInterface {
 
     public function getIssues()
     {
-        $url = "/rest/api/latest/search?jql=Sprint%20%3D%2075%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
+        $url = "/rest/api/latest/search?jql=Sprint%20%3D%20".$this->getSprint()."%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
         $result = $this->callApi($url);
         $processor = $this->getSearchProcessor();
         return $processor->handle($result);
     }
-    
+
     public function getSearchProcessor() {
         return $this->searchProcessor;
     }
