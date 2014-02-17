@@ -34,7 +34,7 @@ class AbstractIssue implements IssueInterface {
         return $this;
     }
     
-    public function getPrinted() {
+    public function isPrinted() {
         return $this->printed;
     }
 

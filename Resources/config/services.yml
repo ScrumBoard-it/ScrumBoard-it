@@ -3,6 +3,15 @@ parameters:
     canal_tp_scrum_board_it.jira.search.processor.class: CanalTP\ScrumBoardItBundle\Processor\JiraSearchProcessor
 
 services:
+    canal_tp_scrum_board_it.service.manager:
+        class: CanalTP\ScrumBoardItBundle\Service\ServiceManager
+        arguments: [@service_container]
+        calls:
+            - [setServiceName, [%issues_service%]]
+    canal_tp_scrum_board_it.jira.service:
+        class: CanalTP\ScrumBoardItBundle\Service\JiraService
+        calls:
+            - [setOptions, [%jira%]]
     canal_tp_scrum_board_it.jira.provider:
         class: %canal_tp_scrum_board_it.jira.provider.class%
         arguments: [%jira_url%, %jira_login%, %jira_password%]

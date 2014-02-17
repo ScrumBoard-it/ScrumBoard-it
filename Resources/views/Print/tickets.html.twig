@@ -12,13 +12,13 @@
         <div class="container">
             {% for issue in issues %}
                 {% set i = (loop.index0 % 6) + 1 %}
-                <div class="post-it item{{ i }} {{ issue.fields.issuetype.name }}">
+                <div class="post-it item{{ i }} {{ issue.type }}">
                     <div class="header">
-                        <div class="id">{{ issue._id }}</div>
-                        <div class="comp">{{ issue.fields.customfield_11108|default(' ') }}</div>
-                        {{ issue._projet }}
+                        <div class="id">{{ issue.id }}</div>
+                        <div class="comp">{{ issue.complexity }}</div>
+                        {{ issue.project }}
                     </div>
-                    <div class="summary">{{ issue.fields.summary|raw }}</div>
+                    <div class="summary">{{ issue.title }}</div>
                 </div>
             {% endfor %}
         </div>

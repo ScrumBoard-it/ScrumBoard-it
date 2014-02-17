@@ -2,40 +2,37 @@
 
 namespace CanalTP\ScrumBoardItBundle\Processor;
 
+use CanalTP\ScrumBoardItBundle\Api\ApiCallBuilderInterface;
 use CanalTP\ScrumBoardItBundle\Collection\IssuesCollection;
 use CanalTP\ScrumBoardItBundle\Entitie\Task;
 use CanalTP\ScrumBoardItBundle\Entitie\SubTask;
 
 /**
- * Description of JiraSearchProcessor
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class JiraSearchProcessor implements ApiProcessorInterface {
+class JiraSearchProcessor extends AbstractProcessor {
+    private $collection;
     private $printedTag;
-    private $result;
     
-    public function __construct()
-    {
-        $this->result = new IssuesCollection();
-        $this->printedTag = 'ScrumBoardIt';
+    public function __construct() {
+        $this->collection = new IssuesCollection();
     }
     
-    public function getPrintedTag() {
-        return $this->printedTag;
+    public function setContext(ApiCallBuilderInterface $context) {
+        return parent::setContext($context);
+        $options = $context->getOptions();
+        $this->printedTag = $options['tag'];
     }
 
-    public function setPrintedTag($printedTag) {
-        $this->printedTag = $printedTag;
-        return $this;
-    }
     
-    public function handle($result)
+    public function handle()
     {
-        if (isset($result->issues)) {
-            $issues = $result->issues;
+        $data = $this->getContext()->getResult();
+        if (isset($data->issues)) {
+            $issues = $data->issues;
             $this->normalize($issues);
+            $this->getContext()->setResult($this->collection);
         }
-        return $this->result;
     }
     
     private function normalize($issues) {
@@ -45,7 +42,7 @@ class JiraSearchProcessor implements ApiProcessorInterface {
             } else {
                 $item = $this->hydrateTask($issue);
             }
-            $this->result->add($item);
+            $this->collection->add($item);
         }
     }
     

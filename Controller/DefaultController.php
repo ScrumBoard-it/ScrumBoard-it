@@ -9,31 +9,27 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $issues = $this->getIssues();
+        $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
+        $service = $manager->getService();
+        /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
         return $this->render(
             'CanalTPScrumBoardItBundle:Default:index.html.twig',
             array(
-                'issues' => $issues
+                'issues' => $service->getIssues()
             )
         );
     }
 
     public function printAction(Request $request)
     {
-        $jiraTag = $this->container->getParameter('jira_tag');
+        $issuesService = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $issues = array();
         $addLabel = array();
         $params = $request->request->get("issues");
-        foreach ($params as $issue) {
-            $response = $this->callApi($issue);
-            list($projet, $id) = explode('-', $response->key);
-            $response->_projet = $projet;
-            if ($response->_projet === "IUS") {
-                $response->_projet = "IUSSAAD";
-            }
-            $response->_id = $id;
-            $issues[] = $response;
-            if (!in_array($jiraTag, $response->fields->labels)) {
+        foreach ($params as $issueUrl) {
+            $issue = $jira->getIssue($issueUrl);
+            $issues[] = $issue;
+            if ($issue->isPrinted()) {
                 $addLabel[] = $issue;
             }
         }
@@ -55,18 +51,23 @@ class DefaultController extends Controller
 
     public function setIssues($issues)
     {
+        $jira = $this->container->get('canal_tp_scrum_board_it.jira.provider');
         $jiraTag = $this->container->getParameter('jira_tag');
         foreach ($issues as $url) {
             $options = array(
                 CURLOPT_CUSTOMREQUEST => "PUT",
                 CURLOPT_POSTFIELDS => '{"update" : {"labels" : [{"add" : "' . $jiraTag . '"}]}}'
             );
-            $result = $this->callApi($url, $options);
+            $result = $jira->callApi($url, $options);
         }
     }
 
     public function getIssues()
     {
+        $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
+        $service = $manager->getService();
+        /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
+        $service->
         $jira = $this->container->get('canal_tp_scrum_board_it.jira.provider');
         return $jira->getIssues();
     }

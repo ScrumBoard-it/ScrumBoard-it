@@ -34,6 +34,14 @@ class JiraIssuesProvider implements IssuesProviderInterface {
         return $this;
     }
 
+    public function getIssue($url)
+    {
+        $result = $this->callApi($url);
+        var_dump($result); exit;
+        $processor = $this->getSearchProcessor();
+        return $processor->handle($result);
+    }
+    
     public function getIssues()
     {
         $url = "/rest/api/latest/search?jql=Sprint%20%3D%20".$this->getSprint()."%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000";
@@ -51,7 +59,7 @@ class JiraIssuesProvider implements IssuesProviderInterface {
         return $this;
     }
 
-    private function callApi($url, $options = array())
+    public function callApi($url, $options = array())
     {
         $authorization = base64_encode($this->login.':'.$this->password);
         $curl = curl_init();
@@ -60,14 +68,14 @@ class JiraIssuesProvider implements IssuesProviderInterface {
             'Content-Type: application/json',
             'Authorization: Basic '.$authorization
         );
-        curl_setopt($curl, CURLOPT_URL, $this->host.$url);
+        curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         foreach ($options as $option => $value) {
             curl_setopt($curl, $option, $value);
         }
-        $issues = curl_exec($curl);
+        $data = curl_exec($curl);
         curl_close($curl);
-        return json_decode($issues);
+        return json_decode($data);
     }
 }
