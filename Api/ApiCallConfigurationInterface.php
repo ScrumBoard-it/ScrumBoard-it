@@ -9,9 +9,11 @@ abstract class ApiCallConfigurationInterface {
     protected $uri;
     protected $parameters;
     protected $processors;
+    protected $method;
     
     public function __construct() {
         $this->setProcessors(array('JsonToObject'));
+        $this->setMethod('GET');
     }
     
     public function getUri() {
@@ -27,7 +29,7 @@ abstract class ApiCallConfigurationInterface {
         return $this;
     }
 
-    public function setParameters(array $parameters) {
+    public function setParameters($parameters) {
         $this->parameters = $parameters;
         return $this;
     }
@@ -38,6 +40,15 @@ abstract class ApiCallConfigurationInterface {
 
     public function setProcessors(array $processors) {
         $this->processors = $processors;
+        return $this;
+    }
+    
+    public function getMethod() {
+        return $this->method;
+    }
+
+    public function setMethod($method) {
+        $this->method = $method;
         return $this;
     }
 }

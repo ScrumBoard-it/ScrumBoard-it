@@ -1,10 +1,12 @@
 .selectable .ui-selecting { background: #f9f9f9; }
 .selectable .ui-selected { background: #ADADAD; }
 
-#submitPrint {
-    border-radius: 0 0 4px 4px;
-    display: block;
+.panel .btn-group {
     width: 100%;
+}
+.panel .btn-group button {
+    width: 50%;
+    border: 0;
 }
 
 .list-group-item:before {

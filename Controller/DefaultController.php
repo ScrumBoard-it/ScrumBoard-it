@@ -22,53 +22,25 @@ class DefaultController extends Controller
 
     public function printAction(Request $request)
     {
-        $issuesService = $this->container->get('canal_tp_scrum_board_it.service.manager');
-        $issues = array();
-        $addLabel = array();
-        $params = $request->request->get("issues");
-        foreach ($params as $issueUrl) {
-            $issue = $jira->getIssue($issueUrl);
-            $issues[] = $issue;
-            if ($issue->isPrinted()) {
-                $addLabel[] = $issue;
-            }
-        }
-        $this->setIssues($addLabel);
+        $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
+        $service = $manager->getService();
+        /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
+        $selected = $request->request->get("issues");
         return $this->render(
             'CanalTPScrumBoardItBundle:Print:tickets.html.twig',
             array(
-                'issues' => $issues
+                'issues' => $service->getIssues($selected)
             )
         );
     }
 
-    public function addLabelAction(Request $request)
-    {
-        $issues = $request->request->get("issues");
-        $this->setIssues($issues);
-        return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
-    }
-
-    public function setIssues($issues)
-    {
-        $jira = $this->container->get('canal_tp_scrum_board_it.jira.provider');
-        $jiraTag = $this->container->getParameter('jira_tag');
-        foreach ($issues as $url) {
-            $options = array(
-                CURLOPT_CUSTOMREQUEST => "PUT",
-                CURLOPT_POSTFIELDS => '{"update" : {"labels" : [{"add" : "' . $jiraTag . '"}]}}'
-            );
-            $result = $jira->callApi($url, $options);
-        }
-    }
-
-    public function getIssues()
+    public function addFlagAction(Request $request)
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
-        $service->
-        $jira = $this->container->get('canal_tp_scrum_board_it.jira.provider');
-        return $jira->getIssues();
+        $selected = $request->request->get("issues");
+        $service->addFlag($selected);
+        return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
     }
 }

@@ -3,6 +3,7 @@
 namespace CanalTP\ScrumBoardItBundle\Service;
 
 use CanalTP\ScrumBoardItBundle\Api\JiraSearchConfiguration;
+use CanalTP\ScrumBoardItBundle\Api\JiraIssueConfiguration;
 use CanalTP\ScrumBoardItBundle\Api\JiraCallBuilder;
 
 /**
@@ -11,17 +12,24 @@ use CanalTP\ScrumBoardItBundle\Api\JiraCallBuilder;
  */
 class JiraService extends AbstractService {
     private $sprintId;
+    private $issueTag;
     
     public function setOptions(array $options) {
         parent::setOptions($options);
         $this->setSprintId($options['sprint_id']);
+        $this->setIssueTag($options['tag']);
     }
     
-    public function getIssues() {
-        $search = 'Sprint = %d AND status not in (Closed)';
+    public function getIssues($selected = array()) {
+        if (empty($selected)) {
+            $template = 'Sprint = %d AND status not in (Closed)';
+            $jql = sprintf($template, $this->getSprintId());
+        } else {
+            $jql = 'issueKey in ('.implode(',', $selected).')';
+        }
         $config = new JiraSearchConfiguration();
         $config->setParameters(array(
-            'jql' => sprintf($search, $this->getSprintId()),
+            'jql' => $jql,
             'maxResults' => -1,
         ));
         $api = new JiraCallBuilder($this->getOptions());
@@ -29,8 +37,19 @@ class JiraService extends AbstractService {
         return $api->call();
     }
     
-    public function callApi($api, $params = array()) {
-        
+    public function addFlag($selected = array()) {
+        if (!empty($selected)) {
+            $config = new JiraIssueConfiguration();
+            foreach ($selected as $issueId) {
+                $config->setIssueId($issueId);
+                $config->setParameters(
+                    '{"update":{"labels":[{"add":"'.$this->getIssueTag().'"}]}}'
+                );
+                $api = new JiraCallBuilder($this->getOptions());
+                $api->setApiConfiguration($config);
+                $api->call();
+            }
+        }
     }
     
     public function getSprintId() {
@@ -39,6 +58,15 @@ class JiraService extends AbstractService {
 
     public function setSprintId($sprintId) {
         $this->sprintId = $sprintId;
+        return $this;
+    }
+    
+    public function getIssueTag() {
+        return $this->issueTag;
+    }
+
+    public function setIssueTag($issueTag) {
+        $this->issueTag = $issueTag;
         return $this;
     }
 }

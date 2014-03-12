@@ -19,9 +19,10 @@ class JiraSearchProcessor extends AbstractProcessor {
     }
     
     public function setContext(ApiCallBuilderInterface $context) {
-        return parent::setContext($context);
+        parent::setContext($context);
         $options = $context->getOptions();
         $this->printedTag = $options['tag'];
+        return $this;
     }
 
     

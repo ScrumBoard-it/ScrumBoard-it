@@ -17,7 +17,7 @@
                         {% for issue in issues if not issue.printed %}
                             {% block issue %}
                             <li class="list-group-item {{ issue.type }}">
-                                <input type="checkbox" name="issues[]" value="{{ issue.link }}" />
+                                <input type="checkbox" name="issues[]" value="{{ issue.project }}-{{ issue.id }}" />
                                 <span>{{ issue.project }}-{{ issue.id }}</span>
                                 <span>{{ issue.title }}</span>
                                 <span class="badge">{{ issue.complexity }}</span>
@@ -36,7 +36,10 @@
                             <span class="badge">0</span>
                         </div>
                         <ul class="list-group" id="printQueue"></ul>
-                        <input type="submit" value="imprimer" id="submitPrint" class="btn btn-default">
+                        <div class="btn-group">
+                            <button id="submitPrint" class="btn btn-default">imprimer</button>
+                            <button id="addFlag" class="btn btn-default">traité</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -86,8 +89,17 @@
                 },
             }
         });
-        $( "form" ).submit(function() {
-            $(this).find(':checkbox').prop('checked', true);
+        $("#submitPrint").click(function() {
+            $form = $(this).parents('form');
+            $form.attr('action', '{{ path('canal_tp_postit_print') }}');
+            $form.find(':checkbox').prop('checked', true);
+            $form.submit();
+        });
+        $("#addFlag").click(function() {
+            $form = $(this).parents('form');
+            $form.attr('action', '{{ path('canal_tp_postit_add_flag') }}');
+            $form.find(':checkbox').prop('checked', true);
+            $form.submit();
         });
     });
     </script>

@@ -58,8 +58,17 @@ class JiraCallBuilder implements ApiCallBuilderInterface {
         $config = $this->getApiConfiguration();
         $url = $this->options['host'].$config->getUri();
         $params = $config->getParameters();
-        if (!empty($params)) {
-            $url .= '?'.http_build_query($params);
+        switch ($config->getMethod()) {
+            case 'PUT':
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT"); 
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+                break;
+            case 'GET':
+            default:
+                if (!empty($params)) {
+                    $url .= '?'.http_build_query($params);
+                }
+                break;
         }
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
