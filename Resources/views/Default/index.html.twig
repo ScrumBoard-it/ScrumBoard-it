@@ -11,20 +11,16 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">
                         A imprimer
-                        {% if issues.notprint is defined %}
-                            <span class="badge">{{ issues.notprint|length }}</span>
-                        {% else %}
-                            <span class="badge">0</span>
-                        {% endif %}
+                        <span class="badge">0</span>
                     </div>
                     <ul class="list-group selectable">
-                        {% for issue in issues.notprint %}
+                        {% for issue in issues if not issue.printed %}
                             {% block issue %}
-                            <li class="list-group-item {{ issue.fields.issuetype.name }}">
-                                <input type="checkbox" name="issues[]" value="{{ issue.self }}" />
-                                <span>{{ issue.key }}</span>
-                                <span>{{ issue.fields.summary }}</span>
-                                <span class="badge">{{ issue.fields.customfield_11108|default('') }}</span>
+                            <li class="list-group-item {{ issue.type }}">
+                                <input type="checkbox" name="issues[]" value="{{ issue.project }}-{{ issue.id }}" />
+                                <span>{{ issue.project }}-{{ issue.id }}</span>
+                                <span>{{ issue.title }}</span>
+                                <span class="badge">{{ issue.complexity }}</span>
                             </li>
                             {% endblock %}
                         {% endfor %}
@@ -39,8 +35,11 @@
                             File d'impression
                             <span class="badge">0</span>
                         </div>
-                            <ul class="list-group" id="printQueue"></ul>
-                            <input type="submit" value="imprimer" id="submitPrint" class="btn btn-default">
+                        <ul class="list-group" id="printQueue"></ul>
+                        <div class="btn-group">
+                            <button id="submitPrint" class="btn btn-default">imprimer</button>
+                            <button id="addFlag" class="btn btn-default">traité</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -49,14 +48,10 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">
                         Deja imprimé
-                        {% if issues.print is defined %}
-                            <span class="badge">{{ issues.print|length }}</span>
-                        {% else %}
-                            <span class="badge">0</span>
-                        {% endif %}
+                        <span class="badge">0</span>
                     </div>
                     <ul class="list-group selectable">
-                        {% for issue in issues.print %}
+                        {% for issue in issues if issue.printed %}
                             {{ block('issue') }}
                         {% endfor %}
                     </ul>
@@ -70,6 +65,11 @@
     {{ parent() }}
      <script>
     $(function() {
+        $(".panel").each(function() {
+            panel = $(this);
+            panel.find('.panel-heading .badge').text(panel.find('ul').children("li").length);
+        });
+        
         $( ".selectable" ).selectable({ filter: "li" });
         $.contextMenu({
             // define which elements trigger this menu
@@ -89,8 +89,17 @@
                 },
             }
         });
-        $( "form" ).submit(function() {
-            $(this).find(':checkbox').prop('checked', true);
+        $("#submitPrint").click(function() {
+            $form = $(this).parents('form');
+            $form.attr('action', '{{ path('canal_tp_postit_print') }}');
+            $form.find(':checkbox').prop('checked', true);
+            $form.submit();
+        });
+        $("#addFlag").click(function() {
+            $form = $(this).parents('form');
+            $form.attr('action', '{{ path('canal_tp_postit_add_flag') }}');
+            $form.find(':checkbox').prop('checked', true);
+            $form.submit();
         });
     });
     </script>

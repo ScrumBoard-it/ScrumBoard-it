@@ -1,7 +1,10 @@
-parameters:
-#    canal_tp_postit.example.class: CanalTP\ScrumBoardItBundle\Example
-
 services:
-#    canal_tp_postit.example:
-#        class: %canal_tp_postit.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    canal_tp_scrum_board_it.service.manager:
+        class: CanalTP\ScrumBoardItBundle\Service\ServiceManager
+        arguments: [@service_container]
+        calls:
+            - [setServiceName, [%issues_service%]]
+    canal_tp_scrum_board_it.jira.service:
+        class: CanalTP\ScrumBoardItBundle\Service\JiraService
+        calls:
+            - [setOptions, [%jira%]]

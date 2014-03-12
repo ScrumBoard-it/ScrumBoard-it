@@ -42,7 +42,7 @@ body {
     page-break-inside: avoid;
     overflow: hidden;
 }
-.post-it.Sous-tâche {
+.post-it.subtask {
     background-color: #ff2282;
 }
     .post-it .header {
