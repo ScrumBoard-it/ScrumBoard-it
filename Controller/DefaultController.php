@@ -9,6 +9,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+        
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */

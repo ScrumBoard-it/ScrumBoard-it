@@ -13,3 +13,10 @@ canal_tp_postit_print:
 canal_tp_postit_print_patron:
     pattern:  /print/base
     defaults: { _controller: CanalTPScrumBoardItBundle:Print:base }
+login:
+    pattern:  /login
+    defaults: { _controller: CanalTPScrumBoardItBundle:Security:login }
+login_check:
+    pattern:  /login_check
+logout:
+    pattern: /logout
