@@ -21,8 +21,12 @@ abstract class AbstractService implements ServiceInterface {
     public function setOptions(array $options) {
         $this->options = $options;
         $this->setHost($options['host']);
-        $this->setLogin($options['login']);
-        $this->setPassword($options['password']);
+
+       
+        
+      
+        
+        
     }
 
     public function getHost() {

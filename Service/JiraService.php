@@ -5,6 +5,7 @@ namespace CanalTP\ScrumBoardItBundle\Service;
 use CanalTP\ScrumBoardItBundle\Api\JiraSearchConfiguration;
 use CanalTP\ScrumBoardItBundle\Api\JiraIssueConfiguration;
 use CanalTP\ScrumBoardItBundle\Api\JiraCallBuilder;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Description of JiraService
@@ -13,11 +14,16 @@ use CanalTP\ScrumBoardItBundle\Api\JiraCallBuilder;
 class JiraService extends AbstractService {
     private $sprintId;
     private $issueTag;
+    private $container;
     
     public function setOptions(array $options) {
+       $user=$this->getContainer()->get('security.context')->getToken()->getJiraUsername();
+       $password=$this->getContainer()->get('security.context')->getToken()->getJiraPassword();
+       $options['login']=$user;
+       $options['password']=$password;
         parent::setOptions($options);
         $this->setSprintId($options['sprint_id']);
-        $this->setIssueTag($options['tag']);
+        $this->setIssueTag($options['tag']); 
     }
     
     public function getIssues($selected = array()) {
@@ -36,7 +42,14 @@ class JiraService extends AbstractService {
         $api->setApiConfiguration($config);
         return $api->call();
     }
-    
+    public function __construct(Container $container){
+        $this->container=$container;
+ 
+       
+    }
+    public function getContainer(){
+        return $this->container;
+    }
     public function addFlag($selected = array()) {
         if (!empty($selected)) {
             $config = new JiraIssueConfiguration();

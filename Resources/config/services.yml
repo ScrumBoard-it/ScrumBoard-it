@@ -1,4 +1,28 @@
 services:
+   
+    canaltp_jira.rest:
+        class: CanalTP\ScrumBoardItBundle\Jira\User\JiraRest
+        arguments:
+            - '%jira_url%'
+    canaltp_jira_auth.user_provider:
+        class: CanalTP\ScrumBoardItBundle\Jira\User\JiraUserProvider
+        arguments:
+            - @canaltp_jira.rest
+            - @service_container
+    canaltp_jira_auth.authentication_success_handler:
+        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
+        
+    canaltp_jira_auth.authentication_failure_handler:
+        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
+    
+    canaltp_jira_auth.authentication_provider:
+        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Provider\JiraAuthProvider
+        arguments: [@canaltp_jira_auth.user_provider, '', @canaltp_jira.rest]
+        
+    canaltp_jira_auth.authentication_listener:
+        class: CanalTP\ScrumBoardItBundle\Security\Firewall\JiraListener
+        parent: security.authentication.listener.abstract
+        abstract: true
     canal_tp_scrum_board_it.service.manager:
         class: CanalTP\ScrumBoardItBundle\Service\ServiceManager
         arguments: [@service_container]
@@ -6,5 +30,7 @@ services:
             - [setServiceName, [%issues_service%]]
     canal_tp_scrum_board_it.jira.service:
         class: CanalTP\ScrumBoardItBundle\Service\JiraService
+        arguments: [@service_container]
         calls:
             - [setOptions, [%jira%]]
+            

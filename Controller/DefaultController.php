@@ -9,9 +9,22 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        
+        $request = $this->getRequest();
+        $session = $request->getSession();
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
-        $service = $manager->getService();
+        $jiraservice=$this->container->get('canal_tp_scrum_board_it.jira.service');
+        $user = $this->container->get('security.context')
+            ->getToken()
+            ->getJiraUsername();
+        $password=$this->container->get('security.context')
+            ->getToken()
+            ->getJiraPassword();
+        $jiraservice->setPassword($password);
+        $jiraservice->setLogin($user);
+       
+       
+        $service = $manager->getService();       
+        
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
         return $this->render(
             'CanalTPScrumBoardItBundle:Default:index.html.twig',
