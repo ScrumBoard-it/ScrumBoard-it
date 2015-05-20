@@ -7,34 +7,34 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\Container;
+//use Symfony\Component\DependencyInjection\Container;
 
 
 class JiraUserProvider implements UserProviderInterface {
 
     private $jiraRest;
-     private $container;
+//     private $container;
 
-    public function __construct(JiraRest $jiraRest, Container $container){
+    public function __construct(JiraRest $jiraRest/*,Container $container*/){
         $this->jiraRest = $jiraRest;
-        $this->container=$container;
+//        $this->container=$container;
         
     }
 
     public function loadUserByUsername($username)
     {
-       $request=$this->container->get('request');
-       $password=$request->get('_password');
-    
-        $userData = $this->jiraRest->getUserInfo($username, $password);        
-
-        if ($userData)
-        {
-            return new JiraUser($username);
-        }
-
-
-        throw new UsernameNotFoundException("KO");
+//       $request=$this->container->get('request');
+//       $password=$request->get('_password');
+//    
+//        $userData = $this->jiraRest->getUserInfo($username, $password);        
+//
+//        if ($userData)
+//        {
+//            return new JiraUser($username);
+//        }
+//
+//
+//        throw new UsernameNotFoundException("KO");
     }
 
     public function refreshUser(UserInterface $user)

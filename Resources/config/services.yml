@@ -8,7 +8,7 @@ services:
         class: CanalTP\ScrumBoardItBundle\Jira\User\JiraUserProvider
         arguments:
             - @canaltp_jira.rest
-            - @service_container
+#            - @service_container
     canaltp_jira_auth.authentication_success_handler:
         class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
         
@@ -21,8 +21,17 @@ services:
         
     canaltp_jira_auth.authentication_listener:
         class: CanalTP\ScrumBoardItBundle\Security\Firewall\JiraListener
-        parent: security.authentication.listener.abstract
-        abstract: true
+        arguments:
+            - @security.context
+            - @security.authentication.manager
+            - @security.authentication.session_strategy
+            - @security.http_utils
+            - ''
+            - @canaltp_jira_auth.authentication_success_handler
+            - @canaltp_jira_auth.authentication_failure_handler
+            - ''
+            - @logger
+            - @event_dispatcher
     canal_tp_scrum_board_it.service.manager:
         class: CanalTP\ScrumBoardItBundle\Service\ServiceManager
         arguments: [@service_container]
