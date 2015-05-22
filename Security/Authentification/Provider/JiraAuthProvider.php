@@ -27,13 +27,20 @@ class JiraAuthProvider implements AuthenticationProviderInterface {
     }
     public function authenticate(TokenInterface $token)
     {   
+        
         $user = $this->checkUserAuthentication($token);
+        
         return $token;
     }
     public function checkUserAuthentication(JiraToken $token)
     {
         $userInfo = $this->jiraRest->getUserInfo($token->getJiraUsername(), $token->getJiraPassword());
-        $user = new User();   
+        $user = new User();
+        $user->setUsername($token->getJiraUsername());
+        $user->setBase64Hash($token->getJiraUsername() . ':' . $token->getJiraPassword());
+
+        $user->setEmail($userInfo->emailAddress);
+        $user->setRoles('ROLE_USER');
         if ($userInfo)
         { 
             return $user;

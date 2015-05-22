@@ -17,7 +17,7 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         
-         if ($this->get('security.context')->isGranted('ROLE_USER')) {
+        if ($this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
         }
         
@@ -32,6 +32,4 @@ class SecurityController extends Controller
             'error' => $error
         ));
     }
-
-    
 }

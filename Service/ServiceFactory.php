@@ -1,5 +1,4 @@
 <?php
-
 namespace CanalTP\ScrumBoardItBundle\Service;
 
 use CanalTP\ScrumBoardItBundle\FactoryInterface;

@@ -3,16 +3,28 @@
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData) }}</div>
 {% endif %}
-
+    <div class="container">
+        <div class="row ">
+            <div class="Absolute-Center is-Responsive">
+            <div id="formJira">
+                <p class="titre">ScrumBoard-it</p>
+                <hr class="soften">
 <form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur" required="required" />
+    </div>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <input class="form-control" type="password" id="password" name="_password" required="required"  placeholder="Mot de passe"/>
+    </div>
  
-
-    <button type="submit" value="Connexion">login</button>
+            <div class="form-group">
+    <button  class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
+        </div>
 </form>
+            </div>
+        </div>
+    </div>
+    </div>
     {% endblock%}

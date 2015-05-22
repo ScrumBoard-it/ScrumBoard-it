@@ -19,6 +19,7 @@ class User implements UserInterface
     private $email;
     
     private $roles;
+    private $hash;
     
     public function __construct()
     {
@@ -72,5 +73,11 @@ class User implements UserInterface
     {
         $this->email = $email;
         return $this;
+    }
+    public function getBase64Hash(){
+        return $this->hash;
+    }
+    public function setBase64Hash($data){
+        $this->hash=base64_encode($data);
     }
 }

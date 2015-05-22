@@ -44,9 +44,13 @@ class JiraUserProvider implements UserProviderInterface {
         }
 
         $decodedUserData = base64_decode($user->getBase64Hash());
+        
         list($username, $password) = explode(':', $decodedUserData);
+        
         $userInfoResponse = $this->jiraRest->getUserInfo($username, $password);
-        $userInfo = json_decode($userInfoResponse->getContent());
+
+//        $userInfo = json_decode($userInfoResponse->getContent());
+        $userInfo =$userInfoResponse;
 
         $user = new User();
         $user->setUsername($user->getUsername());
