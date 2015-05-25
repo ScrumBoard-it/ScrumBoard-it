@@ -11,14 +11,14 @@ class DefaultController extends Controller
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $jiraservice=$this->container->get('canal_tp_scrum_board_it.jira.service');
-        $user = $this->container->get('security.context')
-            ->getToken()
-            ->getJiraUsername();
-        $password=$this->container->get('security.context')
-            ->getToken()
-            ->getJiraPassword();
-        $jiraservice->setPassword($password);
-        $jiraservice->setLogin($user);
+//        $user = $this->container->get('security.context')
+//            ->getToken()
+//            ->getJiraUsername();
+//        $password=$this->container->get('security.context')
+//            ->getToken()
+//            ->getJiraPassword();
+//        $jiraservice->setPassword($password);
+//        $jiraservice->setLogin($user);
         $service = $manager->getService();
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
         return $this->render(

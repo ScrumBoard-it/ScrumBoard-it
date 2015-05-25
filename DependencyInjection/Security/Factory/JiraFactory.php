@@ -23,6 +23,7 @@ class JiraFactory extends AbstractFactory {
         $provider = 'canaltp_jira_auth.authentication_provider.'.$id;
         $container
             ->setDefinition($provider, new DefinitionDecorator('canaltp_jira_auth.authentication_provider'))
+            ->replaceArgument(0, new Reference($userProviderId))
             ->replaceArgument(1, $id)
         ;
 
@@ -41,7 +42,7 @@ class JiraFactory extends AbstractFactory {
 
     public function getKey()
     {
-        return 'jira-login';
+        return 'jira';
     }
 
     protected function createListener($container, $id, $config, $userProvider)

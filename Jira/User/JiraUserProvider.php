@@ -35,6 +35,7 @@ class JiraUserProvider implements UserProviderInterface {
 //
 //
 //        throw new UsernameNotFoundException("KO");
+
     }
 
     public function refreshUser(UserInterface $user)

@@ -25,8 +25,6 @@ class JiraRest {
        
         
         $curl = curl_init();
-        //$login = $this->getJiraLogin();
-        $password = $password;
         curl_setopt($curl, CURLOPT_URL,$jiraRequest);
         curl_setopt($curl,CURLOPT_USERPWD,"$username:$password");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
