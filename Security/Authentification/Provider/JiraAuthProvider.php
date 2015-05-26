@@ -27,7 +27,6 @@ class JiraAuthProvider implements AuthenticationProviderInterface {
     }
     public function authenticate(TokenInterface $token)
     {   
-        
         $user = $this->checkUserAuthentication($token);
         $token->setUser($user);
         $token->setAuthenticated(true);
@@ -39,14 +38,11 @@ class JiraAuthProvider implements AuthenticationProviderInterface {
         $user = new User();
         $user->setUsername($token->getJiraUsername());
         $user->setBase64Hash($token->getJiraUsername() . ':' . $token->getJiraPassword());
-
-        
         $user->setRoles('ROLE_USER');
-        if ($userInfo)
-        { 
+        if ($userInfo){ 
             $user->setEmail($userInfo->emailAddress);
             return $user;
         }
-       throw new AuthenticationException( 'Incorrect login and/or password' );
+        throw new AuthenticationException( 'Incorrect login and/or password' );
     }
 }
