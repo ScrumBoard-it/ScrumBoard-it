@@ -56,8 +56,6 @@ Then configure the bundle with the required parameters in ``config_dev.yml`` :
 
     canal_tp_scrum_board_it:
         jira_url: "http://your.jira"
-        jira_login: "your_login"
-        jira_password: "your_password"
         sprint_id: "your_sprint_id"
 
 Then, you to have import routes in ``routing_dev.yml`` and add optionally a prefix :
@@ -66,7 +64,6 @@ Then, you to have import routes in ``routing_dev.yml`` and add optionally a pref
 
     _scrum_board_it:
         resource: "@CanalTPScrumBoardItBundle/Resources/config/routing.yml"
-        prefix:   /_scrum
 
 Finally you need to install assets
 
