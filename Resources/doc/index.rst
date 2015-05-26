@@ -65,6 +65,31 @@ Then, you to have import routes in ``routing_dev.yml`` and add optionally a pref
     _scrum_board_it:
         resource: "@CanalTPScrumBoardItBundle/Resources/config/routing.yml"
 
+
+Then in your security.yml add:
+provider:
+        jira_auth_provider:
+            id: canaltp_jira_auth.user_provider
+firewall:
+    jira_secured:
+                pattern: /
+                switch_user: false 
+                context:     user
+                provider: jira_auth_provider
+                jira:
+                    login_path: /login
+                    check_path: /login_check
+                    remember_me: true
+                logout:
+                    path: /logout
+                    target: /login
+                remember_me:
+                    key: "%secret%"
+                    lifetime: 300
+                    path: /.*
+                    domain: ~
+                anonymous: ~
+
 Finally you need to install assets
 
 .. code-block :: bash
