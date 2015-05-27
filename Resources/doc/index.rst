@@ -66,12 +66,15 @@ Then, you to have import routes in ``routing_dev.yml`` and add optionally a pref
         resource: "@CanalTPScrumBoardItBundle/Resources/config/routing.yml"
 
 
-Then in your security.yml add:
-provider:
+Then add in security.yml:
+
+.. code-block :: yaml
+
+    provider:
         jira_auth_provider:
             id: canaltp_jira_auth.user_provider
-firewall:
-    jira_secured:
+    firewall:
+        jira_secured:
                 pattern: /
                 switch_user: false 
                 context:     user

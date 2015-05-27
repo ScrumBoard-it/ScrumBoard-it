@@ -22,11 +22,6 @@ abstract class AbstractService implements ServiceInterface {
         $this->options = $options;
         $this->setHost($options['host']);
 
-       
-        
-      
-        
-        
     }
 
     public function getHost() {
