@@ -36,8 +36,7 @@ class JiraIssuesProvider implements IssuesProviderInterface {
 
     public function getIssue($url)
     {
-        $result = $this->callApi($url);
-        
+        $result = $this->callApi($url);        
         $processor = $this->getSearchProcessor();
         return $processor->handle($result);
     }

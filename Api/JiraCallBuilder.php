@@ -14,8 +14,8 @@ class JiraCallBuilder implements ApiCallBuilderInterface {
     protected $result;
     
     public function __construct(array $options = array()) {
-        if (!empty($options)) {
-            $this->setOptions($options);         
+        if (!empty($options)){
+            $this->setOptions($options);        
         }
     }
     
