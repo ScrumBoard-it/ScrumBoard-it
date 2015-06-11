@@ -10,22 +10,25 @@ use CanalTP\ScrumBoardItBundle\Entitie\SubTask;
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class JiraSearchProcessor extends AbstractProcessor {
+class JiraSearchProcessor extends AbstractProcessor
+{
     private $collection;
     private $printedTag;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->collection = new IssuesCollection();
     }
-    
-    public function setContext(ApiCallBuilderInterface $context) {
+
+    public function setContext(ApiCallBuilderInterface $context)
+    {
         parent::setContext($context);
         $options = $context->getOptions();
         $this->printedTag = $options['tag'];
+
         return $this;
     }
 
-    
     public function handle()
     {
         $data = $this->getContext()->getResult();
@@ -35,8 +38,9 @@ class JiraSearchProcessor extends AbstractProcessor {
             $this->getContext()->setResult($this->collection);
         }
     }
-    
-    private function normalize($issues) {
+
+    private function normalize($issues)
+    {
         foreach ($issues as $issue) {
             if (isset($issue->fields->parent)) {
                 $item = $this->hydrateSubTask($issue);
@@ -46,8 +50,9 @@ class JiraSearchProcessor extends AbstractProcessor {
             $this->collection->add($item);
         }
     }
-    
-    private function hydrateTask($issue) {
+
+    private function hydrateTask($issue)
+    {
         $task = new Task();
         list($project, $id) = explode('-', $issue->key, 2);
         $task->setProject($project);
@@ -58,10 +63,12 @@ class JiraSearchProcessor extends AbstractProcessor {
             $task->setComplexity($issue->fields->customfield_11108);
         }
         $task->setTitle($issue->fields->summary);
+
         return $task;
     }
-    
-    private function hydrateSubTask($issue) {
+
+    private function hydrateSubTask($issue)
+    {
         $task = new SubTask();
         list($project, $id) = explode('-', $issue->key, 2);
         $task->setProject($project);
@@ -74,6 +81,7 @@ class JiraSearchProcessor extends AbstractProcessor {
         $task->setTitle($issue->fields->summary);
         $parts = explode('-', $issue->fields->parent->key, 2);
         $task->setTask($parts[1]);
+
         return $task;
     }
 }

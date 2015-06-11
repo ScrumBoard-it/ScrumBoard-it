@@ -8,43 +8,53 @@ use CanalTP\ScrumBoardItBundle\Processor\ProcessorFactory;
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class JiraCallBuilder implements ApiCallBuilderInterface {
+class JiraCallBuilder implements ApiCallBuilderInterface
+{
     protected $apiConfiguration;
     protected $options;
     protected $result;
-    
-    public function __construct(array $options = array()) {
-        if (!empty($options)){
-            $this->setOptions($options);        
+
+    public function __construct(array $options = array())
+    {
+        if (!empty($options)) {
+            $this->setOptions($options);
         }
     }
-    
-    public function setApiConfiguration(ApiCallConfigurationInterface $apiConfiguration) {
+
+    public function setApiConfiguration(ApiCallConfigurationInterface $apiConfiguration)
+    {
         $this->apiConfiguration = $apiConfiguration;
     }
-    
-    public function setOptions(array $options) {
+
+    public function setOptions(array $options)
+    {
         $this->options = $options;
     }
-    
-    public function getApiConfiguration() {
+
+    public function getApiConfiguration()
+    {
         return $this->apiConfiguration;
     }
 
-    public function getOptions() {
+    public function getOptions()
+    {
         return $this->options;
     }
-    
-    public function setResult($result) {
+
+    public function setResult($result)
+    {
         $this->result = $result;
+
         return $this;
     }
-    
-    public function getResult() {
+
+    public function getResult()
+    {
         return $this->result;
     }
-    
-    public function call() {
+
+    public function call()
+    {
         if (empty($this->options['login']) || empty($this->options['password'])) {
             throw new InvalidOptionException('login or password');
         }
@@ -53,14 +63,14 @@ class JiraCallBuilder implements ApiCallBuilderInterface {
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
-            'Authorization: Basic '.$authorization
+            'Authorization: Basic '.$authorization,
         );
         $config = $this->getApiConfiguration();
         $url = $this->options['host'].$config->getUri();
         $params = $config->getParameters();
         switch ($config->getMethod()) {
             case 'PUT':
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT"); 
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 break;
             case 'GET':
@@ -71,22 +81,25 @@ class JiraCallBuilder implements ApiCallBuilderInterface {
                 break;
         }
         # handle jira null pointer exception if no user agent
-        curl_setopt($curl, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $this->setResult(curl_exec($curl));
         curl_close($curl);
+
         return $this->process();
     }
-    
-    protected function process() {
+
+    protected function process()
+    {
         foreach ($this->getApiConfiguration()->getProcessors() as $name) {
             $factory = new ProcessorFactory();
             $factory->setContext($this);
             $processor = $factory->get($name);
             $processor->handle();
         }
+
         return $this->getResult();
     }
 }

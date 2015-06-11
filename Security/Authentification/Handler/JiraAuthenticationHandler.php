@@ -1,21 +1,26 @@
 <?php
+
 namespace CanalTP\ScrumBoardItBundle\Security\Authentification\Handler;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authentication
+\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Http\Authentication
+\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\Response;
+
 class JiraAuthenticationHandler implements AuthenticationSuccessHandlerInterface,
-    AuthenticationFailureHandlerInterface{
+    AuthenticationFailureHandlerInterface
+{
     /**
      * This is called when an interactive authentication attempt fails. This is
      * called by authentication listeners inheriting from
      * AbstractAuthenticationListener.
      *
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $exception
      *
      * @return Response The response to return, never null
@@ -29,7 +34,7 @@ class JiraAuthenticationHandler implements AuthenticationSuccessHandlerInterface
      * is called by authentication listeners inheriting from
      * AbstractAuthenticationListener.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
      *
      * @return Response never null

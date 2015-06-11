@@ -1,8 +1,12 @@
 <?php
+
 namespace CanalTP\ScrumBoardItBundle\Security\Authentification\Token;
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
+/**
+ * retains  authentication data of user.
+ */
 class JiraToken extends AbstractToken
 {
     protected $jira_username;
@@ -11,7 +15,7 @@ class JiraToken extends AbstractToken
     public function __construct($username, $password, array $roles = array('ROLE_USER'))
     {
         parent::__construct($roles);
-        
+
         $this->setUser($username);
         $this->jira_username = $username;
         $this->jira_password = $password;
@@ -49,7 +53,7 @@ class JiraToken extends AbstractToken
         parent::unserialize($parent_data);
     }
 
-    public  function getCredentials()
+    public function getCredentials()
     {
         return '';
     }

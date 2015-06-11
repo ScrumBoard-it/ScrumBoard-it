@@ -1,4 +1,5 @@
 <?php
+
 namespace CanalTP\ScrumBoardItBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
@@ -6,10 +7,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
-class JiraFactory extends AbstractFactory {
-    
-    
-    public function __construct(){
+/**
+ * jirafactory contains the form parameters.
+ */
+class JiraFactory extends AbstractFactory
+{
+    public function __construct()
+    {
         $this->addOption('username_parameter', '_username');
         $this->addOption('password_parameter', '_password');
         $this->addOption('intention', 'authenticate');
@@ -18,8 +22,6 @@ class JiraFactory extends AbstractFactory {
 
     protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
     {
-        
-        
         $provider = 'canaltp_jira_auth.authentication_provider.'.$id;
         $container
             ->setDefinition($provider, new DefinitionDecorator('canaltp_jira_auth.authentication_provider'))
@@ -49,8 +51,7 @@ class JiraFactory extends AbstractFactory {
     {
         $listenerId = parent::createListener($container, $id, $config, $userProvider);
 
-        if (isset($config['csrf_provider'])) 
-        {
+        if (isset($config['csrf_provider'])) {
             $container
                 ->getDefinition($listenerId)
                 ->addArgument(new Reference($config['csrf_provider']))

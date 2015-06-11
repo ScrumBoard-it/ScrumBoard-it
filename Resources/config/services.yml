@@ -1,5 +1,5 @@
 services:
-   
+
     canaltp_jira.rest:
         class: CanalTP\ScrumBoardItBundle\Jira\User\JiraRest
         arguments:
@@ -11,14 +11,14 @@ services:
 #            - @service_container
     canaltp_jira_auth.authentication_success_handler:
         class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
-        
+
     canaltp_jira_auth.authentication_failure_handler:
         class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
-    
+
     canaltp_jira_auth.authentication_provider:
         class: CanalTP\ScrumBoardItBundle\Security\Authentification\Provider\JiraAuthProvider
         arguments: [@canaltp_jira_auth.user_provider, '', @canaltp_jira.rest]
-        
+
     canaltp_jira_auth.authentication_listener:
         class: CanalTP\ScrumBoardItBundle\Security\Firewall\JiraListener
         arguments:
@@ -42,4 +42,3 @@ services:
         arguments: [@service_container]
         calls:
             - [setOptions, [%jira%]]
-            

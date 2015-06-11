@@ -4,6 +4,9 @@ namespace CanalTP\ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Controller to print tickets.
+ */
 class PrintController extends Controller
 {
     public function baseAction()
@@ -18,7 +21,7 @@ class PrintController extends Controller
         return $this->render(
             'CanalTPScrumBoardItBundle:Print:tickets.html.twig',
             array(
-                'issues' => $issues
+                'issues' => $issues,
             )
         );
     }

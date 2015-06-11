@@ -1,8 +1,12 @@
 <?php
+
 namespace CanalTP\ScrumBoardItBundle\Jira\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Jira user.
+ */
 class JiraUser implements UserInterface
 {
     private $username;
@@ -14,7 +18,6 @@ class JiraUser implements UserInterface
     {
         $this->username = $username;
         $this->password = $password;
-        
     }
 
     public function getRoles()
