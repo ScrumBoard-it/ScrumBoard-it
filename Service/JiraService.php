@@ -47,14 +47,17 @@ class JiraService extends AbstractService
 
         return $api->call();
     }
+
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
+
     public function getContainer()
     {
         return $this->container;
     }
+
     public function addFlag($selected = array())
     {
         if (!empty($selected)) {
