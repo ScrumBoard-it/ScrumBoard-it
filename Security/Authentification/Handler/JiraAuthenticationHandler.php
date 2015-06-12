@@ -6,13 +6,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authentication
-\AuthenticationFailureHandlerInterface;
-use Symfony\Component\Security\Http\Authentication
-\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class JiraAuthenticationHandler implements AuthenticationSuccessHandlerInterface,
+/**
+ * JiraAuthenticationHandler.
+ */
+class JiraAuthenticationHandler implements
+    AuthenticationSuccessHandlerInterface,
     AuthenticationFailureHandlerInterface
 {
     /**
