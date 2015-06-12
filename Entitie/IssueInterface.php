@@ -5,7 +5,8 @@ namespace CanalTP\ScrumBoardItBundle\Entitie;
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-interface IssueInterface {
+interface IssueInterface
+{
     public function getProject();
     public function setProject($project);
 

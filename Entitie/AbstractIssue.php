@@ -3,11 +3,12 @@
 namespace CanalTP\ScrumBoardItBundle\Entitie;
 
 /**
- * Description of AbstractIssue
+ * Description of AbstractIssue.
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class AbstractIssue implements IssueInterface {
+class AbstractIssue implements IssueInterface
+{
     private $type;
     private $link;
     private $printed;
@@ -15,67 +16,88 @@ class AbstractIssue implements IssueInterface {
     private $id;
     private $title;
     private $complexity;
-    
-    public function getType() {
+
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
+
         return $this;
     }
-    
-    public function getLink() {
+
+    public function getLink()
+    {
         return $this->link;
     }
 
-    public function setLink($link) {
+    public function setLink($link)
+    {
         $this->link = $link;
+
         return $this;
     }
-    
-    public function isPrinted() {
+
+    public function isPrinted()
+    {
         return $this->printed;
     }
 
-    public function setPrinted($printed) {
+    public function setPrinted($printed)
+    {
         $this->printed = $printed;
+
         return $this;
     }
-    
-    public function getProject() {
+
+    public function getProject()
+    {
         return $this->project;
     }
 
-    public function setProject($project) {
+    public function setProject($project)
+    {
         $this->project = $project;
+
         return $this;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
+
         return $this;
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
+
         return $this;
     }
 
-    public function getComplexity() {
+    public function getComplexity()
+    {
         return $this->complexity;
     }
 
-    public function setComplexity($complexity) {
+    public function setComplexity($complexity)
+    {
         $this->complexity = $complexity;
+
         return $this;
     }
 }

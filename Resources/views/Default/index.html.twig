@@ -4,6 +4,7 @@
     <div class="container">
         <div class="header">
             <img src="{{ asset('bundles/canaltpscrumboardit/images/header.png') }}" />
+            <a href="./logout"><span class="glyphicon glyphicon-off">Logout </span></a>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -69,7 +70,7 @@
             panel = $(this);
             panel.find('.panel-heading .badge').text(panel.find('ul').children("li").length);
         });
-        
+
         $( ".selectable" ).selectable({ filter: "li" });
         $.contextMenu({
             // define which elements trigger this menu

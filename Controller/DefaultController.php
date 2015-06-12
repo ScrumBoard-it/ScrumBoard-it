@@ -5,17 +5,20 @@ namespace CanalTP\ScrumBoardItBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * controller of navigation.
+ */
 class DefaultController extends Controller
 {
     public function indexAction()
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
-        /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
+
         return $this->render(
             'CanalTPScrumBoardItBundle:Default:index.html.twig',
             array(
-                'issues' => $service->getIssues()
+                'issues' => $service->getIssues(),
             )
         );
     }
@@ -25,11 +28,12 @@ class DefaultController extends Controller
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
-        $selected = $request->request->get("issues");
+        $selected = $request->request->get('issues');
+
         return $this->render(
             'CanalTPScrumBoardItBundle:Print:tickets.html.twig',
             array(
-                'issues' => $service->getIssues($selected)
+                'issues' => $service->getIssues($selected),
             )
         );
     }
@@ -39,8 +43,9 @@ class DefaultController extends Controller
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
         /* @var $service \CanalTP\ScrumBoardItBundle\Service\AbstractService */
-        $selected = $request->request->get("issues");
+        $selected = $request->request->get('issues');
         $service->addFlag($selected);
+
         return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
     }
 }

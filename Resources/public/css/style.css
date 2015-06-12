@@ -38,3 +38,37 @@
 .header {
     margin: 15px 0;
 }
+.Absolute-Center {
+  margin:150px auto;
+  
+/*  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;*/
+}
+
+.Absolute-Center.is-Responsive {
+  background-color: #FEF977;
+  width: 50%; 
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 10px;
+}
+#formJira{
+    margin:auto;
+}
+
+
+hr.soften {
+  height: 3px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  border: 0;
+}
+.titre{
+    text-align: center;
+    font-family: 'Avantgarde, sans-serif';
+    font-size: 20px;
+}

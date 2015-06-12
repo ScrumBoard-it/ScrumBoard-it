@@ -5,9 +5,11 @@ namespace CanalTP\ScrumBoardItBundle\IssuesProvider;
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-interface IssuesProviderInterface {
+interface IssuesProviderInterface
+{
     /**
-     * Retrieve issues
+     * Retrieve issues.
+     *
      * @return \CanalTP\ScrumBoardItBundle\Collection\IssuesCollectionInterface
      */
     public function getIssues();

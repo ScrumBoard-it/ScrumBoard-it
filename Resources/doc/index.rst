@@ -56,8 +56,6 @@ Then configure the bundle with the required parameters in ``config_dev.yml`` :
 
     canal_tp_scrum_board_it:
         jira_url: "http://your.jira"
-        jira_login: "your_login"
-        jira_password: "your_password"
         sprint_id: "your_sprint_id"
 
 Then, you to have import routes in ``routing_dev.yml`` and add optionally a prefix :
@@ -66,7 +64,34 @@ Then, you to have import routes in ``routing_dev.yml`` and add optionally a pref
 
     _scrum_board_it:
         resource: "@CanalTPScrumBoardItBundle/Resources/config/routing.yml"
-        prefix:   /_scrum
+
+
+Then add in security.yml:
+
+.. code-block :: yaml
+
+    provider:
+        jira_auth_provider:
+            id: canaltp_jira_auth.user_provider
+    firewall:
+        jira_secured:
+                pattern: /
+                switch_user: false 
+                context:     user
+                provider: jira_auth_provider
+                jira:
+                    login_path: /login
+                    check_path: /login_check
+                    remember_me: true
+                logout:
+                    path: /logout
+                    target: /login
+                remember_me:
+                    key: "%secret%"
+                    lifetime: 300
+                    path: /.*
+                    domain: ~
+                anonymous: ~
 
 Finally you need to install assets
 

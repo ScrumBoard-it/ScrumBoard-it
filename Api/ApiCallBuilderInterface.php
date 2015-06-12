@@ -5,7 +5,8 @@ namespace CanalTP\ScrumBoardItBundle\Api;
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-interface ApiCallBuilderInterface {
+interface ApiCallBuilderInterface
+{
     public function __construct(array $options = array());
     public function setApiConfiguration(ApiCallConfigurationInterface $apiConfiguration);
     public function getOptions();
