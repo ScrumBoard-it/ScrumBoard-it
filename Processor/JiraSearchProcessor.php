@@ -29,6 +29,7 @@ class JiraSearchProcessor extends AbstractProcessor
         return $this;
     }
 
+    
     public function handle()
     {
         $data = $this->getContext()->getResult();
@@ -59,8 +60,14 @@ class JiraSearchProcessor extends AbstractProcessor
         $task->setId($id);
         $task->setLink($issue->self);
         $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
+        $task->setUserStory(($issue->fields->issuetype->id == 21));
+        $description = preg_replace('#h3\.(.+)$#isU', '', $issue->fields->description);
+        $task->setDescription($description);
         if (isset($issue->fields->customfield_11108)) {
             $task->setComplexity($issue->fields->customfield_11108);
+        }
+        if (isset($issue->fields->customfield_11109)) {
+            $task->setBusinessValue($issue->fields->customfield_11109);
         }
         $task->setTitle($issue->fields->summary);
 
@@ -75,8 +82,13 @@ class JiraSearchProcessor extends AbstractProcessor
         $task->setId($id);
         $task->setLink($issue->self);
         $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
+        $description = preg_replace('#h3\.(.+)$#isU', '', $issue->fields->description);
+        $task->setDescription($description);
         if (isset($issue->fields->customfield_11108)) {
             $task->setComplexity($issue->fields->customfield_11108);
+        }
+        if (isset($issue->fields->customfield_11109)) {
+            $task->setBusinessValue($issue->fields->customfield_11109);
         }
         $task->setTitle($issue->fields->summary);
         $parts = explode('-', $issue->fields->parent->key, 2);

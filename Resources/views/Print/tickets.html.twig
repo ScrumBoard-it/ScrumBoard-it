@@ -12,13 +12,18 @@
         <div class="container">
             {% for issue in issues %}
                 {% set i = (loop.index0 % 6) + 1 %}
-                <div class="post-it item{{ i }} {{ issue.type }}">
+                <div class="post-it {% if issue.userStory %}us{% endif %} item{{ i }} {{ issue.type }}">
                     <div class="header">
                         <div class="id">{{ issue.id }}</div>
+                        {% if issue.businessValue is defined %}
+                            <div class="bv">{{ issue.businessValue }}</div>
+                        {% endif %}
                         <div class="comp">{{ issue.complexity }}</div>
+
                         {{ issue.project }}
                     </div>
                     <div class="summary">{{ issue.title }}</div>
+                    <div class="description">{{ issue.description }}</div>
                 </div>
             {% endfor %}
         </div>
