@@ -42,6 +42,11 @@ body {
     page-break-inside: avoid;
     overflow: hidden;
 }
+.post-it.us {
+    width: 127mm;
+    background-color: #ffcc00;
+    margin-left: 12mm;
+}
 .post-it.subtask {
     background-color: #ff2282;
 }
@@ -60,8 +65,18 @@ body {
             position: absolute;
             right: 0;
         }
+        .post-it .header .bv {
+            position: absolute;
+            right: 0;
+            padding-right: 10mm;
+        }
     .post-it .summary {
         margin: 0 auto;
         width: 90%;
         font-size: 22pt;
+    }
+    .post-it .description {
+        margin: 5mm auto;
+        width: 90%;
+        font-size: 16pt;
     }
