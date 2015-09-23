@@ -11,11 +11,14 @@ class AbstractIssue implements IssueInterface {
     private $type;
     private $link;
     private $printed;
+    private $userStory;
     private $project;
     private $id;
     private $title;
     private $complexity;
-    
+    private $businessValue;
+    private $description;
+
     public function getType() {
         return $this->type;
     }
@@ -24,7 +27,7 @@ class AbstractIssue implements IssueInterface {
         $this->type = $type;
         return $this;
     }
-    
+
     public function getLink() {
         return $this->link;
     }
@@ -33,7 +36,7 @@ class AbstractIssue implements IssueInterface {
         $this->link = $link;
         return $this;
     }
-    
+
     public function isPrinted() {
         return $this->printed;
     }
@@ -42,7 +45,18 @@ class AbstractIssue implements IssueInterface {
         $this->printed = $printed;
         return $this;
     }
-    
+
+    public function isUserStory()
+    {
+        return $this->userStory;
+    }
+
+    public function setUserStory($value)
+    {
+        $this->userStory = $value;
+        return $this;
+    }
+
     public function getProject() {
         return $this->project;
     }
@@ -76,6 +90,28 @@ class AbstractIssue implements IssueInterface {
 
     public function setComplexity($complexity) {
         $this->complexity = $complexity;
+        return $this;
+    }
+
+    public function getBusinessValue()
+    {
+        return $this->businessValue;
+    }
+
+    public function setBusinessValue($value)
+    {
+        $this->businessValue = $value;
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 }
