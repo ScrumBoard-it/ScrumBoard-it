@@ -17,11 +17,16 @@ class AbstractIssue implements IssueInterface
     private $id;
     private $title;
     private $complexity;
-    private $businessValue;
-    private $description;
+<<<<<<< HEAD
 
     public function getType()
     {
+=======
+    private $businessValue;
+    private $description;
+
+    public function getType() {
+>>>>>>> 860b0665f25d4f5c85d207976cafcacf9d6d5b9f
         return $this->type;
     }
 
@@ -32,8 +37,12 @@ class AbstractIssue implements IssueInterface
         return $this;
     }
 
+<<<<<<< HEAD
     public function getLink()
     {
+=======
+    public function getLink() {
+>>>>>>> 860b0665f25d4f5c85d207976cafcacf9d6d5b9f
         return $this->link;
     }
 
@@ -44,17 +53,26 @@ class AbstractIssue implements IssueInterface
         return $this;
     }
 
+<<<<<<< HEAD
     public function isPrinted()
     {
+=======
+    public function isPrinted() {
+>>>>>>> 860b0665f25d4f5c85d207976cafcacf9d6d5b9f
         return $this->printed;
     }
 
     public function setPrinted($printed)
     {
         $this->printed = $printed;
+
         return $this;
     }
 
+<<<<<<< HEAD
+    public function getProject()
+    {
+=======
     public function isUserStory()
     {
         return $this->userStory;
@@ -63,12 +81,11 @@ class AbstractIssue implements IssueInterface
     public function setUserStory($value)
     {
         $this->userStory = $value;
-
         return $this;
     }
 
-    public function getProject()
-    {
+    public function getProject() {
+>>>>>>> 860b0665f25d4f5c85d207976cafcacf9d6d5b9f
         return $this->project;
     }
 
@@ -111,6 +128,7 @@ class AbstractIssue implements IssueInterface
     public function setComplexity($complexity)
     {
         $this->complexity = $complexity;
+
         return $this;
     }
 
