@@ -26,12 +26,10 @@ class CanalTPScrumBoardItExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('jira_url', $config['jira_url']);
-        $container->setParameter('sprint_id', $config['sprint_id']);
         $container->setParameter('jira_tag', $config['jira_tag']);
         $container->setParameter('issues_service', 'jira');
         $container->setParameter('jira', array(
             'host' => $config['jira_url'],
-            'sprint_id' => $config['sprint_id'],
             'tag' => $config['jira_tag'],
         ));
     }
