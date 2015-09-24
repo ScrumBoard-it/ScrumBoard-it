@@ -1,3 +1,6 @@
+parameters:
+    canal_tp_scrum_board_it.issues_search.form.class: CanalTP\ScrumBoardItBundle\Form\Type\IssuesSearchType
+
 services:
 
     canaltp_jira.rest:
@@ -39,6 +42,12 @@ services:
             - [setServiceName, [%issues_service%]]
     canal_tp_scrum_board_it.jira.service:
         class: CanalTP\ScrumBoardItBundle\Service\JiraService
-        arguments: [@service_container]
+        arguments: [@security.context]
         calls:
             - [setOptions, [%jira%]]
+
+    canal_tp_scrum_board_it.issues_search.form:
+        class: %canal_tp_scrum_board_it.issues_search.form.class%
+        arguments: [@canal_tp_scrum_board_it.service.manager]
+        tags:
+            - { name: form.type, alias: issues_search }

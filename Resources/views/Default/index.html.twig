@@ -7,6 +7,25 @@
             <a href="./logout"><span class="glyphicon glyphicon-off">Logout </span></a>
         </div>
         <div class="row">
+            <form id="issues_search" class="form-inline">
+                <div class="form-group col-md-4">
+                    {{ form_label(form.board) }}
+                    {{ form_widget(form.board, {'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form_label(form.sprint) }}
+                    {{ form_widget(form.sprint, {'attr': {'class': 'form-control'} }) }}
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            {% if not issues|length %}
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <p>Veuillez renseigner un sprint actif comportant au moins un ticket.</p>
+                    </div>
+                </div>
+            {% endif %}
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
@@ -100,6 +119,13 @@
             $form = $(this).parents('form');
             $form.attr('action', '{{ path('canal_tp_postit_add_flag') }}');
             $form.find(':checkbox').prop('checked', true);
+            $form.submit();
+        });
+        $("#issues_search").find('select').change(function() {
+            $form = $(this).parents('form');
+            if ($(this).attr('id') == 'issues_search_board') {
+                $('#issues_search_sprint').val('');
+            }
             $form.submit();
         });
     });

@@ -10,14 +10,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
         $service = $manager->getService();
 
+        $issuesSearch = $request->get('issues_search');
+        if (!empty($issuesSearch['board'])) {
+            $service->setBoardId($issuesSearch['board']);
+        }
+        if (!empty($issuesSearch['sprint'])) {
+            $service->setSprintId($issuesSearch['sprint']);
+        }
+
+        $form = $this->createForm('issues_search');
+        $form->submit($request);
+
         return $this->render(
             'CanalTPScrumBoardItBundle:Default:index.html.twig',
             array(
+                'form' => $form->createView(),
                 'issues' => $service->getIssues(),
             )
         );

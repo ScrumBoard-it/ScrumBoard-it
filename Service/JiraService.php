@@ -4,81 +4,75 @@ namespace CanalTP\ScrumBoardItBundle\Service;
 
 use CanalTP\ScrumBoardItBundle\Api\JiraSearchConfiguration;
 use CanalTP\ScrumBoardItBundle\Api\JiraIssueConfiguration;
+use CanalTP\ScrumBoardItBundle\Api\JiraBoardConfiguration;
 use CanalTP\ScrumBoardItBundle\Api\JiraCallBuilder;
-use Symfony\Component\DependencyInjection\Container;
+use CanalTP\ScrumBoardItBundle\Api\ApiCallConfigurationInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Description of JiraService.
- *
+ * JIRA service
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class JiraService extends AbstractService
 {
-    private $sprintId;
-    private $issueTag;
-    private $container;
+    /**
+     * Board ID
+     * @var int $boardId
+     */
+    private $boardId;
 
+    /**
+     * Sprint ID
+     * @var int $sprintId
+     */
+    private $sprintId;
+
+    /**
+     * Issue tag
+     * @var string $issueTag
+     */
+    private $issueTag;
+
+    /**
+     * Security context
+     * @var SecurityContextInterface $securityContext
+     */
+    private $securityContext;
+
+    /**
+     * Constructor
+     * @param SecurityContextInterface $securityContext
+     */
+    public function __construct(SecurityContextInterface $securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setOptions(array $options)
     {
-        $user = $this->getContainer()->get('security.context')->getToken()->getJiraUsername();
-        $password = $this->getContainer()->get('security.context')->getToken()->getJiraPassword();
-        $options['login'] = $user;
-        $options['password'] = $password;
+        $token = $this->securityContext->getToken();
+        $options['login'] = $token->getJiraUsername();
+        $options['password'] = $token->getJiraPassword();
         parent::setOptions($options);
-        $this->setSprintId($options['sprint_id']);
         $this->setIssueTag($options['tag']);
     }
 
-    public function getIssues($selected = array())
+    /**
+     * {@inheritDoc}
+     */
+    public function setBoardId($boardId)
     {
-        if (empty($selected)) {
-            $template = 'Sprint = %d AND status not in (Closed)';
-            $jql = sprintf($template, $this->getSprintId());
-        } else {
-            $jql = 'issueKey in ('.implode(',', $selected).')';
-        }
-        $config = new JiraSearchConfiguration();
-        $config->setParameters(array(
-            'jql' => $jql,
-            'maxResults' => -1,
-        ));
-        $api = new JiraCallBuilder($this->getOptions());
-        $api->setApiConfiguration($config);
+        $this->boardId = $boardId;
 
-        return $api->call();
+        return $this;
     }
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    public function addFlag($selected = array())
-    {
-        if (!empty($selected)) {
-            $config = new JiraIssueConfiguration();
-            foreach ($selected as $issueId) {
-                $config->setIssueId($issueId);
-                $config->setParameters(
-                    '{"update":{"labels":[{"add":"'.$this->getIssueTag().'"}]}}'
-                );
-                $api = new JiraCallBuilder($this->getOptions());
-                $api->setApiConfiguration($config);
-                $api->call();
-            }
-        }
-    }
-
-    public function getSprintId()
-    {
-        return $this->sprintId;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function setSprintId($sprintId)
     {
         $this->sprintId = $sprintId;
@@ -86,15 +80,120 @@ class JiraService extends AbstractService
         return $this;
     }
 
-    public function getIssueTag()
-    {
-        return $this->issueTag;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function setIssueTag($issueTag)
     {
         $this->issueTag = $issueTag;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBoards()
+    {
+        $config = new JiraBoardConfiguration();
+        $results = $this->getResults($config);
+        $values = array();
+        if (isset($results->values)) {
+            foreach ($results->values as $value) {
+                $values[$value->id] = $value->name;
+            }
+            asort($values, SORT_NATURAL | SORT_FLAG_CASE);
+        }
+        return $values;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSprints()
+    {
+        $config = new JiraBoardConfiguration();
+        $values = array();
+        if (!empty($this->boardId)) {
+            $config->setBoardId($this->boardId);
+            $config->setParameters(array(
+                'state' => 'active'
+            ));
+            $results = $this->getResults($config);
+            if (isset($results->values)) {
+                foreach ($results->values as $value) {
+                    $values[$value->id] = $value->name;
+                }
+                asort($values, SORT_NATURAL | SORT_FLAG_CASE);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIssues($selected = array())
+    {
+        $config = new JiraSearchConfiguration();
+        if (!empty($this->sprintId)) {
+            if (empty($selected)) {
+                $template = 'Sprint = %d AND status not in (Closed)';
+                $jql = sprintf($template, $this->sprintId);
+            } else {
+                $jql = 'issueKey in ('.implode(',', $selected).')';
+            }
+            $config->setParameters(array(
+                'jql' => $jql
+            ));
+            return $this->getResults($config);
+        }
+        return array();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addFlag($selected = array())
+    {
+        if (!empty($selected)) {
+            $config = new JiraIssueConfiguration();
+            foreach ($selected as $issueId) {
+                $config->setIssueId($issueId);
+                $config->setParameters(
+                    '{"update":{"labels":[{"add":"'.$this->issueTag.'"}]}}'
+                );
+                $this->callApi($config);
+            }
+        }
+    }
+
+    /**
+     * Results from API getter
+     * @param ApiCallConfigurationInterface $config
+     * @return array
+     */
+    private function getResults(ApiCallConfigurationInterface $config)
+    {
+        $config->setParameters(array_merge(
+            $config->getParameters() ?: array(),
+            array(
+                'maxResults' => -1
+            )
+        ));
+        return $this->callApi($config);
+    }
+
+    /**
+     * Api caller
+     * @param ApiCallConfigurationInterface $config
+     * @return mixed
+     */
+    private function callApi(ApiCallConfigurationInterface $config)
+    {
+        $api = new JiraCallBuilder($this->getOptions());
+        $api->setApiConfiguration($config);
+
+        return $api->call();
     }
 }
