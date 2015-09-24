@@ -73,6 +73,14 @@ class JiraService extends AbstractService
     /**
      * {@inheritDoc}
      */
+    public function getBoardId()
+    {
+        return $this->boardId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setSprintId($sprintId)
     {
         $this->sprintId = $sprintId;
@@ -83,11 +91,27 @@ class JiraService extends AbstractService
     /**
      * {@inheritDoc}
      */
+    public function getSprintId()
+    {
+        return $this->sprintId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setIssueTag($issueTag)
     {
         $this->issueTag = $issueTag;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIssueTag()
+    {
+        return $this->issueTag;
     }
 
     /**
@@ -117,14 +141,23 @@ class JiraService extends AbstractService
         if (!empty($this->boardId)) {
             $config->setBoardId($this->boardId);
             $config->setParameters(array(
-                'state' => 'active'
+                'state' => array(
+                    'active',
+                    'future'
+                )
             ));
             $results = $this->getResults($config);
             if (isset($results->values)) {
-                foreach ($results->values as $value) {
-                    $values[$value->id] = $value->name;
+                foreach ($results->values as $key => $value) {
+                    if (!$key && empty($this->sprintId)) {
+                        $this->sprintId = $value->id;
+                    }
+                    $state = $value->state == 'active' ? 'Actif' : 'Futurs';
+                    $values[$state][$value->id] = $value->name;
                 }
-                asort($values, SORT_NATURAL | SORT_FLAG_CASE);
+                if (!empty($values['Futurs'])) {
+                    asort($values['Futurs'], SORT_NATURAL | SORT_FLAG_CASE);
+                }
             }
         }
         return $values;

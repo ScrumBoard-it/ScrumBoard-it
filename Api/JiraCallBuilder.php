@@ -76,7 +76,7 @@ class JiraCallBuilder implements ApiCallBuilderInterface
             case 'GET':
             default:
                 if (!empty($params)) {
-                    $url .= '?'.http_build_query($params);
+                    $url .= $this->getQuery($params);
                 }
                 break;
         }
@@ -101,5 +101,25 @@ class JiraCallBuilder implements ApiCallBuilderInterface
         }
 
         return $this->getResult();
+    }
+
+    /**
+     * Recursive query builder
+     * @param array $params
+     * @return string
+     */
+    private function getQuery(array $params)
+    {
+        $query = '';
+        foreach ($params as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $subvalue) {
+                    $query .= (!strlen($query) ? '?' : '&').http_build_query(array($key => $subvalue));
+                }
+            } else {
+                $query .= (!strlen($query) ? '?' : '&').http_build_query(array($key => $value));
+            }
+        }
+        return $query;
     }
 }

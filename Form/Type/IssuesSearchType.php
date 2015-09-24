@@ -32,22 +32,30 @@ class IssuesSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $boards = $this->service->getBoards();
+        $boardId = $this->service->getBoardId();
+        $sprints = $this->service->getSprints();
+        $sprintId = $this->service->getSprintId();
         $builder
             ->add(
                 'board',
                 'choice',
                 array(
                     'label' => 'Boards: ',
-                    'choices' => array('' => '') + $this->service->getBoards()
+                    'choices' => $boards,
+                    'data' => $boardId,
+                    'required' => false
                 )
             )
             ->add(
                 'sprint',
                 'choice',
                 array(
-                    'label' => 'Sprints actifs: ',
-                    'choices' => array('' => '') + $this->service->getSprints(),
-                    'required' => false
+                    'label' => 'Sprints non terminés: ',
+                    'choices' => $sprints,
+                    'data' => $sprintId,
+                    'required' => false,
+                    'attr' => empty($boardId) ? array('disabled' => 'disabled') : array()
                 )
             );
     }

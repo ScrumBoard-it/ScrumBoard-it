@@ -24,7 +24,6 @@ class DefaultController extends Controller
         }
 
         $form = $this->createForm('issues_search');
-        $form->submit($request);
 
         return $this->render(
             'CanalTPScrumBoardItBundle:Default:index.html.twig',
