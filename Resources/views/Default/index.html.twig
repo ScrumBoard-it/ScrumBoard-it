@@ -22,7 +22,11 @@
             {% if not issues|length %}
                 <div class="col-md-12">
                     <div class="alert alert-info" role="alert">
-                        <p>Veuillez renseigner un sprint actif comportant au moins un ticket.</p>
+                        {% if not form.sprint.vars.choices|length %}
+                            <p>Veuillez renseigner un board comportant des sprints non terminés.</p>
+                        {% else %}
+                            <p>Veuillez renseigner un sprint non terminé comportant des tickets.</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}
@@ -123,8 +127,9 @@
         });
         $("#issues_search").find('select').change(function() {
             $form = $(this).parents('form');
-            if ($(this).attr('id') == 'issues_search_board') {
+            if ($(this).attr('id') == 'issues_search_board' && $('#issues_search_sprint').size()) {
                 $('#issues_search_sprint').val('');
+                $('#issues_search_sprint').attr('disabled', 'disabled');
             }
             $form.submit();
         });

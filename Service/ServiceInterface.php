@@ -7,12 +7,15 @@ namespace CanalTP\ScrumBoardItBundle\Service;
  */
 interface ServiceInterface
 {
-    public function getBoards();
     public function setBoardId($id);
-    public function getSprints();
+    public function getBoardId();
     public function setSprintId($id);
-    public function getIssues($selected = array());
+    public function getSprintId();
     public function setIssueTag($tag);
+    public function getIssueTag();
+    public function getBoards();
+    public function getSprints();
+    public function getIssues($selected = array());
     public function addFlag($selected = array());
     public function getOptions();
     public function setOptions(array $options);
