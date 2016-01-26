@@ -3,7 +3,7 @@
 namespace CanalTP\ScrumBoardItBundle\Entitie;
 
 /**
- * Description of SubTask.
+ * Description of SubTask
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
@@ -24,7 +24,6 @@ class SubTask extends AbstractIssue
     public function setTask($task)
     {
         $this->task = $task;
-
         return $this;
     }
 }

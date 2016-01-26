@@ -13,12 +13,14 @@ class AbstractIssue implements IssueInterface
     private $link;
     private $printed;
     private $userStory;
+    private $proofOfConcept;
     private $project;
     private $id;
     private $title;
     private $complexity;
     private $businessValue;
     private $description;
+    private $timeBox;
 
     public function getType()
     {
@@ -64,13 +66,22 @@ class AbstractIssue implements IssueInterface
         return $this;
     }
 
-    public function getProject()
+    public function isProofOfConcept()
     {
+        return $this->proofOfConcept;
+    }
+
+    public function setProofOfConcept($proofOfConcept)
+    {
+        $this->proofOfConcept = $proofOfConcept;
+        return $this;
+    }
+
+    public function getProject() {
         return $this->project;
     }
 
-    public function setProject($project)
-    {
+    public function setProject($project) {
         $this->project = $project;
         return $this;
     }
@@ -121,6 +132,17 @@ class AbstractIssue implements IssueInterface
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
+    }
+
+    public function getTimeBox()
+    {
+        return $this->timeBox;
+    }
+
+    public function setTimeBox($timeBox)
+    {
+        $this->timeBox = $timeBox;
         return $this;
     }
 }
