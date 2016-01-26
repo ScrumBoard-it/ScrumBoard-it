@@ -169,13 +169,13 @@ class JiraService extends AbstractService
     public function getIssues($selected = array())
     {
         $config = new JiraSearchConfiguration();
-        if (!empty($this->sprintId)) {
-            if (empty($selected)) {
-                $template = 'Sprint = %d AND status not in (Closed)';
-                $jql = sprintf($template, $this->sprintId);
-            } else {
-                $jql = 'issueKey in ('.implode(',', $selected).')';
-            }
+        if (!empty($selected)) {
+            $jql = 'issueKey in ('.implode(',', $selected).')';
+        } elseif (!empty($this->sprintId)) {
+            $template = 'Sprint = %d AND status not in (Closed)';
+            $jql = sprintf($template, $this->sprintId);
+        }
+        if (!empty($jql)) {
             $config->setParameters(array(
                 'jql' => $jql
             ));
