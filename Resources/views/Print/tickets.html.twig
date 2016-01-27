@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Post-it Manager - Base Print{% endblock %}</title>
-		{% stylesheets '@CanalTPScrumBoardItBundle/Resources/public/css/print.css' filter='cssrewrite' %}
+		{% stylesheets 'bundles/canaltpscrumboardit/css/print.css' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
