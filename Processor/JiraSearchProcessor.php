@@ -25,7 +25,6 @@ class JiraSearchProcessor extends AbstractProcessor
         parent::setContext($context);
         $options = $context->getOptions();
         $this->printedTag = $options['tag'];
-
         return $this;
     }
 
@@ -58,12 +57,26 @@ class JiraSearchProcessor extends AbstractProcessor
         $task->setProject($project);
         $task->setId($id);
         $task->setLink($issue->self);
-        $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
+        if (isset($issue->fields->labels)) {
+            $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
+        }
+        $task->setTimeBox($issue->fields->timeoriginalestimate);
+        $task->setUserStory(($issue->fields->issuetype->id == 21));
+        if (isset($issue->fields->labels)) {
+            if (in_array('POC', $issue->fields->labels)) {
+                $task->setProofOfConcept(true);
+            }
+        }
+
+        $description = preg_replace('#h3\.(.+)$#isU', '', $issue->fields->description);
+        $task->setDescription($description);
         if (isset($issue->fields->customfield_11108)) {
             $task->setComplexity($issue->fields->customfield_11108);
         }
+        if (isset($issue->fields->customfield_11109)) {
+            $task->setBusinessValue($issue->fields->customfield_11109);
+        }
         $task->setTitle($issue->fields->summary);
-
         return $task;
     }
 
@@ -75,8 +88,13 @@ class JiraSearchProcessor extends AbstractProcessor
         $task->setId($id);
         $task->setLink($issue->self);
         $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
+        $task->setTimeBox($issue->fields->timeoriginalestimate);
+
         if (isset($issue->fields->customfield_11108)) {
             $task->setComplexity($issue->fields->customfield_11108);
+        }
+        if (isset($issue->fields->customfield_11109)) {
+            $task->setBusinessValue($issue->fields->customfield_11109);
         }
         $task->setTitle($issue->fields->summary);
         $parts = explode('-', $issue->fields->parent->key, 2);

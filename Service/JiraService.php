@@ -37,6 +37,7 @@ class JiraService extends AbstractService
         } else {
             $jql = 'issueKey in ('.implode(',', $selected).')';
         }
+
         $config = new JiraSearchConfiguration();
         $config->setParameters(array(
             'jql' => $jql,
