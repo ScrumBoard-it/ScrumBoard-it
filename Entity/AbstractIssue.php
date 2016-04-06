@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\ScrumBoardItBundle\Entitie;
+namespace CanalTP\ScrumBoardItBundle\Entity;
 
 /**
  * Description of AbstractIssue
