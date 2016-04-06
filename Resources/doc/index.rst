@@ -56,7 +56,6 @@ Then configure the bundle with the required parameters in ``config_dev.yml`` :
 
     canal_tp_scrum_board_it:
         jira_url: "http://your.jira"
-        sprint_id: "your_sprint_id"
 
 Then, you to have import routes in ``routing_dev.yml`` and add optionally a prefix :
 
