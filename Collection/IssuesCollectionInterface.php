@@ -2,7 +2,7 @@
 
 namespace CanalTP\ScrumBoardItBundle\Collection;
 
-use CanalTP\ScrumBoardItBundle\Entitie\IssueInterface;
+use CanalTP\ScrumBoardItBundle\Entity\IssueInterface;
 
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>
