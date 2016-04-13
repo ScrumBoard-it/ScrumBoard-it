@@ -4,12 +4,18 @@ namespace CanalTP\ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * controller of navigation.
  */
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/", name="canal_tp_postit_homepage")
+     * 
+     * @return Response
+     */
     public function indexAction()
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
@@ -23,6 +29,12 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * @Route("/print", name="canal_tp_postit_print")
+     * 
+     * @param Request $request
+     * @return Response
+     */
     public function printAction(Request $request)
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
@@ -38,6 +50,12 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * @Route("/flag/add", name="canal_tp_postit_add_flag")
+     * 
+     * @param Request $request
+     * @return Response
+     */
     public function addFlagAction(Request $request)
     {
         $manager = $this->container->get('canal_tp_scrum_board_it.service.manager');
