@@ -54,7 +54,7 @@ class JiraService extends AbstractService
     public function setOptions(array $options)
     {
         $user = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
-        $password = $this->getContainer()->get('security.token_storage')->getToken()->getJiraPassword();
+        $password = $this->getContainer()->get('security.token_storage')->getToken()->getPassword();
         $options['login'] = $user;
         $options['password'] = $password;
         parent::setOptions($options);

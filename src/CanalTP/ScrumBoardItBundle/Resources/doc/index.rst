@@ -96,4 +96,4 @@ Finally you need to install assets
 
 .. code-block :: bash
 
-    php app/console assets:install --symlink
+    php bin/console assets:install --symlink

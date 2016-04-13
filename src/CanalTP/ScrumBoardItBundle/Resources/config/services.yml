@@ -9,16 +9,7 @@ services:
     ira_auth.user_provider:
         class: CanalTP\ScrumBoardItBundle\Jira\User\JiraUserProvider
         arguments: ['@jira.rest']
-    jira_auth.authentication_success_handler:
-        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
-
-    jira_auth.authentication_failure_handler:
-        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
-
-    jira_auth.authentication_provider:
-        class: CanalTP\ScrumBoardItBundle\Security\Authentification\Provider\JiraAuthProvider
-        arguments: ['@jira_auth.user_provider', '', '@jira.rest']
-
+        
     service.manager:
         class: CanalTP\ScrumBoardItBundle\Service\ServiceManager
         arguments: ['@service_container']
@@ -31,8 +22,12 @@ services:
         calls:
             - [setOptions, [%jira%]]
 
-    canal_tp_scrum_board_it.issues_search.form:
-        class: %canal_tp_scrum_board_it.issues_search.form.class%
-        arguments: [@canal_tp_scrum_board_it.service.manager]
-        tags:
-            - { name: form.type, alias: issues_search }
+    #jira_auth.authentication_success_handler:
+    #    class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
+
+    #jira_auth.authentication_failure_handler:
+    #    class: CanalTP\ScrumBoardItBundle\Security\Authentification\Handler\JiraAuthenticationHandler
+
+    #jira_auth.authentication_provider:
+    #   class: CanalTP\ScrumBoardItBundle\Security\Authentification\Provider\JiraAuthProvider
+    #    arguments: ['@jira_auth.user_provider', '', '@jira.rest']
