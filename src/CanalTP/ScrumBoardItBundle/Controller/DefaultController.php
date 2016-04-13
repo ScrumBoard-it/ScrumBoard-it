@@ -18,7 +18,7 @@ class DefaultController extends Controller
      * 
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->get('service.manager');
         $service = $manager->getService();
