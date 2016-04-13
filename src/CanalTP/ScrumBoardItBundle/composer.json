@@ -1,0 +1,16 @@
+{
+    "name": "canaltp/scrum-board-it-bundle",
+    "type": "symfony-component",
+    "description": "A bundle to facilitate Scrum card printing on sticky notes from Atlassian Jira",
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "Johan Rouve",
+            "email": "johan.rouve@canaltp.fr"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "CanalTP\\ScrumBoardItBundle\\": "" }
+    },
+    "target-dir": "CanalTP/ScrumBoardItBundle"
+}
