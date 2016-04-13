@@ -5,8 +5,6 @@ namespace CanalTP\ScrumBoardItBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * controller of navigation.
@@ -18,7 +16,7 @@ class DefaultController extends Controller
      * 
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->get('service.manager');
         $service = $manager->getService();
