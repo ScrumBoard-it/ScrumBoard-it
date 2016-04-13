@@ -21,7 +21,7 @@ class ServiceFactory extends FactoryInterface
 
     public function get($name)
     {
-        $template = 'canal_tp_scrum_board_it.%s.service';
+        $template = '%s.service';
 
         return $this->container->get(sprintf($template, $name));
     }
