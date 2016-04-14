@@ -10,10 +10,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     private $username;
-    private $salt;
     private $password;
-
     private $email;
+    private $salt;
     private $roles;
     private $hash;
 
@@ -73,6 +72,7 @@ class User implements UserInterface
 
         return $this;
     }
+    
     public function getBase64Hash()
     {
         return $this->hash;
