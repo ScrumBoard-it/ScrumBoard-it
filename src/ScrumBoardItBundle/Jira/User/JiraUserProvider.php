@@ -23,6 +23,7 @@ class JiraUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
+        
     }
 
     public function refreshUser(UserInterface $user)

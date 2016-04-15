@@ -15,12 +15,10 @@ security:
 
         main:
             anonymous: ~
-            form_login:
-                login_path: login
-                check_path: login_check
-            logout:
-                path:   logout
-                target: /login
+            logout: ~
+            guard:
+                authenticators:
+                    - token_authenticator
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
@@ -29,7 +27,7 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             
     providers:
-        app.webservice_user_provider:
+        webservice_user_provider:
             entity:
                 class: ScrumBoardItBundle:User
                 
