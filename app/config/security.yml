@@ -15,10 +15,24 @@ security:
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path:   logout
+                target: /login
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            
+    providers:
+        app.webservice_user_provider:
+            entity:
+                class: ScrumBoardItBundle:User
+                
+    #Specify the encode method on password            
+    encoders:
+        ScrumBoardItBundle\Security\User\WebserviceUser: base64
