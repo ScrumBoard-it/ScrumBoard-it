@@ -8,44 +8,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Security;
-use ScrumBoardItBundle\Jira\User\JiraRest;
 
 /**
  * controller of navigation.
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
-     * @Route("/", name="canal_tp_postit_homepage")
+     * @Route("/", name="index")
      * 
      * @return Response
      */
-    public function indexAction(Request $request)
-    {
-        $manager = $this->get('service.manager');
-        $service = $manager->getService();
 
-        $issuesSearch = $request->get('issues_search');
-        if (!empty($issuesSearch['board'])) {
-            $service->setBoardId($issuesSearch['board']);
-        }
-        if (!empty($issuesSearch['sprint'])) {
-            $service->setSprintId($issuesSearch['sprint']);
-        }
-
-        $form = $this->createForm('issues_search');
-
-        return $this->render(
-            'ScrumBoardItBundle:Default:index.html.twig',
-            array(
-                'form' => $form->createView(),
-                'issues' => $service->getIssues(),
-            )
-        );
+    public function indexAction() {
+        //A changer : redirection automatique à faire
+        return $this->redirect($this->generateUrl('login'));
     }
-    
+
     /**
      * @Route("/login", name="login")
+     * @Route("/login_check", name="login_check")
      * @Route("/logout", name="logout")
      * 
      * @param Request $request
@@ -54,7 +36,8 @@ class DefaultController extends Controller
     public function loginAction(Request $request) {
         $session = $request->getSession();
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-            return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
+            
+            return $this->redirect($this->generateUrl('home'));
         }
         if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
@@ -62,45 +45,37 @@ class DefaultController extends Controller
             $error = $session->get(Security::AUTHENTICATION_ERROR);
             $session->remove(Security::AUTHENTICATION_ERROR);
         }
+
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
                     'last_username' => $session->get(Security::LAST_USERNAME),
                     'error' => $error,
         ));
     }
-    
-    //Fonction temporaire
-    /**
-     * @Route("/login_check", name="login_check")
-     * 
-     * @param Request request
-     * @return Response
-     */
-    public function loginCheckAction(Request $request) {
-        $login = $request->request->get('_username');
-        $password = $request->request->get('_password');
-        $data=JiraRest::authenticate($login,$password);
-        var_dump($data); die;
-    }
 
     /**
-     * @Route("/print", name="canal_tp_postit_print")
+     * @Route("/print", name="print")
      * 
      * @param Request $request
      * @return Response
      */
-    public function printAction(Request $request)
-    {
+    public function printAction(Request $request) {
         $manager = $this->container->get('service.manager');
         $service = $manager->getService();
         /* @var $service ScrumBoardItBundle\Service\AbstractService */
         $selected = $request->request->get('issues');
 
         return $this->render(
-            'ScrumBoardItBundle:Print:tickets.html.twig',
-            array(
-                'issues' => $service->getIssues($selected),
-            )
+                        'ScrumBoardItBundle:Print:tickets.html.twig', array(
+                    'issues' => $service->getIssues($selected),
+                        )
         );
+    }
+
+    /**
+     * @Route("/home", name="home")
+     */
+    public function home() {
+        return new Response("<html><body>Connecté</body></html>");
     }
 
     /**
@@ -109,14 +84,14 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function addFlagAction(Request $request)
-    {
+    public function addFlagAction(Request $request) {
         $manager = $this->container->get('service.manager');
         $service = $manager->getService();
         /* @var $service ScrumBoardItBundle\Service\AbstractService */
         $selected = $request->request->get('issues');
         $service->addFlag($selected);
 
-        return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
+        return $this->redirect($this->generateUrl('index'));
     }
+
 }

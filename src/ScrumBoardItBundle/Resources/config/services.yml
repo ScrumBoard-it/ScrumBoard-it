@@ -1,12 +1,15 @@
 services:
-    jira.rest:
-        class: ScrumBoardItBundle\Jira\User\JiraRest
-        arguments:
-            - '%jira_url%'
-            
-    jira_auth.user_provider:
-        class: ScrumBoardItBundle\Jira\User\JiraUserProvider
-        arguments: ['@jira.rest']
-            
-    app.webservice_user_provider:
+    webservice_user_provider:
         class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
+    token_authenticator:
+        class: ScrumBoardItBundle\Security\TokenAuthenticator
+        arguments: ['@doctrine.orm.entity_manager']
+            
+#    jira.rest:
+#        class: ScrumBoardItBundle\Jira\User\JiraRest
+#        arguments:
+#            - '%jira_url%'
+            
+#    jira_auth.user_provider:
+#        class: ScrumBoardItBundle\Jira\User\JiraUserProvider
+#        arguments: ['@jira.rest']
