@@ -9,10 +9,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator {
-    
     private $em;
     
     public function __construct(EntityManager $em) {
@@ -42,7 +41,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
         $password = $user->getPassword();
         $hash = $user->setHash("$login:$password");
         $password = $credentials['password'];
-        $request = $this->getJiraUrl().'rest/api/2/user?username='. $login;
+        $request = 'http://jira.canaltp.fr/rest/api/2/user?username='. $login;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $request);
         curl_setopt($curl, CURLOPT_USERPWD, $hash);
@@ -54,7 +53,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception) {
-        return new Response($exception);
+        
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
@@ -68,5 +67,4 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
     public function supportsRememberMe() {
         return false;
     }
-
 }
