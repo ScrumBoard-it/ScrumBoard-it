@@ -8,7 +8,7 @@ imports:
 parameters:
     locale: en
     issues_service: jira
-    jira_url: http://canaltp.jira.fr
+    jira_url: http://jira.canaltp.fr
     sprint_id: 12
     jira_tag: ~
     jira: 
