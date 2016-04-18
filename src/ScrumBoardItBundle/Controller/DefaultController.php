@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -22,34 +22,49 @@ class DefaultController extends Controller {
 
     public function indexAction() {
         //A changer : redirection automatique à faire
-        return $this->redirect($this->generateUrl('login'));
+        return new Response("<html><body>index</body></html>");
     }
 
     /**
      * @Route("/login", name="login")
-     * @Route("/login_check", name="login_check")
-     * @Route("/logout", name="logout")
      * 
      * @param Request $request
      * @return Response
      */
     public function loginAction(Request $request) {
         $session = $request->getSession();
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-            
-            return $this->redirect($this->generateUrl('home'));
-        }
+        $error = '';
+        
         if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(Security::AUTHENTICATION_ERROR);
-            $session->remove(Security::AUTHENTICATION_ERROR);
         }
 
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
                     'last_username' => $session->get(Security::LAST_USERNAME),
                     'error' => $error,
         ));
+    }
+    
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction() {
+        
+    }
+    
+    /**
+     * @Route("/login_check", name="login_check")
+     * 
+     * @return type
+     */
+    public function loginCheckAction() {
+        dump($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED'));
+       if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect($this->generateUrl('home'));
+        }
+        else {
+            return $this->redirect($this->generateUrl('login'));
+        }
     }
 
     /**
@@ -73,6 +88,7 @@ class DefaultController extends Controller {
 
     /**
      * @Route("/home", name="home")
+     * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
     public function home() {
         return new Response("<html><body>Connecté</body></html>");
