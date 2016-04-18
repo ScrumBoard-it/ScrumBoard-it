@@ -3,11 +3,12 @@
 namespace ScrumBoardItBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * Symfony user.
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     private $username;
     private $password;
@@ -16,9 +17,10 @@ class User implements UserInterface
     private $roles;
     private $hash;
 
-    public function __construct()
+    public function __construct($username, array $roles)
     {
-        $this->roles = ('ROLE_USER');
+        $this->username = $username;
+        $this->roles = $roles;
     }
     public function eraseCredentials()
     {
@@ -80,5 +82,26 @@ class User implements UserInterface
     public function setBase64Hash($data)
     {
         $this->hash = base64_encode($data);
+    }
+    
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
     }
 }

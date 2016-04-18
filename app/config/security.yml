@@ -1,12 +1,6 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
-    providers:
-        in_memory:
-            memory: ~
-
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -15,22 +9,16 @@ security:
 
         main:
             anonymous: ~
-            logout: ~
             guard:
                 authenticators:
                     - token_authenticator
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            logout:
+                path:   /logout
+                target: /login
+                    
+#        default:
+#            anonymous: ~
             
     providers:
-        webservice_user_provider:
-            entity:
-                class: ScrumBoardItBundle:User
-                
-    #Specify the encode method on password            
-    encoders:
-        ScrumBoardItBundle\Security\User\WebserviceUser: base64
+        webservice:
+            id: webservice_user_provider
