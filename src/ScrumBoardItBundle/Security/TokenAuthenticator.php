@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator {
-    private $rememberMe;
     private $router;
     
     public function __construct(Router $router) {
@@ -68,15 +67,12 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
     }
 
     public function start(Request $request, AuthenticationException $authException = null) {
-//        return new Response('<html><head><title>Erreur 403 | ScrumBoard-it</title><body><h1>HttpError 403</h1>'.
-//                $authException->getMessage() . '</body></html>');
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, new AuthenticationException("Vous devez vous authentifier"));
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, new AuthenticationException("Authentification nécessaire"));
         $url = $this->router->generate('login');
         return new RedirectResponse($url);
     }
 
     public function supportsRememberMe() {
-        return $this->rememberMe;
+        return false;
     }
-
 }
