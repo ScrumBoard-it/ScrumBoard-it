@@ -4,40 +4,51 @@ namespace ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 
-/**
- * controller of connexion to jira.
- */
 class SecurityController extends Controller {
 
     /**
-     * Route("/login", name="login")
-     * Route("/login_check", name="login_check")
-     * Route("/logout", name="logout")
+     * @Route("/login", name="login")
      * 
      * @param Request $request
      * @return Response
      */
-    public function loginAction(Request $request) {
-        //$request = $this->getRequest();
-        $session = $request->getSession();
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-            return $this->redirect($this->generateUrl('canal_tp_postit_homepage'));
+    public function loginAction() {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect($this->generateUrl('home'));
         }
+        $authenticationUtils = $this->get('security.authentication_utils');
 
-        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(Security::AUTHENTICATION_ERROR);
-            $session->remove(Security::AUTHENTICATION_ERROR);
-        }
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        dump($error);
 
-        return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
-                    'last_username' => $session->get(Security::LAST_USERNAME),
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render(
+                        'ScrumBoardItBundle:Security:login.html.twig', array(
+                    // last username entered by the user
+                    'last_username' => $lastUsername,
                     'error' => $error,
-        ));
+                        )
+        );
     }
+
+    /**
+     * @Route("/login_check", name="login_check")
+     * 
+     * @return type
+     */
+    public function loginCheckAction() {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect($this->generateUrl('home'));
+        } else {
+            return $this->redirect($this->generateUrl('login'));
+        }
+    }
+
 }

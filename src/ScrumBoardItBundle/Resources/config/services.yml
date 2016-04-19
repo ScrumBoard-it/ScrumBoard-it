@@ -3,7 +3,7 @@ services:
         class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
     token_authenticator:
         class: ScrumBoardItBundle\Security\TokenAuthenticator
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@router']
             
 #    jira.rest:
 #        class: ScrumBoardItBundle\Jira\User\JiraRest
