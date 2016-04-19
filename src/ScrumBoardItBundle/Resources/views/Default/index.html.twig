@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <form action="{{ path('canal_tp_postit_print') }}" method="POST" target="_blank">
+                <form action="{{ path('print') }}" method="POST" target="_blank">
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
                         <div class="panel-heading">
@@ -115,13 +115,13 @@
         });
         $("#submitPrint").click(function() {
             $form = $(this).parents('form');
-            $form.attr('action', '{{ path('canal_tp_postit_print') }}');
+            $form.attr('action', '{{ path('print') }}');
             $form.find(':checkbox').prop('checked', true);
             $form.submit();
         });
         $("#addFlag").click(function() {
             $form = $(this).parents('form');
-            $form.attr('action', '{{ path('canal_tp_postit_add_flag') }}');
+            $form.attr('action', '{{ path('add_flag') }}');
             $form.find(':checkbox').prop('checked', true);
             $form.submit();
         });

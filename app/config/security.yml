@@ -14,7 +14,6 @@ security:
                     - token_authenticator
             logout:
                 path:   /logout
-                target: /login
                     
 #        default:
 #            anonymous: ~
