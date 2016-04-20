@@ -30,9 +30,8 @@ class DefaultController extends Controller {
         //ENTREE DANS L'APPLICATION
         $user = $this->getUser();
         dump($user);
-        return new Response('<html><head><title>Bienvenue | ScrumBoard-it</title></head><body><img src="'.
-                $user->getImgUrl() . '">Bienvenue ' .
-                $user->getDisplayName() . ' !</body></html>');
+        return new Response('<html><head><title>Bienvenue | ScrumBoard-it</title></head><body>Bienvenue ' .
+                $user->getDisplayName() . ' !<br/></body></html>');
     }
 
     /**
