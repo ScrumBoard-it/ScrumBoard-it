@@ -12,6 +12,8 @@ class User implements UserInterface, EquatableInterface
 {
     private $username;
     private $email;
+    private $displayName;
+    private $imgUrl;
     private $salt;
     private $roles;
     private $hash;
@@ -67,6 +69,22 @@ class User implements UserInterface, EquatableInterface
         $this->email = $email;
 
         return $this;
+    }
+    
+    public function getDisplayName() {
+        return $this->displayName;
+    }
+    
+    public function setDisplayName($displayName) {
+        $this->displayName = $displayName;
+    }
+    
+    public function getImgUrl() {
+        return $this->imgUrl;
+    }
+    
+    public function setImgUrl($imgUrl) {
+        $this->imgUrl = $imgUrl;
     }
     
     public function setHash($hash) {

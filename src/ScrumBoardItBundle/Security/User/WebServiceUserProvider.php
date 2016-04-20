@@ -7,7 +7,6 @@ use ScrumBoardItBundle\Entity\User;
 
 class WebServiceUserProvider implements UserProviderInterface {
     public function loadUserByUsername($username) {
-        
         return new User($username, ['ROLE_AUTHENTICATED']);
     }
 
@@ -15,6 +14,7 @@ class WebServiceUserProvider implements UserProviderInterface {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
+        
         return $user;
     }
 
