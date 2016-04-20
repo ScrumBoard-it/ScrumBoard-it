@@ -13,18 +13,20 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator {
+
     private $router;
-    
-    public function __construct(Router $router) {
+    private $jira;
+
+    public function __construct(Router $router,  $jira) {
         $this->router = $router;
+        $this->jira = $jira;
     }
 
     public function getCredentials(Request $request) {
         if ($request->getPathInfo() != '/login_check' || !$request->isMethod('POST')) {
             return;
         }
-        
-        $this->rememberMe = $request->request->get('_remember_me');
+
         return [
             'username' => $request->request->get('_username'),
             'password' => $request->request->get('_password'),
@@ -38,8 +40,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
     public function checkCredentials($credentials, UserInterface $user) {
         $login = $user->getUsername();
         $password = $credentials['password'];
-        $user->setHash(base64_encode("$login:$password"));
-        $url = 'http://jira.canaltp.fr/rest/api/2/user?username=' . $login;
+        $user->setHash("$login:$password");
+        dump($this->jira);
+        $url = $this->jira['host'] . $this->jira['rest'] . $login;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -51,28 +54,37 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
         curl_close($ch);
 
         if ($httpCode == 200 && !empty($content)) {
-            $data = json_decode($content);
-            $user->setEmail($data->emailAddress);
+            $data = json_decode($content, true);
+            $user->setEmail($data['emailAddress']);
+            $user->setDisplayName($data['displayName']);
+            $user->setImgUrl($data['avatarUrls']['48x48']);
             return true;
         }
         return false;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception) {
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, new AuthenticationException("Nom d'utilisateur ou mot de passe incorrect"));
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
+            'exception' => $exception,
+            'message' => "Nom d'utilisateur ou mot de passe incorrect"
+        ));
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-        
+        //Return response required for remember_me
     }
 
     public function start(Request $request, AuthenticationException $authException = null) {
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, new AuthenticationException("Authentification nécessaire"));
-        $url = $this->router->generate('login');
-        return new RedirectResponse($url);
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
+            'exception' => $authException,
+            'message' => "Authentification nécessaire"
+        ));
+        
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     public function supportsRememberMe() {
+        //Passer à true pour activer le remember_me
         return false;
     }
 }

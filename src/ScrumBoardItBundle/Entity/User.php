@@ -12,6 +12,8 @@ class User implements UserInterface, EquatableInterface
 {
     private $username;
     private $email;
+    private $displayName;
+    private $imgUrl;
     private $salt;
     private $roles;
     private $hash;
@@ -69,8 +71,24 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
     
+    public function getDisplayName() {
+        return $this->displayName;
+    }
+    
+    public function setDisplayName($displayName) {
+        $this->displayName = $displayName;
+    }
+    
+    public function getImgUrl() {
+        return $this->imgUrl;
+    }
+    
+    public function setImgUrl($imgUrl) {
+        $this->imgUrl = $imgUrl;
+    }
+    
     public function setHash($hash) {
-        $this->hash = $hash;
+        $this->hash = base64_encode($hash);
     }
     
     public function getHash() {
@@ -99,7 +117,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     public function getPassword() {
-        
+        //Mot de passe encodé dans le hash
     }
 
 }
