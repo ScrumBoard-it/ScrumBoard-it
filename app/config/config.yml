@@ -12,9 +12,10 @@ parameters:
     sprint_id: 12
     jira_tag: ~
     jira: 
-        - host: %jira_url%,
-        - sprint_id: %sprint_id%
-        - tag: %jira_tag%
+        host: %jira_url%
+        rest: 'rest/api/2/user?username='
+        sprint_id: %sprint_id%
+        tag: %jira_tag%
 
 
 framework:

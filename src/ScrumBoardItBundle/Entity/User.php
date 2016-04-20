@@ -70,7 +70,7 @@ class User implements UserInterface, EquatableInterface
     }
     
     public function setHash($hash) {
-        $this->hash = $hash;
+        $this->hash = base64_encode($hash);
     }
     
     public function getHash() {
@@ -99,7 +99,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     public function getPassword() {
-        
+        //Mot de passe encodé dans le hash
     }
 
 }
