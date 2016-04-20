@@ -54,8 +54,10 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
         curl_close($ch);
 
         if ($httpCode == 200 && !empty($content)) {
-            $data = json_decode($content);
-            $user->setEmail($data->emailAddress);
+            $data = json_decode($content, true);
+            $user->setEmail($data['emailAddress']);
+            $user->setDisplayName($data['displayName']);
+            $user->setImgUrl($data['avatarUrls']['48x48']);
             return true;
         }
         return false;
@@ -77,8 +79,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
             'exception' => $authException,
             'message' => "Authentification nécessaire"
         ));
-        $url = $this->router->generate('login');
-        return new RedirectResponse($url);
+        
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     public function supportsRememberMe() {
