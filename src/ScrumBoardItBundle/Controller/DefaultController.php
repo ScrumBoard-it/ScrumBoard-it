@@ -30,8 +30,9 @@ class DefaultController extends Controller {
     public function home() {
         //ENTREE DANS L'APPLICATION
         $user = $this->getUser();
-        return new Response('<html><head><title>Bienvenue | ScrumBoard-it</title></head><body>Bienvenue ' .
-                $user->getDisplayName() . ' !<br/></body></html>');
+        return new Response('<html><head><title>Bienvenue | ScrumBoard-it</title></head><body><p>Bienvenue ' .
+                $user->getDisplayName() . ' !</p><a href="' .
+                $this->generateUrl('logout') . '">Se déconnecter</a></body></html>');
     }
 
     /**
