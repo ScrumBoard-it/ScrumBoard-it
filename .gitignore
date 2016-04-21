@@ -15,3 +15,5 @@
 /vendor/
 /web/bundles/
 nbproject
+/config
+Capfile
