@@ -81,6 +81,11 @@ hr.soften {
     font-family: 'Avantgarde, sans-serif';
     font-size: 20px;
 }
+
+.error {
+    font-weight: bold;
+    color:red;
+}
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *
