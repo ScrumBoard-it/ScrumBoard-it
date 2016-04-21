@@ -41,7 +41,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
         $login = $user->getUsername();
         $password = $credentials['password'];
         $user->setHash("$login:$password");
-        dump($this->jira);
         $url = $this->jira['host'] . $this->jira['rest'] . $login;
 
         $ch = curl_init();
