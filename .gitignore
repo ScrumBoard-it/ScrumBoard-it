@@ -14,6 +14,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+<<<<<<< a5619904c1e6e71281d4fa83a49ed5f95739272c
 <<<<<<< fddc35e54b8de25830ea3caa3211dce4191f8cea
 nbproject
 Capfile
@@ -24,3 +25,8 @@ Capfile
 =======
 nbproject
 >>>>>>> Migrate bundle to full app
+=======
+nbproject
+/config
+Capfile
+>>>>>>> Mdification gitignore pour Capistrano
