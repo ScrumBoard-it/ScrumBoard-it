@@ -14,11 +14,11 @@ security:
                     - token_authenticator
             logout:
                 path:   /logout
-            #remember_me:
-            #    secret:   '%secret%'
-            #    lifetime: 604800 # 1 week in seconds
-            #    path:     /
-            #     always_remember_me: true
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+            #    always_remember_me: true
                     
 #        default:
 #            anonymous: ~
