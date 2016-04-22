@@ -11,15 +11,18 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator {
 
     private $router;
     private $jira;
+    private $rememberme;
 
-    public function __construct(Router $router,  $jira) {
+    public function __construct(Router $router,  $jira, $rememberme) {
         $this->router = $router;
         $this->jira = $jira;
+        $this->rememberme = $rememberme;
     }
 
     public function getCredentials(Request $request) {
@@ -67,10 +70,12 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
             'exception' => $exception,
             'message' => "Nom d'utilisateur ou mot de passe incorrect"
         ));
+        
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-        //Return response required for remember_me
+        return new RedirectResponse($this->router->generate('home'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null) {
@@ -84,6 +89,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
 
     public function supportsRememberMe() {
         //Passer à true pour activer le remember_me
-        return false;
+        return true;
     }
 }
