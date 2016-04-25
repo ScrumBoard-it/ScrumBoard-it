@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class PrintController extends Controller
 {    
     /**
-     * @Route("/print/base", name="canal_tp_postit_print_patron")
+     * @Route("/print/base", name="print_patron")
      * 
      * @return Response
      */
