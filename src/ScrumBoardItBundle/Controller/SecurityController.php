@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class SecurityController extends Controller {
 
     /**

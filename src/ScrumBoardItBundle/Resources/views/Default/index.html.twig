@@ -1,10 +1,14 @@
 {% extends "ScrumBoardItBundle::base.html.twig" %}
-
+{% block title %}Accueil | {{ parent() }}{% endblock %}
 {% block body %}
     <div class="container">
         <div class="header">
             <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
-            <a href="./logout"><span class="glyphicon glyphicon-off">Logout </span></a>
+            <div class="log">
+                <img class="logImg" src="{{ app.user.imgUrl }}"/>
+                <span>{{ app.user.displayName }}</span><br/>
+                <a href="./logout"><span class="glyphicon glyphicon-off">Déconnexion</span></a>
+            </div>
         </div>
         <div class="row">
             <form id="issues_search" class="form-inline">
@@ -34,18 +38,18 @@
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">
-                        A imprimer
+                        À imprimer
                         <span class="badge">0</span>
                     </div>
                     <ul class="list-group selectable">
                         {% for issue in issues if not issue.printed %}
                             {% block issue %}
-                            <li class="list-group-item {{ issue.type }}">
-                                <input type="checkbox" name="issues[]" value="{{ issue.project }}-{{ issue.id }}" />
-                                <span>{{ issue.project }}-{{ issue.id }}</span>
-                                <span>{{ issue.title }}</span>
-                                <span class="badge">{{ issue.complexity }}</span>
-                            </li>
+                                <li class="list-group-item {{ issue.type }}">
+                                    <input type="checkbox" name="issues[]" value="{{ issue.project }}-{{ issue.id }}" />
+                                    <span>{{ issue.project }}-{{ issue.id }}</span>
+                                    <span>{{ issue.title }}</span>
+                                    <span class="badge">{{ issue.complexity }}</span>
+                                </li>
                             {% endblock %}
                         {% endfor %}
                     </ul>
@@ -71,7 +75,7 @@
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">
-                        Deja imprimé
+                        Déjà imprimé(s)
                         <span class="badge">0</span>
                     </div>
                     <ul class="list-group selectable">
@@ -87,52 +91,44 @@
 
 {% block javascripts %}
     {{ parent() }}
-     <script>
-    $(function() {
-        $(".panel").each(function() {
-            panel = $(this);
-            panel.find('.panel-heading .badge').text(panel.find('ul').children("li").length);
-        });
+    <script>
+        $(function () {
+            $(".panel").each(function () {
+                panel = $(this);
+                panel.find('.panel-heading .badge').text(panel.find('ul').children("li").length);
+            });
 
-        $( ".selectable" ).selectable({ filter: "li" });
-        $.contextMenu({
-            // define which elements trigger this menu
-            selector: "li.ui-selected",
-            // define the elements of the menu
-            items: {
-                opt: {
-                    name: "Envoyer à l'impression",
-                    callback: function(key, opt){
-                        panel = opt.$trigger.parents(".panel");
-                        list = opt.$trigger.parent();
-                        selected = list.children("li.ui-selected");
-                        selected.removeClass("ui-selected").appendTo("#printQueue");
-                        panel.find(".panel-heading .badge").text(list.children("li").length);
-                        $("#printQueue").parents(".panel").find(".panel-heading .badge").text($("#printQueue li").length);
-                    }
-                },
-            }
+            $(".selectable").selectable({filter: "li"});
+            $.contextMenu({
+                // define which elements trigger this menu
+                selector: "li.ui-selected",
+                // define the elements of the menu
+                items: {
+                    opt: {
+                        name: "Envoyer à l'impression",
+                        callback: function (key, opt) {
+                            panel = opt.$trigger.parents(".panel");
+                            list = opt.$trigger.parent();
+                            selected = list.children("li.ui-selected");
+                            selected.removeClass("ui-selected").appendTo("#printQueue");
+                            panel.find(".panel-heading .badge").text(list.children("li").length);
+                            $("#printQueue").parents(".panel").find(".panel-heading .badge").text($("#printQueue li").length);
+                        }
+                    },
+                }
+            });
+            $("#submitPrint").click(function () {
+                $form = $(this).parents('form');
+                $form.attr('action', '{{ path('print') }}');
+                $form.find(':checkbox').prop('checked', true);
+                $form.submit();
+            });
+            $("#addFlag").click(function () {
+                $form = $(this).parents('form');
+                $form.attr('action', '{{ path('add_flag') }}');
+                $form.find(':checkbox').prop('checked', true);
+                $form.submit();
+            });
         });
-        $("#submitPrint").click(function() {
-            $form = $(this).parents('form');
-            $form.attr('action', '{{ path('print') }}');
-            $form.find(':checkbox').prop('checked', true);
-            $form.submit();
-        });
-        $("#addFlag").click(function() {
-            $form = $(this).parents('form');
-            $form.attr('action', '{{ path('add_flag') }}');
-            $form.find(':checkbox').prop('checked', true);
-            $form.submit();
-        });
-        $("#issues_search").find('select').change(function() {
-            $form = $(this).parents('form');
-            if ($(this).attr('id') == 'issues_search_board' && $('#issues_search_sprint').size()) {
-                $('#issues_search_sprint').val('');
-                $('#issues_search_sprint').attr('disabled', 'disabled');
-            }
-            $form.submit();
-        });
-    });
     </script>
 {% endblock %}
