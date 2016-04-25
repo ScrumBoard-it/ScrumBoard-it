@@ -86,6 +86,10 @@ hr.soften {
     font-weight: bold;
     color:red;
 }
+
+.log {
+    float: right;
+}
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *

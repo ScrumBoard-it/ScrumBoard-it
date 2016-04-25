@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * Symfony user.
+ * 
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class User implements UserInterface, EquatableInterface
 {
