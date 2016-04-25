@@ -1,6 +1,6 @@
 <?php
 
-namespace ScrumBoardItBundle\Entitie;
+namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
  * @author Johan Rouve <johan.rouve@gmail.com>

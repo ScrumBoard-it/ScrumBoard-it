@@ -59,7 +59,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
             $data = json_decode($content, true);
             $user->setEmail($data['emailAddress']);
             $user->setDisplayName($data['displayName']);
-            $user->setImgUrl($data['avatarUrls']['48x48']);
+            $user->setImgUrl($data['avatarUrls']['24x24']);
             return true;
         }
         return false;
