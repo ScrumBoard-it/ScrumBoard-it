@@ -11,7 +11,7 @@ security:
             anonymous: ~
             guard:
                 authenticators:
-                    - token_authenticator
+                    - jira_token_authenticator
             logout:
                 path:   /logout
             remember_me:
