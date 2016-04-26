@@ -11,8 +11,7 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 class ApiJira extends AbstractApi {
 
     public function getIssues($id) {
-        $url = $this->getData()['host'] . $this->getData()['api'] . 'search?jql=sprint=' . $id;
-        $data = json_decode($this->curl($url), true);
+        $data = $this->curl($this->getData()['host'] . $this->getData()['api'] . 'search?jql=sprint=' . $id);
         $issues = array();
         for ($i = 0; $i < $data['total']; $i++) {
             if ($data['issues'][$i]['fields']['issuetype']['subtask'] === true) {
@@ -25,20 +24,20 @@ class ApiJira extends AbstractApi {
             $issue->setId($data['issues'][$i]['id']);
             $issue->setProject($data['issues'][$i]['key']);
             $issue->setTitle($data['issues'][$i]['fields']['summary']);
-            if (!empty($data['issues'][$i]['fields']['labels']) && $data['issues'][$i]['fields']['labels'][0] === "Post-it") {
+            if (!empty($data['issues'][$i]['fields']['labels']) &&
+                    $data['issues'][$i]['fields']['labels'][0] === "Post-it") {
                 $issue->setPrinted(true);
             } else {
                 $issue->setPrinted(false);
             }
             array_push($issues, $issue);
         }
-        
+
         return $issues;
     }
 
     public function getProjects() {
-        $url = $this->getData()['host'] . $this->getData()['agile'] . 'board?maxResults=-1';
-        $data = json_decode($this->curl($url), true);
+        $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board?maxResults=-1');
         $boards = array();
         for ($i = 0; $i < count($data['values']); $i++) {
             $board = new Project($data['values'][$i]['id'], $data['values'][$i]['name']);
@@ -49,8 +48,8 @@ class ApiJira extends AbstractApi {
     }
 
     public function getSprints($id) {
-        $url = $this->getData()['host'] . $this->getData()['agile'] . 'board/' . $id . '/sprint?state=active&state=future';
-        $data = json_decode($this->curl($url), true);
+        $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board/' . $id .
+                '/sprint?state=active&state=future');
         $sprints = array();
         for ($i = 0; $i < count($data['values']); $i++) {
             $sprint = new Sprint($data['values'][$i]['id'], $data['values'][$i]['name']);
