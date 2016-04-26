@@ -1,9 +1,12 @@
 services:
     webservice_user_provider:
         class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
-    token_authenticator:
-        class: ScrumBoardItBundle\Security\TokenAuthenticator
+    jira_token_authenticator:
+        class: ScrumBoardItBundle\Security\JiraAuthenticator
         arguments: ['@router','%jira%','@security.rememberme.response_listener']
+    jira.api:
+        class: ScrumBoardItBundle\Jira\ApiJira
+        arguments: ['@security.token_storage', '%jira%']
             
 #    jira.rest:
 #        class: ScrumBoardItBundle\Jira\User\JiraRest
