@@ -27,7 +27,7 @@ abstract class AbstractApi {
         $content = curl_exec($ch);
         curl_close($ch);
         
-        return $content;
+        return json_decode($content, true);
     }
     
     public abstract function getProjects();
