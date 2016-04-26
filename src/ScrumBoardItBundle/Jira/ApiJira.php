@@ -10,8 +10,8 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 
 class ApiJira extends AbstractApi {
 
-    public function getIssues($var) {
-        $url = $this->getData()['host'] . $this->getData()['api'] . 'search?jql=sprint=' . $var;
+    public function getIssues($id) {
+        $url = $this->getData()['host'] . $this->getData()['api'] . 'search?jql=sprint=' . $id;
         $data = json_decode($this->curl($url), true);
         $issues = array();
         for ($i = 0; $i < $data['total']; $i++) {
@@ -48,8 +48,8 @@ class ApiJira extends AbstractApi {
         return $boards;
     }
 
-    public function getSprints($var) {
-        $url = $this->getData()['host'] . $this->getData()['agile'] . 'board/' . $var . '/sprint?state=active&state=future';
+    public function getSprints($id) {
+        $url = $this->getData()['host'] . $this->getData()['agile'] . 'board/' . $id . '/sprint?state=active&state=future';
         $data = json_decode($this->curl($url), true);
         $sprints = array();
         for ($i = 0; $i < count($data['values']); $i++) {

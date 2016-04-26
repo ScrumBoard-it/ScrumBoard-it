@@ -31,8 +31,8 @@ abstract class AbstractApi {
     }
     
     public abstract function getProjects();
-    public abstract function getIssues($var);
+    public abstract function getIssues($id);
     
     //A implémenter uniquement dans ApiJira
-    public abstract function getSprints($var);
+    public abstract function getSprints($id);
 }

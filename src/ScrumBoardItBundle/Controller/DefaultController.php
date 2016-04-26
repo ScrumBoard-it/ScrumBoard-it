@@ -28,8 +28,9 @@ class DefaultController extends Controller {
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
     public function home() {
+        $issues = $this->container->get('jira.api')->getIssues(510);
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-                    'issues' => null
+                    'issues' => $issues
         ));
     }
 
