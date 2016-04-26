@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,20 +10,19 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
-class TokenAuthenticator extends AbstractGuardAuthenticator {
-
+abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator {
+    
     private $router;
-    private $jira;
+    protected $data;
     private $rememberme;
 
-    public function __construct(Router $router,  $jira, $rememberme) {
+    public function __construct(Router $router,  $data, $rememberme) {
         $this->router = $router;
-        $this->jira = $jira;
+        $this->data = $data;
         $this->rememberme = $rememberme;
     }
-
+    
     public function getCredentials(Request $request) {
         if ($request->getPathInfo() != '/login_check' || !$request->isMethod('POST')) {
             return;
@@ -40,30 +38,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator {
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
-    public function checkCredentials($credentials, UserInterface $user) {
-        $login = $user->getUsername();
-        $password = $credentials['password'];
-        $user->setHash("$login:$password");
-        $url = $this->jira['host'] . $this->jira['rest'] . $login;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Basic ' . $user->getHash()]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode == 200 && !empty($content)) {
-            $data = json_decode($content, true);
-            $user->setEmail($data['emailAddress']);
-            $user->setDisplayName($data['displayName']);
-            $user->setImgUrl($data['avatarUrls']['24x24']);
-            return true;
-        }
-        return false;
-    }
+    public abstract function checkCredentials($credentials, UserInterface $user);
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception) {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(

@@ -16,6 +16,7 @@ class User implements UserInterface, EquatableInterface
     private $email;
     private $displayName;
     private $imgUrl;
+    private $coType;
     private $salt;
     private $roles;
     private $hash;
@@ -87,6 +88,14 @@ class User implements UserInterface, EquatableInterface
     
     public function setImgUrl($imgUrl) {
         $this->imgUrl = $imgUrl;
+    }
+    
+    public function getCoType() {
+        return $this->coType;
+    }
+    
+    public function setCoType($coType) {
+       $this->coType = $coType;
     }
     
     public function setHash($hash) {
