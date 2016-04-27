@@ -3,8 +3,6 @@
 namespace ScrumBoardItBundle\Jira;
 
 use ScrumBoardItBundle\Jira\AbstractApi;
-use ScrumBoardItBundle\Entity\Project\Project;
-use ScrumBoardItBundle\Entity\Sprint;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 
@@ -40,14 +38,9 @@ class ApiJira extends AbstractApi {
         $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board?orderBy=name&maxResults=-1');
         $boards = array();
         for ($i = 0; $i < count($data['values']); $i++) {
-            $board = new Project($data['values'][$i]['id'], $data['values'][$i]['name']);
-            array_push($boards, $board);
+            $boards[$data['values'][$i]['id']] = $data['values'][$i]['name'];
         }
-
-        function compare($a, $b) {
-            return strcmp($a->value, $b->value);
-        }
-        usort($boards, 'compare');
+        asort($boards, SORT_NATURAL | SORT_FLAG_CASE);
 
         return $boards;
     }
@@ -57,10 +50,9 @@ class ApiJira extends AbstractApi {
                 '/sprint?state=active&state=future');
         $sprints = array();
         for ($i = 0; $i < count($data['values']); $i++) {
-            $sprint = new Sprint($data['values'][$i]['id'], $data['values'][$i]['name']);
-            array_push($sprints, $sprint);
+            $sprints[$data['values'][$i]['id']] = $data['values'][$i]['name'];
         }
-
+        
         return $sprints;
     }
 }

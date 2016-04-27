@@ -5,6 +5,7 @@ namespace ScrumBoardItBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,16 +35,34 @@ class DefaultController extends Controller {
                     'choices' => $projects,
                     'label' => 'Projets',
                     'choice_label' => function($project) {
-                        return $project->getTitle();
-                    }))
+                        return $project;
+                    },
+                    'empty_data' => null,
+                    'required' => false))
                 ->add('sprints', ChoiceType::class, array(
-                    'choices' => array()))
-                ->getForm();
-        dump($form);
+                    'choices' => array(),
+                ))->getForm();
+                    
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                     'form' => $form->createView(),
                     'issues' => null
         ));
+    }
+    
+    /**
+     * Fonction appelée par Ajax
+     * 
+     * @Route("/home/refresh", name="refresh")
+     * @Method({"GET", "POST"})
+     * 
+     * @param Request $request
+     */
+    public function refreshIssues(Request $request) {
+        dump($request);
+        $id = $request->get('fk_id');
+        $sprints = $this->container->get($this->getUser()->getApi())->getSprints($id);
+        
+        return new JsonResponse(array('data' => json_encode($sprints)));
     }
 
     /**
