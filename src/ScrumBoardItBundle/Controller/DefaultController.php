@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * controller of navigation.
@@ -27,9 +28,21 @@ class DefaultController extends Controller {
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
     public function home() {
-        $issues = $this->container->get('jira.api')->getIssues(510);
+        $projects = $this->container->get($this->getUser()->getApi())->getProjects();
+        $form = $this->createFormBuilder()
+                ->add('projects', ChoiceType::class, array(
+                    'choices' => $projects,
+                    'label' => 'Projets',
+                    'choice_label' => function($project) {
+                        return $project->getTitle();
+                    }))
+                ->add('sprints', ChoiceType::class, array(
+                    'choices' => array()))
+                ->getForm();
+        dump($form);
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-                    'issues' => $issues
+                    'form' => $form->createView(),
+                    'issues' => null
         ));
     }
 

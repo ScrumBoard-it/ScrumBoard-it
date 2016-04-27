@@ -10,7 +10,7 @@
                 <a href="./logout"><span class="glyphicon glyphicon-off">Déconnexion</span></a>
             </div>
         </div>
-        {# <div class="row">
+        <div class="row">
             <form id="issues_search" class="form-inline">
                 <div class="form-group col-md-4">
                     {{ form_label(form.projects) }}
@@ -26,14 +26,14 @@
             {% if not issues|length %}
                 <div class="col-md-12">
                     <div class="alert alert-info" role="alert">
-                        {% if not form.sprint.vars.choices|length %}
+                        {% if not form.sprints.vars.choices|length %}
                             <p>Veuillez renseigner un board comportant des sprints non terminés.</p>
                         {% else %}
                             <p>Veuillez renseigner un sprint non terminé comportant des tickets.</p>
                         {% endif %}
                     </div>
                 </div>
-            {% endif %} #}
+            {% endif %}
             <div class="row">
                 <div class="col-md-4">
                     <div class="panel panel-default">

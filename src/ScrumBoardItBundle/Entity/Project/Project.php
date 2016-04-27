@@ -5,7 +5,7 @@ namespace ScrumBoardItBundle\Entity\Project;
 class Project {
 
     private $id;
-    private $title;
+    private $value;
 
     public function __construct($id, $title) {
         $this->id = $id;
@@ -16,7 +16,7 @@ class Project {
         return $this->id;
     }
     
-    public function getTitle() {
-        return $this->title;
+    public function getValue() {
+        return $this->value;
     }
 }
