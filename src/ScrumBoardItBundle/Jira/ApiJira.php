@@ -37,12 +37,17 @@ class ApiJira extends AbstractApi {
     }
 
     public function getProjects() {
-        $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board?maxResults=-1');
+        $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board?orderBy=name&maxResults=-1');
         $boards = array();
         for ($i = 0; $i < count($data['values']); $i++) {
             $board = new Project($data['values'][$i]['id'], $data['values'][$i]['name']);
             array_push($boards, $board);
         }
+
+        function compare($a, $b) {
+            return strcmp($a->value, $b->value);
+        }
+        usort($boards, 'compare');
 
         return $boards;
     }
