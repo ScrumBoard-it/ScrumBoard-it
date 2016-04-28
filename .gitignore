@@ -29,4 +29,10 @@ nbproject
 nbproject
 /config
 Capfile
+<<<<<<< 9ae17235072472f466e33f93304e09b38a51e87c
 >>>>>>> Mdification gitignore pour Capistrano
+=======
+.project
+.settings
+.buildpath
+>>>>>>> ignore eclipse files
