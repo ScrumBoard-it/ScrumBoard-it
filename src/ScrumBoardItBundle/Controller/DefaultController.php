@@ -52,8 +52,8 @@ class DefaultController extends Controller {
      */
     public function refreshIssues(Request $request) {
         if ($request->isXMLHttpRequest()) {
-            $id = $request->get('id');
-            $sprints = $this->container->get($this->getUser()->getApi())->getSprints($id);
+            $projectId = $request->get('project');
+            $sprints = $this->container->get($this->getUser()->getApi(). '.api')->getSprints($projectId);
 
             return new JsonResponse(array('data' => json_encode($sprints)));
         }
