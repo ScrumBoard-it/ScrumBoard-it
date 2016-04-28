@@ -13,10 +13,10 @@
         <div class="row">
             <form id="issues_search" class="form-inline">
                 <div class="form-group col-md-4">
-                    {{ form_row(form.project, {'attr': {'class': 'form-control'} }) }}
+                    {{ form_row(form.project, {'attr': {'id': 'form_project', 'class': 'form-control'} }) }}
                 </div>
                 <div class="form-group col-md-4">
-                    {{ form_row(form.sprint, {'attr': {'class': 'form-control'} }) }}
+                    {{ form_row(form.sprint, {'attr': {'id': 'form_sprint', 'class': 'form-control'} }) }}
                 </div>
             </form>
         </div>
@@ -145,7 +145,7 @@
                     $form.submit();
                 });
                 $("#issues_search").find('select').on('change', function () {
-                    /*$projects = $(this).parents('form.projects');
+                    {# $projects = $(this).parents('form.projects');
                     $sprints = $("#sprints");
                     $.ajax({
                         url: "{{ path('refresh') }}",
@@ -158,9 +158,10 @@
                         }
                     }).done(function () {
                         refreshForm();
-                    });*/
+                    }); #}
                     var project = $('#form_project').size() ? $('#form_project').val() : null,
                         sprint = $('#form_sprint').size() ? $('#form_sprint').val() : null;
+                    console.log(project, sprint);
                     $.ajax({
                         url: "{{ path('refresh') }}",
                         type: "GET",
@@ -168,7 +169,8 @@
                             'project': project,
                             'sprint': sprint
                         },
-                        success: console.log($projects),
+                        success: refreshForm(),
+                        error: console.log(),
                         dataType: 'json',
                     });
                 });
