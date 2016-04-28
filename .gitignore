@@ -17,3 +17,6 @@
 nbproject
 /config
 Capfile
+.project
+.settings
+.buildpath
