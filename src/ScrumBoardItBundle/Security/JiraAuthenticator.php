@@ -26,7 +26,7 @@ class JiraAuthenticator extends AbstractTokenAuthenticator {
             $user->setEmail($data['emailAddress']);
             $user->setDisplayName($data['displayName']);
             $user->setImgUrl($data['avatarUrls']['24x24']);
-            $user->setApi('jira.api');
+            $user->setApi('jira');
             return true;
         }
         return false;

@@ -38,9 +38,9 @@ class ApiJira extends AbstractApi {
         $data = $this->curl($this->getData()['host'] . $this->getData()['agile'] . 'board?orderBy=name&maxResults=-1');
         $boards = array();
         for ($i = 0; $i < count($data['values']); $i++) {
-            $boards[$data['values'][$i]['id']] = $data['values'][$i]['name'];
+            $boards[$data['values'][$i]['name']] = $data['values'][$i]['id'];
         }
-        asort($boards, SORT_NATURAL | SORT_FLAG_CASE);
+        ksort($boards, SORT_NATURAL | SORT_FLAG_CASE);
 
         return $boards;
     }
