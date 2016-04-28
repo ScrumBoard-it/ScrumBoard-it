@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
+use ScrumBoardItBundle\Entity\Search\JiraSearch;
 
 /**
  * controller of navigation.
@@ -16,8 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class DefaultController extends Controller {
 
     /**
-     * @Route("/", name="index")
-     * @Route("/logout", name="logout")    * 
+     * @Route("/", name="index")    * 
      * @return Response
      */
     public function indexAction() {
@@ -28,27 +29,19 @@ class DefaultController extends Controller {
      * @Route("/home", name="home")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
-    public function home() {
-        $projects = $this->container->get($this->getUser()->getApi())->getProjects();
-        $form = $this->createFormBuilder()
-                ->add('projects', ChoiceType::class, array(
-                    'choices' => $projects,
-                    'label' => 'Projets',
-                    'choice_label' => function($project) {
-                        return $project;
-                    },
-                    'empty_data' => null,
-                    'required' => false))
-                ->add('sprints', ChoiceType::class, array(
-                    'choices' => array(),
-                ))->getForm();
-                    
+    public function home()
+    {
+        $api = $this->container->get($this->getUser()->getApi().'.api');
+        $jiraSearch = new JiraSearch();
+        $jiraSearch->setProjects($api->getProjects());
+        $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-                    'form' => $form->createView(),
-                    'issues' => null
+            'form' => $form->createView(),
+            'issues' => null
         ));
     }
-    
+
     /**
      * Fonction appelée par Ajax
      * 
@@ -58,11 +51,13 @@ class DefaultController extends Controller {
      * @param Request $request
      */
     public function refreshIssues(Request $request) {
-        dump($request);
-        $id = $request->get('fk_id');
-        $sprints = $this->container->get($this->getUser()->getApi())->getSprints($id);
-        
-        return new JsonResponse(array('data' => json_encode($sprints)));
+        if ($request->isXMLHttpRequest()) {
+            $id = $request->get('id');
+            $sprints = $this->container->get($this->getUser()->getApi())->getSprints($id);
+
+            return new JsonResponse(array('data' => json_encode($sprints)));
+        }
+        return new Response("Error: Request Type (Ajax request expected)", 400);
     }
 
     /**

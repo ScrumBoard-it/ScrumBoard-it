@@ -13,14 +13,10 @@
         <div class="row">
             <form id="issues_search" class="form-inline">
                 <div class="form-group col-md-4">
-                    {{ form_label(form.projects) }}
-                    {{ form_widget(form.projects, {'attr': {'class': 'form-control'} }) }}
+                    {{ form_row(form.project, {'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="form-group col-md-4">
-                    {% if form.sprints is not empty %}
-                        {{ form_label(form.sprints) }}
-                        {{ form_widget(form.sprints, {'attr': {'class': 'form-control'} }) }}
-                    {% endif %}
+                    {{ form_row(form.sprint, {'attr': {'class': 'form-control'} }) }}
                 </div>
             </form>
         </div>
@@ -127,16 +123,38 @@
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
                 });
-                $("#issues_search").find('select').change(function () {
-                    $form = $(this).parents('form');
+                $("#issues_search").find('select').on('change', function () {
+                    /*$projects = $(this).parents('form.projects');
+                    $sprints = $("#sprints");
                     $.ajax({
                         url: "{{ path('refresh') }}",
-                        method: "post",
-                        data: {id: $form.sprints.selected.id}
+                        type: "GET",
+                        data: {project: $projects},
+                        success: console.log($projects),
+                        dataType: 'json',
+                        error: function (err) {
+                            console.log(err);
+                        }
                     }).done(function () {
-                        refreshlist();
+                        refreshForm();
+                    });*/
+                    var project = $('#form_project').size() ? $('#form_project').val() : null,
+                        sprint = $('#form_sprint').size() ? $('#form_sprint').val() : null;
+                    $.ajax({
+                        url: "{{ path('refresh') }}",
+                        type: "GET",
+                        data: {
+                            'project': project,
+                            'sprint': sprint
+                        },
+                        success: console.log($projects),
+                        dataType: 'json',
                     });
                 });
+
+                function refreshForm() {
+                    console.log("Form refresh");
+                }
             });
         </script>
     {% endblock %}
