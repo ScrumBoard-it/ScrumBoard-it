@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Exception;
 
 /**
@@ -9,6 +8,7 @@ namespace ScrumBoardItBundle\Exception;
  */
 class ClassNotFoundException extends \Exception
 {
+
     public function __construct($class)
     {
         $message = sprintf('Class %s not found.', $class);

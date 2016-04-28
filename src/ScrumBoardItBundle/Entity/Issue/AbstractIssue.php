@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
@@ -7,19 +6,31 @@ namespace ScrumBoardItBundle\Entity\Issue;
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class AbstractIssue implements IssueInterface
+class AbstractIssue implements IssueInterface, \JsonSerializable
 {
+
     private $type;
+
     private $link;
+
     private $printed;
+
     private $userStory;
+
     private $proofOfConcept;
+
     private $project;
+
     private $id;
+
     private $title;
+
     private $complexity;
+
     private $businessValue;
+
     private $description;
+
     private $timeBox;
 
     public function getType()
@@ -77,38 +88,46 @@ class AbstractIssue implements IssueInterface
         return $this;
     }
 
-    public function getProject() {
+    public function getProject()
+    {
         return $this->project;
     }
 
-    public function setProject($project) {
+    public function setProject($project)
+    {
         $this->project = $project;
         return $this;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
         return $this;
     }
 
-    public function getComplexity() {
+    public function getComplexity()
+    {
         return $this->complexity;
     }
 
-    public function setComplexity($complexity) {
+    public function setComplexity($complexity)
+    {
         $this->complexity = $complexity;
         return $this;
     }
@@ -144,5 +163,28 @@ class AbstractIssue implements IssueInterface
     {
         $this->timeBox = $timeBox;
         return $this;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'type' => $this->getType(),
+            'link' => $this->getLink(),
+            'printed' => $this->isPrinted(),
+            'user_story' => $this->isUserStory(),
+            'proof_of_concept' => $this->isProofOfConcept(),
+            'project' => $this->getProject(),
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'complexity' => $this->getComplexity(),
+            'business_Value' => $this->getBusinessValue(),
+            'description' => $this->getDescription(),
+            'time_box' => $this->getTimeBox()
+        );
     }
 }

@@ -11,9 +11,7 @@ parameters:
     jira_url: http://jira.canaltp.fr/
     jira_tag: ~
     jira: 
-        host: "%jira_url%rest/"
-        api: 'api/2/'
-        agile: 'agile/1.0/'
+        host: "%jira_url%"
         tag: %jira_tag%
 
 framework:
