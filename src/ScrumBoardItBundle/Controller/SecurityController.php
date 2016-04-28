@@ -14,6 +14,7 @@ class SecurityController extends Controller {
 
     /**
      * @Route("/login", name="login")
+     * @Route("/logout", name="logout")
      * 
      * @param Request $request
      * @return Response
