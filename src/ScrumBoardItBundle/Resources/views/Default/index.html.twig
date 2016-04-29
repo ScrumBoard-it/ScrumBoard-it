@@ -1,3 +1,4 @@
+<<<<<<< 57ff1ade4731b2e75abd5138a313ab5bf3d8ed13
 {% extends "ScrumBoardItBundle::base.html.twig" %}
 {% block title %}Accueil{{ parent() }}{% endblock %}
 {% block body %}
@@ -108,6 +109,83 @@
     {% block javascripts %}
         {{ parent() }}
         <script>
+=======
+{% extends "ScrumBoardItBundle::base.html.twig" %} {% block title
+%}Accueil{{ parent() }}{% endblock %} {% block body %}
+<div class="container">
+	<div class="header">
+		<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+		<div class="log">
+			<img class="logImg" src="{{ app.user.imgUrl }}" /> <span>{{
+				app.user.displayName }}</span><br /> <a href="./logout"><span
+				class="glyphicon glyphicon-off">Déconnexion</span></a>
+		</div>
+	</div>
+	<div class="row">
+		<form id="issues_search" class="form-inline">
+			<div class="form-group col-md-4">{{ form_row(form.project, {'attr':
+				{'id': 'form_project', 'class': 'form-control'} }) }}</div>
+			<div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
+				{'id': 'form_sprint', 'class': 'form-control'} }) }}</div>
+		</form>
+	</div>
+	<div class="row">
+		{% if not issues|length %}
+		<div class="col-md-12">
+			<div class="alert alert-info" role="alert">
+				<p>Veuillez renseigner ci-dessus un projet en cous.</p>
+			</div>
+		</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">
+						À imprimer <span class="badge">0</span>
+					</div>
+					<ul class="list-group selectable">
+						{% for issue in issues if not issue.printed %} {% block issue %}
+						<li class="list-group-item {{ issue.type }}"><input
+							type="checkbox" name="issues[]"
+							value="{{ issue.project }}-{{ issue.id }}" /> <span>{{
+								issue.project }}-{{ issue.id }}</span> <span>{{ issue.title }}</span>
+							<span class="badge">{{ issue.complexity }}</span></li> {%
+						endblock %} {% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<form action="{{ path('print') }}" method="POST" target="_blank">
+					<div class="panel panel-default">
+						<!-- Default panel contents -->
+						<div class="panel-heading">
+							File d'impression <span class="badge">0</span>
+						</div>
+						<ul class="list-group" id="printQueue"></ul>
+						<div class="btn-group">
+							<button id="submitPrint" class="btn btn-default">imprimer</button>
+							<button id="addFlag" class="btn btn-default">traité</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">
+						Déjà imprimé(s) <span class="badge">0</span>
+					</div>
+					<ul class="list-group selectable">{% for issue in issues if
+						issue.printed %} {{ block('issue') }} {% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %} {% block javascripts %} {{ parent() }}
+	<script>
+>>>>>>> Refactoring
             $(function () {
                 $(".panel").each(function () {
                     panel = $(this);
@@ -145,30 +223,13 @@
                     $form.submit();
                 });
                 $("#issues_search").find('select').on('change', function () {
-                    {# $projects = $(this).parents('form.projects');
-                    $sprints = $("#sprints");
-                    $.ajax({
-                        url: "{{ path('refresh') }}",
-                        type: "GET",
-                        data: {project: $projects},
-                        success: console.log($projects),
-                        dataType: 'json',
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    }).done(function () {
-                        refreshForm();
-                    }); #}
                     var project = $('#form_project').size() ? $('#form_project').val() : null,
                         sprint = $('#form_sprint').size() ? $('#form_sprint').val() : null;
                     console.log(project, sprint);
                     $.ajax({
-                        url: "{{ path('refresh') }}",
+                        url: "{{ path('issues') }}",
                         type: "GET",
-                        data: {
-                            'project': project,
-                            'sprint': sprint
-                        },
+                        data: {},
                         success: refreshForm(),
                         error: console.log(),
                         dataType: 'json',
@@ -180,4 +241,4 @@
                 }
             });
         </script>
-    {% endblock %}
+	{% endblock %}

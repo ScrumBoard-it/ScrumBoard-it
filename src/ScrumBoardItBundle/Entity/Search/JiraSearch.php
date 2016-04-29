@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Entity\Search;
 
 /**
@@ -7,32 +6,38 @@ namespace ScrumBoardItBundle\Entity\Search;
  */
 class JiraSearch
 {
+
     /**
      * Projects
+     * 
      * @var array $projects
      */
     private $projects = array();
-    
+
     /**
      * Sprints
+     * 
      * @var array $sprints
      */
     private $sprints = array();
-    
+
     /**
      * Project ID
+     * 
      * @var int $project
      */
     private $project;
-    
+
     /**
      * Sprint ID
+     * 
      * @var int $sprint
      */
     private $sprint;
-    
+
     /**
      * Projects getter
+     * 
      * @return array
      */
     function getProjects()
@@ -42,6 +47,7 @@ class JiraSearch
 
     /**
      * Sprints getter
+     * 
      * @return array
      */
     function getSprints()
@@ -51,31 +57,33 @@ class JiraSearch
 
     /**
      * Projects setter
-     * @param array $projects
+     * 
+     * @param array $projects            
      * @return self
      */
     function setProjects($projects)
     {
         $this->projects = $projects;
-
+        
         return $this;
     }
 
     /**
      * Sprints setter
-     * @param array $sprints
+     * 
+     * @param array $sprints            
      * @return self
      */
     function setSprints($sprints)
     {
         $this->sprints = $sprints;
-
+        
         return $this;
     }
 
-        
     /**
      * Project getter
+     * 
      * @return int
      */
     function getProject()
@@ -85,6 +93,7 @@ class JiraSearch
 
     /**
      * Sprint getter
+     * 
      * @return int
      */
     function getSprint()
@@ -94,27 +103,27 @@ class JiraSearch
 
     /**
      * Project setter
-     * @param int $project
+     * 
+     * @param int $project            
      * @return self
      */
     function setProject($project)
     {
         $this->project = $project;
-
+        
         return $this;
     }
 
     /**
      * Sprint setter
-     * @param int $sprint
+     * 
+     * @param int $sprint            
      * @return self
      */
     function setSprint($sprint)
     {
         $this->sprint = $sprint;
-
+        
         return $this;
     }
-
-
 }
