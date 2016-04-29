@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\IssuesProvider;
 
 use ScrumBoardItBundle\Processor\ApiProcessorInterface;
@@ -11,10 +10,15 @@ use ScrumBoardItBundle\Processor\ApiProcessorInterface;
  */
 class JiraIssuesProvider implements IssuesProviderInterface
 {
+
     private $host;
+
     private $login;
+
     private $password;
+
     private $sprint;
+
     /** @var $searchProcessor ScrumBoardItBundle\Processor\JiraSearchProcessor **/
     private $searchProcessor;
 
@@ -33,7 +37,7 @@ class JiraIssuesProvider implements IssuesProviderInterface
     public function setSprint($sprint)
     {
         $this->sprint = $sprint;
-
+        
         return $this;
     }
 
@@ -41,16 +45,16 @@ class JiraIssuesProvider implements IssuesProviderInterface
     {
         $result = $this->callApi($url);
         $processor = $this->getSearchProcessor();
-
+        
         return $processor->handle($result);
     }
 
     public function getIssues()
     {
-        $url = '/rest/api/latest/search?jql=Sprint%20%3D%20'.$this->getSprint().'%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000';
+        $url = '/rest/api/latest/search?jql=Sprint%20%3D%20' . $this->getSprint() . '%20AND%20status%20not%20in%20%28Closed%29&maxResults=1000';
         $result = $this->callApi($url);
         $processor = $this->getSearchProcessor();
-
+        
         return $processor->handle($result);
     }
 
@@ -62,18 +66,18 @@ class JiraIssuesProvider implements IssuesProviderInterface
     public function setSearchProcessor(ApiProcessorInterface $searchProcessor)
     {
         $this->searchProcessor = $searchProcessor;
-
+        
         return $this;
     }
 
     public function callApi($url, $options = array())
     {
-        $authorization = base64_encode($this->login.':'.$this->password);
+        $authorization = base64_encode($this->login . ':' . $this->password);
         $curl = curl_init();
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
-            'Authorization: Basic '.$authorization,
+            'Authorization: Basic ' . $authorization
         );
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -83,7 +87,7 @@ class JiraIssuesProvider implements IssuesProviderInterface
         }
         $data = curl_exec($curl);
         curl_close($curl);
-
+        
         return json_decode($data);
     }
 }

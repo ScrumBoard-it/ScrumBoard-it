@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Collection;
 
 use ScrumBoardItBundle\Entitie\IssueInterface;
@@ -11,14 +10,16 @@ use ScrumBoardItBundle\Entitie\IssueInterface;
  */
 class IssuesCollection implements IssuesCollectionInterface, \Iterator
 {
+
     public $collection = array();
+
     private $position = 0;
 
     public function add(IssueInterface $item)
     {
         $this->collection[] = $item;
         end($this->collection);
-
+        
         return key($this->collection);
     }
 
@@ -31,7 +32,7 @@ class IssuesCollection implements IssuesCollectionInterface, \Iterator
     {
         $item = $this->get($index);
         unset($this->collection[$index]);
-
+        
         return $item;
     }
 
@@ -47,7 +48,7 @@ class IssuesCollection implements IssuesCollectionInterface, \Iterator
 
     public function next()
     {
-        ++$this->position;
+        ++ $this->position;
     }
 
     public function rewind()

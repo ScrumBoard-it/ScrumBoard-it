@@ -1,18 +1,19 @@
 <?php
-
 namespace ScrumBoardItBundle\Collection;
 
 use ScrumBoardItBundle\Entitie\IssueInterface;
 
 /**
+ *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 interface IssuesCollectionInterface
 {
+
     /**
      * Add an element to the collection.
      *
-     * @param ScrumBoardItBundle\Entitie\IssueInterface $item
+     * @param ScrumBoardItBundle\Entitie\IssueInterface $item            
      *
      * @return int Index of the item
      */
@@ -21,7 +22,7 @@ interface IssuesCollectionInterface
     /**
      * Remove an element from the collection.
      *
-     * @param int $index
+     * @param int $index            
      *
      * @return ScrumBoardItBundle\Entitie\IssueInterface Removed item
      */
@@ -30,7 +31,7 @@ interface IssuesCollectionInterface
     /**
      * Get an item from the collection.
      *
-     * @param int $index
+     * @param int $index            
      *
      * @return ScrumBoardItBundle\Entitie\IssueInterface Requested item
      */
