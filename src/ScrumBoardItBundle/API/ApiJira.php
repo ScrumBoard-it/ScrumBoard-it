@@ -52,7 +52,7 @@ class ApiJira extends AbstractApi
                 $task->setTitle($issue->fields->summary);
                 $task->setPrinted(! empty($issue->fields->labels));
                 
-                $issues[] = $task;
+                $issues[$issue->id] = $task;
             }
         }
         
@@ -73,9 +73,7 @@ class ApiJira extends AbstractApi
             $searchFilters['project'] = null;
         }
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        if (empty($searchFilters['sprint'])) {
-            $searchFilters['sprint'] = isset($searchFilters['sprints'][0]) ? $searchFilters['sprints'][0] : null;
-        }
+        $searchFilters['sprint'] = isset(array_keys($searchFilters['sprints'])[0]) ? array_keys($searchFilters['sprints'])[0] : null;
         
         return $searchFilters;
     }

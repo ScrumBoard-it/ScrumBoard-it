@@ -63,12 +63,12 @@ class DefaultController extends Controller
         $searchFilters = $service->getSearchFilters($request);
         $issues = $service->getIssues($searchFilters);
         
-        $config = array(
+        $results = array(
             'search_filters' => $searchFilters,
             'issues' => $issues
         );
         
-        return new JsonResponse($config);
+        return new JsonResponse($results);
         // }
         // return new Response("Error: Request Type (Ajax request expected)", 400);
     }
