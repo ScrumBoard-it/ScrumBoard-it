@@ -3,6 +3,7 @@ namespace ScrumBoardItBundle\API;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  *
@@ -42,7 +43,7 @@ abstract class AbstractApi
      * Return a array of the API response
      *
      * @param string $url            
-     * @return array
+     * @return \stdClass
      */
     protected function call($url)
     {
@@ -54,8 +55,10 @@ abstract class AbstractApi
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $content = curl_exec($ch);
+        $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
         curl_close($ch);
         
+        if($httpCode !== 200) throw new HttpException($httpCode);
         return json_decode($content);
     }
 
