@@ -212,28 +212,23 @@
                 });
                 $("#submitPrint").click(function () {
                     $form = $(this).parents('form');
-                    $form.attr('action', '{{ path('print') }}');
+                    $form.attr('action', "{{ path('print') }}");
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
                 });
                 $("#addFlag").click(function () {
                     $form = $(this).parents('form');
-                    $form.attr('action', '{{ path('add_flag') }}');
+                    $form.attr('action', "{{ path('add_flag') }}");
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
                 });
-                $("#issues_search").find('select').on('change', function () {
-                    var project = $('#form_project').size() ? $('#form_project').val() : null,
-                        sprint = $('#form_sprint').size() ? $('#form_sprint').val() : null;
-                    console.log(project, sprint);
-                    $.ajax({
-                        url: "{{ path('issues') }}",
-                        type: "GET",
-                        data: {},
-                        success: refreshForm(),
-                        error: console.log(),
-                        dataType: 'json',
-                    });
+                $("#issues_search").find('select').change(function() {
+                    $form = $(this).parents('form');
+                    /*if ($(this).attr('id') == 'issues_search_board' && $('#issues_search_sprint').size()) {
+                        $('#issues_search_sprint').val('');
+                        $('#issues_search_sprint').attr('disabled', 'disabled');
+                    } */
+                    $form.submit();
                 });
 
                 function refreshForm() {

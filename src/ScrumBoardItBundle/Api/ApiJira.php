@@ -1,7 +1,6 @@
 <?php
-namespace ScrumBoardItBundle\API;
+namespace ScrumBoardItBundle\Api;
 
-use ScrumBoardItBundle\API\AbstractApi;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,7 +72,7 @@ class ApiJira extends AbstractApi
             $searchFilters['project'] = null;
         }
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        $searchFilters['sprint'] = isset(array_keys($searchFilters['sprints'])[0]) ? array_keys($searchFilters['sprints'])[0] : null;
+        $searchFilters['sprint'] = isset(array_values($searchFilters['sprints'])[0]) ? array_values($searchFilters['sprints'])[0] : null;
         
         return $searchFilters;
     }
@@ -92,7 +91,7 @@ class ApiJira extends AbstractApi
             $data = $this->call($api);
             
             foreach ($data->values as $sprint) {
-                $sprints[$sprint->id] = $sprint->name;
+                $sprints[$sprint->name] = $sprint->id;
             }
         }
         
