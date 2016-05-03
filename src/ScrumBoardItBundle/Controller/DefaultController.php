@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 use ScrumBoardItBundle\Entity\Search\JiraSearch;
 
@@ -32,17 +31,13 @@ class DefaultController extends Controller
      * @Route("/home", name="home")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
-    public function home()
+    public function home(Request $request)
     {
-        $api = $this->container->get($this->getUser()
-            ->getConnector() . '.api');
-        $jiraSearch = new JiraSearch();
-        $jiraSearch->setProjects($api->getProjects());
-        $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+        $results = $this->issuesAction($request);
         
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-            'form' => $form->createView(),
-            'issues' => null
+            'form' => $results['form']->createView(),
+            'issues' => $results['issues']
         ));
     }
 
@@ -52,26 +47,28 @@ class DefaultController extends Controller
      * @Route("/home/issues", name="issues")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @method ({"GET", "POST"})
+     * @method ({"GET"})
      *        
-     * @param Request $request            
+     * @param Request
      */
     public function issuesAction(Request $request)
     {
-        // if ($request->isXMLHttpRequest()) {
         $service = $this->container->get($this->getUser()
             ->getConnector() . '.api');
         $searchFilters = $service->getSearchFilters($request);
+        
+        //A spécifier !!
+        $jiraSearch = new JiraSearch($searchFilters);
+        $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+        
         $issues = $service->getIssues($searchFilters);
         
         $results = array(
-            'search_filters' => $searchFilters,
+            'form' => $form,
             'issues' => $issues
         );
         
-        return new JsonResponse($results);
-        // }
-        // return new Response("Error: Request Type (Ajax request expected)", 400);
+        return $results;
     }
 
     /**

@@ -1,50 +1,31 @@
 <?php
 namespace ScrumBoardItBundle\Entity\Search;
 
+use ScrumBoardItBundle\Entity\Search\AbstractSearch;
 /**
  * Jira search
  */
-class JiraSearch
+class JiraSearch extends AbstractSearch
 {
-
-    /**
-     * Projects
-     * 
-     * @var array $projects
-     */
-    private $projects = array();
-
-    /**
-     * Sprints
-     * 
-     * @var array $sprints
-     */
-    private $sprints = array();
-
-    /**
-     * Project ID
-     * 
-     * @var int $project
-     */
-    private $project;
-
     /**
      * Sprint ID
      * 
      * @var int $sprint
      */
     private $sprint;
-
+    
     /**
-     * Projects getter
-     * 
-     * @return array
+     * Sprints
+     * @var array $sprints
      */
-    function getProjects()
-    {
-        return $this->projects;
-    }
+    private $sprints = array();
 
+    public function __construct($searchFilters) {
+        parent::__construct($searchFilters);
+        $this->sprint = $searchFilters['sprint'];
+        $this->sprints = $searchFilters['sprints'];
+    }
+    
     /**
      * Sprints getter
      * 
@@ -53,19 +34,6 @@ class JiraSearch
     function getSprints()
     {
         return $this->sprints;
-    }
-
-    /**
-     * Projects setter
-     * 
-     * @param array $projects            
-     * @return self
-     */
-    function setProjects($projects)
-    {
-        $this->projects = $projects;
-        
-        return $this;
     }
 
     /**
@@ -82,16 +50,6 @@ class JiraSearch
     }
 
     /**
-     * Project getter
-     * 
-     * @return int
-     */
-    function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
      * Sprint getter
      * 
      * @return int
@@ -99,19 +57,6 @@ class JiraSearch
     function getSprint()
     {
         return $this->sprint;
-    }
-
-    /**
-     * Project setter
-     * 
-     * @param int $project            
-     * @return self
-     */
-    function setProject($project)
-    {
-        $this->project = $project;
-        
-        return $this;
     }
 
     /**

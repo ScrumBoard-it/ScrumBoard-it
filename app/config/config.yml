@@ -12,7 +12,7 @@ parameters:
     jira_tag: ~
     jira: 
         host: "%jira_url%"
-        tag: %jira_tag%
+        tag: "%jira_tag%"
 
 framework:
     #esi:             ~
