@@ -15,3 +15,8 @@
 /vendor/
 /web/bundles/
 nbproject
+Capfile
+/config
+.buildpath
+.project
+.settings
