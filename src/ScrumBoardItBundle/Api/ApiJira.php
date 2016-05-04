@@ -4,6 +4,7 @@ namespace ScrumBoardItBundle\Api;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\Expr\Value;
 
 /**
  * Jira API
@@ -65,14 +66,17 @@ class ApiJira extends AbstractApi
      */
     public function getSearchFilters(Request $request)
     {
-        $searchFilters = $request->get('search') ?: array();
+        $searchFilters = $request->get('jira_search') ?: array();
         
         $searchFilters['projects'] = $this->getProjects();
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
         }
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        $searchFilters['sprint'] = isset(array_values($searchFilters['sprints'])[0]) ? array_values($searchFilters['sprints'])[0] : null;
+        dump($searchFilters);
+        if (empty($searchFilters['sprint'])) {
+            $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
+        }
         
         return $searchFilters;
     }
@@ -91,7 +95,11 @@ class ApiJira extends AbstractApi
             $data = $this->call($api);
             
             foreach ($data->values as $sprint) {
-                $sprints[$sprint->name] = $sprint->id;
+                $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
+                $sprints[$state][$sprint->name] = $sprint->id;
+            }
+            if (! empty($sprints['Futurs'])) {
+                asort($sprints['Futurs'], SORT_NATURAL | SORT_FLAG_CASE);
             }
         }
         

@@ -26,8 +26,9 @@ class JiraSearchType extends AbstractType
             'placeholder' => 'Choisissez un projet en cours'
         ))
             ->add('sprint', ChoiceType::class, array(
-            'label' => 'Sprints',
-            'choices' => $jiraSearch->getSprints()
+            'label' => 'Sprints non terminés',
+            'choices' => $jiraSearch->getSprints(),
+            'attr' => empty($jiraSearch->getProject()) ? array('disabled' => 'disabled') : array()
         ));
     }
 

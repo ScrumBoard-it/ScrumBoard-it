@@ -42,24 +42,25 @@ class DefaultController extends Controller
     }
 
     /**
-     * Ajax call to refresh form and issues
+     * Return form and issues from the request
      *
-     * @Route("/home/issues", name="issues")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @method ({"GET"})
-     *        
-     * @param Request
+     * @param Request $request            
+     * @return array
      */
-    public function issuesAction(Request $request)
+    private function issuesAction(Request $request)
     {
         $service = $this->container->get($this->getUser()
             ->getConnector() . '.api');
         $searchFilters = $service->getSearchFilters($request);
         
-        //A spécifier !!
-        $jiraSearch = new JiraSearch($searchFilters);
-        $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+        switch ($this->getUser()->getConnector()) {
+            case 'jira':
+                $jiraSearch = new JiraSearch($searchFilters);
+                $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+                break;
+        }
         
         $issues = $service->getIssues($searchFilters);
         
