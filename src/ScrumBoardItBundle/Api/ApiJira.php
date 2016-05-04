@@ -66,7 +66,7 @@ class ApiJira extends AbstractApi
      */
     public function getSearchFilters(Request $request)
     {
-        $searchFilters = $request->get('search') ?: array();
+        $searchFilters = $request->get('jira_search') ?: array();
         
         $searchFilters['projects'] = $this->getProjects();
         if (empty($searchFilters['project'])) {
@@ -75,10 +75,10 @@ class ApiJira extends AbstractApi
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
         dump($searchFilters);
         if (empty($searchFilters['sprint'])) {
-            $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? key($searchFilters['sprints']['Actif']) : null;
+            $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
         }
         
-        
+        dump($searchFilters);
         return $searchFilters;
     }
 

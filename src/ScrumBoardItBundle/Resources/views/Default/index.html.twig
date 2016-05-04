@@ -224,16 +224,12 @@
                 });
                 $("#issues_search").find('select').change(function() {
                     $form = $(this).parents('form');
-                    /*if ($(this).attr('id') == 'issues_search_board' && $('#issues_search_sprint').size()) {
-                        $('#issues_search_sprint').val('');
-                        $('#issues_search_sprint').attr('disabled', 'disabled');
-                    } */
+                    /*if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
+                        $('#jira_search_sprint').val('');
+                        $('#jira_search_sprint').attr('disabled', 'disabled');
+                    }*/
                     $form.submit();
                 });
-
-                function refreshForm() {
-                    console.log("Form refresh");
-                }
             });
         </script>
 	{% endblock %}
