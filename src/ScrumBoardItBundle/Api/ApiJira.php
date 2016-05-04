@@ -78,7 +78,6 @@ class ApiJira extends AbstractApi
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
         }
         
-        dump($searchFilters);
         return $searchFilters;
     }
 
