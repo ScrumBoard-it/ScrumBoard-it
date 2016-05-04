@@ -35,4 +35,8 @@ Capfile
 .project
 .settings
 .buildpath
+<<<<<<< ce2955dceb9814af0f84d2ee9996b25512606d49
 >>>>>>> ignore eclipse files
+=======
+/log/
+>>>>>>> update capistrano -> .gitignore /log/

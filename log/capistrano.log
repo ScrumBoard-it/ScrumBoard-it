@@ -1,0 +1,859 @@
+# Logfile created on 2016-05-09 21:32:47 +0200 by logger.rb/v1.2.7
+  INFO ---------------------------------------------------------------------------
+  INFO START 2016-05-09 21:32:47 +0200 cap dev deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [0aaedcfc] Running /usr/bin/env mkdir -p /tmp/scrmboard-it/ on scrumboard-it_dev.fr
+ DEBUG [0aaedcfc] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /tmp/scrmboard-it/ )
+  INFO [0aaedcfc] Finished in 0.252 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/scrmboard-it/git-ssh.sh 0.0%
+  INFO Uploading /tmp/scrmboard-it/git-ssh.sh 100.0%
+  INFO [1cfbd5de] Running /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh on scrumboard-it_dev.fr
+ DEBUG [1cfbd5de] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh )
+  INFO [1cfbd5de] Finished in 0.005 seconds with exit status 0 (successful).
+  INFO [8159cabd] Running /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git on scrumboard-it_dev.fr
+ DEBUG [8159cabd] Command: ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git )
+ DEBUG [8159cabd] 	c90d9b617f103b5bdf51b519ee7b8dbcd4ddc290	refs/heads/feature-ajaxify-front
+bdfa27d0ed87ed2707258fa697611ed6831864e0	refs/heads/feature-boards-sprints-and-issues-from-api
+f08f4f2b363701e7c6663c99406879ec2b521c88	refs/heads/master
+63090ade6fe11db359efce001469202f702200f9	refs/heads/migrate-full-app
+  INFO [8159cabd] Finished in 1.191 seconds with exit status 0 (successful).
+  INFO [f4cdc7ed] Running /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/shared ~/developpment/ScrumBoard-it/releases on scrumboard-it_dev.fr
+ DEBUG [f4cdc7ed] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/shared ~/developpment/ScrumBoard-it/releases )
+  INFO [f4cdc7ed] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [847144b3] Running /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/shared/var/logs on scrumboard-it_dev.fr
+ DEBUG [847144b3] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/shared/var/logs )
+  INFO [847144b3] Finished in 0.011 seconds with exit status 0 (successful).
+ DEBUG [703b5589] Running [ -f ~/developpment/ScrumBoard-it/current/REVISION ] on scrumboard-it_dev.fr
+ DEBUG [703b5589] Command: [ -f ~/developpment/ScrumBoard-it/current/REVISION ]
+ DEBUG [703b5589] Finished in 0.006 seconds with exit status 0 (successful).
+ DEBUG [73579643] Running /usr/bin/env cat ~/developpment/ScrumBoard-it/current/REVISION 2>/dev/null on scrumboard-it_dev.fr
+ DEBUG [73579643] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env cat ~/developpment/ScrumBoard-it/current/REVISION 2>/dev/null )
+ DEBUG [73579643] 	bdb1ebcd7780d053fa88882bb2d3cf57cf36bfe6
+ DEBUG [73579643] Finished in 0.017 seconds with exit status 0 (successful).
+ DEBUG [c60ae84c] Running [ -f ~/developpment/ScrumBoard-it/repo/HEAD ] on scrumboard-it_dev.fr
+ DEBUG [c60ae84c] Command: [ -f ~/developpment/ScrumBoard-it/repo/HEAD ]
+ DEBUG [c60ae84c] Finished in 0.004 seconds with exit status 0 (successful).
+  INFO The repository mirror is at ~/developpment/ScrumBoard-it/repo
+ DEBUG [64ba8f00] Running if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [64ba8f00] Command: if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi
+ DEBUG [64ba8f00] Finished in 0.004 seconds with exit status 0 (successful).
+  INFO [b8209e75] Running /usr/bin/env git remote update --prune on scrumboard-it_dev.fr
+ DEBUG [b8209e75] Command: cd ~/developpment/ScrumBoard-it/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [b8209e75] 	Récupération de origin
+ DEBUG [b8209e75] 	Depuis github.com:brieucpouliquen/ScrumBoard-it
+   bdb1ebc..f08f4f2  master     -> master
+  INFO [b8209e75] Finished in 1.507 seconds with exit status 0 (successful).
+ DEBUG [b57c2cc7] Running if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [b57c2cc7] Command: if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi
+ DEBUG [b57c2cc7] Finished in 0.003 seconds with exit status 0 (successful).
+  INFO [3c45353f] Running /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/releases/20160509193248 on scrumboard-it_dev.fr
+ DEBUG [3c45353f] Command: cd ~/developpment/ScrumBoard-it/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/releases/20160509193248 )
+  INFO [3c45353f] Finished in 0.008 seconds with exit status 0 (successful).
+  INFO [52b720f9] Running /usr/bin/env git archive master | tar -x -f - -C ~/developpment/ScrumBoard-it/releases/20160509193248 on scrumboard-it_dev.fr
+ DEBUG [52b720f9] Command: cd ~/developpment/ScrumBoard-it/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git archive master | tar -x -f - -C ~/developpment/ScrumBoard-it/releases/20160509193248 )
+  INFO [52b720f9] Finished in 0.032 seconds with exit status 0 (successful).
+ DEBUG [460e0cf2] Running if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [460e0cf2] Command: if test ! -d ~/developpment/ScrumBoard-it/repo; then echo "Directory does not exist '~/developpment/ScrumBoard-it/repo'" 1>&2; false; fi
+ DEBUG [460e0cf2] Finished in 0.003 seconds with exit status 0 (successful).
+ DEBUG [fa32a810] Running /usr/bin/env git rev-list --max-count=1 master on scrumboard-it_dev.fr
+ DEBUG [fa32a810] Command: cd ~/developpment/ScrumBoard-it/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [fa32a810] 	f08f4f2b363701e7c6663c99406879ec2b521c88
+ DEBUG [fa32a810] Finished in 0.005 seconds with exit status 0 (successful).
+ DEBUG [cd76de95] Running if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [cd76de95] Command: if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi
+ DEBUG [cd76de95] Finished in 0.009 seconds with exit status 0 (successful).
+  INFO [5914bfe1] Running /usr/bin/env echo "f08f4f2b363701e7c6663c99406879ec2b521c88" >> REVISION on scrumboard-it_dev.fr
+ DEBUG [5914bfe1] Command: cd ~/developpment/ScrumBoard-it/releases/20160509193248 && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "f08f4f2b363701e7c6663c99406879ec2b521c88" >> REVISION )
+  INFO [5914bfe1] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO [76f4184b] Running /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/releases/20160509193248/var on scrumboard-it_dev.fr
+ DEBUG [76f4184b] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p ~/developpment/ScrumBoard-it/releases/20160509193248/var )
+  INFO [76f4184b] Finished in 0.004 seconds with exit status 0 (successful).
+ DEBUG [72844500] Running [ -L ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs ] on scrumboard-it_dev.fr
+ DEBUG [72844500] Command: [ -L ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs ]
+ DEBUG [72844500] Finished in 0.003 seconds with exit status 1 (failed).
+ DEBUG [274fc47e] Running [ -d ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs ] on scrumboard-it_dev.fr
+ DEBUG [274fc47e] Command: [ -d ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs ]
+ DEBUG [274fc47e] Finished in 0.005 seconds with exit status 0 (successful).
+  INFO [341014ac] Running /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs on scrumboard-it_dev.fr
+ DEBUG [341014ac] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs )
+  INFO [341014ac] Finished in 0.016 seconds with exit status 0 (successful).
+  INFO [f15cc4d9] Running /usr/bin/env ln -s ~/developpment/ScrumBoard-it/shared/var/logs ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs on scrumboard-it_dev.fr
+ DEBUG [f15cc4d9] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s ~/developpment/ScrumBoard-it/shared/var/logs ~/developpment/ScrumBoard-it/releases/20160509193248/var/logs )
+  INFO [f15cc4d9] Finished in 0.006 seconds with exit status 0 (successful).
+ DEBUG [9cf87f9c] Running if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [9cf87f9c] Command: if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi
+ DEBUG [9cf87f9c] Finished in 0.004 seconds with exit status 0 (successful).
+ DEBUG [8a59f3ec] Running [ -d ~/developpment/ScrumBoard-it/releases/20160509193248/var/cache ] on scrumboard-it_dev.fr
+ DEBUG [8a59f3ec] Command: [ -d ~/developpment/ScrumBoard-it/releases/20160509193248/var/cache ]
+ DEBUG [8a59f3ec] Finished in 0.005 seconds with exit status 0 (successful).
+  INFO [5f77926e] Running /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160509193248/var/cache on scrumboard-it_dev.fr
+ DEBUG [5f77926e] Command: cd ~/developpment/ScrumBoard-it/releases/20160509193248 && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160509193248/var/cache )
+  INFO [5f77926e] Finished in 0.016 seconds with exit status 0 (successful).
+  INFO [1670e315] Running /usr/bin/env mkdir -pv var/cache on scrumboard-it_dev.fr
+ DEBUG [1670e315] Command: cd ~/developpment/ScrumBoard-it/releases/20160509193248 && ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -pv var/cache )
+ DEBUG [1670e315] 	mkdir: création du répertoire 'var/cache'
+  INFO [1670e315] Finished in 0.005 seconds with exit status 0 (successful).
+ DEBUG [ea4d20f7] Running if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [ea4d20f7] Command: if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248'" 1>&2; false; fi
+ DEBUG [ea4d20f7] Finished in 0.004 seconds with exit status 0 (successful).
+  INFO [f3609627] Running /usr/bin/env composer install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader on scrumboard-it_dev.fr
+ DEBUG [f3609627] Command: cd ~/developpment/ScrumBoard-it/releases/20160509193248 && ( export SYMFONY_ENV="prod" ; /usr/bin/env composer install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader )
+  INFO [f3609627] Finished in 42.029 seconds with exit status 0 (successful).
+  INFO [ea12fa94] Running /usr/bin/env php ~/developpment/ScrumBoard-it/releases/20160509193248/bin/console cache:warmup  --no-debug on scrumboard-it_dev.fr
+ DEBUG [ea12fa94] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env php ~/developpment/ScrumBoard-it/releases/20160509193248/bin/console cache:warmup  --no-debug )
+ DEBUG [ea12fa94] 	
+ DEBUG [ea12fa94] 	 // Warming up the cache for the prod environment with debug false
+ DEBUG [ea12fa94] 	
+ DEBUG [ea12fa94] 	 [OK] Cache for the "prod" environment (debug=false) was successfully warmed.                                           
+ DEBUG [ea12fa94] 	
+  INFO [ea12fa94] Finished in 1.017 seconds with exit status 0 (successful).
+ DEBUG [a98f9eab] Running if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248/web; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248/web'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [a98f9eab] Command: if test ! -d ~/developpment/ScrumBoard-it/releases/20160509193248/web; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases/20160509193248/web'" 1>&2; false; fi
+ DEBUG [a98f9eab] Finished in 0.006 seconds with exit status 0 (successful).
+  INFO [533c0c8c] Running /usr/bin/env rm -f app_*.php on scrumboard-it_dev.fr
+ DEBUG [533c0c8c] Command: cd ~/developpment/ScrumBoard-it/releases/20160509193248/web && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -f app_*.php )
+  INFO [533c0c8c] Finished in 0.009 seconds with exit status 0 (successful).
+  INFO [bdb90d0b] Running /usr/bin/env ln -s ~/developpment/ScrumBoard-it/releases/20160509193248 ~/developpment/ScrumBoard-it/releases/current on scrumboard-it_dev.fr
+ DEBUG [bdb90d0b] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s ~/developpment/ScrumBoard-it/releases/20160509193248 ~/developpment/ScrumBoard-it/releases/current )
+  INFO [bdb90d0b] Finished in 0.006 seconds with exit status 0 (successful).
+  INFO [f3f021f6] Running /usr/bin/env mv ~/developpment/ScrumBoard-it/releases/current ~/developpment/ScrumBoard-it on scrumboard-it_dev.fr
+ DEBUG [f3f021f6] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mv ~/developpment/ScrumBoard-it/releases/current ~/developpment/ScrumBoard-it )
+  INFO [f3f021f6] Finished in 0.005 seconds with exit status 0 (successful).
+ DEBUG [4d8570ba] Running /usr/bin/env ls -xtr ~/developpment/ScrumBoard-it/releases on scrumboard-it_dev.fr
+ DEBUG [4d8570ba] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ls -xtr ~/developpment/ScrumBoard-it/releases )
+ DEBUG [4d8570ba] 	20160504170032	20160504170345	20160504170521	20160504183826	20160504184151
+20160509193248
+ DEBUG [4d8570ba] Finished in 0.017 seconds with exit status 0 (successful).
+  INFO Keeping 5 of 6 deployed releases on scrumboard-it_dev.fr
+  INFO [80217530] Running /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160504170032 on scrumboard-it_dev.fr
+ DEBUG [80217530] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf ~/developpment/ScrumBoard-it/releases/20160504170032 )
+  INFO [80217530] Finished in 0.322 seconds with exit status 0 (successful).
+ DEBUG [97d462f0] Running if test ! -d ~/developpment/ScrumBoard-it/releases; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases'" 1>&2; false; fi on scrumboard-it_dev.fr
+ DEBUG [97d462f0] Command: if test ! -d ~/developpment/ScrumBoard-it/releases; then echo "Directory does not exist '~/developpment/ScrumBoard-it/releases'" 1>&2; false; fi
+ DEBUG [97d462f0] Finished in 0.003 seconds with exit status 0 (successful).
+  INFO [0e66cd4c] Running /usr/bin/env echo "Branch master (at f08f4f2b363701e7c6663c99406879ec2b521c88) deployed as release 20160509193248 by brieuc" >> ~/developpment/ScrumBoard-it/revisions.log on scrumboard-it_dev.fr
+ DEBUG [0e66cd4c] Command: cd ~/developpment/ScrumBoard-it/releases && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "Branch master (at f08f4f2b363701e7c6663c99406879ec2b521c88) deployed as release 20160509193248 by brieuc" >> ~/developpment/ScrumBoard-it/revisions.log )
+  INFO [0e66cd4c] Finished in 0.004 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2016-05-09 21:33:39 +0200 cap preprod deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [16433db7] Running /usr/bin/env mkdir -p /tmp/scrmboard-it/ as deployer@10.2.16.126
+ DEBUG [16433db7] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /tmp/scrmboard-it/ )
+  INFO [16433db7] Finished in 0.150 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/scrmboard-it/git-ssh.sh 0.0%
+  INFO Uploading /tmp/scrmboard-it/git-ssh.sh 100.0%
+  INFO [c9a34281] Running /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh as deployer@10.2.16.126
+ DEBUG [c9a34281] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh )
+  INFO [c9a34281] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO [b343f162] Running /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git as deployer@10.2.16.126
+ DEBUG [b343f162] Command: ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git )
+ DEBUG [b343f162] 	c90d9b617f103b5bdf51b519ee7b8dbcd4ddc290	refs/heads/feature-ajaxify-front
+bdfa27d0ed87ed2707258fa697611ed6831864e0	refs/heads/feature-boards-sprints-and-issues-from-api
+f08f4f2b363701e7c6663c99406879ec2b521c88	refs/heads/master
+63090ade6fe11db359efce001469202f702200f9	refs/heads/migrate-full-app
+  INFO [b343f162] Finished in 1.277 seconds with exit status 0 (successful).
+  INFO [0110c84a] Running /usr/bin/env mkdir -p /var/www/scrumboardit/shared /var/www/scrumboardit/releases as deployer@10.2.16.126
+ DEBUG [0110c84a] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/shared /var/www/scrumboardit/releases )
+  INFO [0110c84a] Finished in 0.018 seconds with exit status 0 (successful).
+  INFO [c0dd2aca] Running /usr/bin/env mkdir -p /var/www/scrumboardit/shared/var/logs as deployer@10.2.16.126
+ DEBUG [c0dd2aca] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/shared/var/logs )
+  INFO [c0dd2aca] Finished in 0.019 seconds with exit status 0 (successful).
+ DEBUG [d56a557a] Running [ -f /var/www/scrumboardit/current/REVISION ] as deployer@10.2.16.126
+ DEBUG [d56a557a] Command: [ -f /var/www/scrumboardit/current/REVISION ]
+ DEBUG [d56a557a] Finished in 0.015 seconds with exit status 0 (successful).
+ DEBUG [d68bc0e9] Running /usr/bin/env cat /var/www/scrumboardit/current/REVISION 2>/dev/null as deployer@10.2.16.126
+ DEBUG [d68bc0e9] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env cat /var/www/scrumboardit/current/REVISION 2>/dev/null )
+ DEBUG [d68bc0e9] 	bdb1ebcd7780d053fa88882bb2d3cf57cf36bfe6
+ DEBUG [d68bc0e9] Finished in 0.024 seconds with exit status 0 (successful).
+ DEBUG [3694a0b9] Running if test ! -d /var/www/scrumboardit/shared; then echo "Directory does not exist '/var/www/scrumboardit/shared'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [3694a0b9] Command: if test ! -d /var/www/scrumboardit/shared; then echo "Directory does not exist '/var/www/scrumboardit/shared'" 1>&2; false; fi
+ DEBUG [3694a0b9] Finished in 0.015 seconds with exit status 0 (successful).
+ DEBUG [e7101bd5] Running /usr/bin/env [ -e composer.phar ] as deployer@10.2.16.126
+ DEBUG [e7101bd5] Command: cd /var/www/scrumboardit/shared && ( export SYMFONY_ENV="prod" ; /usr/bin/env [ -e composer.phar ] )
+ DEBUG [e7101bd5] Finished in 0.018 seconds with exit status 0 (successful).
+ DEBUG [d40eb09d] Running [ -f /var/www/scrumboardit/repo/HEAD ] as deployer@10.2.16.126
+ DEBUG [d40eb09d] Command: [ -f /var/www/scrumboardit/repo/HEAD ]
+ DEBUG [d40eb09d] Finished in 0.015 seconds with exit status 0 (successful).
+  INFO The repository mirror is at /var/www/scrumboardit/repo
+ DEBUG [fafb4ef2] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [fafb4ef2] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [fafb4ef2] Finished in 0.017 seconds with exit status 0 (successful).
+  INFO [86db14e5] Running /usr/bin/env git remote update --prune as deployer@10.2.16.126
+ DEBUG [86db14e5] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [86db14e5] 	Fetching origin
+ DEBUG [86db14e5] 	From github.com:brieucpouliquen/ScrumBoard-it
+   bdb1ebc..f08f4f2  master     -> master
+  INFO [86db14e5] Finished in 1.524 seconds with exit status 0 (successful).
+ DEBUG [3870cad2] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [3870cad2] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [3870cad2] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [58b93692] Running /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160509193340 as deployer@10.2.16.126
+ DEBUG [58b93692] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160509193340 )
+  INFO [58b93692] Finished in 0.016 seconds with exit status 0 (successful).
+  INFO [ad7d6269] Running /usr/bin/env git archive master | tar -x -f - -C /var/www/scrumboardit/releases/20160509193340 as deployer@10.2.16.126
+ DEBUG [ad7d6269] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git archive master | tar -x -f - -C /var/www/scrumboardit/releases/20160509193340 )
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	.gitignore: time stamp 2016-05-09 21:32:22 is 7060.438373334 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	README.md: time stamp 2016-05-09 21:32:22 is 7060.437922278 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/.htaccess: time stamp 2016-05-09 21:32:22 is 7060.436379941 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/AppCache.php: time stamp 2016-05-09 21:32:22 is 7060.43611665 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/AppKernel.php: time stamp 2016-05-09 21:32:22 is 7060.435799066 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/Resources/views/base.html.twig: time stamp 2016-05-09 21:32:22 is 7060.435343825 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/Resources/views/default/index.html.twig: time stamp 2016-05-09 21:32:22 is 7060.434909875 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/Resources/views/default: time stamp 2016-05-09 21:32:22 is 7060.434637256 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/Resources/views: time stamp 2016-05-09 21:32:22 is 7060.434501117 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/Resources: time stamp 2016-05-09 21:32:22 is 7060.434376803 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/autoload.php: time stamp 2016-05-09 21:32:22 is 7060.434066013 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/config.yml: time stamp 2016-05-09 21:32:22 is 7060.433567525 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/config_dev.yml: time stamp 2016-05-09 21:32:22 is 7060.43324452 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/config_prod.yml: time stamp 2016-05-09 21:32:22 is 7060.432896863 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/config_test.yml: time stamp 2016-05-09 21:32:22 is 7060.432613778 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/parameters.yml.dist: time stamp 2016-05-09 21:32:22 is 7060.432329918 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/routing.yml: time stamp 2016-05-09 21:32:22 is 7060.432015936 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/routing_dev.yml: time stamp 2016-05-09 21:32:22 is 7060.431711698 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/security.yml: time stamp 2016-05-09 21:32:22 is 7060.431415221 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config/services.yml: time stamp 2016-05-09 21:32:22 is 7060.431108687 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app/config: time stamp 2016-05-09 21:32:22 is 7060.430838639 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	app: time stamp 2016-05-09 21:32:22 is 7060.430601782 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	bin/console: time stamp 2016-05-09 21:32:22 is 7060.430305139 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	bin/symfony_requirements: time stamp 2016-05-09 21:32:22 is 7060.429997094 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	bin: time stamp 2016-05-09 21:32:22 is 7060.429803343 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	composer.json: time stamp 2016-05-09 21:32:22 is 7060.429542139 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: composer.lock: time stamp 2016-05-09 21:32:22 is 7060.426649276 s in the future
+ DEBUG [ad7d6269] 	tar: phpunit.xml.dist: time stamp 2016-05-09 21:32:22 is 7060.426475866 s in the future
+ DEBUG [ad7d6269] 	tar: src/.htaccess: time stamp 2016-05-09 21:32:22 is 7060.426265818 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/ApiCallBuilderInterface.php: time stamp 2016-05-09 21:32:22 is 7060.42596775 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/ApiCallConfigurationInterface.php: time stamp 2016-05-09 21:32:22 is 7060.425856448 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/JiraCallBuilder.php: time stamp 2016-05-09 21:32:22 is 7060.425696101 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/JiraConfiguration.php: time stamp 2016-05-09 21:32:22 is 7060.425581599 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/JiraIssueConfiguration.php: time stamp 2016-05-09 21:32:22 is 7060.425430547 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old/JiraSearchConfiguration.php: time stamp 2016-05-09 21:32:22 is 7060.425309939 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Api_old: time stamp 2016-05-09 21:32:22 is 7060.425223397 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Collection_old/IssuesCollection.php: time stamp 2016-05-09 21:32:22 is 7060.424933702 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Collection_old/IssuesCollectionInterface.php: time stamp 2016-05-09 21:32:22 is 7060.424797181 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Collection_old: time stamp 2016-05-09 21:32:22 is 7060.424740918 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Controller/DefaultController.php: time stamp 2016-05-09 21:32:22 is 7060.424528758 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Controller/PrintController.php: time stamp 2016-05-09 21:32:22 is 7060.424405383 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Controller/SecurityController.php: time stamp 2016-05-09 21:32:22 is 7060.42427441 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Controller: time stamp 2016-05-09 21:32:22 is 7060.424211129 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/DependencyInjection/Configuration.php: time stamp 2016-05-09 21:32:22 is 7060.424025044 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/DependencyInjection/ScrumBoardItExtension.php: time stamp 2016-05-09 21:32:22 is 7060.423831715 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/DependencyInjection/Security/Factory/JiraFactory.php: time stamp 2016-05-09 21:32:22 is 7060.423551814 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/DependencyInjection/Security/Factory: time stamp 2016-05-09 21:32:22 is 7060.423492894 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/DependencyInjection/Security: time stamp 2016-05-09 21:32:22 is 7060.423471412 s in the future
+tar: src/ScrumBoardItBundle/DependencyInjection: time stamp 2016-05-09 21:32:22 is 7060.423453708 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Issue/AbstractIssue.php: time stamp 2016-05-09 21:32:22 is 7060.423096867 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Issue/IssueInterface.php: time stamp 2016-05-09 21:32:22 is 7060.42296286 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Issue/SubTask.php: time stamp 2016-05-09 21:32:22 is 7060.422863272 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Issue/Task.php: time stamp 2016-05-09 21:32:22 is 7060.418685607 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Issue: time stamp 2016-05-09 21:32:22 is 7060.418617036 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Search/AbstractSearch.php: time stamp 2016-05-09 21:32:22 is 7060.418407101 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Search/JiraSearch.php: time stamp 2016-05-09 21:32:22 is 7060.418272079 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/Search: time stamp 2016-05-09 21:32:22 is 7060.418212535 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity/User.php: time stamp 2016-05-09 21:32:22 is 7060.418115996 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Entity: time stamp 2016-05-09 21:32:22 is 7060.418060918 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Exception/ClassNotFoundException.php: time stamp 2016-05-09 21:32:22 is 7060.41789168 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Exception/InvalidOptionException.php: time stamp 2016-05-09 21:32:22 is 7060.417790521 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Exception: time stamp 2016-05-09 21:32:22 is 7060.417716623 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/FactoryInterface.php: time stamp 2016-05-09 21:32:22 is 7060.417585906 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Form/Type/Search/JiraSearchType.php: time stamp 2016-05-09 21:32:22 is 7060.417179405 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Form/Type/Search: time stamp 2016-05-09 21:32:22 is 7060.417119011 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Form/Type: time stamp 2016-05-09 21:32:22 is 7060.417097818 s in the future
+tar: src/ScrumBoardItBundle/Form: time stamp 2016-05-09 21:32:22 is 7060.417080637 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/IssuesProvider_old/IssuesProviderInterface.php: time stamp 2016-05-09 21:32:22 is 7060.416875923 s in the future
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/IssuesProvider_old/JiraIssuesProvider.php: time stamp 2016-05-09 21:32:22 is 7060.416762986 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/IssuesProvider_old: time stamp 2016-05-09 21:32:22 is 7060.416596823 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old/AbstractProcessor.php: time stamp 2016-05-09 21:32:22 is 7060.416410551 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old/JiraSearchProcessor.php: time stamp 2016-05-09 21:32:22 is 7060.416269074 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old/JsonToObjectProcessor.php: time stamp 2016-05-09 21:32:22 is 7060.416167336 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old/ProcessorFactory.php: time stamp 2016-05-09 21:32:22 is 7060.415966604 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old/ProcessorInterface.php: time stamp 2016-05-09 21:32:22 is 7060.415834492 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Processor_old: time stamp 2016-05-09 21:32:22 is 7060.415778745 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/README.md: time stamp 2016-05-09 21:32:22 is 7060.415672695 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/config/services.yml: time stamp 2016-05-09 21:32:22 is 7060.415377255 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/config: time stamp 2016-05-09 21:32:22 is 7060.415318121 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/doc/index.rst: time stamp 2016-05-09 21:32:22 is 7060.414219394 s in the future
+tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/Resources/doc: time stamp 2016-05-09 21:32:22 is 7060.414152653 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/bootstrap-theme.css: time stamp 2016-05-09 21:32:22 is 7060.413874553 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/bootstrap-theme.min.css: time stamp 2016-05-09 21:32:22 is 7060.413722162 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/bootstrap.css: time stamp 2016-05-09 21:32:22 is 7060.412638879 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/bootstrap.min.css: time stamp 2016-05-09 21:32:22 is 7060.41064204 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/jquery.contextMenu.css: time stamp 2016-05-09 21:32:22 is 7060.41047961 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/css/print.css: time stamp 2016-05-09 21:32:22 is 7060.41038182 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/css/style.css: time stamp 2016-05-09 21:32:22 is 7060.410223391 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/css: time stamp 2016-05-09 21:32:22 is 7060.410153628 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.eot: time stamp 2016-05-09 21:32:22 is 7060.409953832 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.svg: time stamp 2016-05-09 21:32:22 is 7060.408373118 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.ttf: time stamp 2016-05-09 21:32:22 is 7060.408171198 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.woff: time stamp 2016-05-09 21:32:22 is 7060.408035229 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/fonts: time stamp 2016-05-09 21:32:22 is 7060.407994596 s in the future
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/Resources/public/images/header.png: time stamp 2016-05-09 21:32:22 is 7060.40728041 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/Resources/public/images: time stamp 2016-05-09 21:32:22 is 7060.407037973 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/Resources/public/js/bootstrap.js: time stamp 2016-05-09 21:32:22 is 7060.406265036 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	src/ScrumBoardItBundle/Resources/public/js/bootstrap.min.js: time stamp 2016-05-09 21:32:22 is 7060.40587461 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js: time stamp 2016-05-09 21:32:22 is 7060.403730736 s in the future
+tar: src/ScrumBoardItBundle/Resources/public/js: time stamp 2016-05-09 21:32:22 is 7060.403644961 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/public: time stamp 2016-05-09 21:32:22 is 7060.403620772 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Default/index.html.twig: time stamp 2016-05-09 21:32:22 is 7060.40332234 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Default: time stamp 2016-05-09 21:32:22 is 7060.403260299 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Print/base.html.twig: time stamp 2016-05-09 21:32:22 is 7060.403041769 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Print/tickets.html.twig: time stamp 2016-05-09 21:32:22 is 7060.402938809 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Print: time stamp 2016-05-09 21:32:22 is 7060.402864588 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Security/login.html.twig: time stamp 2016-05-09 21:32:22 is 7060.402585153 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/Security: time stamp 2016-05-09 21:32:22 is 7060.402523574 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views/base.html.twig: time stamp 2016-05-09 21:32:22 is 7060.402404606 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources/views: time stamp 2016-05-09 21:32:22 is 7060.402345171 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Resources: time stamp 2016-05-09 21:32:22 is 7060.402322677 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/ScrumBoardItBundle.php: time stamp 2016-05-09 21:32:22 is 7060.402193618 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Security/AbstractTokenAuthenticator.php: time stamp 2016-05-09 21:32:22 is 7060.401950185 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Security/JiraAuthenticator.php: time stamp 2016-05-09 21:32:22 is 7060.401814573 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Security/User/WebServiceUserProvider.php: time stamp 2016-05-09 21:32:22 is 7060.401587449 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Security/User: time stamp 2016-05-09 21:32:22 is 7060.401526942 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Security: time stamp 2016-05-09 21:32:22 is 7060.401505723 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Services/AbstractApi.php: time stamp 2016-05-09 21:32:22 is 7060.401282418 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Services/ApiJira.php: time stamp 2016-05-09 21:32:22 is 7060.401167766 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/Services: time stamp 2016-05-09 21:32:22 is 7060.401113244 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle/composer.json: time stamp 2016-05-09 21:32:22 is 7060.400990975 s in the future
+ DEBUG [ad7d6269] 	tar: src/ScrumBoardItBundle: time stamp 2016-05-09 21:32:22 is 7060.400917588 s in the future
+ DEBUG [ad7d6269] 	tar: src: time stamp 2016-05-09 21:32:22 is 7060.400896207 s in the future
+ DEBUG [ad7d6269] 	tar: tests/AppBundle/Controller/DefaultControllerTest.php: time stamp 2016-05-09 21:32:22 is 7060.400503233 s in the future
+ DEBUG [ad7d6269] 	tar: tests/AppBundle/Controller: time stamp 2016-05-09 21:32:22 is 7060.400443688 s in the future
+ DEBUG [ad7d6269] 	tar: tests/AppBundle: time stamp 2016-05-09 21:32:22 is 7060.400423285 s in the future
+tar: tests: time stamp 2016-05-09 21:32:22 is 7060.400406344 s in the future
+ DEBUG [ad7d6269] 	tar: var/SymfonyRequirements.php: time stamp 2016-05-09 21:32:22 is 7060.398639406 s in the future
+ DEBUG [ad7d6269] 	tar: var/cache/.gitkeep: time stamp 2016-05-09 21:32:22 is 7060.398418189 s in the future
+ DEBUG [ad7d6269] 	tar: var/cache: time stamp 2016-05-09 21:32:22 is 7060.398359919 s in the future
+ DEBUG [ad7d6269] 	tar: var/logs/.gitkeep: time stamp 2016-05-09 21:32:22 is 7060.398153548 s in the future
+ DEBUG [ad7d6269] 	tar: var/logs: time stamp 2016-05-09 21:32:22 is 7060.398095206 s in the future
+ DEBUG [ad7d6269] 	tar: var/sessions/.gitkeep: time stamp 2016-05-09 21:32:22 is 7060.397917645 s in the future
+ DEBUG [ad7d6269] 	tar: var/sessions: time stamp 2016-05-09 21:32:22 is 7060.397861793 s in the future
+ DEBUG [ad7d6269] 	tar: var: time stamp 2016-05-09 21:32:22 is 7060.397841777 s in the future
+ DEBUG [ad7d6269] 	tar: web/.htaccess: time stamp 2016-05-09 21:32:22 is 7060.397635642 s in the future
+ DEBUG [ad7d6269] 	tar: web/app.php: time stamp 2016-05-09 21:32:22 is 7060.397534096 s in the future
+ DEBUG [ad7d6269] 	tar: web/app_dev.php: time stamp 2016-05-09 21:32:22 is 7060.397418252 s in the future
+ DEBUG [ad7d6269] 	tar: web/apple-touch-icon.png: time stamp 2016-05-09 21:32:22 is 7060.397226152 s in the future
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	web/config.php: time stamp 2016-05-09 21:32:22 is 7060.395802525 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c21be03.css: time stamp 2016-05-09 21:32:22 is 7060.395525755 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c21be03_print_1.css: time stamp 2016-05-09 21:32:22 is 7060.395423359 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c3cc6ab.css: time stamp 2016-05-09 21:32:22 is 7060.393314931 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c3cc6ab_bootstrap.min_1.css: time stamp 2016-05-09 21:32:22 is 7060.391176524 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c3cc6ab_jquery.contextMenu_3.css: time stamp 2016-05-09 21:32:22 is 7060.391049258 s in the future
+ DEBUG [ad7d6269] 	tar: web/css/c3cc6ab_style_2.css: time stamp 2016-05-09 21:32:22 is 7060.390866884 s in the future
+ DEBUG [ad7d6269] 	tar: web/css: time stamp 2016-05-09 21:32:22 is 7060.390807724 s in the future
+ DEBUG [ad7d6269] 	tar: web/favicon.ico: time stamp 2016-05-09 21:32:22 is 7060.390485354 s in the future
+ DEBUG [ad7d6269] 	tar: web/js/32ddea4.js: time stamp 2016-05-09 21:32:22 is 7060.388935728 s in the future
+tar: web/js/32ddea4_bootstrap.min_1.js: time stamp 2016-05-09 21:32:22 is 7060.388739963 s in the future
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	web/js/32ddea4_jquery.contextMenu_2.js: time stamp 2016-05-09 21:32:22 is 7060.387829012 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	web/js: time stamp 2016-05-09 21:32:22 is 7060.387580526 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	web/robots.txt: time stamp 2016-05-09 21:32:22 is 7060.38731849 s in the future
+ DEBUG [ad7d6269] 	
+ DEBUG [ad7d6269] 	tar: 
+ DEBUG [ad7d6269] 	web: time stamp 2016-05-09 21:32:22 is 7060.387081843 s in the future
+ DEBUG [ad7d6269] 	
+  INFO [ad7d6269] Finished in 0.081 seconds with exit status 0 (successful).
+ DEBUG [41c5eccc] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [41c5eccc] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [41c5eccc] Finished in 0.009 seconds with exit status 0 (successful).
+ DEBUG [f5ef4ebd] Running /usr/bin/env git rev-list --max-count=1 master as deployer@10.2.16.126
+ DEBUG [f5ef4ebd] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [f5ef4ebd] 	f08f4f2b363701e7c6663c99406879ec2b521c88
+ DEBUG [f5ef4ebd] Finished in 0.015 seconds with exit status 0 (successful).
+ DEBUG [68058bea] Running if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [68058bea] Command: if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi
+ DEBUG [68058bea] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [3b2eb6e6] Running /usr/bin/env echo "f08f4f2b363701e7c6663c99406879ec2b521c88" >> REVISION as deployer@10.2.16.126
+ DEBUG [3b2eb6e6] Command: cd /var/www/scrumboardit/releases/20160509193340 && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "f08f4f2b363701e7c6663c99406879ec2b521c88" >> REVISION )
+  INFO [3b2eb6e6] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [0a11b816] Running /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160509193340/var as deployer@10.2.16.126
+ DEBUG [0a11b816] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160509193340/var )
+  INFO [0a11b816] Finished in 0.017 seconds with exit status 0 (successful).
+ DEBUG [f698eab5] Running [ -L /var/www/scrumboardit/releases/20160509193340/var/logs ] as deployer@10.2.16.126
+ DEBUG [f698eab5] Command: [ -L /var/www/scrumboardit/releases/20160509193340/var/logs ]
+ DEBUG [f698eab5] Finished in 0.009 seconds with exit status 1 (failed).
+ DEBUG [40d1ee25] Running [ -d /var/www/scrumboardit/releases/20160509193340/var/logs ] as deployer@10.2.16.126
+ DEBUG [40d1ee25] Command: [ -d /var/www/scrumboardit/releases/20160509193340/var/logs ]
+ DEBUG [40d1ee25] Finished in 0.009 seconds with exit status 0 (successful).
+  INFO [fbd239e8] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160509193340/var/logs as deployer@10.2.16.126
+ DEBUG [fbd239e8] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160509193340/var/logs )
+  INFO [fbd239e8] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO [98a30feb] Running /usr/bin/env ln -s /var/www/scrumboardit/shared/var/logs /var/www/scrumboardit/releases/20160509193340/var/logs as deployer@10.2.16.126
+ DEBUG [98a30feb] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s /var/www/scrumboardit/shared/var/logs /var/www/scrumboardit/releases/20160509193340/var/logs )
+  INFO [98a30feb] Finished in 0.012 seconds with exit status 0 (successful).
+ DEBUG [6ac1fbcc] Running if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [6ac1fbcc] Command: if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi
+ DEBUG [6ac1fbcc] Finished in 0.011 seconds with exit status 0 (successful).
+ DEBUG [6d5e2878] Running [ -d /var/www/scrumboardit/releases/20160509193340/var/cache ] as deployer@10.2.16.126
+ DEBUG [6d5e2878] Command: [ -d /var/www/scrumboardit/releases/20160509193340/var/cache ]
+ DEBUG [6d5e2878] Finished in 0.009 seconds with exit status 0 (successful).
+  INFO [d4e71d1e] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160509193340/var/cache as deployer@10.2.16.126
+ DEBUG [d4e71d1e] Command: cd /var/www/scrumboardit/releases/20160509193340 && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160509193340/var/cache )
+  INFO [d4e71d1e] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [aef957af] Running /usr/bin/env mkdir -pv var/cache as deployer@10.2.16.126
+ DEBUG [aef957af] Command: cd /var/www/scrumboardit/releases/20160509193340 && ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -pv var/cache )
+ DEBUG [aef957af] 	mkdir: created directory 'var/cache'
+  INFO [aef957af] Finished in 0.014 seconds with exit status 0 (successful).
+ DEBUG [8ff97b1b] Running if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [8ff97b1b] Command: if test ! -d /var/www/scrumboardit/releases/20160509193340; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340'" 1>&2; false; fi
+ DEBUG [8ff97b1b] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [0da3373e] Running php /var/www/scrumboardit/shared/composer.phar install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader as deployer@10.2.16.126
+ DEBUG [0da3373e] Command: cd /var/www/scrumboardit/releases/20160509193340 && ( export SYMFONY_ENV="prod" ; php /var/www/scrumboardit/shared/composer.phar install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader )
+  INFO [0da3373e] Finished in 52.534 seconds with exit status 0 (successful).
+  INFO [f1bb96c1] Running /usr/bin/env php /var/www/scrumboardit/releases/20160509193340/bin/console cache:warmup  --no-debug as deployer@10.2.16.126
+ DEBUG [f1bb96c1] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env php /var/www/scrumboardit/releases/20160509193340/bin/console cache:warmup  --no-debug )
+ DEBUG [f1bb96c1] 	
+ // Warming up the cache for the prod environment with debug false
+ DEBUG [f1bb96c1] 	
+ DEBUG [f1bb96c1] 	 [OK] Cache for the "prod" environment (debug=false) was successfully warmed.                                           
+ DEBUG [f1bb96c1] 	
+  INFO [f1bb96c1] Finished in 1.181 seconds with exit status 0 (successful).
+ DEBUG [c5e77859] Running if test ! -d /var/www/scrumboardit/releases/20160509193340/web; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340/web'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [c5e77859] Command: if test ! -d /var/www/scrumboardit/releases/20160509193340/web; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160509193340/web'" 1>&2; false; fi
+ DEBUG [c5e77859] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [6e9ec3dc] Running /usr/bin/env rm -f app_*.php as deployer@10.2.16.126
+ DEBUG [6e9ec3dc] Command: cd /var/www/scrumboardit/releases/20160509193340/web && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -f app_*.php )
+  INFO [6e9ec3dc] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [bfc08a00] Running /usr/bin/env ln -s /var/www/scrumboardit/releases/20160509193340 /var/www/scrumboardit/releases/current as deployer@10.2.16.126
+ DEBUG [bfc08a00] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s /var/www/scrumboardit/releases/20160509193340 /var/www/scrumboardit/releases/current )
+  INFO [bfc08a00] Finished in 0.015 seconds with exit status 0 (successful).
+  INFO [47eebfc1] Running /usr/bin/env mv /var/www/scrumboardit/releases/current /var/www/scrumboardit as deployer@10.2.16.126
+ DEBUG [47eebfc1] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mv /var/www/scrumboardit/releases/current /var/www/scrumboardit )
+  INFO [47eebfc1] Finished in 0.013 seconds with exit status 0 (successful).
+ DEBUG [771bc108] Running /usr/bin/env ls -xtr /var/www/scrumboardit/releases as deployer@10.2.16.126
+ DEBUG [771bc108] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ls -xtr /var/www/scrumboardit/releases )
+ DEBUG [771bc108] 	20160504155335	20160504155744	20160504165855	20160504183919	20160504184319
+20160509193340
+ DEBUG [771bc108] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO Keeping 5 of 6 deployed releases on 10.2.16.126
+  INFO [7ce3c78b] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160504155335 as deployer@10.2.16.126
+ DEBUG [7ce3c78b] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160504155335 )
+  INFO [7ce3c78b] Finished in 0.543 seconds with exit status 0 (successful).
+ DEBUG [d0d04f65] Running if test ! -d /var/www/scrumboardit/releases; then echo "Directory does not exist '/var/www/scrumboardit/releases'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [d0d04f65] Command: if test ! -d /var/www/scrumboardit/releases; then echo "Directory does not exist '/var/www/scrumboardit/releases'" 1>&2; false; fi
+ DEBUG [d0d04f65] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [a8228b79] Running /usr/bin/env echo "Branch master (at f08f4f2b363701e7c6663c99406879ec2b521c88) deployed as release 20160509193340 by brieuc" >> /var/www/scrumboardit/revisions.log as deployer@10.2.16.126
+ DEBUG [a8228b79] Command: cd /var/www/scrumboardit/releases && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "Branch master (at f08f4f2b363701e7c6663c99406879ec2b521c88) deployed as release 20160509193340 by brieuc" >> /var/www/scrumboardit/revisions.log )
+  INFO [a8228b79] Finished in 0.017 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2016-05-10 13:13:07 +0200 cap preprod deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [dee04ac5] Running /usr/bin/env mkdir -p /tmp/scrmboard-it/ as deployer@10.2.16.126
+ DEBUG [dee04ac5] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /tmp/scrmboard-it/ )
+  INFO [dee04ac5] Finished in 0.180 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/scrmboard-it/git-ssh.sh 0.0%
+  INFO Uploading /tmp/scrmboard-it/git-ssh.sh 100.0%
+  INFO [3e3418ec] Running /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh as deployer@10.2.16.126
+ DEBUG [3e3418ec] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env chmod +rx /tmp/scrmboard-it/git-ssh.sh )
+  INFO [3e3418ec] Finished in 0.024 seconds with exit status 0 (successful).
+  INFO [7dd6af29] Running /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git as deployer@10.2.16.126
+ DEBUG [7dd6af29] Command: ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git ls-remote --heads git@github.com:brieucpouliquen/ScrumBoard-it.git )
+ DEBUG [7dd6af29] 	Warning: Permanently added the RSA host key for IP address '192.30.252.130' to the list of known hosts.
+ DEBUG [7dd6af29] 	c90d9b617f103b5bdf51b519ee7b8dbcd4ddc290	refs/heads/feature-ajaxify-front
+bdfa27d0ed87ed2707258fa697611ed6831864e0	refs/heads/feature-boards-sprints-and-issues-from-api
+d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb	refs/heads/master
+ebb76735121844c74d01838034f78673935eb6c8	refs/heads/migrate-full-app
+  INFO [7dd6af29] Finished in 1.308 seconds with exit status 0 (successful).
+  INFO [9ac55373] Running /usr/bin/env mkdir -p /var/www/scrumboardit/shared /var/www/scrumboardit/releases as deployer@10.2.16.126
+ DEBUG [9ac55373] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/shared /var/www/scrumboardit/releases )
+  INFO [9ac55373] Finished in 0.017 seconds with exit status 0 (successful).
+  INFO [a2eca6c3] Running /usr/bin/env mkdir -p /var/www/scrumboardit/shared/var/logs as deployer@10.2.16.126
+ DEBUG [a2eca6c3] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/shared/var/logs )
+  INFO [a2eca6c3] Finished in 0.019 seconds with exit status 0 (successful).
+ DEBUG [7a134bf2] Running [ -f /var/www/scrumboardit/current/REVISION ] as deployer@10.2.16.126
+ DEBUG [7a134bf2] Command: [ -f /var/www/scrumboardit/current/REVISION ]
+ DEBUG [7a134bf2] Finished in 0.017 seconds with exit status 0 (successful).
+ DEBUG [cd35fd55] Running /usr/bin/env cat /var/www/scrumboardit/current/REVISION 2>/dev/null as deployer@10.2.16.126
+ DEBUG [cd35fd55] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env cat /var/www/scrumboardit/current/REVISION 2>/dev/null )
+ DEBUG [cd35fd55] 	f08f4f2b363701e7c6663c99406879ec2b521c88
+ DEBUG [cd35fd55] Finished in 0.013 seconds with exit status 0 (successful).
+ DEBUG [648467fe] Running if test ! -d /var/www/scrumboardit/shared; then echo "Directory does not exist '/var/www/scrumboardit/shared'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [648467fe] Command: if test ! -d /var/www/scrumboardit/shared; then echo "Directory does not exist '/var/www/scrumboardit/shared'" 1>&2; false; fi
+ DEBUG [648467fe] Finished in 0.008 seconds with exit status 0 (successful).
+ DEBUG [533b793f] Running /usr/bin/env [ -e composer.phar ] as deployer@10.2.16.126
+ DEBUG [533b793f] Command: cd /var/www/scrumboardit/shared && ( export SYMFONY_ENV="prod" ; /usr/bin/env [ -e composer.phar ] )
+ DEBUG [533b793f] Finished in 0.011 seconds with exit status 0 (successful).
+ DEBUG [3d135c87] Running [ -f /var/www/scrumboardit/repo/HEAD ] as deployer@10.2.16.126
+ DEBUG [3d135c87] Command: [ -f /var/www/scrumboardit/repo/HEAD ]
+ DEBUG [3d135c87] Finished in 0.008 seconds with exit status 0 (successful).
+  INFO The repository mirror is at /var/www/scrumboardit/repo
+ DEBUG [87da52c1] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [87da52c1] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [87da52c1] Finished in 0.008 seconds with exit status 0 (successful).
+  INFO [01c830b7] Running /usr/bin/env git remote update --prune as deployer@10.2.16.126
+ DEBUG [01c830b7] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [01c830b7] 	Fetching origin
+ DEBUG [01c830b7] 	From github.com:brieucpouliquen/ScrumBoard-it
+   f08f4f2..d8f8e50  master     -> master
+ DEBUG [01c830b7] 	 + 63090ad...ebb7673 migrate-full-app -> migrate-full-app  (forced update)
+  INFO [01c830b7] Finished in 1.401 seconds with exit status 0 (successful).
+ DEBUG [193ddc3a] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [193ddc3a] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [193ddc3a] Finished in 0.020 seconds with exit status 0 (successful).
+  INFO [5e8a5dbb] Running /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160510111309 as deployer@10.2.16.126
+ DEBUG [5e8a5dbb] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160510111309 )
+  INFO [5e8a5dbb] Finished in 0.022 seconds with exit status 0 (successful).
+  INFO [5c10f052] Running /usr/bin/env git archive master | tar -x -f - -C /var/www/scrumboardit/releases/20160510111309 as deployer@10.2.16.126
+ DEBUG [5c10f052] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git archive master | tar -x -f - -C /var/www/scrumboardit/releases/20160510111309 )
+ DEBUG [5c10f052] 	tar: .gitignore: time stamp 2016-05-10 13:12:27 is 7097.493465362 s in the future
+ DEBUG [5c10f052] 	tar: README.md: time stamp 2016-05-10 13:12:27 is 7097.493271398 s in the future
+ DEBUG [5c10f052] 	tar: app/.htaccess: time stamp 2016-05-10 13:12:27 is 7097.493090197 s in the future
+ DEBUG [5c10f052] 	tar: app/AppCache.php: time stamp 2016-05-10 13:12:27 is 7097.49298744 s in the future
+ DEBUG [5c10f052] 	tar: app/AppKernel.php: time stamp 2016-05-10 13:12:27 is 7097.492900071 s in the future
+ DEBUG [5c10f052] 	tar: app/Resources/views/base.html.twig: time stamp 2016-05-10 13:12:27 is 7097.492620572 s in the future
+ DEBUG [5c10f052] 	tar: app/Resources/views/default/index.html.twig: time stamp 2016-05-10 13:12:27 is 7097.492418006 s in the future
+ DEBUG [5c10f052] 	tar: app/Resources/views/default: time stamp 2016-05-10 13:12:27 is 7097.492361657 s in the future
+tar: app/Resources/views: time stamp 2016-05-10 13:12:27 is 7097.492341058 s in the future
+ DEBUG [5c10f052] 	tar: app/Resources: time stamp 2016-05-10 13:12:27 is 7097.492323749 s in the future
+ DEBUG [5c10f052] 	tar: app/autoload.php: time stamp 2016-05-10 13:12:27 is 7097.49223844 s in the future
+ DEBUG [5c10f052] 	tar: app/config/config.yml: time stamp 2016-05-10 13:12:27 is 7097.492056078 s in the future
+ DEBUG [5c10f052] 	tar: app/config/config_dev.yml: time stamp 2016-05-10 13:12:27 is 7097.491945302 s in the future
+ DEBUG [5c10f052] 	tar: app/config/config_prod.yml: time stamp 2016-05-10 13:12:27 is 7097.491846383 s in the future
+ DEBUG [5c10f052] 	tar: app/config/config_test.yml: time stamp 2016-05-10 13:12:27 is 7097.491748728 s in the future
+ DEBUG [5c10f052] 	tar: app/config/parameters.yml.dist: time stamp 2016-05-10 13:12:27 is 7097.491658566 s in the future
+ DEBUG [5c10f052] 	tar: app/config/routing.yml: time stamp 2016-05-10 13:12:27 is 7097.491558696 s in the future
+ DEBUG [5c10f052] 	tar: app/config/routing_dev.yml: time stamp 2016-05-10 13:12:27 is 7097.491473718 s in the future
+ DEBUG [5c10f052] 	tar: app/config/security.yml: time stamp 2016-05-10 13:12:27 is 7097.491373409 s in the future
+ DEBUG [5c10f052] 	tar: app/config/services.yml: time stamp 2016-05-10 13:12:27 is 7097.49127887 s in the future
+ DEBUG [5c10f052] 	tar: app/config: time stamp 2016-05-10 13:12:27 is 7097.491193535 s in the future
+ DEBUG [5c10f052] 	tar: app: time stamp 2016-05-10 13:12:27 is 7097.491152608 s in the future
+ DEBUG [5c10f052] 	tar: bin/console: time stamp 2016-05-10 13:12:27 is 7097.490993837 s in the future
+ DEBUG [5c10f052] 	tar: bin/symfony_requirements: time stamp 2016-05-10 13:12:27 is 7097.490866696 s in the future
+ DEBUG [5c10f052] 	tar: bin: time stamp 2016-05-10 13:12:27 is 7097.490804914 s in the future
+ DEBUG [5c10f052] 	tar: composer.json: time stamp 2016-05-10 13:12:27 is 7097.490693228 s in the future
+ DEBUG [5c10f052] 	tar: composer.lock: time stamp 2016-05-10 13:12:27 is 7097.488049552 s in the future
+ DEBUG [5c10f052] 	tar: phpunit.xml.dist: time stamp 2016-05-10 13:12:27 is 7097.487913177 s in the future
+ DEBUG [5c10f052] 	tar: src/.htaccess: time stamp 2016-05-10 13:12:27 is 7097.487743901 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/ApiCallBuilderInterface.php: time stamp 2016-05-10 13:12:27 is 7097.48747091 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/ApiCallConfigurationInterface.php: time stamp 2016-05-10 13:12:27 is 7097.487304019 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/JiraCallBuilder.php: time stamp 2016-05-10 13:12:27 is 7097.487170598 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/JiraConfiguration.php: time stamp 2016-05-10 13:12:27 is 7097.487073308 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/JiraIssueConfiguration.php: time stamp 2016-05-10 13:12:27 is 7097.486979585 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old/JiraSearchConfiguration.php: time stamp 2016-05-10 13:12:27 is 7097.486873546 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Api_old: time stamp 2016-05-10 13:12:27 is 7097.486820577 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Collection_old/IssuesCollection.php: time stamp 2016-05-10 13:12:27 is 7097.486614616 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Collection_old/IssuesCollectionInterface.php: time stamp 2016-05-10 13:12:27 is 7097.486482846 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Collection_old: time stamp 2016-05-10 13:12:27 is 7097.486434577 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Controller/DefaultController.php: time stamp 2016-05-10 13:12:27 is 7097.486291081 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Controller/PrintController.php: time stamp 2016-05-10 13:12:27 is 7097.486151657 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Controller/SecurityController.php: time stamp 2016-05-10 13:12:27 is 7097.48605631 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Controller: time stamp 2016-05-10 13:12:27 is 7097.486013688 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/DependencyInjection/Configuration.php: time stamp 2016-05-10 13:12:27 is 7097.485852852 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/DependencyInjection/ScrumBoardItExtension.php: time stamp 2016-05-10 13:12:27 is 7097.485762449 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/DependencyInjection/Security/Factory/JiraFactory.php: time stamp 2016-05-10 13:12:27 is 7097.485500128 s in the future
+tar: src/ScrumBoardItBundle/DependencyInjection/Security/Factory: time stamp 2016-05-10 13:12:27 is 7097.485447674 s in the future
+tar: src/ScrumBoardItBundle/DependencyInjection/Security: time stamp 2016-05-10 13:12:27 is 7097.485427632 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/DependencyInjection: time stamp 2016-05-10 13:12:27 is 7097.485410033 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Issue/AbstractIssue.php: time stamp 2016-05-10 13:12:27 is 7097.485147182 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Issue/IssueInterface.php: time stamp 2016-05-10 13:12:27 is 7097.485035233 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Issue/SubTask.php: time stamp 2016-05-10 13:12:27 is 7097.484957594 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Issue/Task.php: time stamp 2016-05-10 13:12:27 is 7097.484873026 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Issue: time stamp 2016-05-10 13:12:27 is 7097.484828666 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Search/AbstractSearch.php: time stamp 2016-05-10 13:12:27 is 7097.484683298 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Search/JiraSearch.php: time stamp 2016-05-10 13:12:27 is 7097.484557014 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/Search: time stamp 2016-05-10 13:12:27 is 7097.484506729 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity/User.php: time stamp 2016-05-10 13:12:27 is 7097.484431274 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Entity: time stamp 2016-05-10 13:12:27 is 7097.48438734 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Exception/ClassNotFoundException.php: time stamp 2016-05-10 13:12:27 is 7097.48421788 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Exception/InvalidOptionException.php: time stamp 2016-05-10 13:12:27 is 7097.48412215 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Exception: time stamp 2016-05-10 13:12:27 is 7097.484077144 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/FactoryInterface.php: time stamp 2016-05-10 13:12:27 is 7097.484014953 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Form/Type/Search/JiraSearchType.php: time stamp 2016-05-10 13:12:27 is 7097.483646179 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Form/Type/Search: time stamp 2016-05-10 13:12:27 is 7097.483591266 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Form/Type: time stamp 2016-05-10 13:12:27 is 7097.48357151 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Form: time stamp 2016-05-10 13:12:27 is 7097.48354326 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/IssuesProvider_old/IssuesProviderInterface.php: time stamp 2016-05-10 13:12:27 is 7097.483396693 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/IssuesProvider_old/JiraIssuesProvider.php: time stamp 2016-05-10 13:12:27 is 7097.48328965 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/IssuesProvider_old: time stamp 2016-05-10 13:12:27 is 7097.483241347 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old/AbstractProcessor.php: time stamp 2016-05-10 13:12:27 is 7097.483107724 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old/JiraSearchProcessor.php: time stamp 2016-05-10 13:12:27 is 7097.482994985 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old/JsonToObjectProcessor.php: time stamp 2016-05-10 13:12:27 is 7097.482879994 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old/ProcessorFactory.php: time stamp 2016-05-10 13:12:27 is 7097.48277979 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old/ProcessorInterface.php: time stamp 2016-05-10 13:12:27 is 7097.482654603 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Processor_old: time stamp 2016-05-10 13:12:27 is 7097.482607676 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/README.md: time stamp 2016-05-10 13:12:27 is 7097.482539146 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/config/services.yml: time stamp 2016-05-10 13:12:27 is 7097.482298003 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/config: time stamp 2016-05-10 13:12:27 is 7097.482247827 s in the future
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/doc/index.rst: time stamp 2016-05-10 13:12:27 is 7097.479757102 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/doc: time stamp 2016-05-10 13:12:27 is 7097.479602798 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/css/bootstrap-theme.css: time stamp 2016-05-10 13:12:27 is 7097.478866062 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/css/bootstrap-theme.min.css: time stamp 2016-05-10 13:12:27 is 7097.478108009 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/css/bootstrap.css: time stamp 2016-05-10 13:12:27 is 7097.476952779 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/css/bootstrap.min.css: time stamp 2016-05-10 13:12:27 is 7097.474680575 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/css/jquery.contextMenu.css: time stamp 2016-05-10 13:12:27 is 7097.474553968 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/css/print.css: time stamp 2016-05-10 13:12:27 is 7097.474440627 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/css/style.css: time stamp 2016-05-10 13:12:27 is 7097.474337066 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/css: time stamp 2016-05-10 13:12:27 is 7097.474297643 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.eot: time stamp 2016-05-10 13:12:27 is 7097.474104348 s in the future
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.svg: time stamp 2016-05-10 13:12:27 is 7097.472426783 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.ttf: time stamp 2016-05-10 13:12:27 is 7097.472123704 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/fonts/glyphicons-halflings-regular.woff: time stamp 2016-05-10 13:12:27 is 7097.471828847 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/fonts: time stamp 2016-05-10 13:12:27 is 7097.471666054 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/images/header.png: time stamp 2016-05-10 13:12:27 is 7097.470924772 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/images: time stamp 2016-05-10 13:12:27 is 7097.470717969 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/js/bootstrap.js: time stamp 2016-05-10 13:12:27 is 7097.469179968 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources/public/js/bootstrap.min.js: time stamp 2016-05-10 13:12:27 is 7097.468615165 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js: time stamp 2016-05-10 13:12:27 is 7097.466602242 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public/js: time stamp 2016-05-10 13:12:27 is 7097.466540731 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/public: time stamp 2016-05-10 13:12:27 is 7097.466519986 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Default/index.html.twig: time stamp 2016-05-10 13:12:27 is 7097.466253604 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Default: time stamp 2016-05-10 13:12:27 is 7097.466199801 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Print/base.html.twig: time stamp 2016-05-10 13:12:27 is 7097.466027894 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Print/tickets.html.twig: time stamp 2016-05-10 13:12:27 is 7097.46590306 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Print: time stamp 2016-05-10 13:12:27 is 7097.465853896 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/Security/login.html.twig: time stamp 2016-05-10 13:12:27 is 7097.464838421 s in the future
+tar: src/ScrumBoardItBundle/Resources/views/Security: time stamp 2016-05-10 13:12:27 is 7097.464780245 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views/base.html.twig: time stamp 2016-05-10 13:12:27 is 7097.464711926 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Resources/views: time stamp 2016-05-10 13:12:27 is 7097.464666886 s in the future
+tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Resources: time stamp 2016-05-10 13:12:27 is 7097.464632926 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/ScrumBoardItBundle.php: time stamp 2016-05-10 13:12:27 is 7097.464557076 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Security/AbstractTokenAuthenticator.php: time stamp 2016-05-10 13:12:27 is 7097.464336069 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Security/JiraAuthenticator.php: time stamp 2016-05-10 13:12:27 is 7097.464232275 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Security/User/WebServiceUserProvider.php: time stamp 2016-05-10 13:12:27 is 7097.464046995 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Security/User: time stamp 2016-05-10 13:12:27 is 7097.463996605 s in the future
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	src/ScrumBoardItBundle/Security: time stamp 2016-05-10 13:12:27 is 7097.463976785 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Services/AbstractApi.php: time stamp 2016-05-10 13:12:27 is 7097.463809491 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Services/ApiJira.php: time stamp 2016-05-10 13:12:27 is 7097.463639629 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/Services: time stamp 2016-05-10 13:12:27 is 7097.463585329 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle/composer.json: time stamp 2016-05-10 13:12:27 is 7097.46346856 s in the future
+ DEBUG [5c10f052] 	tar: src/ScrumBoardItBundle: time stamp 2016-05-10 13:12:27 is 7097.463415272 s in the future
+ DEBUG [5c10f052] 	tar: src: time stamp 2016-05-10 13:12:27 is 7097.463396015 s in the future
+ DEBUG [5c10f052] 	tar: tests/AppBundle/Controller/DefaultControllerTest.php: time stamp 2016-05-10 13:12:27 is 7097.463145559 s in the future
+ DEBUG [5c10f052] 	tar: tests/AppBundle/Controller: time stamp 2016-05-10 13:12:27 is 7097.463096985 s in the future
+ DEBUG [5c10f052] 	tar: tests/AppBundle: time stamp 2016-05-10 13:12:27 is 7097.463078146 s in the future
+ DEBUG [5c10f052] 	tar: tests: time stamp 2016-05-10 13:12:27 is 7097.46306169 s in the future
+ DEBUG [5c10f052] 	tar: var/SymfonyRequirements.php: time stamp 2016-05-10 13:12:27 is 7097.462827273 s in the future
+ DEBUG [5c10f052] 	tar: var/cache/.gitkeep: time stamp 2016-05-10 13:12:27 is 7097.46262012 s in the future
+ DEBUG [5c10f052] 	tar: var/cache: time stamp 2016-05-10 13:12:27 is 7097.462556376 s in the future
+ DEBUG [5c10f052] 	tar: var/logs/.gitkeep: time stamp 2016-05-10 13:12:27 is 7097.462422448 s in the future
+ DEBUG [5c10f052] 	tar: var/logs: time stamp 2016-05-10 13:12:27 is 7097.462374987 s in the future
+ DEBUG [5c10f052] 	tar: var/sessions/.gitkeep: time stamp 2016-05-10 13:12:27 is 7097.462252071 s in the future
+ DEBUG [5c10f052] 	tar: var/sessions: time stamp 2016-05-10 13:12:27 is 7097.462205419 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: var: time stamp 2016-05-10 13:12:27 is 7097.462186102 s in the future
+ DEBUG [5c10f052] 	tar: web/.htaccess: time stamp 2016-05-10 13:12:27 is 7097.46199037 s in the future
+ DEBUG [5c10f052] 	tar: web/app.php: time stamp 2016-05-10 13:12:27 is 7097.461869684 s in the future
+ DEBUG [5c10f052] 	tar: web/app_dev.php: time stamp 2016-05-10 13:12:27 is 7097.461746997 s in the future
+ DEBUG [5c10f052] 	tar: web/apple-touch-icon.png: time stamp 2016-05-10 13:12:27 is 7097.461610193 s in the future
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/config.php: time stamp 2016-05-10 13:12:27 is 7097.46070016 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c21be03.css: time stamp 2016-05-10 13:12:27 is 7097.460242494 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c21be03_print_1.css: time stamp 2016-05-10 13:12:27 is 7097.459975812 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c3cc6ab.css: time stamp 2016-05-10 13:12:27 is 7097.457967388 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c3cc6ab_bootstrap.min_1.css: time stamp 2016-05-10 13:12:27 is 7097.456471773 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c3cc6ab_jquery.contextMenu_3.css: time stamp 2016-05-10 13:12:27 is 7097.454930531 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css/c3cc6ab_style_2.css: time stamp 2016-05-10 13:12:27 is 7097.454547899 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/css: time stamp 2016-05-10 13:12:27 is 7097.454256493 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/favicon.ico: time stamp 2016-05-10 13:12:27 is 7097.454047509 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/js/32ddea4.js: time stamp 2016-05-10 13:12:27 is 7097.452019138 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/js/32ddea4_bootstrap.min_1.js: time stamp 2016-05-10 13:12:27 is 7097.451003802 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/js/32ddea4_jquery.contextMenu_2.js: time stamp 2016-05-10 13:12:27 is 7097.450477054 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/js: time stamp 2016-05-10 13:12:27 is 7097.450311361 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web/robots.txt: time stamp 2016-05-10 13:12:27 is 7097.450131277 s in the future
+ DEBUG [5c10f052] 	
+ DEBUG [5c10f052] 	tar: 
+ DEBUG [5c10f052] 	web: time stamp 2016-05-10 13:12:27 is 7097.44997457 s in the future
+ DEBUG [5c10f052] 	
+  INFO [5c10f052] Finished in 0.097 seconds with exit status 0 (successful).
+ DEBUG [f6bfc3c4] Running if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [f6bfc3c4] Command: if test ! -d /var/www/scrumboardit/repo; then echo "Directory does not exist '/var/www/scrumboardit/repo'" 1>&2; false; fi
+ DEBUG [f6bfc3c4] Finished in 0.023 seconds with exit status 0 (successful).
+ DEBUG [a7de3f4d] Running /usr/bin/env git rev-list --max-count=1 master as deployer@10.2.16.126
+ DEBUG [a7de3f4d] Command: cd /var/www/scrumboardit/repo && ( export SYMFONY_ENV="prod" GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/scrmboard-it/git-ssh.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [a7de3f4d] 	d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb
+ DEBUG [a7de3f4d] Finished in 0.021 seconds with exit status 0 (successful).
+ DEBUG [303adcf2] Running if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [303adcf2] Command: if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi
+ DEBUG [303adcf2] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [f1e0cfd2] Running /usr/bin/env echo "d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb" >> REVISION as deployer@10.2.16.126
+ DEBUG [f1e0cfd2] Command: cd /var/www/scrumboardit/releases/20160510111309 && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb" >> REVISION )
+  INFO [f1e0cfd2] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [288790ca] Running /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160510111309/var as deployer@10.2.16.126
+ DEBUG [288790ca] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -p /var/www/scrumboardit/releases/20160510111309/var )
+  INFO [288790ca] Finished in 0.014 seconds with exit status 0 (successful).
+ DEBUG [a1532f2a] Running [ -L /var/www/scrumboardit/releases/20160510111309/var/logs ] as deployer@10.2.16.126
+ DEBUG [a1532f2a] Command: [ -L /var/www/scrumboardit/releases/20160510111309/var/logs ]
+ DEBUG [a1532f2a] Finished in 0.010 seconds with exit status 1 (failed).
+ DEBUG [647bf428] Running [ -d /var/www/scrumboardit/releases/20160510111309/var/logs ] as deployer@10.2.16.126
+ DEBUG [647bf428] Command: [ -d /var/www/scrumboardit/releases/20160510111309/var/logs ]
+ DEBUG [647bf428] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [82979478] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160510111309/var/logs as deployer@10.2.16.126
+ DEBUG [82979478] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160510111309/var/logs )
+  INFO [82979478] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [9747f5a5] Running /usr/bin/env ln -s /var/www/scrumboardit/shared/var/logs /var/www/scrumboardit/releases/20160510111309/var/logs as deployer@10.2.16.126
+ DEBUG [9747f5a5] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s /var/www/scrumboardit/shared/var/logs /var/www/scrumboardit/releases/20160510111309/var/logs )
+  INFO [9747f5a5] Finished in 0.015 seconds with exit status 0 (successful).
+ DEBUG [7f6cf907] Running if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [7f6cf907] Command: if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi
+ DEBUG [7f6cf907] Finished in 0.008 seconds with exit status 0 (successful).
+ DEBUG [8babb5f9] Running [ -d /var/www/scrumboardit/releases/20160510111309/var/cache ] as deployer@10.2.16.126
+ DEBUG [8babb5f9] Command: [ -d /var/www/scrumboardit/releases/20160510111309/var/cache ]
+ DEBUG [8babb5f9] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [c5fba987] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160510111309/var/cache as deployer@10.2.16.126
+ DEBUG [c5fba987] Command: cd /var/www/scrumboardit/releases/20160510111309 && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160510111309/var/cache )
+  INFO [c5fba987] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO [996b56d6] Running /usr/bin/env mkdir -pv var/cache as deployer@10.2.16.126
+ DEBUG [996b56d6] Command: cd /var/www/scrumboardit/releases/20160510111309 && ( export SYMFONY_ENV="prod" ; /usr/bin/env mkdir -pv var/cache )
+ DEBUG [996b56d6] 	mkdir: created directory 'var/cache'
+  INFO [996b56d6] Finished in 0.013 seconds with exit status 0 (successful).
+ DEBUG [2a664e54] Running if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [2a664e54] Command: if test ! -d /var/www/scrumboardit/releases/20160510111309; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309'" 1>&2; false; fi
+ DEBUG [2a664e54] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [616e8800] Running php /var/www/scrumboardit/shared/composer.phar install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader as deployer@10.2.16.126
+ DEBUG [616e8800] Command: cd /var/www/scrumboardit/releases/20160510111309 && ( export SYMFONY_ENV="prod" ; php /var/www/scrumboardit/shared/composer.phar install --no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader )
+  INFO [616e8800] Finished in 31.941 seconds with exit status 0 (successful).
+  INFO [322d2943] Running /usr/bin/env php /var/www/scrumboardit/releases/20160510111309/bin/console cache:warmup  --no-debug as deployer@10.2.16.126
+ DEBUG [322d2943] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env php /var/www/scrumboardit/releases/20160510111309/bin/console cache:warmup  --no-debug )
+ DEBUG [322d2943] 	
+ // Warming up the cache for the prod environment with debug false
+ DEBUG [322d2943] 	
+ DEBUG [322d2943] 	 [OK] Cache for the "prod" environment (debug=false) was successfully warmed.                                           
+ DEBUG [322d2943] 	
+  INFO [322d2943] Finished in 0.542 seconds with exit status 0 (successful).
+ DEBUG [48246288] Running if test ! -d /var/www/scrumboardit/releases/20160510111309/web; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309/web'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [48246288] Command: if test ! -d /var/www/scrumboardit/releases/20160510111309/web; then echo "Directory does not exist '/var/www/scrumboardit/releases/20160510111309/web'" 1>&2; false; fi
+ DEBUG [48246288] Finished in 0.013 seconds with exit status 0 (successful).
+  INFO [64abc4e1] Running /usr/bin/env rm -f app_*.php as deployer@10.2.16.126
+ DEBUG [64abc4e1] Command: cd /var/www/scrumboardit/releases/20160510111309/web && ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -f app_*.php )
+  INFO [64abc4e1] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO [0cb84354] Running /usr/bin/env ln -s /var/www/scrumboardit/releases/20160510111309 /var/www/scrumboardit/releases/current as deployer@10.2.16.126
+ DEBUG [0cb84354] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ln -s /var/www/scrumboardit/releases/20160510111309 /var/www/scrumboardit/releases/current )
+  INFO [0cb84354] Finished in 0.007 seconds with exit status 0 (successful).
+  INFO [6ec37add] Running /usr/bin/env mv /var/www/scrumboardit/releases/current /var/www/scrumboardit as deployer@10.2.16.126
+ DEBUG [6ec37add] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env mv /var/www/scrumboardit/releases/current /var/www/scrumboardit )
+  INFO [6ec37add] Finished in 0.011 seconds with exit status 0 (successful).
+ DEBUG [2eee4520] Running /usr/bin/env ls -xtr /var/www/scrumboardit/releases as deployer@10.2.16.126
+ DEBUG [2eee4520] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env ls -xtr /var/www/scrumboardit/releases )
+ DEBUG [2eee4520] 	20160504155744	20160504165855	20160504183919	20160504184319	20160509193340
+20160510111309
+ DEBUG [2eee4520] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO Keeping 5 of 6 deployed releases on 10.2.16.126
+  INFO [9e9b6468] Running /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160504155744 as deployer@10.2.16.126
+ DEBUG [9e9b6468] Command: ( export SYMFONY_ENV="prod" ; /usr/bin/env rm -rf /var/www/scrumboardit/releases/20160504155744 )
+  INFO [9e9b6468] Finished in 0.251 seconds with exit status 0 (successful).
+ DEBUG [cd7f6ea2] Running if test ! -d /var/www/scrumboardit/releases; then echo "Directory does not exist '/var/www/scrumboardit/releases'" 1>&2; false; fi as deployer@10.2.16.126
+ DEBUG [cd7f6ea2] Command: if test ! -d /var/www/scrumboardit/releases; then echo "Directory does not exist '/var/www/scrumboardit/releases'" 1>&2; false; fi
+ DEBUG [cd7f6ea2] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [08b0867c] Running /usr/bin/env echo "Branch master (at d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb) deployed as release 20160510111309 by brieuc" >> /var/www/scrumboardit/revisions.log as deployer@10.2.16.126
+ DEBUG [08b0867c] Command: cd /var/www/scrumboardit/releases && ( export SYMFONY_ENV="prod" ; /usr/bin/env echo "Branch master (at d8f8e5054d4de0e80cfdcbfc6868821a2ae1f0cb) deployed as release 20160510111309 by brieuc" >> /var/www/scrumboardit/revisions.log )
+  INFO [08b0867c] Finished in 0.010 seconds with exit status 0 (successful).
