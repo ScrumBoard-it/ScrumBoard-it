@@ -1,5 +1,5 @@
 <?php
-namespace ScrumBoardItBundle\Api;
+namespace ScrumBoardItBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -59,7 +59,7 @@ abstract class AbstractApi
         curl_close($ch);
         
         if ($httpCode !== 200)
-            throw new HttpException($httpCode);
+            throw new HttpException($httpCode, $content);
         
         return json_decode($content);
     }

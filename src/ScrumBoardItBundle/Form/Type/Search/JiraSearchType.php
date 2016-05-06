@@ -5,6 +5,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 /**
  * Jira search type
  */
@@ -19,16 +20,22 @@ class JiraSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $jiraSearch = $options['data'];
+        dump($jiraSearch);
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Projets',
             'choices' => $jiraSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un projet en cours'
+            'placeholder' => 'Choisissez un projet en cours',
+            'attr' => array(
+                'id' => $jiraSearch->getProject()
+            )
         ))
             ->add('sprint', ChoiceType::class, array(
             'label' => 'Sprints non terminés',
             'choices' => $jiraSearch->getSprints(),
-            'attr' => empty($jiraSearch->getProject()) ? array('disabled' => 'disabled') : array()
+            'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
+                'disabled' => 'disabled'
+            ) : array()
         ));
     }
 

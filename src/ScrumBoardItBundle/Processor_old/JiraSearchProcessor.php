@@ -3,8 +3,8 @@ namespace ScrumBoardItBundle\Processor;
 
 use ScrumBoardItBundle\Api\ApiCallBuilderInterface;
 use ScrumBoardItBundle\Collection\IssuesCollection;
-use ScrumBoardItBundle\Entitie\Task;
-use ScrumBoardItBundle\Entitie\SubTask;
+use ScrumBoardItBundle\Entity\Issue\Task;
+use ScrumBoardItBundle\Entity\Issue\SubTask;
 
 /**
  *
