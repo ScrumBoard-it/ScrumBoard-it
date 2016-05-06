@@ -5,7 +5,7 @@ services:
         class: ScrumBoardItBundle\Security\JiraAuthenticator
         arguments: ['@router','%jira%','@security.rememberme.response_listener']
     jira.api:
-        class: ScrumBoardItBundle\Api\ApiJira
+        class: ScrumBoardItBundle\Services\ApiJira
         arguments: ['@security.token_storage', '%jira%']
             
 #    jira.rest:

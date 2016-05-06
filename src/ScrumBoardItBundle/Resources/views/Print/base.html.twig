@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}Post-it Manager - Base Print{% endblock %}</title>
+<title>{% block title %}Post-it Manager |{{ parent() }}{% endblock %}</title>
 {% stylesheets 'bundles/scrumboardit/css/print.css' filter='cssrewrite'
 %}
 <link rel="stylesheet" href="{{ asset_url }}" />

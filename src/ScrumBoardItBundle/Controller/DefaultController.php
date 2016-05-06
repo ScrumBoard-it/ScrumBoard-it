@@ -4,7 +4,6 @@ namespace ScrumBoardItBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
@@ -80,13 +79,12 @@ class DefaultController extends Controller
      */
     public function printAction(Request $request)
     {
-        $manager = $this->container->get('service.manager');
-        $service = $manager->getService();
-        /* @var $service ScrumBoardItBundle\Service\AbstractService */
+        $service = $this->container->get($this->getUser()
+            ->getConnector() . '.api');
         $selected = $request->request->get('issues');
         
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
-            'issues' => $service->getIssues($selected)
+            'issues' => $service->getSelectedIssues($request, $selected)
         ));
     }
 

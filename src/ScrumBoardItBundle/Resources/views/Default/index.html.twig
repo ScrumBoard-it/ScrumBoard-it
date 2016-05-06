@@ -224,10 +224,10 @@
                 });
                 $("#issues_search").find('select').change(function() {
                     $form = $(this).parents('form');
-                    /*if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
+                    if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
                         $('#jira_search_sprint').val('');
                         $('#jira_search_sprint').attr('disabled', 'disabled');
-                    }*/
+                    }
                     $form.submit();
                 });
             });
