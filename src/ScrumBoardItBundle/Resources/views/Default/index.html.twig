@@ -137,49 +137,46 @@
 			</div>
 		</div>
 		{% endif %}
-		<div class="row">
-			<div class="col-md-4">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					À imprimer <span class="badge">0</span>
+				</div>
+				<ul class="list-group selectable">
+					{% for issue in issues if not issue.printed %} {% block issue %}
+					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
+						name="issues[]" value="{{ issue.project }}" /> <span>{{
+							issue.project }}</span> <span>{{ issue.title }}</span> <span
+						class="badge">{{ issue.complexity }}</span></li> {% endblock %} {%
+					endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<form action="{{ path('print') }}" method="POST" target="_blank">
 				<div class="panel panel-default">
 					<!-- Default panel contents -->
 					<div class="panel-heading">
-						À imprimer <span class="badge">0</span>
+						File d'impression <span class="badge">0</span>
 					</div>
-					<ul class="list-group selectable">
-						{% for issue in issues if not issue.printed %} {% block issue %}
-						<li class="list-group-item {{ issue.type }}"><input
-							type="checkbox" name="issues[]"
-							value="{{ issue.project }}-{{ issue.id }}" /> <span>{{
-								issue.project }}-{{ issue.id }}</span> <span>{{ issue.title }}</span>
-							<span class="badge">{{ issue.complexity }}</span></li> {%
-						endblock %} {% endfor %}
-					</ul>
+					<ul class="list-group" id="printQueue"></ul>
+					<div class="btn-group">
+						<button id="submitPrint" class="btn btn-default">imprimer</button>
+						<button id="addFlag" class="btn btn-default">traité</button>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<form action="{{ path('print') }}" method="POST" target="_blank">
-					<div class="panel panel-default">
-						<!-- Default panel contents -->
-						<div class="panel-heading">
-							File d'impression <span class="badge">0</span>
-						</div>
-						<ul class="list-group" id="printQueue"></ul>
-						<div class="btn-group">
-							<button id="submitPrint" class="btn btn-default">imprimer</button>
-							<button id="addFlag" class="btn btn-default">traité</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<!-- Default panel contents -->
-					<div class="panel-heading">
-						Déjà imprimé(s) <span class="badge">0</span>
-					</div>
-					<ul class="list-group selectable">{% for issue in issues if
-						issue.printed %} {{ block('issue') }} {% endfor %}
-					</ul>
+			</form>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					Déjà imprimé(s) <span class="badge">0</span>
 				</div>
+				<ul class="list-group selectable">{% for issue in issues if
+					issue.printed %} {{ block('issue') }} {% endfor %}
+				</ul>
 			</div>
 		</div>
 	</div>

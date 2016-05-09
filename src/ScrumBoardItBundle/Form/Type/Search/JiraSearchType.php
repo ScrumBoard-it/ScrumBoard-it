@@ -20,7 +20,6 @@ class JiraSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $jiraSearch = $options['data'];
-        dump($jiraSearch);
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Projets',
             'choices' => $jiraSearch->getProjects(),
