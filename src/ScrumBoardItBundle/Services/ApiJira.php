@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class ApiJira extends AbstractApi
 {
+
     /**
      * Rest API
      *
@@ -32,29 +33,35 @@ class ApiJira extends AbstractApi
      * {@inheritdoc}
      *
      */
-    public function getIssues($searchFilters = array())
+    public function searchIssues($searchFilters = array())
     {
-        $issues = array();
         if (! empty($searchFilters['sprint'])) {
             $api = $this->getIssuesApi('sprint=' . $searchFilters['sprint']);
             $data = $this->call($api);
-            
-            foreach ($data->issues as $issue) {
-                if ($issue->fields->issuetype->subtask === true) {
-                    $task = new SubTask();
-                    $task->setUserStory(true);
-                } else {
-                    $task = new Task();
-                    $task->setComplexity($issue->fields->customfield_11108);
-                    $task->setProofOfConcept(false);
-                }
-                $task->setId($issue->id);
-                $task->setProject($issue->key);
-                $task->setTitle($issue->fields->summary);
-                $task->setPrinted(! empty($issue->fields->labels));
-                
-                $issues[$issue->id] = $task;
+            return $this->getIssues($data);
+        }
+        
+        return array();
+    }
+    
+    private function getIssues($data) {
+
+        $issues = array();
+        foreach ($data->issues as $issue) {
+            if ($issue->fields->issuetype->subtask === true) {
+                $task = new SubTask();
+                $task->setUserStory(true);
+            } else {
+                $task = new Task();
+                $task->setComplexity($issue->fields->customfield_11108);
+                $task->setProofOfConcept(false);
             }
+            $task->setId($issue->id);
+            $task->setProject($issue->key);
+            $task->setTitle($issue->fields->summary);
+            $task->setPrinted(! empty($issue->fields->labels));
+        
+            $issues[$issue->id] = $task;
         }
         
         return $issues;
@@ -63,19 +70,16 @@ class ApiJira extends AbstractApi
     public function getSelectedIssues(Request $request, $selected = array())
     {
         $sprint = $request->getSession()->get('filters')['sprint'];
-        dump($sprint);
         if (! empty($selected)) {
-            $jql = 'issueKey in (' . implode(',', $selected) . ')';
+            $jql = 'issueKey IN (' . implode(',', $selected) . ')';
         } elseif (! empty($sprint)) {
-            $template = 'Sprint = %d AND status not in (Closed)';
+            $template = 'sprint=%d AND status not in (Closed)';
             $jql = sprintf($template, $sprint);
         }
         if (! empty($jql)) {
-            $url = $this->getIssuesApi($jql);
-            $results = $this->call($url);
-            dump($results);
-            exit();
-            return $this->call($url);
+            $url = $this->getIssuesApi(urlencode($jql));
+            $data = $this->call($url);
+            return $this->getIssues($data);
         }
         return array();
     }
@@ -88,7 +92,7 @@ class ApiJira extends AbstractApi
     public function getSearchFilters(Request $request)
     {
         $session = $request->getSession();
-        if($session->has('filters'))
+        if ($session->has('filters'))
             $this->initFilters($session);
         $searchFilters = $request->get('jira_search') ?: array();
         
@@ -107,8 +111,9 @@ class ApiJira extends AbstractApi
         
         return $searchFilters;
     }
-    
-    public function initFilters(Session $session) {
+
+    public function initFilters(Session $session)
+    {
         $session->set('filters', array(
             'project' => null,
             'sprint' => null
@@ -127,7 +132,6 @@ class ApiJira extends AbstractApi
         if ($project !== null) {
             $api = $this->getSprintApi($project);
             $data = $this->call($api);
-            
             foreach ($data->values as $sprint) {
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
@@ -149,7 +153,6 @@ class ApiJira extends AbstractApi
     {
         $api = $this->getProjectApi();
         $data = $this->call($api);
-        
         $projects = array();
         foreach ($data->values as $sprint) {
             $projects[$sprint->name] = $sprint->id;

@@ -61,7 +61,7 @@ class DefaultController extends Controller
                 break;
         }
         
-        $issues = $service->getIssues($searchFilters);
+        $issues = $service->searchIssues($searchFilters);
         
         $results = array(
             'form' => $form,

@@ -3,7 +3,7 @@ namespace ScrumBoardItBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  *
@@ -57,9 +57,9 @@ abstract class AbstractApi
         $content = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        
-        if ($httpCode !== 200)
-            throw new HttpException($httpCode, $content);
+        if ($httpCode !== 200) {
+            throw new Exception($httpCode, json_decode($content));
+        }
         
         return json_decode($content);
     }
@@ -75,9 +75,16 @@ abstract class AbstractApi
      * Return the issues list
      *
      * @param array $searchFilters            
-     * @return array
+     * @return \stdClass
      */
-    public abstract function getIssues($searchFilters = null);
+    public abstract function searchIssues($searchFilters = null);
+    
+    /**
+     * Return the selected issues list
+     * @param Request $request
+     * @param array $selected
+     */
+    public abstract function getSelectedIssues(Request $request, $selected);
 
     /**
      * Return the searc list

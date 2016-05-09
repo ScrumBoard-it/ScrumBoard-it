@@ -88,10 +88,6 @@
 >>>>>>> Refactoring
 }
 
-#formJira {
-	margin: auto;
-}
-
 hr.soften {
 	height: 3px;
 	background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0),
@@ -118,4 +114,8 @@ hr.soften {
 
 .log {
 	float: right;
+}
+
+.form-control {
+	margin-bottom: 20px;
 }
