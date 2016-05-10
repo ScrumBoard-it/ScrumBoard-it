@@ -6407,6 +6407,10 @@ th.visible-print, td.visible-print {
 	right: 1em;
 }
 
+#issues_search select {
+    margin-bottom: 20px;
+}
+
 .container {
 	max-width: 100%;
 }
@@ -6416,20 +6420,23 @@ th.visible-print, td.visible-print {
 }
 
 .Absolute-Center {
-	margin: 150px auto;
+  margin:150px auto;
 
-	/*  position: absolute;
+/*  position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;*/
 }
 
 .Absolute-Center.is-Responsive {
-	background-color: #FEF977;
-	width: 50%;
-	height: 50%;
-	min-width: 200px;
-	max-width: 400px;
-	padding: 40px;
-	border-radius: 10px;
+  background-color: #FEF977;
+  width: 50%;
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 10px;
+}
+#formJira{
+    margin:auto;
 }
 
 hr.soften {
