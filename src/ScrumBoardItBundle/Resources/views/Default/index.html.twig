@@ -34,8 +34,8 @@
 				<ul class="list-group selectable">
 					{% for issue in issues if not issue.printed %} {% block issue %}
 					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
-						name="issues[]" value="{{ issue.project }}-{{ issue.id }}" /> <span>{{
-							issue.project }}-{{ issue.id }}</span> <span>{{ issue.title }}</span>
+						name="issues[]" value="{{ issue.project }}" /> <span>{{
+							issue.project }}</span> <span>{{ issue.title }}</span>
 						<span class="badge">{{ issue.complexity }}</span></li> {% endblock
 					%} {% endfor %}
 				</ul>
