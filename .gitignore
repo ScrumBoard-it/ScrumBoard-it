@@ -14,9 +14,13 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+<<<<<<< fddc35e54b8de25830ea3caa3211dce4191f8cea
 nbproject
 Capfile
 /config
 .buildpath
 .project
 .settings
+=======
+nbproject
+>>>>>>> Migrate bundle to full app

@@ -1,0 +1,35 @@
+{% extends "ScrumBoardItBundle::base.html.twig" %}
+
+{% block title %}Connexion | {{ parent() }}{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row ">
+        <div class="Absolute-Center is-Responsive">
+            <div id="formJira">
+                <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+                <hr class="soften">
+                <form action="{{ path('login_check') }}" method="post">
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur" required="required" />
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input class="form-control" type="password" id="password" name="_password" required="required"  placeholder="Mot de passe"/>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- CheckBox remember-me
+                        <input type="checkbox" id="remember_me" name="_remember_me"  />
+                        <label for="remember_me">Se souvenir de moi</label> -->
+                        <button  class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
+                    </div>
+                    {% if error %}
+                    <div class="error">{{ error.message|trans({},'messages') }}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

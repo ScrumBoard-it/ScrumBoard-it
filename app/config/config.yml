@@ -8,13 +8,14 @@ imports:
 parameters:
     locale: en
     issues_service: jira
-    jira_url: http://canaltp.jira.fr
+    jira_url: http://jira.canaltp.fr/
     sprint_id: 12
     jira_tag: ~
     jira: 
-        - host: %jira_url%,
-        - sprint_id: %sprint_id%
-        - tag: %jira_tag%
+        host: %jira_url%
+        rest: 'rest/api/2/user?username='
+        sprint_id: %sprint_id%
+        tag: %jira_tag%
 
 
 framework:
