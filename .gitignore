@@ -14,9 +14,29 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+<<<<<<< a5619904c1e6e71281d4fa83a49ed5f95739272c
+<<<<<<< fddc35e54b8de25830ea3caa3211dce4191f8cea
 nbproject
 Capfile
 /config
 .buildpath
 .project
 .settings
+=======
+nbproject
+>>>>>>> Migrate bundle to full app
+=======
+nbproject
+/config
+Capfile
+<<<<<<< 9ae17235072472f466e33f93304e09b38a51e87c
+>>>>>>> Mdification gitignore pour Capistrano
+=======
+.project
+.settings
+.buildpath
+<<<<<<< ce2955dceb9814af0f84d2ee9996b25512606d49
+>>>>>>> ignore eclipse files
+=======
+/log/
+>>>>>>> update capistrano -> .gitignore /log/
