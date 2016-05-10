@@ -5,7 +5,11 @@ services:
         class: ScrumBoardItBundle\Security\JiraAuthenticator
         arguments: ['@router','%jira%','@security.rememberme.response_listener']
     jira.api:
+<<<<<<< HEAD
         class: ScrumBoardItBundle\Services\ApiJira
+=======
+        class: ScrumBoardItBundle\API\ApiJira
+>>>>>>> brieuc/post-it-manager
         arguments: ['@security.token_storage', '%jira%']
             
 #    jira.rest:

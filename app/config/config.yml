@@ -12,7 +12,11 @@ parameters:
     jira_tag: ~
     jira: 
         host: "%jira_url%"
+<<<<<<< HEAD
         tag: "%jira_tag%"
+=======
+        tag: %jira_tag%
+>>>>>>> brieuc/post-it-manager
 
 framework:
     #esi:             ~

@@ -41,7 +41,11 @@
 }
 
 #issues_search select {
+<<<<<<< HEAD
 	margin-bottom: 20px;
+=======
+    margin-bottom: 20px;
+>>>>>>> brieuc/post-it-manager
 }
 
 .container {
@@ -53,13 +57,40 @@
 }
 
 .Absolute-Center {
+<<<<<<< HEAD
 	margin: 150px auto;
 
 	/*  position: absolute;
+=======
+<<<<<<< 57ff1ade4731b2e75abd5138a313ab5bf3d8ed13
+  margin:150px auto;
+
+/*  position: absolute;
+=======
+	margin: 150px auto;
+
+	/*  position: absolute;
+>>>>>>> Refactoring
+>>>>>>> brieuc/post-it-manager
   top: 0; left: 0; bottom: 0; right: 0;*/
 }
 
 .Absolute-Center.is-Responsive {
+<<<<<<< HEAD
+=======
+<<<<<<< 57ff1ade4731b2e75abd5138a313ab5bf3d8ed13
+  background-color: #FEF977;
+  width: 50%;
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 10px;
+}
+#formJira{
+    margin:auto;
+=======
+>>>>>>> brieuc/post-it-manager
 	background-color: #FEF977;
 	width: 50%;
 	height: 50%;
@@ -67,6 +98,10 @@
 	max-width: 400px;
 	padding: 40px;
 	border-radius: 10px;
+<<<<<<< HEAD
+=======
+>>>>>>> Refactoring
+>>>>>>> brieuc/post-it-manager
 }
 
 #formJira {
@@ -99,8 +134,11 @@ hr.soften {
 
 .log {
 	float: right;
+<<<<<<< HEAD
 }
 
 .form-control {
 	margin-bottom: 20px;
+=======
+>>>>>>> brieuc/post-it-manager
 }

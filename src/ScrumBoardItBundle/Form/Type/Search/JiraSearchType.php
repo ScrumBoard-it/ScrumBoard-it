@@ -1,7 +1,11 @@
 <?php
 namespace ScrumBoardItBundle\Form\Type\Search;
 
+<<<<<<< HEAD
 use Symfony\Component\OptionsResolver\OptionsResolver;
+=======
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+>>>>>>> brieuc/post-it-manager
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,6 +25,7 @@ class JiraSearchType extends AbstractType
     {
         $jiraSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
+<<<<<<< HEAD
             'label' => 'Projets',
             'choices' => $jiraSearch->getProjects(),
             'empty_data' => null,
@@ -35,6 +40,15 @@ class JiraSearchType extends AbstractType
             'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
                 'disabled' => 'disabled'
             ) : array()
+=======
+            'choices' => $jiraSearch->getProjects(),
+            'label' => 'Projets',
+            'empty_data' => null
+        ))
+            ->add('sprint', ChoiceType::class, array(
+            'label' => 'Sprints',
+            'choices' => $jiraSearch->getSprints()
+>>>>>>> brieuc/post-it-manager
         ));
     }
 
@@ -43,7 +57,11 @@ class JiraSearchType extends AbstractType
      * {@inheritdoc}
      *
      */
+<<<<<<< HEAD
     public function configureOptions(OptionsResolver $resolver)
+=======
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+>>>>>>> brieuc/post-it-manager
     {
         $resolver->setDefaults(array(
             'data_class' => 'ScrumBoardItBundle\Entity\Search\JiraSearch'
