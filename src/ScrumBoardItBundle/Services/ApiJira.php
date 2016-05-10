@@ -50,16 +50,15 @@ class ApiJira extends AbstractApi
         foreach ($data->issues as $issue) {
             if ($issue->fields->issuetype->subtask === true) {
                 $task = new SubTask();
-                $task->setUserStory(true);
             } else {
                 $task = new Task();
                 $task->setComplexity($issue->fields->customfield_11108);
-                $task->setProofOfConcept(false);
+                $task->setUserStory(true);
             }
             $task->setId($issue->id);
             $task->setProject($issue->key);
             $task->setTitle($issue->fields->summary);
-            $task->setPrinted(! empty($issue->fields->labels));
+            $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
         
             $issues[$issue->id] = $task;
         }
