@@ -1,7 +1,11 @@
 <?php
 namespace ScrumBoardItBundle\Collection;
 
+<<<<<<< a0df371f1f85b80f2e1618d9b067030d71cdb1fa:src/CanalTP/ScrumBoardItBundle/Collection/IssuesCollectionInterface.php
 use CanalTP\ScrumBoardItBundle\Entity\IssueInterface;
+=======
+use ScrumBoardItBundle\Entitie\IssueInterface;
+>>>>>>> 15/04/2016 Refonte sécurité (mise à jour des services):src/ScrumBoardItBundle/Collection/IssuesCollectionInterface.php
 
 /**
  *

@@ -149,3 +149,4 @@ class User implements UserInterface, EquatableInterface
         // Mot de passe encodé dans le hash
     }
 }
+

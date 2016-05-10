@@ -26,6 +26,7 @@ class JiraSearch extends AbstractSearch
         $this->sprints = $searchFilters['sprints'];
     }
     
+
     /**
      * Sprints getter
      * 
@@ -60,6 +61,7 @@ class JiraSearch extends AbstractSearch
     }
 
     /**
+
      * Sprint setter
      * 
      * @param int $sprint            

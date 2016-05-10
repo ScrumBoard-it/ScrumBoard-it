@@ -15,6 +15,10 @@ class WebServiceUserProvider implements UserProviderInterface
         ]);
     }
 
+    public function refreshUser(UserInterface $user) {
+        if (!$user instanceof User) {
+    }
+
     public function refreshUser(UserInterface $user)
     {
         if (! $user instanceof User) {
