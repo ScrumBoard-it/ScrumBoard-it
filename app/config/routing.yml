@@ -1,0 +1,4 @@
+sbi:
+    resource: "@CanalTPScrumBoardItBundle/Controller/"
+    type:     annotation
+
