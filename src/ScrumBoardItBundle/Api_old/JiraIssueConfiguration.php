@@ -2,11 +2,7 @@
 namespace ScrumBoardItBundle\Api;
 
 /**
-<<<<<<< 57ff1ade4731b2e75abd5138a313ab5bf3d8ed13:src/ScrumBoardItBundle/Api/JiraIssueConfiguration.php
- * Jira issuer configuration
-=======
- *
->>>>>>> Refactoring:src/ScrumBoardItBundle/Api_old/JiraIssueConfiguration.php
+ * Jira issue configuration
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class JiraIssueConfiguration extends JiraConfiguration

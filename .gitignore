@@ -14,7 +14,4 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-<<<<<<< HEAD
 /web/css/
-=======
->>>>>>> brieuc/post-it-manager

@@ -1,7 +1,6 @@
 <?php
 namespace ScrumBoardItBundle\Entity\Search;
 
-<<<<<<< HEAD
 use ScrumBoardItBundle\Entity\Search\AbstractSearch;
 /**
  * Jira search
@@ -17,61 +16,17 @@ class JiraSearch extends AbstractSearch
     
     /**
      * Sprints
-=======
-/**
- * Jira search
- */
-class JiraSearch
-{
-
-    /**
-     * Projects
-     * 
-     * @var array $projects
-     */
-    private $projects = array();
-
-    /**
-     * Sprints
-     * 
->>>>>>> brieuc/post-it-manager
      * @var array $sprints
      */
     private $sprints = array();
 
-<<<<<<< HEAD
     public function __construct($searchFilters) {
         parent::__construct($searchFilters);
         $this->sprint = $searchFilters['sprint'];
         $this->sprints = $searchFilters['sprints'];
     }
     
-=======
-    /**
-     * Project ID
-     * 
-     * @var int $project
-     */
-    private $project;
 
-    /**
-     * Sprint ID
-     * 
-     * @var int $sprint
-     */
-    private $sprint;
-
-    /**
-     * Projects getter
-     * 
-     * @return array
-     */
-    function getProjects()
-    {
-        return $this->projects;
-    }
-
->>>>>>> brieuc/post-it-manager
     /**
      * Sprints getter
      * 
@@ -83,22 +38,6 @@ class JiraSearch
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * Projects setter
-     * 
-     * @param array $projects            
-     * @return self
-     */
-    function setProjects($projects)
-    {
-        $this->projects = $projects;
-        
-        return $this;
-    }
-
-    /**
->>>>>>> brieuc/post-it-manager
      * Sprints setter
      * 
      * @param array $sprints            
@@ -112,19 +51,6 @@ class JiraSearch
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * Project getter
-     * 
-     * @return int
-     */
-    function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
->>>>>>> brieuc/post-it-manager
      * Sprint getter
      * 
      * @return int
@@ -135,22 +61,6 @@ class JiraSearch
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * Project setter
-     * 
-     * @param int $project            
-     * @return self
-     */
-    function setProject($project)
-    {
-        $this->project = $project;
-        
-        return $this;
-    }
-
-    /**
->>>>>>> brieuc/post-it-manager
      * Sprint setter
      * 
      * @param int $sprint            
