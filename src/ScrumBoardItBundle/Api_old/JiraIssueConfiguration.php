@@ -1,9 +1,8 @@
 <?php
-
 namespace ScrumBoardItBundle\Api;
 
 /**
- * Jira issuer configuration
+ * Jira issue configuration
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class JiraIssueConfiguration extends JiraConfiguration
@@ -21,7 +20,8 @@ class JiraIssueConfiguration extends JiraConfiguration
     {
         parent::__construct();
         $this->setUri('issue');
-        $this->baseUri = $this->getUri();
+
+        $this->baseUri = $this->getUri() . '/';
         $this->setMethod('PUT');
     }
 
@@ -32,8 +32,8 @@ class JiraIssueConfiguration extends JiraConfiguration
      */
     public function setIssueId($issueId)
     {
-        $this->uri = $this->baseUri.'/'.$issueId;
-
+        $this->uri = $this->baseUri . $issueId;
+        
         return $this;
     }
 }

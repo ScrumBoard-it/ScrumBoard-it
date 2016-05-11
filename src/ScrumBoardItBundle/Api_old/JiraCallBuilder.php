@@ -1,22 +1,25 @@
 <?php
-
 namespace ScrumBoardItBundle\Api;
 
 use ScrumBoardItBundle\Exception\InvalidOptionException;
 use ScrumBoardItBundle\Processor\ProcessorFactory;
 
 /**
+ *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class JiraCallBuilder implements ApiCallBuilderInterface
 {
+
     protected $apiConfiguration;
+
     protected $options;
+
     protected $result;
 
     public function __construct(array $options = array())
     {
-        if (!empty($options)) {
+        if (! empty($options)) {
             $this->setOptions($options);
         }
     }
@@ -44,7 +47,7 @@ class JiraCallBuilder implements ApiCallBuilderInterface
     public function setResult($result)
     {
         $this->result = $result;
-
+        
         return $this;
     }
 
@@ -58,15 +61,15 @@ class JiraCallBuilder implements ApiCallBuilderInterface
         if (empty($this->options['login']) || empty($this->options['password'])) {
             throw new InvalidOptionException('login or password');
         }
-        $authorization = base64_encode($this->options['login'].':'.$this->options['password']);
+        $authorization = base64_encode($this->options['login'] . ':' . $this->options['password']);
         $curl = curl_init();
         $headers = array(
             'Accept: application/json',
             'Content-Type: application/json',
-            'Authorization: Basic '.$authorization,
+            'Authorization: Basic ' . $authorization
         );
         $config = $this->getApiConfiguration();
-        $url = $this->options['host'].$config->getUri();
+        $url = $this->options['host'] . $config->getUri();
         $params = $config->getParameters();
         switch ($config->getMethod()) {
             case 'PUT':
@@ -75,19 +78,19 @@ class JiraCallBuilder implements ApiCallBuilderInterface
                 break;
             case 'GET':
             default:
-                if (!empty($params)) {
-                    $url .= $this->getQuery($params);
+                if (! empty($params)) {
+                    $url .= '?' . http_build_query($params);
                 }
                 break;
         }
-        # handle jira null pointer exception if no user agent
+        // handle jira null pointer exception if no user agent
         curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $this->setResult(curl_exec($curl));
         curl_close($curl);
-
+        
         return $this->process();
     }
 
@@ -99,7 +102,7 @@ class JiraCallBuilder implements ApiCallBuilderInterface
             $processor = $factory->get($name);
             $processor->handle();
         }
-
+        
         return $this->getResult();
     }
 

@@ -1,6 +1,5 @@
 <?php
-
-namespace ScrumBoardItBundle\Entitie;
+namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
  * Description of Task.
@@ -9,6 +8,12 @@ namespace ScrumBoardItBundle\Entitie;
  */
 class Task extends AbstractIssue
 {
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function __construct()
     {
         $this->setType('task');
