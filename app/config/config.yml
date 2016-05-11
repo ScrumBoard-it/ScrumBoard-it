@@ -9,14 +9,10 @@ parameters:
     locale: en
     issues_service: jira
     jira_url: http://jira.canaltp.fr/
-    sprint_id: 12
     jira_tag: ~
     jira: 
-        host: %jira_url%
-        rest: 'rest/api/2/user?username='
-        sprint_id: %sprint_id%
+        host: "%jira_url%"
         tag: %jira_tag%
-
 
 framework:
     #esi:             ~

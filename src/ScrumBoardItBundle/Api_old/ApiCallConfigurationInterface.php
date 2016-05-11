@@ -1,20 +1,26 @@
 <?php
-
 namespace ScrumBoardItBundle\Api;
 
 /**
+ *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 abstract class ApiCallConfigurationInterface
 {
+
     protected $uri;
+
     protected $parameters;
+
     protected $processors;
+
     protected $method;
 
     public function __construct()
     {
-        $this->setProcessors(array('JsonToObject'));
+        $this->setProcessors(array(
+            'JsonToObject'
+        ));
         $this->setMethod('GET');
     }
 
@@ -31,14 +37,14 @@ abstract class ApiCallConfigurationInterface
     public function setUri($uri)
     {
         $this->uri = $uri;
-
+        
         return $this;
     }
 
     public function setParameters($parameters)
     {
         $this->parameters = $parameters;
-
+        
         return $this;
     }
 
@@ -50,7 +56,7 @@ abstract class ApiCallConfigurationInterface
     public function setProcessors(array $processors)
     {
         $this->processors = $processors;
-
+        
         return $this;
     }
 
@@ -62,7 +68,7 @@ abstract class ApiCallConfigurationInterface
     public function setMethod($method)
     {
         $this->method = $method;
-
+        
         return $this;
     }
 }

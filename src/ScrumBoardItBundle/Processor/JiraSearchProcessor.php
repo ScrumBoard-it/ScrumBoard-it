@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Processor;
 
 use ScrumBoardItBundle\Api\ApiCallBuilderInterface;
@@ -8,11 +7,14 @@ use ScrumBoardItBundle\Entitie\Task;
 use ScrumBoardItBundle\Entitie\SubTask;
 
 /**
+ *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class JiraSearchProcessor extends AbstractProcessor
 {
+
     private $collection;
+
     private $printedTag;
 
     public function __construct()
@@ -53,7 +55,7 @@ class JiraSearchProcessor extends AbstractProcessor
     private function hydrateTask($issue)
     {
         $task = new Task();
-        list($project, $id) = explode('-', $issue->key, 2);
+        list ($project, $id) = explode('-', $issue->key, 2);
         $task->setProject($project);
         $task->setId($id);
         $task->setLink($issue->self);
@@ -67,7 +69,7 @@ class JiraSearchProcessor extends AbstractProcessor
                 $task->setProofOfConcept(true);
             }
         }
-
+        
         $description = preg_replace('#h3\.(.+)$#isU', '', $issue->fields->description);
         $task->setDescription($description);
         if (isset($issue->fields->customfield_11108)) {
@@ -83,13 +85,13 @@ class JiraSearchProcessor extends AbstractProcessor
     private function hydrateSubTask($issue)
     {
         $task = new SubTask();
-        list($project, $id) = explode('-', $issue->key, 2);
+        list ($project, $id) = explode('-', $issue->key, 2);
         $task->setProject($project);
         $task->setId($id);
         $task->setLink($issue->self);
         $task->setPrinted(in_array($this->printedTag, $issue->fields->labels));
         $task->setTimeBox($issue->fields->timeoriginalestimate);
-
+        
         if (isset($issue->fields->customfield_11108)) {
             $task->setComplexity($issue->fields->customfield_11108);
         }
@@ -99,7 +101,7 @@ class JiraSearchProcessor extends AbstractProcessor
         $task->setTitle($issue->fields->summary);
         $parts = explode('-', $issue->fields->parent->key, 2);
         $task->setTask($parts[1]);
-
+        
         return $task;
     }
 }

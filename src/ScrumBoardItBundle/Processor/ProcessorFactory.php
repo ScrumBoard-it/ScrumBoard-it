@@ -1,5 +1,4 @@
 <?php
-
 namespace ScrumBoardItBundle\Processor;
 
 use ScrumBoardItBundle\FactoryInterface;
@@ -11,6 +10,7 @@ use ScrumBoardItBundle\FactoryInterface;
  */
 class ProcessorFactory extends FactoryInterface
 {
+
     private $context;
 
     public function __construct($suffix = null)
@@ -21,7 +21,7 @@ class ProcessorFactory extends FactoryInterface
     public function get($name)
     {
         $service = parent::get($name);
-
+        
         return $service->setContext($this->getContext());
     }
 
@@ -33,7 +33,7 @@ class ProcessorFactory extends FactoryInterface
     public function setContext($context)
     {
         $this->context = $context;
-
+        
         return $this;
     }
 }
