@@ -1,5 +1,5 @@
 <?php
-namespace ScrumBoardItBundle\IssuesProvider;
+namespace ScrumBoardItBundle\IssuesProvider_old;
 
 /**
  *

@@ -1,7 +1,7 @@
 <?php
-namespace ScrumBoardItBundle\IssuesProvider;
+namespace ScrumBoardItBundle\IssuesProvider_old;
 
-use ScrumBoardItBundle\Processor\ApiProcessorInterface;
+use ScrumBoardItBundle\Processor_old\ApiProcessorInterface;
 
 /**
  * Description of JiraIssuesProvider.

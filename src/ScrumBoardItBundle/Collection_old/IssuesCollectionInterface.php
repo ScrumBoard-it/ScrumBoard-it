@@ -1,7 +1,7 @@
 <?php
-namespace ScrumBoardItBundle\Collection;
+namespace ScrumBoardItBundle\Collection_old;
 
-use CanalTP\ScrumBoardItBundle\Entity\IssueInterface;
+use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 
 /**
  *

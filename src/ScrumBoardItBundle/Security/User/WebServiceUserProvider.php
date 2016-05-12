@@ -4,6 +4,7 @@ namespace ScrumBoardItBundle\Security\User;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ScrumBoardItBundle\Entity\User;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class WebServiceUserProvider implements UserProviderInterface
 {
@@ -13,10 +14,6 @@ class WebServiceUserProvider implements UserProviderInterface
         return new User($username, [
             'ROLE_AUTHENTICATED'
         ]);
-    }
-
-    public function refreshUser(UserInterface $user) {
-        if (!$user instanceof User) {
     }
 
     public function refreshUser(UserInterface $user)
