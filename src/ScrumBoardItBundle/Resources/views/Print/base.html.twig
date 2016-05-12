@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Post-it Manager - Base Print{% endblock %}</title>
+{% stylesheets 'bundles/scrumboardit/css/print.css' filter='cssrewrite'
+%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+</head>
+<body class="base">
+	<div class="container">
+		<div class="page">
+			{% for i in 1..6 %}
+			<div class="post-it item{{ i }}"></div>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

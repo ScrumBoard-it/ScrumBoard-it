@@ -14,9 +14,4 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-nbproject
-Capfile
-/config
-.buildpath
-.project
-.settings
+/web/css/
