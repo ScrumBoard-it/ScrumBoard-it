@@ -1,7 +1,7 @@
 <?php
 namespace ScrumBoardItBundle\Form\Type\Search;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,13 +21,20 @@ class JiraSearchType extends AbstractType
     {
         $jiraSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'choices' => $jiraSearch->getProjects(),
             'label' => 'Projets',
-            'empty_data' => null
+            'choices' => $jiraSearch->getProjects(),
+            'empty_data' => null,
+            'placeholder' => 'Choisissez un projet en cours',
+            'attr' => array(
+                'id' => $jiraSearch->getProject()
+            )
         ))
             ->add('sprint', ChoiceType::class, array(
-            'label' => 'Sprints',
-            'choices' => $jiraSearch->getSprints()
+            'label' => 'Sprints non terminés',
+            'choices' => $jiraSearch->getSprints(),
+            'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
+                'disabled' => 'disabled'
+            ) : array()
         ));
     }
 
@@ -36,7 +43,7 @@ class JiraSearchType extends AbstractType
      * {@inheritdoc}
      *
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'ScrumBoardItBundle\Entity\Search\JiraSearch'
@@ -53,4 +60,3 @@ class JiraSearchType extends AbstractType
         return 'jira_search';
     }
 }
-

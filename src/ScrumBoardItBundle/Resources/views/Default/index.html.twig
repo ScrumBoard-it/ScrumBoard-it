@@ -34,8 +34,8 @@
 				<ul class="list-group selectable">
 					{% for issue in issues if not issue.printed %} {% block issue %}
 					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
-						name="issues[]" value="{{ issue.project }}-{{ issue.id }}" /> <span>{{
-							issue.project }}-{{ issue.id }}</span> <span>{{ issue.title }}</span>
+						name="issues[]" value="{{ issue.project }}" /> <span>{{
+							issue.project }}</span> <span>{{ issue.title }}</span>
 						<span class="badge">{{ issue.complexity }}</span></li> {% endblock
 					%} {% endfor %}
 				</ul>
@@ -107,23 +107,15 @@
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
                 });
-                $("#issues_search").find('select').on('change', function () {
-                    var project = $('#form_project').size() ? $('#form_project').val() : null,
-                        sprint = $('#form_sprint').size() ? $('#form_sprint').val() : null;
-                    console.log(project, sprint);
-                    $.ajax({
-                        url: "{{ path('issues') }}",
-                        type: "GET",
-                        data: {},
-                        success: refreshForm(),
-                        error: console.log(),
-                        dataType: 'json',
-                    });
-                });
 
-                function refreshForm() {
-                    console.log("Form refresh");
-                }
+                $("#issues_search").find('select').change(function() {
+                    $form = $(this).parents('form');
+                    if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
+                        $('#jira_search_sprint').val('');
+                        $('#jira_search_sprint').attr('disabled', 'disabled');
+                    }
+                    $form.submit();
+                });
             });
         </script>
 {% endblock %}
