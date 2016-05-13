@@ -23,7 +23,7 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('login_check'));
+        return $this->redirect($this->generateUrl('login'));
     }
 
     /**
@@ -32,6 +32,7 @@ class DefaultController extends Controller
      */
     public function home(Request $request)
     {
+        dump($this->getUser());
         $results = $this->issuesAction($request);
         
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(

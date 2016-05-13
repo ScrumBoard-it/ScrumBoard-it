@@ -9,10 +9,15 @@ parameters:
     locale: en
     issues_service: jira
     jira_url: http://jira.canaltp.fr/
+    github_url: https://api.github.com/
     jira_tag: ~
+    github_tag: ~
     jira: 
         host: "%jira_url%"
         tag: "%jira_tag%"
+    github:
+        host: "%github_url%"
+        tag: "%github_tag%"
 
 framework:
     #esi:             ~

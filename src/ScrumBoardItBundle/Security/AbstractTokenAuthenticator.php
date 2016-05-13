@@ -29,10 +29,10 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/login_check' || ! $request->isMethod('POST')) {
+        // Check if we come from the login form and if the requested api is the current one
+        if ($request->getPathInfo() != '/login_check' || ! $request->isMethod('POST') || $this->getApi() != $request->request->get('_api')) {
             return;
         }
-        
         return [
             'username' => $request->request->get('_username'),
             'password' => $request->request->get('_password')
@@ -44,6 +44,8 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
+    protected abstract function getApi();
+
     public abstract function checkCredentials($credentials, UserInterface $user);
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -52,7 +54,6 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
             'exception' => $exception,
             'message' => "Nom d'utilisateur ou mot de passe incorrect"
         ));
-        
         return new RedirectResponse($this->router->generate('login'));
     }
 
@@ -68,7 +69,9 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
             'message' => "Authentification nécessaire"
         ));
         
-        return new RedirectResponse($this->router->generate('login'));
+        dump('start');
+        $url = $this->router->generate('login');
+        return new RedirectResponse($url);
     }
 
     public function supportsRememberMe()

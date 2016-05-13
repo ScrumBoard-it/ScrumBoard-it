@@ -15,7 +15,6 @@ class SecurityController extends Controller
 
     /**
      * @Route("/login", name="login")
-     * @Route("/logout", name="logout")
      *
      * @param Request $request            
      * @return Response
@@ -23,8 +22,9 @@ class SecurityController extends Controller
     public function loginAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
-            return $this->redirect($this->generateUrl('home'));
+            return $this->redirectToRoute('home');
         }
+        
         $authenticationUtils = $this->get('security.authentication_utils');
         
         // get the login error if there is one
@@ -34,7 +34,6 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
         
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
-            // last username entered by the user
             'last_username' => $lastUsername,
             'error' => $error
         ));
@@ -42,15 +41,13 @@ class SecurityController extends Controller
 
     /**
      * @Route("/login_check", name="login_check")
-     *
-     * @return type
      */
     public function loginCheckAction()
-    {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
-            return $this->redirect($this->generateUrl('home'));
-        } else {
-            return $this->redirect($this->generateUrl('login'));
-        }
-    }
+    {}
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {}
 }
