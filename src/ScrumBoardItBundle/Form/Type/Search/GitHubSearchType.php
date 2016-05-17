@@ -28,7 +28,8 @@ class GitHubSearchType extends AbstractType
         ->add('sprint', ChoiceType::class, array(
             'label' => 'Sprints non terminés',
             'choices' => $gitHubSearch->getSprints(),
-            'attr' => (empty($gitHubSearch->getProject()) || empty($gitHubSearch->getSprint())) ? array(
+            'placeholder' => 'Sélectionnez un sprint en cours',
+            'attr' => (empty($gitHubSearch->getProject()) || empty($gitHubSearch->getSprints())) ? array(
                 'disabled' => 'disabled'
             ) : array()
         ));

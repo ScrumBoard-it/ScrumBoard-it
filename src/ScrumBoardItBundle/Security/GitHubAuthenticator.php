@@ -9,7 +9,6 @@ class GitHubAuthenticator extends AbstractTokenAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        dump('github check');
         $login = $user->getUsername();
         $password = $credentials['password'];
         $user->setHash("$login:$password");

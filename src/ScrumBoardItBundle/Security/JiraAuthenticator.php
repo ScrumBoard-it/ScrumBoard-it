@@ -9,7 +9,6 @@ class JiraAuthenticator extends AbstractTokenAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        dump('check jira');
         $login = $user->getUsername();
         $password = $credentials['password'];
         $user->setHash("$login:$password");

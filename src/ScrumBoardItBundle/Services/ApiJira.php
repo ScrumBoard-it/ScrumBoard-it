@@ -101,7 +101,6 @@ class ApiJira extends AbstractApi
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
         if (empty($searchFilters['sprint']))
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
-        $this->sprint = $searchFilters['sprint'];
         
         $session->set('filters', array(
             'project' => $searchFilters['project'],
@@ -111,19 +110,10 @@ class ApiJira extends AbstractApi
         return $searchFilters;
     }
 
-    public function initFilters(Session $session)
-    {
-        $session->set('filters', array(
-            'project' => null,
-            'sprint' => null
-        ));
-    }
-
     /**
-     * Sprints getter according to a project
      *
-     * @param int $project            
-     * @return array
+     * {@inheritdoc}
+     *
      */
     public function getSprints($project)
     {
@@ -153,8 +143,8 @@ class ApiJira extends AbstractApi
         $api = $this->getProjectApi();
         $data = $this->call($api);
         $projects = array();
-        foreach ($data->values as $sprint) {
-            $projects[$sprint->name] = $sprint->id;
+        foreach ($data->values as $project) {
+            $projects[$project->name] = $project->id;
         }
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
         

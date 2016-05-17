@@ -12,9 +12,9 @@
 	<div class="row">
 		<form id="issues_search" class="form-inline">
 			<div class="form-group col-md-4">{{ form_row(form.project, {'attr':
-				{'id': 'form_project', 'class': 'form-control'} }) }}</div>
+				{'id': 'form_project', 'class': 'form-control search_project'} }) }}</div>
 			<div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
-				{'id': 'form_sprint', 'class': 'form-control'} }) }}</div>
+				{'id': 'form_sprint', 'class': 'form-control search_sprint'} }) }}</div>
 		</form>
 	</div>
 	<div class="row">
@@ -109,9 +109,9 @@
                 });
                 $("#issues_search").find('select').change(function() {
                     $form = $(this).parents('form');
-                    if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
-                        $('#jira_search_sprint').val('');
-                        $('#jira_search_sprint').attr('disabled', 'disabled');
+                    if ($(this).hasClass('search_project') && $('.search_sprint').size()) {
+                        $('.search_sprint').val('');
+                        $('search_sprint').attr('disabled', 'disabled');
                     }
                     $form.submit();
                 });

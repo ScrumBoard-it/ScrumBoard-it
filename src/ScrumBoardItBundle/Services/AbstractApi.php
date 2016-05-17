@@ -4,6 +4,7 @@ namespace ScrumBoardItBundle\Services;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  *
@@ -50,7 +51,10 @@ abstract class AbstractApi
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $this->getUser()->getHash()
+            'Authorization: Basic ' . $this->getUser()->getHash() .
+            "\naccept: application/json
+            \naccept-language: en-US,en;q=0.8
+            \nuser-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
         ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
@@ -64,12 +68,26 @@ abstract class AbstractApi
         return json_decode($content);
     }
 
+    protected function initFilters(Session $session)
+    {
+        $session->set('filters', array(
+            'project' => null,
+            'sprint' => null
+        ));
+    }
+
     /**
      * Return the projects list
      *
      * @return array
      */
     public abstract function getProjects();
+    
+    /**
+     * Return the sprints list according to a project
+     * @param string $project
+     */
+    public abstract function getSprints($project);
 
     /**
      * Return the issues list
