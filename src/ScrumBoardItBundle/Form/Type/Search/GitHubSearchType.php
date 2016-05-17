@@ -1,16 +1,13 @@
 <?php
 namespace ScrumBoardItBundle\Form\Type\Search;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
+
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
 
-/**
- * Jira search type
- */
-class JiraSearchType extends AbstractType
+class GitHubSearchType extends AbstractType
 {
-
     /**
      *
      * {@inheritdoc}
@@ -18,25 +15,25 @@ class JiraSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $jiraSearch = $options['data'];
+        $gitHubSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Projets',
-            'choices' => $jiraSearch->getProjects(),
+            'choices' => $gitHubSearch->getProjects(),
             'empty_data' => null,
             'placeholder' => 'Choisissez un projet en cours',
             'attr' => array(
-                'id' => $jiraSearch->getProject()
+                'id' => $gitHubSearch->getProject()
             )
         ))
-            ->add('sprint', ChoiceType::class, array(
+        ->add('sprint', ChoiceType::class, array(
             'label' => 'Sprints non terminés',
-            'choices' => $jiraSearch->getSprints(),
-            'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
+            'choices' => $gitHubSearch->getSprints(),
+            'attr' => (empty($gitHubSearch->getProject()) || empty($gitHubSearch->getSprint())) ? array(
                 'disabled' => 'disabled'
             ) : array()
         ));
     }
-
+    
     /**
      *
      * {@inheritdoc}
@@ -48,7 +45,7 @@ class JiraSearchType extends AbstractType
             'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity'
         ));
     }
-
+    
     /**
      *
      * {@inheritdoc}
@@ -56,7 +53,6 @@ class JiraSearchType extends AbstractType
      */
     public function getName()
     {
-        return 'jira_search';
+        return 'github_search';
     }
 }
-

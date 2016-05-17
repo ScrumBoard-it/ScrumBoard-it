@@ -29,7 +29,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getCredentials(Request $request)
     {
-        // Check if we come from the login form and if the requested api is the current one
+        // Check if request comes from the login form and if the requested api is the current one
         if ($request->getPathInfo() != '/login_check' || ! $request->isMethod('POST') || $this->getApi() != $request->request->get('_api')) {
             return;
         }
@@ -54,7 +54,9 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
             'exception' => $exception,
             'message' => "Nom d'utilisateur ou mot de passe incorrect"
         ));
-        return new RedirectResponse($this->router->generate('login'));
+        $url=$this->router->generate('login');
+        
+        return new RedirectResponse($url);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -68,9 +70,8 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
             'exception' => $authException,
             'message' => "Authentification nécessaire"
         ));
-        
-        dump('start');
         $url = $this->router->generate('login');
+        
         return new RedirectResponse($url);
     }
 

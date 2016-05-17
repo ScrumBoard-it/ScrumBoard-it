@@ -1,7 +1,7 @@
 <?php
 namespace ScrumBoardItBundle\Entity\Search;
 
-abstract class AbstractSearch {
+class SearchEntity {
     /**
     * Projects
     *
@@ -17,6 +17,19 @@ abstract class AbstractSearch {
     private $project;
     
     /**
+     * Sprint ID
+     *
+     * @var int $sprint
+     */
+    private $sprint;
+    
+    /**
+     * Sprints
+     * @var array $sprints
+     */
+    private $sprints = array();
+    
+    /**
      * Projects getter
      *
      * @return array
@@ -30,6 +43,8 @@ abstract class AbstractSearch {
     public function __construct($searchFilters) {
         $this->project = $searchFilters['project'];
         $this->projects = $searchFilters['projects'];
+        $this->sprint = $searchFilters['sprint'];
+        $this->sprints = $searchFilters['sprints'];
     }
     
     /**
@@ -67,4 +82,52 @@ abstract class AbstractSearch {
         
         return $this;
     }
+    
+    /**
+     * Sprints getter
+     *
+     * @return array
+     */
+    function getSprints()
+    {
+        return $this->sprints;
+    }
+    
+    /**
+     * Sprints setter
+     *
+     * @param array $sprints
+     * @return self
+     */
+    function setSprints($sprints)
+    {
+        $this->sprints = $sprints;
+    
+        return $this;
+    }
+    
+    /**
+     * Sprint getter
+     *
+     * @return int
+     */
+    function getSprint()
+    {
+        return $this->sprint;
+    }
+    
+    /**
+    
+    * Sprint setter
+    *
+    * @param int $sprint
+    * @return self
+    */
+    function setSprint($sprint)
+    {
+        $this->sprint = $sprint;
+    
+        return $this;
+    }
+    
 }

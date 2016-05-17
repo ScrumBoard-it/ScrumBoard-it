@@ -34,6 +34,7 @@ class GitHubAuthenticator extends AbstractTokenAuthenticator
             $user->setEmail($data->email);
             $user->setDisplayName($data->name);
             $user->setImgUrl($data->avatar_url);
+            $user->setApi($this->getApi());
             return true;
         }
         return false;

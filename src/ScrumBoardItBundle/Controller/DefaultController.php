@@ -7,7 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
-use ScrumBoardItBundle\Entity\Search\JiraSearch;
+use ScrumBoardItBundle\Form\Type\Search\GitHubSearchType;
+use ScrumBoardItBundle\Entity\Search\SearchEntity;
 
 /**
  * controller of navigation.
@@ -32,7 +33,6 @@ class DefaultController extends Controller
      */
     public function home(Request $request)
     {
-        dump($this->getUser());
         $results = $this->issuesAction($request);
         
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
@@ -54,11 +54,14 @@ class DefaultController extends Controller
         $service = $this->container->get($this->getUser()
             ->getConnector() . '.api');
         $searchFilters = $service->getSearchFilters($request);
+        $search = new SearchEntity($searchFilters);
         
         switch ($this->getUser()->getConnector()) {
             case 'jira':
-                $jiraSearch = new JiraSearch($searchFilters);
-                $form = $this->createForm(JiraSearchType::class, $jiraSearch);
+                $form = $this->createForm(JiraSearchType::class, $search);
+                break;
+            case 'github':
+                $form = $this->createForm(GitHubSearchType::class, $search);
                 break;
         }
         

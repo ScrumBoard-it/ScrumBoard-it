@@ -10,6 +10,9 @@ services:
     jira.api:
         class: ScrumBoardItBundle\Services\ApiJira
         arguments: ['@security.token_storage', '%jira%']
+    github.api:
+        class: ScrumBoardItBundle\Services\ApiGitHub
+        arguments: ['@security.token_storage', '%github%']
             
 #    jira.rest:
 #        class: ScrumBoardItBundle\Jira\User\JiraRest
