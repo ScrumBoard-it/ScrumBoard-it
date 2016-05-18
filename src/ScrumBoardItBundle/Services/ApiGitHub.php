@@ -61,7 +61,7 @@ class ApiGitHub extends AbstractApi
         foreach ($data as $issue) {
             $task = new Task();
             $task->setUserStory(true);
-            $task->setId($issue->number);
+            $task->setId($issue->id);
             $task->setProject($searchFilters['project']);
             $task->setTitle($issue->title);
             
@@ -77,7 +77,16 @@ class ApiGitHub extends AbstractApi
      *
      */
     public function getSelectedIssues(Request $request, $selected)
-    {}
+    {
+        $filters = $request->getSession()->get('filters');
+        if(empty($selected)) {
+            $url = 'repos/' . $request->getUser()->getUsername() . '/' . $filters['project'] . '/issues';
+            if(!empty($filters['sprint']))
+                $url .= '?milestone=' . $filters['sprint'];
+        }
+        else {
+        }
+    }
 
     /**
      *
