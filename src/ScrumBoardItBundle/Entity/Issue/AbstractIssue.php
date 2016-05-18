@@ -22,6 +22,8 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     private $project;
 
     private $id;
+    
+    private $number;
 
     private $title;
 
@@ -187,4 +189,16 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
             'time_box' => $this->getTimeBox()
         );
     }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function setNumber($number)
+    {
+        $this->number = $number;
+        return $this;
+    }
+ 
 }

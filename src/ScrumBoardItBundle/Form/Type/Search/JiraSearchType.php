@@ -20,7 +20,7 @@ class JiraSearchType extends AbstractType
     {
         $jiraSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'label' => 'Projets',
+            'label' => 'Boards',
             'choices' => $jiraSearch->getProjects(),
             'empty_data' => null,
             'placeholder' => 'Choisissez un projet en cours',

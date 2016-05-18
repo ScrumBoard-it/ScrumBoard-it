@@ -15,7 +15,7 @@
 		<div
 			class="post-it {% if issue.userStory %}us{% endif %} {% if issue.proofOfConcept %}poc{% endif %} item{{ i }} {{ issue.type }}">
 			<div class="header">
-				<div class="id">{{ issue.id }}</div>
+				<div class="id">{{ issue.number }}</div>
 				{% if issue.businessValue is defined %}
 				<div class="bv">{{ issue.businessValue }}</div>
 				{% endif %}

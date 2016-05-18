@@ -55,8 +55,9 @@ class ApiJira extends AbstractApi
                 $task->setComplexity($issue->fields->customfield_11108);
                 $task->setUserStory(true);
             }
-            $task->setId($issue->id);
-            $task->setProject($issue->key);
+            $task->setId($issue->key);
+            $task->setNumber($issue->id);
+            $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
         

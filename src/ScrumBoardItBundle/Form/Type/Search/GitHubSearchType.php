@@ -17,7 +17,7 @@ class GitHubSearchType extends AbstractType
     {
         $gitHubSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'label' => 'Projets',
+            'label' => 'Dépôts',
             'choices' => $gitHubSearch->getProjects(),
             'empty_data' => null,
             'placeholder' => 'Choisissez un projet en cours',

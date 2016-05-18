@@ -61,11 +61,12 @@ class ApiGitHub extends AbstractApi
         foreach ($data as $issue) {
             $task = new Task();
             $task->setUserStory(true);
-            $task->setId($issue->id);
+            $task->setId($issue->number);
+            $task->setNumber($issue->number);
             $task->setProject($searchFilters['project']);
             $task->setTitle($issue->title);
             
-            $issues[$issue->id] = $task;
+            $issues[$issue->number] = $task;
         }
         
         return $issues;
@@ -78,14 +79,20 @@ class ApiGitHub extends AbstractApi
      */
     public function getSelectedIssues(Request $request, $selected)
     {
+        $issues = array();
         $filters = $request->getSession()->get('filters');
-        if(empty($selected)) {
-            $url = 'repos/' . $request->getUser()->getUsername() . '/' . $filters['project'] . '/issues';
-            if(!empty($filters['sprint']))
-                $url .= '?milestone=' . $filters['sprint'];
-        }
+        if(empty($selected))
+                $issues = $this->searchIssues($filters);
         else {
+            foreach($selected as $selectedIssue) {
+                $url = $this->getOriginApi($filters['project']) . '/issues/' . $selectedIssue;
+                $data = $this->call($url);
+                $issue = $this->getIssues(array(0 => $data), $filters);
+                $issues = array_merge($issues, $issue);
+            }
         }
+        
+        return $issues;
     }
 
     /**
@@ -152,6 +159,7 @@ class ApiGitHub extends AbstractApi
             
             return $api;
         }
+        
         return;
     }
 }
