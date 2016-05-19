@@ -7,6 +7,7 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 
 class ApiGitHub extends AbstractApi
 {
+
     /**
      *
      * {@inheritdoc}
@@ -78,13 +79,15 @@ class ApiGitHub extends AbstractApi
     {
         $issues = array();
         $filters = $request->getSession()->get('filters');
-        if(empty($selected))
-                $issues = $this->searchIssues($filters);
+        if (empty($selected))
+            $issues = $this->searchIssues($filters);
         else {
-            foreach($selected as $selectedIssue) {
+            foreach ($selected as $selectedIssue) {
                 $url = $this->getOriginApi($filters['project']) . '/issues/' . $selectedIssue;
                 $data = $this->call($url);
-                $issue = $this->getIssues(array(0 => $data), $filters);
+                $issue = $this->getIssues(array(
+                    0 => $data
+                ), $filters);
                 $issues = array_merge($issues, $issue);
             }
         }
@@ -120,6 +123,9 @@ class ApiGitHub extends AbstractApi
         
         return $searchFilters;
     }
+
+    public function addFlag($selected)
+    {}
 
     private function getProjectApi()
     {

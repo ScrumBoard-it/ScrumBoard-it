@@ -111,4 +111,6 @@ abstract class AbstractApi
      * @return array
      */
     public abstract function getSearchFilters(Request $request);
+    
+    public abstract function addFlag($selected);
 }

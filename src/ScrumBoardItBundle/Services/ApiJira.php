@@ -43,9 +43,9 @@ class ApiJira extends AbstractApi
         
         return array();
     }
-    
-    private function getIssues($data) {
 
+    private function getIssues($data)
+    {
         $issues = array();
         foreach ($data->issues as $issue) {
             if ($issue->fields->issuetype->subtask === true) {
@@ -60,7 +60,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
-        
+            
             $issues[$issue->id] = $task;
         }
         
@@ -110,6 +110,9 @@ class ApiJira extends AbstractApi
         
         return $searchFilters;
     }
+
+    public function addFlag($selected)
+    {}
 
     /**
      *

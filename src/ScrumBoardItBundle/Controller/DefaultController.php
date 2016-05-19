@@ -76,7 +76,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * 
      * @Route("/print", name="print")
+     * 
+     * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            
      * @return Response
@@ -94,14 +97,16 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag/add", name="add_flag")
+     * 
+     * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            
      * @return Response
      */
     public function addFlagAction(Request $request)
     {
-        $manager = $this->container->get('service.manager');
-        $service = $manager->getService();
+        $service = $this->container->get($this->getUser()
+            ->getConnector() . '.api');
         /* @var $service ScrumBoardItBundle\Service\AbstractService */
         $selected = $request->request->get('issues');
         $service->addFlag($selected);
