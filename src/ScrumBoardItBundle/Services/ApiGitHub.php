@@ -7,9 +7,6 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 
 class ApiGitHub extends AbstractApi
 {
-
-    const API_USERS = 'users/';
-
     /**
      *
      * {@inheritdoc}
@@ -141,12 +138,6 @@ class ApiGitHub extends AbstractApi
     private function getOriginApi($project)
     {
         $api = 'repos/' . $this->getUser()->getUsername() . '/' . $project;
-        $content = $this->call($this->config['host'] . $api);
-        if ($content->fork) {
-            $user = $content->parent->owner->login;
-            $realProject = $content->parent->name;
-            $api = 'repos/' . $user . '/' . $realProject;
-        }
         
         return $this->config['host'] . $api;
     }
