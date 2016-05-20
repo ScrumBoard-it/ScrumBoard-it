@@ -6,7 +6,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class GitHubAuthenticator extends AbstractTokenAuthenticator
 {
-
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         $login = $user->getUsername();

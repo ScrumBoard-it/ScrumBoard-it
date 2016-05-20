@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
-class GitHubSearchType extends AbstractType
+class GithubSearchType extends AbstractType
 {
     /**
      *
@@ -15,21 +15,21 @@ class GitHubSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $gitHubSearch = $options['data'];
+        $githubSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Dépôts',
-            'choices' => $gitHubSearch->getProjects(),
+            'choices' => $githubSearch->getProjects(),
             'empty_data' => null,
             'placeholder' => 'Choisissez un projet en cours',
             'attr' => array(
-                'id' => $gitHubSearch->getProject()
+                'id' => $githubSearch->getProject()
             )
         ))
         ->add('sprint', ChoiceType::class, array(
             'label' => 'Sprints non terminés',
-            'choices' => $gitHubSearch->getSprints(),
+            'choices' => $githubSearch->getSprints(),
             'placeholder' => 'Sélectionnez un sprint en cours',
-            'attr' => (empty($gitHubSearch->getProject()) || empty($gitHubSearch->getSprints())) ? array(
+            'attr' => (empty($githubSearch->getProject()) || empty($githubSearch->getSprints())) ? array(
                 'disabled' => 'disabled'
             ) : array()
         ));

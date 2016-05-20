@@ -65,6 +65,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setPrinted($printed)
     {
         $this->printed = $printed;
+        
         return $this;
     }
 
@@ -76,6 +77,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setUserStory($value)
     {
         $this->userStory = $value;
+        
         return $this;
     }
 
@@ -87,6 +89,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setProofOfConcept($proofOfConcept)
     {
         $this->proofOfConcept = $proofOfConcept;
+        
         return $this;
     }
 
@@ -98,6 +101,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setProject($project)
     {
         $this->project = $project;
+        
         return $this;
     }
 
@@ -109,6 +113,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setId($id)
     {
         $this->id = $id;
+        
         return $this;
     }
 
@@ -120,6 +125,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setTitle($title)
     {
         $this->title = $title;
+        
         return $this;
     }
 
@@ -131,6 +137,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setComplexity($complexity)
     {
         $this->complexity = $complexity;
+        
         return $this;
     }
 
@@ -142,6 +149,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setBusinessValue($value)
     {
         $this->businessValue = $value;
+        
         return $this;
     }
 
@@ -153,6 +161,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setDescription($description)
     {
         $this->description = $description;
+        
         return $this;
     }
 
@@ -164,6 +173,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setTimeBox($timeBox)
     {
         $this->timeBox = $timeBox;
+        
         return $this;
     }
 
@@ -198,6 +208,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setNumber($number)
     {
         $this->number = $number;
+        
         return $this;
     }
  

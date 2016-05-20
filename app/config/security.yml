@@ -17,11 +17,10 @@ security:
             logout:
                 path: /logout
                 target: /
-#            remember_me:
-#                secret:   '%secret%'
-#                lifetime: 604800 # 1 week in seconds
-#                path:     /
-            #    always_remember_me: true
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
             
     providers:
         webservice:

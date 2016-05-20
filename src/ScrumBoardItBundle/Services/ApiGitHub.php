@@ -105,14 +105,18 @@ class ApiGitHub extends AbstractApi
         $session = $request->getSession();
         if ($session->has('filters'))
             $this->initFilters($session);
-        $searchFilters = $request->get('git_hub_search') ?: array();
+        $searchFilters = $request->get('github_search') ?: array();
         
+        // Che
         $searchFilters['projects'] = $this->getProjects();
+        
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
             $searchFilters['sprints'] = null;
         } else
             $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+            
+            // Initialise sprint even no sprint is selected
         if (empty($searchFilters['sprint']))
             $searchFilters['sprint'] = null;
         

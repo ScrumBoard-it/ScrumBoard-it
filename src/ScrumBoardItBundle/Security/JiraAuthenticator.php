@@ -6,7 +6,11 @@ use ScrumBoardItBundle\Security\AbstractTokenAuthenticator;
 
 class JiraAuthenticator extends AbstractTokenAuthenticator
 {
-
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         $login = $user->getUsername();

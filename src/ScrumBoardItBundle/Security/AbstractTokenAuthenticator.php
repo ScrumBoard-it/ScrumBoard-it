@@ -19,7 +19,12 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     protected $data;
 
     private $rememberme;
-
+    
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function __construct(Router $router, $data, $rememberme)
     {
         $this->router = $router;
@@ -27,10 +32,15 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
         $this->rememberme = $rememberme;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function getCredentials(Request $request)
     {
         // Check if request comes from the login form and if the requested api is the current one
-        if ($request->getPathInfo() != '/login_check' || ! $request->isMethod('POST') || $this->getApi() != $request->request->get('_api')) {
+        if ('/login_check' != $request->getPathInfo() || ! $request->isMethod('POST') || $request->request->get('_api') != $this->getApi()) {
             return;
         }
         return [
@@ -39,6 +49,11 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
         ];
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         return $userProvider->loadUserByUsername($credentials['username']);
@@ -46,24 +61,43 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 
     protected abstract function getApi();
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public abstract function checkCredentials($credentials, UserInterface $user);
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
             'exception' => $exception,
             'message' => "Nom d'utilisateur ou mot de passe incorrect"
         ));
-        $url=$this->router->generate('login');
         
-        return new RedirectResponse($url);
+        return new RedirectResponse($this->router->generate('login'));
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return new RedirectResponse($this->router->generate('home'));
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
@@ -75,6 +109,11 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
         return new RedirectResponse($url);
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     */
     public function supportsRememberMe()
     {
         // Passer à true pour activer le remember_me

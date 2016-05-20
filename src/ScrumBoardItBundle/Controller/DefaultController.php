@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
-use ScrumBoardItBundle\Form\Type\Search\GitHubSearchType;
+use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 
 /**
@@ -21,7 +21,6 @@ class DefaultController extends Controller
      *
      * @return Response
      */
-
     public function indexAction()
     {
         return $this->redirect($this->generateUrl('login'));
@@ -61,7 +60,7 @@ class DefaultController extends Controller
                 $form = $this->createForm(JiraSearchType::class, $search);
                 break;
             case 'github':
-                $form = $this->createForm(GitHubSearchType::class, $search);
+                $form = $this->createForm(GithubSearchType::class, $search);
                 break;
         }
         
@@ -76,9 +75,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * 
+     *
      * @Route("/print", name="print")
-     * 
+     *
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            
@@ -97,7 +96,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag/add", name="add_flag")
-     * 
+     *
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            
