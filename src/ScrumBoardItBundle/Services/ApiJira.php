@@ -56,7 +56,7 @@ class ApiJira extends AbstractApi
                 $task->setUserStory(true);
             }
             $task->setId($issue->key);
-            $task->setNumber($issue->id);
+            $task->setNumber(explode("-",$issue->key)['1']);
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
@@ -95,11 +95,13 @@ class ApiJira extends AbstractApi
         if ($session->has('filters'))
             $this->initFilters($session);
         $searchFilters = $request->get('jira_search') ?: array();
-        
-        $searchFilters['projects'] = $this->getProjects();
+
         if (empty($searchFilters['project']))
             $searchFilters['project'] = null;
+        
+        $searchFilters['projects'] = $this->getProjects();
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        
         if (empty($searchFilters['sprint']))
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
         

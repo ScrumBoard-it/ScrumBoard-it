@@ -28,11 +28,13 @@ class ApiGitHub extends AbstractApi
 
     public function getSprints($project)
     {
-        $api = $this->getSprintApi($project);
-        $data = $this->call($api);
         $sprints = array();
-        foreach ($data as $sprint)
-            $sprints['Actif'][$sprint->title] = $sprint->number;
+        if ($project !== null) {
+            $api = $this->getSprintApi($project);
+            $data = $this->call($api);
+            foreach ($data as $sprint)
+                $sprints['Actif'][$sprint->title] = $sprint->number;
+        }
         
         return $sprints;
     }
@@ -107,16 +109,13 @@ class ApiGitHub extends AbstractApi
             $this->initFilters($session);
         $searchFilters = $request->get('github_search') ?: array();
         
-        // Che
-        $searchFilters['projects'] = $this->getProjects();
-        
-        if (empty($searchFilters['project'])) {
+        if (empty($searchFilters['project']))
             $searchFilters['project'] = null;
-            $searchFilters['sprints'] = null;
-        } else
-            $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-            
-            // Initialise sprint even no sprint is selected
+        
+        $searchFilters['projects'] = $this->getProjects();
+        $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        
+        // Initialise sprint even no sprint is selected
         if (empty($searchFilters['sprint']))
             $searchFilters['sprint'] = null;
         

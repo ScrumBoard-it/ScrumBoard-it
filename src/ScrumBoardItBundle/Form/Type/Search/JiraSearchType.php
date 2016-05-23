@@ -23,7 +23,7 @@ class JiraSearchType extends AbstractType
             'label' => 'Tableaux',
             'choices' => $jiraSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un projet en cours',
+            'placeholder' => 'Choisissez un tableau',
             'attr' => array(
                 'id' => $jiraSearch->getProject()
             )

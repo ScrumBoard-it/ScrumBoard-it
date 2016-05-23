@@ -20,15 +20,15 @@ class GithubSearchType extends AbstractType
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un projet en cours',
+            'placeholder' => 'Choisissez un dépôt',
             'attr' => array(
                 'id' => $githubSearch->getProject()
             )
         ))
         ->add('sprint', ChoiceType::class, array(
-            'label' => 'Sprints non terminés',
+            'label' => 'Milestones actifs',
             'choices' => $githubSearch->getSprints(),
-            'placeholder' => 'Sélectionnez un sprint en cours',
+            'placeholder' => 'Sélectionnez un milestone (optionnel)',
             'attr' => (empty($githubSearch->getProject()) || empty($githubSearch->getSprints())) ? array(
                 'disabled' => 'disabled'
             ) : array()
