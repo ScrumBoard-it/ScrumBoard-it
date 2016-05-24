@@ -5,6 +5,7 @@ use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
  * Jira API
@@ -23,7 +24,7 @@ class ApiJira extends AbstractApi
 
     /**
      * Rest AGILE
-     *
+     * 
      * @var string
      */
     const REST_AGILE = 'rest/agile/latest/';
@@ -44,19 +45,28 @@ class ApiJira extends AbstractApi
         return array();
     }
 
+    /**
+     * Return issues based on API results
+     * 
+     * @param \stdClass $data            
+     * @return array
+     */
     private function getIssues($data)
     {
         $issues = array();
         foreach ($data->issues as $issue) {
-            if ($issue->fields->issuetype->subtask === true) {
+            if ($issue->fields->issuetype->subtask)
                 $task = new SubTask();
-            } else {
+            else {
                 $task = new Task();
-                $task->setComplexity($issue->fields->customfield_11108);
-                $task->setUserStory(true);
+                if (! empty($issue->fields->customfield_11108)) {
+                    $task->setComplexity($issue->fields->customfield_11108);
+                    $task->setUserStory(true);
+                } else
+                    $task->setProofOfConcept(true);
             }
             $task->setId($issue->key);
-            $task->setNumber(explode("-",$issue->key)['1']);
+            $task->setNumber(explode("-", $issue->key)['1']);
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
@@ -67,6 +77,11 @@ class ApiJira extends AbstractApi
         return $issues;
     }
 
+    /**
+     *
+     * {@inheritDoc}
+     *
+     */
     public function getSelectedIssues(Request $request, $selected = array())
     {
         $sprint = $request->getSession()->get('filters')['sprint'];
@@ -95,7 +110,7 @@ class ApiJira extends AbstractApi
         if ($session->has('filters'))
             $this->initFilters($session);
         $searchFilters = $request->get('jira_search') ?: array();
-
+        
         if (empty($searchFilters['project']))
             $searchFilters['project'] = null;
         
@@ -113,7 +128,12 @@ class ApiJira extends AbstractApi
         return $searchFilters;
     }
 
-    public function addFlag($selected)
+    /**
+     *
+     * {@inheritDoc}
+     *
+     */
+    public function addFlag(Request $request, $selected)
     {}
 
     /**
@@ -155,6 +175,16 @@ class ApiJira extends AbstractApi
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
         
         return $projects;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     */
+    public function getFormType()
+    {
+        return JiraSearchType::class;
     }
 
     /**

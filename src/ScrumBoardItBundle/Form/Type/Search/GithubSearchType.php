@@ -6,6 +6,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
+/**
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ *
+ */
 class GithubSearchType extends AbstractType
 {
     /**

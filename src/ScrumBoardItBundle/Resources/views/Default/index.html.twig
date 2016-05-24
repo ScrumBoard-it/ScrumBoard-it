@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<form action="{{ path('print') }}" method="POST" target="_blank">
+			<form action="{{ path('print') }}" method="POST">
 				<div class="panel panel-default">
 					<!-- Default panel contents -->
 					<div class="panel-heading">
@@ -99,6 +99,7 @@
                     $form = $(this).parents('form');
                     $form.attr('action', "{{ path('print') }}");
                     $form.find(':checkbox').prop('checked', true);
+                    $form.attr('target', '_blank');
                     $form.submit();
                 });
                 $("#addFlag").click(function () {
@@ -106,6 +107,7 @@
                     $form.attr('action', "{{ path('add_flag') }}");
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
+                    
                 });
                 $("#issues_search").find('select').change(function() {
                     $form = $(this).parents('form');

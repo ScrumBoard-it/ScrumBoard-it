@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\AbstractType;
 
 /**
  *
@@ -51,8 +52,7 @@ abstract class AbstractApi
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $this->getUser()->getHash() .
-            "\naccept: application/json
+            'Authorization: Basic ' . $this->getUser()->getHash() . "\naccept: application/json
             \naccept-language: en-US,en;q=0.8
             \nuser-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
         ]);
@@ -68,6 +68,29 @@ abstract class AbstractApi
         return json_decode($content);
     }
 
+    protected function send($url, $content, $nbArguments)
+    {   
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Basic ' . $this->getUser()->getHash() . "\naccept: application/json
+            \naccept-language: en-US,en;q=0.8
+            \nuser-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_POST, $nbArguments);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+        curl_exec($ch);
+        
+        curl_close($ch);
+    }
+
+    /**
+     * Initialize filters in session variable
+     *
+     * @param Session $session            
+     */
     protected function initFilters(Session $session)
     {
         $session->set('filters', array(
@@ -75,6 +98,13 @@ abstract class AbstractApi
             'sprint' => null
         ));
     }
+    
+    /**
+     * Return type of the form
+     * @return AbstractType
+     * 
+     */
+    public abstract function getFormType();
 
     /**
      * Return the projects list
@@ -82,10 +112,11 @@ abstract class AbstractApi
      * @return array
      */
     public abstract function getProjects();
-    
+
     /**
      * Return the sprints list according to a project
-     * @param string $project
+     *
+     * @param string $project            
      */
     public abstract function getSprints($project);
 
@@ -96,11 +127,12 @@ abstract class AbstractApi
      * @return \stdClass
      */
     public abstract function searchIssues($searchFilters = null);
-    
+
     /**
      * Return the selected issues list
-     * @param Request $request
-     * @param array $selected
+     *
+     * @param Request $request            
+     * @param array $selected            
      */
     public abstract function getSelectedIssues(Request $request, $selected);
 
@@ -111,6 +143,11 @@ abstract class AbstractApi
      * @return array
      */
     public abstract function getSearchFilters(Request $request);
-    
-    public abstract function addFlag($selected);
+
+    /**
+     * Add printed flag on selected issues
+     *
+     * @param array $selected            
+     */
+    public abstract function addFlag(Request $request, $selected);
 }

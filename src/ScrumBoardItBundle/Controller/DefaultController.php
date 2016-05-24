@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
-use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
-use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 
 /**
@@ -23,7 +21,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('login'));
+        return $this->redirect('login');
     }
 
     /**
@@ -32,46 +30,19 @@ class DefaultController extends Controller
      */
     public function home(Request $request)
     {
-        $results = $this->issuesAction($request);
-        
-        return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-            'form' => $results['form']->createView(),
-            'issues' => $results['issues']
-        ));
-    }
-
-    /**
-     * Return form and issues from the request
-     *
-     * @Secure("has_role('ROLE_AUTHENTICATED')")
-     *
-     * @param Request $request            
-     * @return array
-     */
-    private function issuesAction(Request $request)
-    {
-        $service = $this->container->get($this->getUser()
+        $service = $this->get($this->getUser()
             ->getConnector() . '.api');
+        
         $searchFilters = $service->getSearchFilters($request);
-        $search = new SearchEntity($searchFilters);
-        
-        switch ($this->getUser()->getConnector()) {
-            case 'jira':
-                $form = $this->createForm(JiraSearchType::class, $search);
-                break;
-            case 'github':
-                $form = $this->createForm(GithubSearchType::class, $search);
-                break;
-        }
-        
         $issues = $service->searchIssues($searchFilters);
         
-        $results = array(
-            'form' => $form,
-            'issues' => $issues
-        );
+        $searchEntity = new SearchEntity($searchFilters);
+        $form = $this->createForm($service->getFormType(), $searchEntity);
         
-        return $results;
+        return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
+            'form' => $form->createView(),
+            'issues' => $issues
+        ));
     }
 
     /**
@@ -85,7 +56,7 @@ class DefaultController extends Controller
      */
     public function printAction(Request $request)
     {
-        $service = $this->container->get($this->getUser()
+        $service = $this->get($this->getUser()
             ->getConnector() . '.api');
         $selected = $request->request->get('issues');
         
@@ -95,7 +66,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/flag/add", name="add_flag")
+     * @Route("/flag", name="add_flag")
      *
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
@@ -104,12 +75,11 @@ class DefaultController extends Controller
      */
     public function addFlagAction(Request $request)
     {
-        $service = $this->container->get($this->getUser()
+        $service = $this->get($this->getUser()
             ->getConnector() . '.api');
-        /* @var $service ScrumBoardItBundle\Service\AbstractService */
         $selected = $request->request->get('issues');
-        $service->addFlag($selected);
+        $service->addFlag($request, $selected);
         
-        return $this->redirect($this->generateUrl('index'));
+        return $this->redirect('home');
     }
 }
