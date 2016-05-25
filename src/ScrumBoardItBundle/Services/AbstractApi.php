@@ -3,7 +3,6 @@ namespace ScrumBoardItBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
 
@@ -16,7 +15,7 @@ abstract class AbstractApi
 {
 
     protected $config;
-
+    protected $apiCaller;
     private $user;
 
     /**
@@ -26,10 +25,11 @@ abstract class AbstractApi
      * @param
      *            array
      */
-    public function __construct(TokenStorage $token, $config)
+    public function __construct(TokenStorage $token, $config, $apiCaller)
     {
         $this->user = $token->getToken()->getUser();
         $this->config = $config;
+        $this->apiCaller = $apiCaller;
     }
 
     /**
@@ -39,51 +39,6 @@ abstract class AbstractApi
     protected function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Return a array of the API response
-     *
-     * @param string $url            
-     * @return \stdClass
-     */
-    protected function call($url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $this->getUser()->getHash() . "\naccept: application/json
-            \naccept-language: en-US,en;q=0.8
-            \nuser-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        if ($httpCode !== 200) {
-            throw new Exception($httpCode, json_decode($content));
-        }
-        
-        return json_decode($content);
-    }
-
-    protected function send($url, $content, $nbArguments)
-    {   
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $this->getUser()->getHash() . "\naccept: application/json
-            \naccept-language: en-US,en;q=0.8
-            \nuser-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_POST, $nbArguments);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
-        curl_exec($ch);
-        
-        curl_close($ch);
     }
 
     /**
@@ -98,11 +53,12 @@ abstract class AbstractApi
             'sprint' => null
         ));
     }
-    
+
     /**
      * Return type of the form
-     * @return AbstractType
      * 
+     * @return AbstractType
+     *
      */
     public abstract function getFormType();
 

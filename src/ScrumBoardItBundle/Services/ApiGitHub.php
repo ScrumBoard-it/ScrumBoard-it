@@ -24,7 +24,7 @@ class ApiGitHub extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        $data = $this->call($api);
+        $data = $this->apiCaller->call($this->getUser(), $api)['content'];
         $projects = array();
         foreach ($data as $project) {
             $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
@@ -44,7 +44,7 @@ class ApiGitHub extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->call($api);
+            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
             foreach ($data as $sprint)
                 $sprints['Actif'][$sprint->title] = $sprint->number;
         }
@@ -61,7 +61,7 @@ class ApiGitHub extends AbstractApi
     {
         $api = $this->getIssueApi($searchFilters);
         if (! empty($api)) {
-            $data = $this->call($api);
+            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
             $issues = array();
             foreach ($data as $issue)
                 array_push($issues, $this->getIssue($issue, $searchFilters['project']));
@@ -133,7 +133,7 @@ class ApiGitHub extends AbstractApi
         else {
             foreach ($selected as $selectedIssue) {
                 $url = $this->getBaseApi($filters['project']) . '/issues/' . $selectedIssue;
-                $data = $this->call($url);
+                $data = $this->apiCaller->call($this->getUser(), $url)['content'];
                 $issue = $this->getIssue($data, $filters['project']);
                 array_push($issues, $issue);
             }
@@ -185,7 +185,7 @@ class ApiGitHub extends AbstractApi
                     ->get('filters')['project']) . '/issues/' . $issue . '/labels';
                 $content = '["Printed"]';
                 
-                $this->send($url, $content, 1);
+                $this->send($this->getUser(), $url, $content, 1);
             }
         }
     }

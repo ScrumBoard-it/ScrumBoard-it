@@ -38,7 +38,7 @@ class ApiJira extends AbstractApi
     {
         if (! empty($searchFilters['sprint'])) {
             $api = $this->getIssuesApi('sprint=' . $searchFilters['sprint']);
-            $data = $this->call($api);
+            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
             return $this->getIssues($data);
         }
         
@@ -93,7 +93,7 @@ class ApiJira extends AbstractApi
         }
         if (! empty($jql)) {
             $url = $this->getIssuesApi(urlencode($jql));
-            $data = $this->call($url);
+            $data = $this->apiCaller->call($this->getUser(), $url)['content'];
             return $this->getIssues($data);
         }
         return array();
@@ -146,7 +146,7 @@ class ApiJira extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->call($api);
+            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
             foreach ($data->values as $sprint) {
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
@@ -167,7 +167,7 @@ class ApiJira extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        $data = $this->call($api);
+        $data = $this->apiCaller->call($this->getUser(), $api)['content'];
         $projects = array();
         foreach ($data->values as $project) {
             $projects[$project->name] = $project->id;

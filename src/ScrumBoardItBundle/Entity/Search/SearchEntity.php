@@ -3,7 +3,6 @@ namespace ScrumBoardItBundle\Entity\Search;
 
 class SearchEntity
 {
-
     /**
      * Projects
      *

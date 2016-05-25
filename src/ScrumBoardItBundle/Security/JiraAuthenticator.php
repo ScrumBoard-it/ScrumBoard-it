@@ -6,6 +6,7 @@ use ScrumBoardItBundle\Security\AbstractTokenAuthenticator;
 
 class JiraAuthenticator extends AbstractTokenAuthenticator
 {
+
     /**
      *
      * {@inheritdoc}
@@ -16,31 +17,29 @@ class JiraAuthenticator extends AbstractTokenAuthenticator
         $login = $user->getUsername();
         $password = $credentials['password'];
         $user->setHash("$login:$password");
+        
         $url = $this->data['host'] . '/rest/api/latest/user?username=' . $login;
+        $results = $this->apiCaller->call($user, $url);
         
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $user->getHash()
-        ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-        if ($httpCode == 200 && ! empty($content)) {
-            $data = json_decode($content, true);
-            $user->setEmail($data['emailAddress']);
-            $user->setDisplayName($data['displayName']);
-            $user->setImgUrl($data['avatarUrls']['24x24']);
+        if ($results['http_code'] == 200 && ! empty($results['content'])) {
+            $content = $results['content'];
+            $user->setEmail($content->emailAddress);
+            $user->setDisplayName($content->displayName);
+            $user->setImgUrl($content->avatarUrls->{'24x24'});
             $user->setApi($this->getApi());
+            
             return true;
         }
         return false;
     }
-    
-    protected function getApi() {
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     */
+    protected function getApi()
+    {
         return 'jira';
     }
 }

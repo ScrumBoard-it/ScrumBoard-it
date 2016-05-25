@@ -9,10 +9,11 @@ use Symfony\Component\Form\AbstractType;
 /**
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
- *
+ *        
  */
 class GithubSearchType extends AbstractType
 {
+
     /**
      *
      * {@inheritdoc}
@@ -25,12 +26,9 @@ class GithubSearchType extends AbstractType
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un dépôt',
-            'attr' => array(
-                'id' => $githubSearch->getProject()
-            )
+            'placeholder' => 'Choisissez un dépôt'
         ))
-        ->add('sprint', ChoiceType::class, array(
+            ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones actifs',
             'choices' => $githubSearch->getSprints(),
             'placeholder' => 'Sélectionnez un milestone (optionnel)',
@@ -39,7 +37,7 @@ class GithubSearchType extends AbstractType
             ) : array()
         ));
     }
-    
+
     /**
      *
      * {@inheritdoc}
@@ -51,7 +49,7 @@ class GithubSearchType extends AbstractType
             'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity'
         ));
     }
-    
+
     /**
      *
      * {@inheritdoc}

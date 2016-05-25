@@ -20,16 +20,19 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 
     private $rememberme;
     
+    protected $apiCaller;
+    
     /**
      *
      * {@inheritdoc}
      *
      */
-    public function __construct(Router $router, $data, $rememberme)
+    public function __construct(Router $router, $data, $rememberme, $ApiCaller)
     {
         $this->router = $router;
         $this->data = $data;
         $this->rememberme = $rememberme;
+        $this->apiCaller = $ApiCaller;
     }
 
     /**
