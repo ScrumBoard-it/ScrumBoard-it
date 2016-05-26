@@ -17,3 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    locale:            en
+    
+    jira_url:           ~
+    jira_complexity_field: ~
+    github_url:        ~
+    

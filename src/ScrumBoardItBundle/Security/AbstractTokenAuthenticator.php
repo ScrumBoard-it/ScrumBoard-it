@@ -19,9 +19,9 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     protected $data;
 
     private $rememberme;
-    
+
     protected $apiCaller;
-    
+
     /**
      *
      * {@inheritdoc}

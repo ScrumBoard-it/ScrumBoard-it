@@ -55,6 +55,8 @@ class SubTask extends AbstractIssue
      */
     public function jsonSerialize()
     {
-        return array_merge(parent::jsonSerialize(), array('task' => $this->getTask()));
+        return array_merge(parent::jsonSerialize(), array(
+            'task' => $this->getTask()
+        ));
     }
 }

@@ -36,7 +36,7 @@ class GitHubAuthenticator extends AbstractTokenAuthenticator
     /**
      *
      * {@inheritDoc}
-     * 
+     *
      */
     protected function getApi()
     {

@@ -30,7 +30,8 @@ class DefaultController extends Controller
      */
     public function homeAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector() . '.api');
+        $service = $this->get($this->getUser()
+            ->getConnector() . '.api');
         
         $searchFilters = $service->getSearchFilters($request);
         $issues = $service->searchIssues($searchFilters);
@@ -55,7 +56,8 @@ class DefaultController extends Controller
      */
     public function printAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector() . '.api');
+        $service = $this->get($this->getUser()
+            ->getConnector() . '.api');
         $selected = $request->request->get('issues');
         
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
@@ -73,7 +75,8 @@ class DefaultController extends Controller
      */
     public function addFlagAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector() . '.api');
+        $service = $this->get($this->getUser()
+            ->getConnector() . '.api');
         $selected = $request->request->get('issues');
         $service->addFlag($request, $selected);
         

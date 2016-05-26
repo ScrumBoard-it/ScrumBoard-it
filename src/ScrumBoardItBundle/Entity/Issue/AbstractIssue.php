@@ -22,7 +22,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     private $project;
 
     private $id;
-    
+
     private $number;
 
     private $title;
@@ -211,5 +211,4 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
         
         return $this;
     }
- 
 }

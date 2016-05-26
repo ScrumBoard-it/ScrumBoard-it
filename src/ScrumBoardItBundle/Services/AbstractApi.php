@@ -15,7 +15,9 @@ abstract class AbstractApi
 {
 
     protected $config;
+
     protected $apiCaller;
+
     private $user;
 
     /**
@@ -56,7 +58,7 @@ abstract class AbstractApi
 
     /**
      * Return type of the form
-     * 
+     *
      * @return AbstractType
      *
      */

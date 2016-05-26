@@ -3,6 +3,7 @@ namespace ScrumBoardItBundle\Entity\Search;
 
 class SearchEntity
 {
+
     /**
      * Projects
      *
@@ -26,7 +27,7 @@ class SearchEntity
 
     /**
      * Sprints
-     * 
+     *
      * @var array $sprints
      */
     private $sprints = array();

@@ -24,9 +24,9 @@ class ApiGitHub extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        $data = $this->apiCaller->call($this->getUser(), $api)['content'];
+        $data = $this->apiCaller->call($this->getUser(), $api);
         $projects = array();
-        foreach ($data as $project) {
+        foreach ($data['content'] as $project) {
             $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
         }
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
@@ -44,9 +44,10 @@ class ApiGitHub extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
-            foreach ($data as $sprint)
+            $data = $this->apiCaller->call($this->getUser(), $api);
+            foreach ($data['content'] as $sprint) {
                 $sprints['Actif'][$sprint->title] = $sprint->number;
+            }
         }
         
         return $sprints;
@@ -61,10 +62,11 @@ class ApiGitHub extends AbstractApi
     {
         $api = $this->getIssueApi($searchFilters);
         if (! empty($api)) {
-            $data = $this->apiCaller->call($this->getUser(), $api)['content'];
+            $data = $this->apiCaller->call($this->getUser(), $api);
             $issues = array();
-            foreach ($data as $issue)
+            foreach ($data['content'] as $issue) {
                 array_push($issues, $this->getIssue($issue, $searchFilters['project']));
+            }
             
             return $issues;
         }
@@ -107,8 +109,9 @@ class ApiGitHub extends AbstractApi
         preg_match_all("/\[(.*?)\]/", $issue->body, $parameters);
         foreach ($parameters[1] as $parameter) {
             $values = explode(':', $parameter);
-            if (trim($values[0]) === 'CT')
+            if (trim($values[0]) === 'CT') {
                 $task->setComplexity(trim($values[1]));
+            }
         }
         
         $task->setId($issue->number);
@@ -128,13 +131,13 @@ class ApiGitHub extends AbstractApi
     {
         $issues = array();
         $filters = $request->getSession()->get('filters');
-        if (empty($selected))
+        if (empty($selected)) {
             $issues = $this->searchIssues($filters);
-        else {
+        } else {
             foreach ($selected as $selectedIssue) {
                 $url = $this->getBaseApi($filters['project']) . '/issues/' . $selectedIssue;
-                $data = $this->apiCaller->call($this->getUser(), $url)['content'];
-                $issue = $this->getIssue($data, $filters['project']);
+                $data = $this->apiCaller->call($this->getUser(), $url);
+                $issue = $this->getIssue($data['content'], $filters['project']);
                 array_push($issues, $issue);
             }
         }
@@ -150,19 +153,22 @@ class ApiGitHub extends AbstractApi
     public function getSearchFilters(Request $request)
     {
         $session = $request->getSession();
-        if ($session->has('filters'))
+        if ($session->has('filters')) {
             $this->initFilters($session);
+        }
         $searchFilters = $request->get('github_search') ?: array();
         
-        if (empty($searchFilters['project']))
+        if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
+        }
         
         $searchFilters['projects'] = $this->getProjects();
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
         
         // Initialise sprint even no sprint is selected
-        if (empty($searchFilters['sprint']))
+        if (empty($searchFilters['sprint'])) {
             $searchFilters['sprint'] = null;
+        }
         
         $session->set('filters', array(
             'project' => $searchFilters['project'],
@@ -183,7 +189,9 @@ class ApiGitHub extends AbstractApi
             foreach ($selected as $issue) {
                 $url = $this->getBaseApi($request->getSession()
                     ->get('filters')['project']) . '/issues/' . $issue . '/labels';
-                $content = '["Printed"]';
+                $content = [
+                    'Printed'
+                ];
                 
                 $this->send($this->getUser(), $url, $content, 1);
             }
@@ -248,7 +256,9 @@ class ApiGitHub extends AbstractApi
     {
         if (! empty($searchFilters['project'])) {
             $api = $this->getBaseApi($searchFilters['project']) . '/issues';
-            $api .= empty($searchFilters['sprint']) ? '' : ('?milestone=' . $searchFilters['sprint']);
+            if (! empty($searchFilters['sprint'])) {
+                $api .= '?milestone=' . $searchFilters['sprint'];
+            }
             
             return $api;
         }

@@ -1,18 +1,18 @@
 <?php
 namespace ScrumBoardItBundle\Services;
 
-use Symfony\Component\Security\Core\User\User;
-use Symfony\Component\Security\Core\User\UserInterface;
+use ScrumBoardItBundle\Entity\User;
 
 class ApiCaller
 {
+
     /**
      * Return a array of the API response
      *
      * @param string $url            
      * @return \stdClass
      */
-    public function call(UserInterface $user, $url)
+    public function call(User $user, $url)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -34,12 +34,12 @@ class ApiCaller
     }
 
     /**
-     * 
-     * @param unknown $url
-     * @param unknown $content
-     * @param unknown $nbArguments
+     *
+     * @param string $url            
+     * @param array $content            
+     * @param int $nbArguments            
      */
-    public function send(UserInterface $user, $url, $content, $nbArguments)
+    public function send(User $user, $url, $content, $nbArguments)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -56,10 +56,5 @@ class ApiCaller
         curl_close($ch);
         
         return $result;
-    }
-    
-    public function setUser($user)
-    {
-        $this->user = $user;
     }
 }

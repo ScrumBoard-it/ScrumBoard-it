@@ -4,9 +4,9 @@
 	<div class="header">
 		<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
 		<div class="log">
-			<img class="logImg" src="{{ app.user.imgUrl }}" height="24" width="24"/> <span>{{
-				app.user.displayName }}</span><br /> <a href="./logout"><span
-				class="glyphicon glyphicon-off">Déconnexion</span></a>
+			<img class="logImg" src="{{ app.user.imgUrl }}" height="24"
+				width="24" /> <span>{{ app.user.displayName }}</span><br /> <a
+				href="./logout"><span class="glyphicon glyphicon-off">Déconnexion</span></a>
 		</div>
 	</div>
 	<div class="row">
@@ -21,7 +21,8 @@
 		{% if not issues|length %}
 		<div class="col-md-12">
 			<div class="alert alert-info" role="alert">
-				<p>Veuillez renseigner ci-dessus un projet en cours contenant des tickets.</p>
+				<p>Veuillez renseigner ci-dessus un projet en cours contenant des
+					tickets.</p>
 			</div>
 		</div>
 		{% endif %}
@@ -34,10 +35,9 @@
 				<ul class="list-group selectable">
 					{% for issue in issues if not issue.printed %} {% block issue %}
 					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
-						name="issues[]" value="{{ issue.id }}" /> <span>{{
-							issue.id }}</span> <span>{{ issue.title }}</span>
-						<span class="badge">{{ issue.complexity }}</span></li> {% endblock
-					%} {% endfor %}
+						name="issues[]" value="{{ issue.id }}" /> <span>{{ issue.id }}</span>
+						<span>{{ issue.title }}</span> <span class="badge">{{
+							issue.complexity }}</span></li> {% endblock %} {% endfor %}
 				</ul>
 			</div>
 		</div>

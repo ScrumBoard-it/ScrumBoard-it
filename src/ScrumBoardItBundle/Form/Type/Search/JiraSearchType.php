@@ -1,5 +1,6 @@
 <?php
 namespace ScrumBoardItBundle\Form\Type\Search;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
