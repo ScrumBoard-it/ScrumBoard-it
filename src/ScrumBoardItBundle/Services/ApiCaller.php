@@ -2,6 +2,8 @@
 namespace ScrumBoardItBundle\Services;
 
 use ScrumBoardItBundle\Entity\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 
 class ApiCaller
 {
@@ -14,21 +16,22 @@ class ApiCaller
      */
     public function call(User $user, $url)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic ' . $user->getHash(),
-            'Accept: application/json',
-            'User-Agent: ScrumBoard-It'
+        $client = new Client([
+            'headers' => [
+                'Authorization' => 'Basic ' . $user->getHash(),
+                'Accept' => 'application/json',
+                'User-Agent' => ': ScrumBoard-It'
+            ]
         ]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $response = $client->get($url);
+        
+        $links = Psr7\parse_header($response->getHeader('Link'));
+        $content = json_decode($response->getBody());
+        $httpCode = $response->getStatusCode();
         
         return array(
-            'content' => json_decode($content),
+            'links' => $links,
+            'content' => $content,
             'http_code' => $httpCode
         );
     }

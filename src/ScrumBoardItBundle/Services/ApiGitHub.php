@@ -24,11 +24,23 @@ class ApiGitHub extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        $data = $this->apiCaller->call($this->getUser(), $api);
+        
+        //Multipagination
         $projects = array();
-        foreach ($data['content'] as $project) {
-            $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
-        }
+        do {
+            $page = $this->apiCaller->call($this->getUser(), $api);
+            foreach ($page['content'] as $project) {
+                $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
+                if($page['links'][0]['rel'] === 'first'){
+                    $api = null;
+                }
+                else {
+                    $match = '';
+                    preg_match('/<(.*)>/', $page['links'][0][0], $match);
+                    $api = $match[1];
+                }
+            }
+        } while(!empty($api));
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
         
         return $projects;
