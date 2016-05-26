@@ -59,8 +59,8 @@ class ApiJira extends AbstractApi
                 $task = new SubTask();
             } else {
                 $task = new Task();
-                if (! empty($issue->fields->customfield_11108)) {
-                    $task->setComplexity($issue->fields->customfield_11108);
+                if (! empty($issue->fields->{$this->config['complexity_field']})) {
+                    $task->setComplexity($issue->fields->{$this->config['complexity_field']});
                     $task->setUserStory(true);
                 } else
                     $task->setProofOfConcept(true);

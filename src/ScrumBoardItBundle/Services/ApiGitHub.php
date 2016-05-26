@@ -61,7 +61,7 @@ class ApiGitHub extends AbstractApi
     public function searchIssues($searchFilters = null)
     {
         $api = $this->getIssueApi($searchFilters);
-        if (! empty($api)) {
+        if (!empty($api)) {
             $data = $this->apiCaller->call($this->getUser(), $api);
             $issues = array();
             foreach ($data['content'] as $issue) {
@@ -185,13 +185,11 @@ class ApiGitHub extends AbstractApi
      */
     public function addFlag(Request $request, $selected)
     {
-        if (! empty($selected)) {
+        if (!empty($selected)) {
             foreach ($selected as $issue) {
-                $url = $this->getBaseApi($request->getSession()
-                    ->get('filters')['project']) . '/issues/' . $issue . '/labels';
-                $content = [
-                    'Printed'
-                ];
+                $url = $this->getBaseApi($request->getSession()->get('filters')['project']) .
+                '/issues/' . $issue . '/labels';
+                $content = ['Printed'];
                 
                 $this->send($this->getUser(), $url, $content, 1);
             }
@@ -254,9 +252,9 @@ class ApiGitHub extends AbstractApi
      */
     private function getIssueApi($searchFilters)
     {
-        if (! empty($searchFilters['project'])) {
+        if (!empty($searchFilters['project'])) {
             $api = $this->getBaseApi($searchFilters['project']) . '/issues';
-            if (! empty($searchFilters['sprint'])) {
+            if (!empty($searchFilters['sprint'])) {
                 $api .= '?milestone=' . $searchFilters['sprint'];
             }
             
