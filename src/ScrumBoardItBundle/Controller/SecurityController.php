@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
  *
@@ -16,34 +17,28 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      *
-     * @param Request $request            
+     * @param Request $request
      * @return Response
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
             return $this->redirectToRoute('home');
         }
-        
+
+        $form = $this->createForm(LoginType::class);
+        $form->handleRequest($request);
+
         $authenticationUtils = $this->get('security.authentication_utils');
-        
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        
+
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
-            'last_username' => $lastUsername,
+            'form' => $form->createView(),
             'error' => $error
         ));
     }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     */
-    public function loginCheckAction()
-    {}
 
     /**
      * @Route("/logout", name="logout")
