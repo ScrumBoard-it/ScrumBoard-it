@@ -21,7 +21,7 @@ class GitHubAuthenticator extends AbstractTokenAuthenticator
         $url = $this->data['host'] . 'user';
         $results = $this->apiCaller->call($user, $url);
         
-        if ($results['http_code'] == 200 && ! empty($results['content'])) {
+        if ($results['http_code'] === 200 && !empty($results['content'])) {
             $data = $results['content'];
             $user->setEmail($data->email);
             $user->setDisplayName($data->name);
