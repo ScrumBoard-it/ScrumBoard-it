@@ -77,4 +77,4 @@ scrum_board_it:
         host: "%jira_url%"
         complexity_field: "%jira_complexity_field%"
     github:
-        host: "%github_url%"
+        host: https://api.github.com/

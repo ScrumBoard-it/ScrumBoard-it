@@ -8,7 +8,6 @@ namespace ScrumBoardItBundle\Entity\Issue;
  */
 class SubTask extends AbstractIssue
 {
-
     /**
      * Task
      *
@@ -17,9 +16,7 @@ class SubTask extends AbstractIssue
     private $task;
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function __construct()
     {
@@ -49,9 +46,7 @@ class SubTask extends AbstractIssue
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function jsonSerialize()
     {

@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class PrintController extends Controller
 {
-
     /**
      * @Route("/print/base", name="print_patron")
      *
@@ -20,6 +19,12 @@ class PrintController extends Controller
         return $this->render('ScrumBoardItBundle:Print:base.html.twig');
     }
 
+    /**
+     * Launch the Print Manager
+     * 
+     * @param array $issues
+     * @return Response
+     */
     public function ticketsAction($issues)
     {
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(

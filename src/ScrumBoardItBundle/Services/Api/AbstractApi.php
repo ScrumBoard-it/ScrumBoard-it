@@ -1,5 +1,5 @@
 <?php
-namespace ScrumBoardItBundle\Services;
+namespace ScrumBoardItBundle\Services\Api;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -7,25 +7,35 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
 
 /**
+ * Abstract Api
  *
- * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
- *        
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>        
  */
 abstract class AbstractApi
 {
-
+    /**
+     * Config
+     * @var array
+     */
     protected $config;
 
+    /**
+     * Api Caller
+     * @var ApiCaller
+     */
     protected $apiCaller;
 
+    /**
+     * User
+     * @var User
+     */
     private $user;
 
     /**
      * Constructor
      *
      * @param TokenStorage $token            
-     * @param
-     *            array
+     * @param array
      */
     public function __construct(TokenStorage $token, $config, $apiCaller)
     {
@@ -35,6 +45,7 @@ abstract class AbstractApi
     }
 
     /**
+     * User getter
      *
      * @return User
      */
@@ -45,7 +56,6 @@ abstract class AbstractApi
 
     /**
      * Initialize filters in session variable
-     *
      * @param Session $session            
      */
     protected function initFilters(Session $session)
@@ -60,7 +70,6 @@ abstract class AbstractApi
      * Return type of the form
      *
      * @return AbstractType
-     *
      */
     public abstract function getFormType();
 
@@ -73,14 +82,12 @@ abstract class AbstractApi
 
     /**
      * Return the sprints list according to a project
-     *
      * @param string $project            
      */
     public abstract function getSprints($project);
 
     /**
      * Return the issues list
-     *
      * @param array $searchFilters            
      * @return \stdClass
      */
@@ -88,7 +95,6 @@ abstract class AbstractApi
 
     /**
      * Return the selected issues list
-     *
      * @param Request $request            
      * @param array $selected            
      */
@@ -96,7 +102,6 @@ abstract class AbstractApi
 
     /**
      * Return the searc list
-     *
      * @param Request $request            
      * @return array
      */
@@ -104,7 +109,6 @@ abstract class AbstractApi
 
     /**
      * Add printed flag on selected issues
-     *
      * @param array $selected            
      */
     public abstract function addFlag(Request $request, $selected);

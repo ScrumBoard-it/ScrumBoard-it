@@ -8,12 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
- *
+ * Controller of security
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class SecurityController extends Controller
 {
-
     /**
      * @Route("/login", name="login")
      *
@@ -23,7 +22,7 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
-            return $this->redirectToRoute('home');
+            return $this->redirect('home');
         }
 
         $form = $this->createForm(LoginType::class);

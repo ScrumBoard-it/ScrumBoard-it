@@ -10,35 +10,48 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use ScrumBoardItBundle\Services\ApiCaller;
 
+/**
+ * Abstract Token Authenticator
+ * 
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 {
-
+    /**
+     * Router
+     * @var Router
+     */
     private $router;
 
+    /**
+     * Data
+     * @var array
+     */
     protected $data;
 
-    private $rememberme;
-
-    protected $apiCaller;
+    /**
+     * Remember Me
+     * @var boolean
+     */
+    private $rememberMe = false;
 
     /**
-     *
-     * {@inheritdoc}
-     *
+     * Api Caller
+     * @var ApiCaller
      */
-    public function __construct(Router $router, $data, $rememberme, $ApiCaller)
+    protected $apiCaller;
+
+    public function __construct(Router $router, $data, $ApiCaller)
     {
         $this->router = $router;
         $this->data = $data;
-        $this->rememberme = $rememberme;
         $this->apiCaller = $ApiCaller;
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getCredentials(Request $request)
     {
@@ -54,28 +67,20 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
-    protected abstract function getApi();
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public abstract function checkCredentials($credentials, UserInterface $user);
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
@@ -86,9 +91,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -96,9 +99,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
@@ -111,13 +112,17 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function supportsRememberMe()
     {
-        // Passer à true pour activer le remember_me
-        return true;
+        return $this->rememberMe;
     }
+
+    /**
+     * Return Api identificator
+     * 
+     * @return string
+     */
+    protected abstract function getApi();
 }

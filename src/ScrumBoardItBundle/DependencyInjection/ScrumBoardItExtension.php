@@ -13,11 +13,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ScrumBoardItExtension extends Extension
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function load(array $configs, ContainerBuilder $container)
     {

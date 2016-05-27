@@ -4,31 +4,32 @@ namespace ScrumBoardItBundle\Services;
 use ScrumBoardItBundle\Entity\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
-use Exception;
 
+/**
+ * Api Caller
+ * 
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class ApiCaller
 {
-
     /**
-     * Return a array of the API response
-     *
+     * Return an array of the API response
      * @param string $url            
      * @return \stdClass
      */
     public function call(User $user, $url)
     {
-       
         $client = new Client([
             'headers' => [
                 'Authorization' => 'Basic ' . $user->getHash(),
                 'Accept' => 'application/json',
-                'User-Agent' => ': ScrumBoard-It'
+                'User-Agent' => ': ScrumBoard-it'
             ]
         ]);
         try {
             $response = $client->get($url);
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             return null;
         }
         
@@ -44,10 +45,11 @@ class ApiCaller
     }
 
     /**
-     *
-     * @param string $url            
-     * @param array $content            
-     * @param int $nbArguments            
+     * Send array to an API
+     * @param string $url
+     * @param array $content
+     * @param int $nbArguments
+     * @return \stdClass
      */
     public function send(User $user, $url, $content, $nbArguments)
     {

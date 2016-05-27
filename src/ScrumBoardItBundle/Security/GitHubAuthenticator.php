@@ -4,13 +4,15 @@ namespace ScrumBoardItBundle\Security;
 use ScrumBoardItBundle\Security\AbstractTokenAuthenticator;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Github Authenticator
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class GitHubAuthenticator extends AbstractTokenAuthenticator
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
@@ -30,13 +32,12 @@ class GitHubAuthenticator extends AbstractTokenAuthenticator
             
             return true;
         }
+        
         return false;
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     protected function getApi()
     {

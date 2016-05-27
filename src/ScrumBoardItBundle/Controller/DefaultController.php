@@ -9,13 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 
 /**
- * controller of navigation.
+ * Controller of navigation.
  */
 class DefaultController extends Controller
 {
-
     /**
-     * @Route("/", name="index") *
+     * @Route("/", name="index")
      *
      * @return Response
      */
@@ -47,7 +46,6 @@ class DefaultController extends Controller
     /**
      *
      * @Route("/print", name="print")
-     *
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            
@@ -65,7 +63,6 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag", name="add_flag")
-     *
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
      * @param Request $request            

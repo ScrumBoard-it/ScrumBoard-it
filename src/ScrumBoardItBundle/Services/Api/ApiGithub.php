@@ -1,7 +1,6 @@
 <?php
-namespace ScrumBoardItBundle\Services;
+namespace ScrumBoardItBundle\Services\Api;
 
-use ScrumBoardItBundle\Services\AbstractApi;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
@@ -9,17 +8,14 @@ use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 
 /**
- *
+ * Api Github
+ * 
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
- *        
  */
-class ApiGitHub extends AbstractApi
+class ApiGithub extends AbstractApi
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getProjects()
     {
@@ -31,7 +27,7 @@ class ApiGitHub extends AbstractApi
             $page = $this->apiCaller->call($this->getUser(), $api);
             foreach ($page['content'] as $project) {
                 $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
-                if($page['links'][0]['rel'] === 'first'){
+                if($page['links'][0]['rel'] === 'first') {
                     $api = null;
                 }
                 else {
@@ -47,9 +43,7 @@ class ApiGitHub extends AbstractApi
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     public function getSprints($project)
     {
@@ -66,9 +60,7 @@ class ApiGitHub extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function searchIssues($searchFilters = null)
     {
@@ -87,7 +79,6 @@ class ApiGitHub extends AbstractApi
 
     /**
      * Return issue based on API result
-     *
      * @param \stdClass $issue            
      * @param string $project            
      * @return IssueInterface
@@ -135,9 +126,7 @@ class ApiGitHub extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSelectedIssues(Request $request, $selected)
     {
@@ -158,9 +147,7 @@ class ApiGitHub extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSearchFilters(Request $request)
     {
@@ -191,9 +178,7 @@ class ApiGitHub extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function addFlag(Request $request, $selected)
     {
@@ -203,15 +188,13 @@ class ApiGitHub extends AbstractApi
                 '/issues/' . $issue . '/labels';
                 $content = ['Printed'];
                 
-                $this->send($this->getUser(), $url, $content, 1);
+                $this->apiCaller->send($this->getUser(), $url, $content, 1);
             }
         }
     }
 
     /**
-     *
      * {@inheritDoc}
-     *
      */
     public function getFormType()
     {
@@ -232,7 +215,6 @@ class ApiGitHub extends AbstractApi
 
     /**
      * Return url for searching sprints
-     *
      * @param string $project            
      * @return string
      */
@@ -245,7 +227,6 @@ class ApiGitHub extends AbstractApi
 
     /**
      * Return base url for the api
-     *
      * @param string $project            
      * @return string
      */
@@ -258,7 +239,6 @@ class ApiGitHub extends AbstractApi
 
     /**
      * Return url for searching issues
-     *
      * @param array $searchFilters            
      * @return string
      */

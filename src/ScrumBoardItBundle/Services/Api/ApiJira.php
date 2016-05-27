@@ -1,5 +1,5 @@
 <?php
-namespace ScrumBoardItBundle\Services;
+namespace ScrumBoardItBundle\Services\Api;
 
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
@@ -8,13 +8,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
- * Jira API
+ * Api Jira
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ApiJira extends AbstractApi
 {
-
     /**
      * Rest API
      *
@@ -30,9 +29,7 @@ class ApiJira extends AbstractApi
     const REST_AGILE = 'rest/agile/latest/';
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function searchIssues($searchFilters = array())
     {
@@ -47,7 +44,6 @@ class ApiJira extends AbstractApi
 
     /**
      * Return issues based on API results
-     *
      * @param \stdClass $data            
      * @return array
      */
@@ -71,7 +67,6 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
-            
             $issues[$issue->id] = $task;
         }
         
@@ -79,9 +74,7 @@ class ApiJira extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSelectedIssues(Request $request, $selected = array())
     {
@@ -101,9 +94,7 @@ class ApiJira extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSearchFilters(Request $request)
     {
@@ -133,17 +124,13 @@ class ApiJira extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function addFlag(Request $request, $selected)
     {}
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSprints($project)
     {
@@ -182,9 +169,7 @@ class ApiJira extends AbstractApi
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getFormType()
     {
@@ -193,8 +178,8 @@ class ApiJira extends AbstractApi
 
     /**
      * Sprint API getter
-     *
-     * @param int $project            
+     * @param int $project
+     * @return string
      */
     private function getSprintApi($project)
     {
@@ -205,8 +190,8 @@ class ApiJira extends AbstractApi
 
     /**
      * Project API getter
-     *
-     * @param int $maxResults            
+     * @param int $maxResults
+     * @return string
      */
     private function getProjectApi($maxResults = '-1')
     {
@@ -217,8 +202,8 @@ class ApiJira extends AbstractApi
 
     /**
      * Issues API getter
-     *
-     * @param string $jql            
+     * @param string $jql
+     * @return string
      */
     private function getIssuesApi($jql = '')
     {

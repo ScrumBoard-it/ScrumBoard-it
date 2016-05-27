@@ -22,5 +22,4 @@ parameters:
     
     jira_url:           ~
     jira_complexity_field: ~
-    github_url:        ~
     

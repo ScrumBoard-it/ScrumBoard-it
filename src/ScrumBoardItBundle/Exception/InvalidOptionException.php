@@ -8,7 +8,6 @@ namespace ScrumBoardItBundle\Exception;
  */
 class InvalidOptionException extends \Exception
 {
-
     public function __construct($option)
     {
         $message = sprintf('Option %s invalide.', $option);

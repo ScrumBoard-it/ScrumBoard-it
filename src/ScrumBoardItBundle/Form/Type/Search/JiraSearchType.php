@@ -8,14 +8,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Jira search type
+ * 
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class JiraSearchType extends AbstractType
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -39,9 +38,7 @@ class JiraSearchType extends AbstractType
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -51,9 +48,7 @@ class JiraSearchType extends AbstractType
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getName()
     {

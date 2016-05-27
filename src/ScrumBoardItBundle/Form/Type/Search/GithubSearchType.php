@@ -7,17 +7,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 /**
+ * Github search type
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
- *        
  */
 class GithubSearchType extends AbstractType
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -39,9 +36,7 @@ class GithubSearchType extends AbstractType
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -51,9 +46,7 @@ class GithubSearchType extends AbstractType
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getName()
     {
