@@ -47,7 +47,7 @@ class ApiCaller
     /**
      * Send array to an API
      * @param string $url
-     * @param array $content
+     * @param string $content
      * @param int $nbArguments
      * @return \stdClass
      */

@@ -21,7 +21,7 @@ class ApiGithub extends AbstractApi
     {
         $api = $this->getProjectApi();
         
-        //Multipagination
+        // Multipagination
         $projects = array();
         do {
             $page = $this->apiCaller->call($this->getUser(), $api);
@@ -186,8 +186,7 @@ class ApiGithub extends AbstractApi
             foreach ($selected as $issue) {
                 $url = $this->getBaseApi($request->getSession()->get('filters')['project']) .
                 '/issues/' . $issue . '/labels';
-                $content = ['Printed'];
-                
+                $content = '["Printed"]';
                 $this->apiCaller->send($this->getUser(), $url, $content, 1);
             }
         }
