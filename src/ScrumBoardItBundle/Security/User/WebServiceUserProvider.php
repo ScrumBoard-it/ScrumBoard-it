@@ -6,9 +6,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use ScrumBoardItBundle\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
+/**
+ * User Provider
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class WebServiceUserProvider implements UserProviderInterface
 {
-
+    /**
+     * {@inheritDoc}
+     */
     public function loadUserByUsername($username)
     {
         return new User($username, [
@@ -16,6 +23,9 @@ class WebServiceUserProvider implements UserProviderInterface
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function refreshUser(UserInterface $user)
     {
         if (! $user instanceof User) {
@@ -25,6 +35,9 @@ class WebServiceUserProvider implements UserProviderInterface
         return $user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function supportsClass($class)
     {
         return $class === 'ScrumBoardBundle\Entity\User';

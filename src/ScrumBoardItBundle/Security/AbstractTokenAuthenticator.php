@@ -10,57 +10,97 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use ScrumBoardItBundle\Services\ApiCaller;
 
+/**
+ * Abstract Token Authenticator
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 {
-
+    /**
+     * Router
+     * @var Router
+     */
     private $router;
 
+    /**
+     * Data
+     * @var array
+     */
     protected $data;
 
-    private $rememberme;
+    /**
+     * Remember Me
+     * @var boolean
+     */
+    private $rememberMe = false;
 
-    public function __construct(Router $router, $data, $rememberme)
+    /**
+     * Api Caller
+     * @var ApiCaller
+     */
+    protected $apiCaller;
+
+    public function __construct(Router $router, $data, $ApiCaller)
     {
         $this->router = $router;
         $this->data = $data;
-        $this->rememberme = $rememberme;
+        $this->apiCaller = $ApiCaller;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/login_check' || ! $request->isMethod('POST')) {
-            return;
+        // Check if request comes from the login form and if the requested api is the current one
+        if ($request->getPathInfo() == '/login' && $request->isMethod('POST')) {
+            $login = $request->request->get('login');
+            if (!empty($login['api']) && $login['api'] == $this->getApi()) {
+                return $login;
+            }
         }
-        
-        return [
-            'username' => $request->request->get('_username'),
-            'password' => $request->request->get('_password')
-        ];
+
+        return;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
-    public abstract function checkCredentials($credentials, UserInterface $user);
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function checkCredentials($credentials, UserInterface $user);
 
+    /**
+     * {@inheritdoc}
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
             'exception' => $exception,
             'message' => "Nom d'utilisateur ou mot de passe incorrect"
         ));
-        
-        return new RedirectResponse($this->router->generate('login'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return new RedirectResponse($this->router->generate('home'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
@@ -71,9 +111,18 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
         return new RedirectResponse($this->router->generate('login'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function supportsRememberMe()
     {
-        // Passer à true pour activer le remember_me
-        return true;
+        return $this->rememberMe;
     }
+
+    /**
+     * Return Api identificator
+     *
+     * @return string
+     */
+    abstract protected function getApi();
 }

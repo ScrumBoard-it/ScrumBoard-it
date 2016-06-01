@@ -1,27 +1,28 @@
 {% extends "ScrumBoardItBundle::base.html.twig" %} {% block title
-%}Accueil{{ parent() }}{% endblock %} {% block body %}
+%}Accueil - {{ parent() }}{% endblock %} {% block body %}
 <div class="container">
 	<div class="header">
 		<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
 		<div class="log">
-			<img class="logImg" src="{{ app.user.imgUrl }}" /> <span>{{
-				app.user.displayName }}</span><br /> <a href="./logout"><span
-				class="glyphicon glyphicon-off">Déconnexion</span></a>
+			<img class="logImg" src="{{ app.user.imgUrl }}" height="24"
+				width="24" /> <span>{{ app.user.displayName }}</span><br /> <a
+				href="./logout"><span class="glyphicon glyphicon-off">Déconnexion</span></a>
 		</div>
 	</div>
 	<div class="row">
 		<form id="issues_search" class="form-inline">
 			<div class="form-group col-md-4">{{ form_row(form.project, {'attr':
-				{'id': 'form_project', 'class': 'form-control'} }) }}</div>
+				{'class': 'form-control search_project'} }) }}</div>
 			<div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
-				{'id': 'form_sprint', 'class': 'form-control'} }) }}</div>
+				{'class': 'form-control search_sprint'} }) }}</div>
 		</form>
 	</div>
 	<div class="row">
 		{% if not issues|length %}
 		<div class="col-md-12">
 			<div class="alert alert-info" role="alert">
-				<p>Veuillez renseigner ci-dessus un projet en cous.</p>
+				<p>Veuillez renseigner ci-dessus un projet en cours contenant des
+					tickets.</p>
 			</div>
 		</div>
 		{% endif %}
@@ -34,15 +35,14 @@
 				<ul class="list-group selectable">
 					{% for issue in issues if not issue.printed %} {% block issue %}
 					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
-						name="issues[]" value="{{ issue.project }}" /> <span>{{
-							issue.project }}</span> <span>{{ issue.title }}</span>
-						<span class="badge">{{ issue.complexity }}</span></li> {% endblock
-					%} {% endfor %}
+						name="issues[]" value="{{ issue.id }}" /> <span>{{ issue.id }}</span>
+						<span>{{ issue.title }}</span> <span class="badge">{{
+							issue.complexity }}</span></li> {% endblock %} {% endfor %}
 				</ul>
 			</div>
 		</div>
 		<div class="col-md-4">
-			<form action="{{ path('print') }}" method="POST" target="_blank">
+			<form action="{{ path('print') }}" method="POST">
 				<div class="panel panel-default">
 					<!-- Default panel contents -->
 					<div class="panel-heading">
@@ -99,6 +99,7 @@
                     $form = $(this).parents('form');
                     $form.attr('action', "{{ path('print') }}");
                     $form.find(':checkbox').prop('checked', true);
+                    $form.attr('target', '_blank');
                     $form.submit();
                 });
                 $("#addFlag").click(function () {
@@ -106,12 +107,13 @@
                     $form.attr('action', "{{ path('add_flag') }}");
                     $form.find(':checkbox').prop('checked', true);
                     $form.submit();
+                    
                 });
                 $("#issues_search").find('select').change(function() {
                     $form = $(this).parents('form');
-                    if ($(this).attr('id') == 'jira_search_project' && $('#jira_search_sprint').size()) {
-                        $('#jira_search_sprint').val('');
-                        $('#jira_search_sprint').attr('disabled', 'disabled');
+                    if ($(this).hasClass('search_project') && $('.search_sprint').size()) {
+                        $('.search_sprint').val('');
+                        $('.search_sprint').attr('disabled', 'disabled');
                     }
                     $form.submit();
                 });

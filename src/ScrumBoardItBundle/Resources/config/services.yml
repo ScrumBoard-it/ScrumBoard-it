@@ -1,18 +1,29 @@
 services:
-    webservice_user_provider:
-        class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
-    jira_token_authenticator:
-        class: ScrumBoardItBundle\Security\JiraAuthenticator
-        arguments: ['@router','%jira%','@security.rememberme.response_listener']
-    jira.api:
-        class: ScrumBoardItBundle\Services\ApiJira
-        arguments: ['@security.token_storage', '%jira%']
-            
-#    jira.rest:
-#        class: ScrumBoardItBundle\Jira\User\JiraRest
-#        arguments:
-#            - '%jira_url%'
-            
-#    jira_auth.user_provider:
-#        class: ScrumBoardItBundle\Jira\User\JiraUserProvider
-#        arguments: ['@jira.rest']
+   webservice_user_provider:
+       class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
+   api.caller:
+       class: ScrumBoardItBundle\Services\ApiCaller
+   jira_token_authenticator:
+       class: ScrumBoardItBundle\Security\JiraAuthenticator
+       arguments:
+           - '@router'
+           - '%jira%'
+           - '@api.caller'
+   github_token_authenticator:
+       class: ScrumBoardItBundle\Security\GitHubAuthenticator
+       arguments:
+           - '@router'
+           - '%github%'
+           - '@api.caller'
+   jira.api:
+       class: ScrumBoardItBundle\Services\Api\ApiJira
+       arguments:
+           - '@security.token_storage'
+           - '%jira%'
+           - '@api.caller'
+   github.api:
+       class: ScrumBoardItBundle\Services\Api\ApiGithub
+       arguments:
+           - '@security.token_storage'
+           - '%github%'
+           - '@api.caller'

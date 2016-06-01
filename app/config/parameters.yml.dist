@@ -17,3 +17,9 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    locale:            en
+    
+    jira_url:           http://jira.canaltp.fr/
+    jira_complexity_field: customfield_11108
+    

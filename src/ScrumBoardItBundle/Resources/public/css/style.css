@@ -40,12 +40,15 @@
 	right: 1em;
 }
 
-#issues_search select {
-<<<<<<< HEAD
-    margin-bottom: 20px;
-=======
+#issues_search select { <<<<<<<
+	HEAD margin-bottom: 20px; =======
 	margin-bottom: 20px;
->>>>>>> d80ea57... Debug after merging
+	>>>>>>>
+	d80ea57
+	...
+	Debug
+	after
+	merging
 }
 
 .container {
@@ -70,16 +73,18 @@
   top: 0; left: 0; bottom: 0; right: 0;*/
 }
 
-.Absolute-Center.is-Responsive {  background-color: #FEF977;
-  width: 50%;
-  height: 50%;
-  min-width: 200px;
-  max-width: 400px;
-  padding: 40px;
-  border-radius: 10px;
+.Absolute-Center.is-Responsive {
+	background-color: #FEF977;
+	width: 50%;
+	height: 50%;
+	min-width: 200px;
+	max-width: 400px;
+	padding: 40px;
+	border-radius: 10px;
 }
-#formJira{
-    margin:auto;
+
+#formJira {
+	margin: auto;
 }
 
 #formJira {

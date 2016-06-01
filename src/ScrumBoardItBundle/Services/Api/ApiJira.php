@@ -1,19 +1,19 @@
 <?php
-namespace ScrumBoardItBundle\Services;
+namespace ScrumBoardItBundle\Services\Api;
 
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
- * Jira API
+ * Api Jira
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ApiJira extends AbstractApi
 {
-
     /**
      * Rest API
      *
@@ -29,43 +29,54 @@ class ApiJira extends AbstractApi
     const REST_AGILE = 'rest/agile/latest/';
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function searchIssues($searchFilters = array())
     {
         if (! empty($searchFilters['sprint'])) {
             $api = $this->getIssuesApi('sprint=' . $searchFilters['sprint']);
-            $data = $this->call($api);
-            return $this->getIssues($data);
+            $data = $this->apiCaller->call($this->getUser(), $api);
+            return $this->getIssues($data['content']);
         }
         
         return array();
     }
-    
-    private function getIssues($data) {
 
+    /**
+     * Return issues based on API results
+     * @param \stdClass $data
+     * @return array
+     */
+    private function getIssues($data)
+    {
         $issues = array();
         foreach ($data->issues as $issue) {
-            if ($issue->fields->issuetype->subtask === true) {
+            if ($issue->fields->issuetype->subtask) {
                 $task = new SubTask();
             } else {
                 $task = new Task();
-                $task->setComplexity($issue->fields->customfield_11108);
-                $task->setUserStory(true);
+                if (! empty($issue->fields->{$this->config['complexity_field']})) {
+                    $task->setComplexity($issue->fields->{$this->config['complexity_field']});
+                    $task->setUserStory(true);
+                } else {
+                    $task->setProofOfConcept(true);
+                }
             }
-            $task->setId($issue->id);
-            $task->setProject($issue->key);
+            $task->setId($issue->key);
+            $number = str_replace($issue->fields->project->key . '-', '', $issue->key);
+            $task->setNumber($number);
+            $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
-        
             $issues[$issue->id] = $task;
         }
         
         return $issues;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSelectedIssues(Request $request, $selected = array())
     {
         $sprint = $request->getSession()->get('filters')['sprint'];
@@ -77,31 +88,33 @@ class ApiJira extends AbstractApi
         }
         if (! empty($jql)) {
             $url = $this->getIssuesApi(urlencode($jql));
-            $data = $this->call($url);
-            return $this->getIssues($data);
+            $data = $this->apiCaller->call($this->getUser(), $url);
+            return $this->getIssues($data['content']);
         }
         return array();
     }
 
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getSearchFilters(Request $request)
     {
         $session = $request->getSession();
-        if ($session->has('filters'))
+        if ($session->has('filters')) {
             $this->initFilters($session);
+        }
         $searchFilters = $request->get('jira_search') ?: array();
         
-        $searchFilters['projects'] = $this->getProjects();
-        if (empty($searchFilters['project']))
+        if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
+        }
+        
+        $searchFilters['projects'] = $this->getProjects();
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        if (empty($searchFilters['sprint']))
+        
+        if (empty($searchFilters['sprint'])) {
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
-        $this->sprint = $searchFilters['sprint'];
+        }
         
         $session->set('filters', array(
             'project' => $searchFilters['project'],
@@ -111,27 +124,23 @@ class ApiJira extends AbstractApi
         return $searchFilters;
     }
 
-    public function initFilters(Session $session)
+    /**
+     * {@inheritdoc}
+     */
+    public function addFlag(Request $request, $selected)
     {
-        $session->set('filters', array(
-            'project' => null,
-            'sprint' => null
-        ));
     }
 
     /**
-     * Sprints getter according to a project
-     *
-     * @param int $project            
-     * @return array
+     * {@inheritdoc}
      */
     public function getSprints($project)
     {
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->call($api);
-            foreach ($data->values as $sprint) {
+            $data = $this->apiCaller->call($this->getUser(), $api);
+            foreach ($data['content']->values as $sprint) {
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
             }
@@ -151,10 +160,10 @@ class ApiJira extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        $data = $this->call($api);
+        $data = $this->apiCaller->call($this->getUser(), $api);
         $projects = array();
-        foreach ($data->values as $sprint) {
-            $projects[$sprint->name] = $sprint->id;
+        foreach ($data['content']->values as $project) {
+            $projects[$project->name] = $project->id;
         }
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
         
@@ -162,9 +171,17 @@ class ApiJira extends AbstractApi
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getFormType()
+    {
+        return JiraSearchType::class;
+    }
+
+    /**
      * Sprint API getter
-     *
-     * @param int $project            
+     * @param int $project
+     * @return string
      */
     private function getSprintApi($project)
     {
@@ -175,6 +192,8 @@ class ApiJira extends AbstractApi
 
     /**
      * Project API getter
+     * @param int $maxResults
+     * @return string
      */
     private function getProjectApi($maxResults = '-1')
     {
@@ -185,8 +204,8 @@ class ApiJira extends AbstractApi
 
     /**
      * Issues API getter
-     *
-     * @param string $jql            
+     * @param string $jql
+     * @return string
      */
     private function getIssuesApi($jql = '')
     {

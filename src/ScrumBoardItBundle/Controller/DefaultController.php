@@ -6,81 +6,54 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
-use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
-use ScrumBoardItBundle\Entity\Search\JiraSearch;
+use ScrumBoardItBundle\Entity\Search\SearchEntity;
 
 /**
- * controller of navigation.
+ * Controller of navigation.
  */
 class DefaultController extends Controller
 {
-
     /**
-     * @Route("/", name="index") *
+     * @Route("/", name="index")
      *
      * @return Response
      */
-
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('login_check'));
+        return $this->redirect('login');
     }
 
     /**
      * @Route("/home", name="home")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      */
-    public function home(Request $request)
+    public function homeAction(Request $request)
     {
-        $results = $this->issuesAction($request);
+        $service = $this->get($this->getUser()->getConnector() . '.api');
+        
+        $searchFilters = $service->getSearchFilters($request);
+        $issues = $service->searchIssues($searchFilters);
+        
+        $searchEntity = new SearchEntity($searchFilters);
+        $form = $this->createForm($service->getFormType(), $searchEntity);
         
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-            'form' => $results['form']->createView(),
-            'issues' => $results['issues']
+            'form' => $form->createView(),
+            'issues' => $issues
         ));
     }
 
     /**
-     * Return form and issues from the request
      *
+     * @Route("/print", name="print")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @param Request $request            
-     * @return array
-     */
-    private function issuesAction(Request $request)
-    {
-        $service = $this->container->get($this->getUser()
-            ->getConnector() . '.api');
-        $searchFilters = $service->getSearchFilters($request);
-        
-        switch ($this->getUser()->getConnector()) {
-            case 'jira':
-                $jiraSearch = new JiraSearch($searchFilters);
-                $form = $this->createForm(JiraSearchType::class, $jiraSearch);
-                break;
-        }
-        
-        $issues = $service->searchIssues($searchFilters);
-        
-        $results = array(
-            'form' => $form,
-            'issues' => $issues
-        );
-        
-        return $results;
-    }
-
-    /**
-     * @Route("/print", name="print")
-     *
-     * @param Request $request            
+     * @param Request $request
      * @return Response
      */
     public function printAction(Request $request)
     {
-        $service = $this->container->get($this->getUser()
-            ->getConnector() . '.api');
+        $service = $this->get($this->getUser()->getConnector() . '.api');
         $selected = $request->request->get('issues');
         
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
@@ -89,19 +62,18 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/flag/add", name="add_flag")
+     * @Route("/flag", name="add_flag")
+     * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @param Request $request            
+     * @param Request $request
      * @return Response
      */
     public function addFlagAction(Request $request)
     {
-        $manager = $this->container->get('service.manager');
-        $service = $manager->getService();
-        /* @var $service ScrumBoardItBundle\Service\AbstractService */
+        $service = $this->get($this->getUser()->getConnector() . '.api');
         $selected = $request->request->get('issues');
-        $service->addFlag($selected);
+        $service->addFlag($request, $selected);
         
-        return $this->redirect($this->generateUrl('index'));
+        return $this->redirect('home');
     }
 }

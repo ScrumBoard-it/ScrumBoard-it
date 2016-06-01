@@ -7,21 +7,20 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        default:
             anonymous: ~
             guard:
                 authenticators:
                     - jira_token_authenticator
+                    - github_token_authenticator
+                entry_point: jira_token_authenticator
             logout:
-                path:   /logout
+                path: /logout
+                target: /
             remember_me:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
-            #    always_remember_me: true
-                    
-#        default:
-#            anonymous: ~
             
     providers:
         webservice:

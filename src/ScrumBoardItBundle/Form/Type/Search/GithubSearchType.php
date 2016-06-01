@@ -1,37 +1,35 @@
 <?php
 namespace ScrumBoardItBundle\Form\Type\Search;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
 
 /**
- * Jira search type
+ * Github search type
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class JiraSearchType extends AbstractType
+class GithubSearchType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $jiraSearch = $options['data'];
+        $githubSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'label' => 'Tableaux',
-            'choices' => $jiraSearch->getProjects(),
+            'label' => 'Dépôts',
+            'choices' => $githubSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un tableau',
-            'attr' => array(
-                'id' => $jiraSearch->getProject()
-            )
+            'placeholder' => 'Choisissez un dépôt'
         ))
             ->add('sprint', ChoiceType::class, array(
-            'label' => 'Sprints non terminés',
-            'choices' => $jiraSearch->getSprints(),
-            'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
+            'label' => 'Milestones actifs',
+            'choices' => $githubSearch->getSprints(),
+            'placeholder' => 'Sélectionnez un milestone (optionnel)',
+            'attr' => (empty($githubSearch->getProject()) || empty($githubSearch->getSprints())) ? array(
                 'disabled' => 'disabled'
             ) : array()
         ));
@@ -52,6 +50,6 @@ class JiraSearchType extends AbstractType
      */
     public function getName()
     {
-        return 'jira_search';
+        return 'github_search';
     }
 }

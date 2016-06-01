@@ -5,14 +5,6 @@ imports:
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
-    issues_service: jira
-    jira_url: http://jira.canaltp.fr/
-    jira_tag: ~
-    jira: 
-        host: "%jira_url%"
-        tag: "%jira_tag%"
 
 framework:
     #esi:             ~
@@ -78,3 +70,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# ScrumBoard-it config
+scrum_board_it:
+    jira: 
+        host: "%jira_url%"
+        complexity_field: "%jira_complexity_field%"
+    github:
+        host: https://api.github.com/

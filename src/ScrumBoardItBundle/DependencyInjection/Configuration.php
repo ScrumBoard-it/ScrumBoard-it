@@ -11,17 +11,34 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        // $rootNode =
-        $treeBuilder->root('scrum_board_it');
+        $rootNode = $treeBuilder->root('scrum_board_it');
+        
+        $rootNode->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('jira')
+                    ->children()
+                        ->scalarNode('host')
+                            ->isRequired()
+                        ->end()
+                        ->scalarNode('complexity_field')
+                            ->isRequired()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('github')
+                    ->children()
+                        ->scalarNode('host')
+                            ->isRequired()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
         
         return $treeBuilder;
     }

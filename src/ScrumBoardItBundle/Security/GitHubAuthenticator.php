@@ -1,15 +1,15 @@
 <?php
 namespace ScrumBoardItBundle\Security;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use ScrumBoardItBundle\Security\AbstractTokenAuthenticator;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Jira Authenticator
+ * Github Authenticator
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class JiraAuthenticator extends AbstractTokenAuthenticator
+class GitHubAuthenticator extends AbstractTokenAuthenticator
 {
     /**
      * {@inheritdoc}
@@ -20,14 +20,14 @@ class JiraAuthenticator extends AbstractTokenAuthenticator
         $password = $credentials['password'];
         $user->setHash("$login:$password");
         
-        $url = $this->data['host'] . '/rest/api/latest/user?username=' . $login;
+        $url = $this->data['host'] . 'user';
         $results = $this->apiCaller->call($user, $url);
         
         if ($results['http_code'] === 200 && !empty($results['content'])) {
-            $content = $results['content'];
-            $user->setEmail($content->emailAddress);
-            $user->setDisplayName($content->displayName);
-            $user->setImgUrl($content->avatarUrls->{'24x24'});
+            $data = $results['content'];
+            $user->setEmail($data->email);
+            $user->setDisplayName($data->name);
+            $user->setImgUrl($data->avatar_url);
             $user->setApi($this->getApi());
             
             return true;
@@ -41,6 +41,6 @@ class JiraAuthenticator extends AbstractTokenAuthenticator
      */
     protected function getApi()
     {
-        return 'jira';
+        return 'github';
     }
 }
