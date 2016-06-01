@@ -88,7 +88,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Type getter
-     * 
+     *
      * @return Type
      */
     public function getType()
@@ -110,7 +110,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Link getter
-     * 
+     *
      * @return string
      */
     public function getLink()
@@ -132,7 +132,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Printed getter
-     * 
+     *
      * @return boolean
      */
     public function isPrinted()
@@ -154,7 +154,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * User Story getter
-     * 
+     *
      * @return boolean
      */
     public function isUserStory()
@@ -176,7 +176,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Proof of Concept getter
-     * 
+     *
      * @return boolean
      */
     public function isProofOfConcept()
@@ -234,7 +234,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Number getter
-     * 
+     *
      * @return number
      */
     public function getNumber()
@@ -292,7 +292,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Business Value getter
-     * 
+     *
      * @return number
      */
     public function getBusinessValue()
@@ -314,7 +314,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
     /**
      * Description getter
-     * 
+     *
      * @return string
      */
     public function getDescription()

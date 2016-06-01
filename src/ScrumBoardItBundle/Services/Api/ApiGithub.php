@@ -9,7 +9,7 @@ use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 
 /**
  * Api Github
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ApiGithub extends AbstractApi
@@ -27,16 +27,15 @@ class ApiGithub extends AbstractApi
             $page = $this->apiCaller->call($this->getUser(), $api);
             foreach ($page['content'] as $project) {
                 $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
-                if($page['links'][0]['rel'] === 'first') {
+                if ($page['links'][0]['rel'] === 'first') {
                     $api = null;
-                }
-                else {
+                } else {
                     $match = '';
                     preg_match('/<(.*)>/', $page['links'][0][0], $match);
                     $api = $match[1];
                 }
             }
-        } while(!empty($api));
+        } while (!empty($api));
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
         
         return $projects;
@@ -79,8 +78,8 @@ class ApiGithub extends AbstractApi
 
     /**
      * Return issue based on API result
-     * @param \stdClass $issue            
-     * @param string $project            
+     * @param \stdClass $issue
+     * @param string $project
      * @return IssueInterface
      */
     private function getIssue($issue, $project)
@@ -214,7 +213,7 @@ class ApiGithub extends AbstractApi
 
     /**
      * Return url for searching sprints
-     * @param string $project            
+     * @param string $project
      * @return string
      */
     private function getSprintApi($project)
@@ -226,7 +225,7 @@ class ApiGithub extends AbstractApi
 
     /**
      * Return base url for the api
-     * @param string $project            
+     * @param string $project
      * @return string
      */
     private function getBaseApi($project)
@@ -238,7 +237,7 @@ class ApiGithub extends AbstractApi
 
     /**
      * Return url for searching issues
-     * @param array $searchFilters            
+     * @param array $searchFilters
      * @return string
      */
     private function getIssueApi($searchFilters)

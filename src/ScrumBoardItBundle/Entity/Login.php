@@ -3,7 +3,7 @@ namespace ScrumBoardItBundle\Entity;
 
 /**
  * Description of login
- * 
+ *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
 class Login
@@ -34,40 +34,40 @@ class Login
 
     /**
      * Username getter
-     * 
+     *
      * @return string
      */
-    function getUsername()
+    public function getUsername()
     {
         return $this->username;
     }
 
     /**
      * Password getter
-     * 
+     *
      * @return string
      */
-    function getPassword()
+    public function getPassword()
     {
         return $this->password;
     }
 
     /**
      * Api getter
-     * 
+     *
      * @return string
      */
-    function getApi()
+    public function getApi()
     {
         return $this->api;
     }
 
     /**
      * Remember Me getter
-     * 
+     *
      * @return boolean
      */
-    function getRememberMe()
+    public function getRememberMe()
     {
         return $this->rememberMe;
     }
@@ -77,7 +77,7 @@ class Login
      * @param string $username
      * @return self
      */
-    function setUsername($username)
+    public function setUsername($username)
     {
         $this->username = $username;
 
@@ -89,7 +89,7 @@ class Login
      * @param string $password
      * @return self
      */
-    function setPassword($password)
+    public function setPassword($password)
     {
         $this->password = $password;
 
@@ -101,7 +101,7 @@ class Login
      * @param string $api
      * @return self
      */
-    function setApi($api)
+    public function setApi($api)
     {
         $this->api = $api;
 
@@ -113,7 +113,7 @@ class Login
      * @param boolean $rememberMe
      * @return self
      */
-    function setRememberMe($rememberMe)
+    public function setRememberMe($rememberMe)
     {
         $this->rememberMe = $rememberMe;
 

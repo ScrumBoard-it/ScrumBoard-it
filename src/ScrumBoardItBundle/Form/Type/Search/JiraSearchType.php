@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Jira search type
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class JiraSearchType extends AbstractType
@@ -55,4 +55,3 @@ class JiraSearchType extends AbstractType
         return 'jira_search';
     }
 }
-

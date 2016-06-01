@@ -44,7 +44,7 @@ class ApiJira extends AbstractApi
 
     /**
      * Return issues based on API results
-     * @param \stdClass $data            
+     * @param \stdClass $data
      * @return array
      */
     private function getIssues($data)
@@ -58,8 +58,9 @@ class ApiJira extends AbstractApi
                 if (! empty($issue->fields->{$this->config['complexity_field']})) {
                     $task->setComplexity($issue->fields->{$this->config['complexity_field']});
                     $task->setUserStory(true);
-                } else
+                } else {
                     $task->setProofOfConcept(true);
+                }
             }
             $task->setId($issue->key);
             $number = str_replace($issue->fields->project->key . '-', '', $issue->key);
@@ -127,7 +128,8 @@ class ApiJira extends AbstractApi
      * {@inheritdoc}
      */
     public function addFlag(Request $request, $selected)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}

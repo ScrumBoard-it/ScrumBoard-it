@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
  * User Provider
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class WebServiceUserProvider implements UserProviderInterface

@@ -7,14 +7,14 @@ use GuzzleHttp\Psr7;
 
 /**
  * Api Caller
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ApiCaller
 {
     /**
      * Return an array of the API response
-     * @param string $url            
+     * @param string $url
      * @return \stdClass
      */
     public function call(User $user, $url)
@@ -28,8 +28,7 @@ class ApiCaller
         ]);
         try {
             $response = $client->get($url);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
         

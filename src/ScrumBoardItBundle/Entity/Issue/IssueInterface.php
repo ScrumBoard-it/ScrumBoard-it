@@ -3,14 +3,14 @@ namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
  * Issue Interface
- * 
+ *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 interface IssueInterface
 {
     /**
      * Project getter
-     * 
+     *
      * @return string
      */
     public function getProject();
@@ -24,7 +24,7 @@ interface IssueInterface
 
     /**
      * ID getter
-     * 
+     *
      * @return number
      */
     public function getId();
@@ -38,7 +38,7 @@ interface IssueInterface
 
     /**
      * Title getter
-     * 
+     *
      * @return string
      */
     public function getTitle();
@@ -52,7 +52,7 @@ interface IssueInterface
 
     /**
      * Complexity getter
-     * 
+     *
      * @return number
      */
     public function getComplexity();

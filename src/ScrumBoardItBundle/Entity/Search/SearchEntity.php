@@ -3,7 +3,7 @@ namespace ScrumBoardItBundle\Entity\Search;
 
 /**
  * Description of projects/sprints search
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class SearchEntity
@@ -49,17 +49,17 @@ class SearchEntity
      *
      * @return array
      */
-    function getProjects()
+    public function getProjects()
     {
         return $this->projects;
     }
 
     /**
      * Projects setter
-     * @param array $projects            
+     * @param array $projects
      * @return self
      */
-    function setProjects($projects)
+    public function setProjects($projects)
     {
         $this->projects = $projects;
         
@@ -71,17 +71,17 @@ class SearchEntity
      *
      * @return int
      */
-    function getProject()
+    public function getProject()
     {
         return $this->project;
     }
 
     /**
      * Project setter
-     * @param int $project            
+     * @param int $project
      * @return self
      */
-    function setProject($project)
+    public function setProject($project)
     {
         $this->project = $project;
         
@@ -93,17 +93,17 @@ class SearchEntity
      *
      * @return array
      */
-    function getSprints()
+    public function getSprints()
     {
         return $this->sprints;
     }
 
     /**
      * Sprints setter
-     * @param array $sprints            
+     * @param array $sprints
      * @return self
      */
-    function setSprints($sprints)
+    public function setSprints($sprints)
     {
         $this->sprints = $sprints;
         
@@ -115,17 +115,17 @@ class SearchEntity
      *
      * @return int
      */
-    function getSprint()
+    public function getSprint()
     {
         return $this->sprint;
     }
 
     /**
      * Sprint setter
-     * @param int $sprint            
+     * @param int $sprint
      * @return self
      */
-    function setSprint($sprint)
+    public function setSprint($sprint)
     {
         $this->sprint = $sprint;
         

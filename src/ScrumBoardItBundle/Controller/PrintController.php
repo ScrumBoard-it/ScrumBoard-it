@@ -21,7 +21,7 @@ class PrintController extends Controller
 
     /**
      * Launch the Print Manager
-     * 
+     *
      * @param array $issues
      * @return Response
      */

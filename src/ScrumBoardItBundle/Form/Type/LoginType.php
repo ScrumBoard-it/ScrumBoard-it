@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 /**
  * Login type
- * 
+ *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
 class LoginType extends AbstractType

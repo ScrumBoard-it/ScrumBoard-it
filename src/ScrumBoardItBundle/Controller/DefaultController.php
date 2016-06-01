@@ -48,7 +48,7 @@ class DefaultController extends Controller
      * @Route("/print", name="print")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @param Request $request            
+     * @param Request $request
      * @return Response
      */
     public function printAction(Request $request)
@@ -65,7 +65,7 @@ class DefaultController extends Controller
      * @Route("/flag", name="add_flag")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
-     * @param Request $request            
+     * @param Request $request
      * @return Response
      */
     public function addFlagAction(Request $request)

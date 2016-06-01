@@ -14,7 +14,7 @@ use ScrumBoardItBundle\Services\ApiCaller;
 
 /**
  * Abstract Token Authenticator
- * 
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
@@ -77,7 +77,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * {@inheritdoc}
      */
-    public abstract function checkCredentials($credentials, UserInterface $user);
+    abstract public function checkCredentials($credentials, UserInterface $user);
 
     /**
      * {@inheritdoc}
@@ -121,8 +121,8 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Return Api identificator
-     * 
+     *
      * @return string
      */
-    protected abstract function getApi();
+    abstract protected function getApi();
 }

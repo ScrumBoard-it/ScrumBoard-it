@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 /**
  * Abstract Api
  *
- * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>        
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 abstract class AbstractApi
 {
@@ -34,7 +34,7 @@ abstract class AbstractApi
     /**
      * Constructor
      *
-     * @param TokenStorage $token            
+     * @param TokenStorage $token
      * @param array
      */
     public function __construct(TokenStorage $token, $config, $apiCaller)
@@ -56,7 +56,7 @@ abstract class AbstractApi
 
     /**
      * Initialize filters in session variable
-     * @param Session $session            
+     * @param Session $session
      */
     protected function initFilters(Session $session)
     {
@@ -71,45 +71,45 @@ abstract class AbstractApi
      *
      * @return AbstractType
      */
-    public abstract function getFormType();
+    abstract public function getFormType();
 
     /**
      * Return the projects list
      *
      * @return array
      */
-    public abstract function getProjects();
+    abstract public function getProjects();
 
     /**
      * Return the sprints list according to a project
-     * @param string $project            
+     * @param string $project
      */
-    public abstract function getSprints($project);
+    abstract public function getSprints($project);
 
     /**
      * Return the issues list
-     * @param array $searchFilters            
+     * @param array $searchFilters
      * @return \stdClass
      */
-    public abstract function searchIssues($searchFilters = null);
+    abstract public function searchIssues($searchFilters = null);
 
     /**
      * Return the selected issues list
-     * @param Request $request            
-     * @param array $selected            
+     * @param Request $request
+     * @param array $selected
      */
-    public abstract function getSelectedIssues(Request $request, $selected);
+    abstract public function getSelectedIssues(Request $request, $selected);
 
     /**
      * Return the searc list
-     * @param Request $request            
+     * @param Request $request
      * @return array
      */
-    public abstract function getSearchFilters(Request $request);
+    abstract public function getSearchFilters(Request $request);
 
     /**
      * Add printed flag on selected issues
-     * @param array $selected            
+     * @param array $selected
      */
-    public abstract function addFlag(Request $request, $selected);
+    abstract public function addFlag(Request $request, $selected);
 }

@@ -9,7 +9,6 @@ use ScrumBoardItBundle\Exception\ClassNotFoundException;
  */
 abstract class FactoryInterface
 {
-
     protected $suffix;
 
     public function __construct($suffix = null)

@@ -69,7 +69,8 @@ class User implements UserInterface, EquatableInterface
      * {@inheritDoc}
      */
     public function eraseCredentials()
-    {}
+    {
+    }
 
     /**
      * {@inheritDoc}
@@ -132,7 +133,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * Email getter
-     * 
+     *
      * @return string
      */
     public function getEmail()
@@ -154,7 +155,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * Display Name getter
-     * 
+     *
      * @return string
      */
     public function getDisplayName()
@@ -176,7 +177,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * Img Url getter
-     * 
+     *
      * @return string
      */
     public function getImgUrl()
@@ -198,7 +199,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * Connector getter
-     * 
+     *
      * @return string
      */
     public function getConnector()
@@ -271,4 +272,3 @@ class User implements UserInterface, EquatableInterface
         // Mot de passe encodé dans le hash
     }
 }
-
