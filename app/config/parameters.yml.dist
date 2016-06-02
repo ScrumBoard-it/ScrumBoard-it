@@ -22,4 +22,5 @@ parameters:
     
     jira_url:           http://jira.canaltp.fr/
     jira_complexity_field: customfield_11108
+    jira_printed_tag:   Post-it
     

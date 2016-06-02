@@ -76,5 +76,6 @@ scrum_board_it:
     jira: 
         host: "%jira_url%"
         complexity_field: "%jira_complexity_field%"
+        printed_tag: "%jira_printed_tag%"
     github:
         host: https://api.github.com/

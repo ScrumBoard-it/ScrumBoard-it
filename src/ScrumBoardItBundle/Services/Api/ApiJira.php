@@ -135,6 +135,14 @@ class ApiJira extends AbstractApi
      */
     public function addFlag(Request $request, $selected)
     {
+    if (!empty($selected)) {
+            foreach ($selected as $issue) {
+                $api = $this->getFlagIssuesApi() . $issue;
+                $tag = '"' . $this->config['printed_tag'] . '"';
+                $content = '{"update":{"labels":[{"add":' . $tag . '}]}}';
+                $this->apiCaller->puting($this->getUser(), $api, $content);
+            }
+        }
     }
 
     /**
@@ -218,5 +226,17 @@ class ApiJira extends AbstractApi
         $api = self::REST_API . 'search?jql=' . $jql;
         
         return $this->config['host'] . $api;
+    }
+    
+    /**
+     * addFlag API getter
+     * 
+     * @return string
+     */
+    private function getFlagIssuesApi()
+    {
+        $api = self::REST_API . 'issue/';
+        
+        return $this->config['host'] .$api;
     }
 }
