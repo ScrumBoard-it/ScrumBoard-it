@@ -78,4 +78,11 @@ class DefaultController extends Controller
 
         return $this->redirect('home');
     }
+    
+    /**
+     * @Route("/discover", name="discover")
+     */
+    public function VisitorAction()
+    {
+    }
 }

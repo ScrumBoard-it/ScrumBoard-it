@@ -19,6 +19,12 @@ services:
            - 
               host: https://api.github.com/
            - '@api.caller'
+   visitor_token_authenticator:
+       class: ScrumBoardItBundle\Security\VisitorAuthenticator
+       arguments:
+           - '@router'
+           - '%github%'
+           - '@api.caller'
    jira.api:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
