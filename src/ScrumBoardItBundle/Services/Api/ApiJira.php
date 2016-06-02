@@ -51,23 +51,29 @@ class ApiJira extends AbstractApi
     {
         $issues = array();
         foreach ($data->issues as $issue) {
-            if ($issue->fields->issuetype->subtask) {
-                $task = new SubTask();
-            } else {
-                $task = new Task();
-                if (! empty($issue->fields->{$this->config['complexity_field']})) {
+            $task = new Task();
+            switch($issue->fields->issuetype->name) {
+                case 'Récit':
                     $task->setComplexity($issue->fields->{$this->config['complexity_field']});
                     $task->setUserStory(true);
-                } else {
+                    break;
+                case 'Sous-tâche':
+                    $task->setType('subtask');
+                    break;
+                case 'Bogue':
+                    break;
+                default:
                     $task->setProofOfConcept(true);
-                }
+                    break;
             }
+            
             $task->setId($issue->key);
             $number = str_replace($issue->fields->project->key . '-', '', $issue->key);
             $task->setNumber($number);
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
+            $task->setTimeBox($issue->fields->timeestimate);
             $issues[$issue->id] = $task;
         }
         

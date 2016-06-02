@@ -111,8 +111,15 @@ class ApiGithub extends AbstractApi
         preg_match_all("/\[(.*?)\]/", $issue->body, $parameters);
         foreach ($parameters[1] as $parameter) {
             $values = explode(':', $parameter);
-            if (trim($values[0]) === 'CT') {
-                $task->setComplexity(trim($values[1]));
+            switch(trim($values[0])) {
+                case 'CT':
+                    $task->setComplexity(trim($values[1]));
+                    break;
+                case 'TB':
+                    $task->setTimeBox(trim($values[1]));
+                    break;
+                default:
+                    break;
             }
         }
         
