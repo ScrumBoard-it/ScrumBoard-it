@@ -68,6 +68,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
+            $task->setTimeBox($issue->fields->timeestimate);
             $issues[$issue->id] = $task;
         }
         
