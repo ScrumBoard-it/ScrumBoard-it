@@ -23,7 +23,8 @@ services:
        class: ScrumBoardItBundle\Security\VisitorAuthenticator
        arguments:
            - '@router'
-           - '%github%'
+           - 
+              host: https://api.github.com/
            - '@api.caller'
    jira.api:
        class: ScrumBoardItBundle\Services\Api\ApiJira
@@ -36,6 +37,13 @@ services:
            - '@api.caller'
    github.api:
        class: ScrumBoardItBundle\Services\Api\ApiGithub
+       arguments:
+           - '@security.token_storage'
+           - 
+              host: https://api.github.com/
+           - '@api.caller'
+   discover.api:
+       class: ScrumBoardItBundle\Services\Api\ApiVisitor
        arguments:
            - '@security.token_storage'
            - 
