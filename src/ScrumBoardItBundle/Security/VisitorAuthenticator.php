@@ -12,7 +12,7 @@ class VisitorAuthenticator extends AbstractTokenAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if($request->getPathInfo() == '/discover') {
+        if ($request->getPathInfo() == '/discover') {
             return array(
                 'username' => 'visitor'
             );

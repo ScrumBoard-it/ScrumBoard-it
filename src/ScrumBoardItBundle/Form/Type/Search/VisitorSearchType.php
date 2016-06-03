@@ -18,14 +18,20 @@ class VisitorSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
+        $visitorSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
+            'label' => 'Projets',
+            'choices' => $visitorSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un dépôt'
+            'placeholder' => 'Sélectionnez un projet'
         ))
-            ->add('sprint', ChoiceType::class, array(
-            'empty_data' => null,
-            'placeholder' => 'Sélectionnez un milestone (optionnel)',
+        ->add('sprint', ChoiceType::class, array(
+            'label' => 'Milestones actifs',
+            'choices' => $visitorSearch->getSprints(),
+            'placeholder' => 'Sélectionnez un filtre (optionnel)',
+            'attr' => (empty($visitorSearch->getProject()) || empty($visitorSearch->getSprints())) ? array(
+                'disabled' => 'disabled'
+            ) : array()
         ));
     }
 
