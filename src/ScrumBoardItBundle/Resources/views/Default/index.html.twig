@@ -1,3 +1,4 @@
+<<<<<<< 656de387a5cd63a36187c4abdbf405a912e729d4
 {% extends "ScrumBoardItBundle::base.html.twig" %}
 
 {% block title %}
@@ -88,6 +89,31 @@
                             {{ block('issue') }}
                         {% endfor %}
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Choix du template d'impression:
+                </div>
+                <div class="context-menu-input">
+                    {{ form_start(template) }}
+                        <p>
+                            {{ form_row(template.userStory) }}
+                        </p>
+                        <p>
+                            {{ form_row(template.subTask) }}
+                        </p>
+                        <p>
+                            {{ form_row(template.poc) }}
+                        </p>
+
+                        {{ form_rest(template) }}
+
+                        <button class="btn btn-def btn-block" type="submit" value="SaveTemplate">Valider</button>
+
+                    {{ form_end(template) }}
                 </div>
             </div>
         </div>
