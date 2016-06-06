@@ -1,4 +1,3 @@
-<<<<<<< 656de387a5cd63a36187c4abdbf405a912e729d4
 {% extends "ScrumBoardItBundle::base.html.twig" %}
 
 {% block title %}
@@ -92,22 +91,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Choix du template d'impression:
-                </div>
-                <div class="context-menu-input">
+        <div class="context-menu-input">
+            <div>
+                <div>
                     {{ form_start(template) }}
-                        <p>
-                            {{ form_row(template.userStory) }}
-                        </p>
-                        <p>
-                            {{ form_row(template.subTask) }}
-                        </p>
-                        <p>
-                            {{ form_row(template.poc) }}
-                        </p>
+
+                        {% for type in template if 'token' not in type.vars.name %}
+                            <h5>{{ form_label(type) }}</h5>
+                                {% for choix in type %}
+                                    {{ form_widget(choix) }}
+                                    <img src="{{ asset('bundles/scrumboardit/images/' ~type.vars.name~ '_template' ~ loop.index ~ '.png') }}"
+                                         height="150" width="150" />
+                               {% endfor %}
+                        {% endfor %}
 
                         {{ form_rest(template) }}
 
