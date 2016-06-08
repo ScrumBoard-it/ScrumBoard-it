@@ -27,6 +27,27 @@ class ApiJira extends AbstractApi
      * @var string
      */
     const REST_AGILE = 'rest/agile/latest/';
+    
+    /**
+     * Label for User Story
+     *
+     * @var string
+     */
+    const LABEL_US = 'Récit';
+    
+    /**
+     * Label for Subtask
+     *
+     * @var string
+     */
+    const LABEL_SUBTASK = 'Sous-tâche';
+    
+    /**
+     * Label for Bogue
+     *
+     * @var string
+     */
+    const LABEL_BOGUE = 'Bogue';
 
     /**
      * {@inheritdoc}
@@ -52,15 +73,15 @@ class ApiJira extends AbstractApi
         $issues = array();
         foreach ($data->issues as $issue) {
             $task = new Task();
-            switch($issue->fields->issuetype->name) {
-                case 'Récit':
+            switch ($issue->fields->issuetype->name) {
+                case $this::LABEL_US:
                     $task->setComplexity($issue->fields->{$this->config['complexity_field']});
                     $task->setUserStory(true);
                     break;
-                case 'Sous-tâche':
+                case $this::LABEL_SUBTASK:
                     $task->setType('subtask');
                     break;
-                case 'Bogue':
+                case $this::LABEL_BOGUE:
                     break;
                 default:
                     $task->setProofOfConcept(true);
@@ -135,7 +156,7 @@ class ApiJira extends AbstractApi
      */
     public function addFlag(Request $request, $selected)
     {
-    if (!empty($selected)) {
+        if (!empty($selected)) {
             foreach ($selected as $issue) {
                 $api = $this->getFlagIssuesApi() . $issue;
                 $tag = '"' . $this->config['printed_tag'] . '"';
@@ -230,7 +251,7 @@ class ApiJira extends AbstractApi
     
     /**
      * addFlag API getter
-     * 
+     *
      * @return string
      */
     private function getFlagIssuesApi()

@@ -7,23 +7,31 @@ services:
        class: ScrumBoardItBundle\Security\JiraAuthenticator
        arguments:
            - '@router'
-           - '%jira%'
+           - 
+              host: "%jira_url%"
+              complexity_field: "%jira_complexity_field%"
+              printed_tag: "%jira_printed_tag%"
            - '@api.caller'
    github_token_authenticator:
        class: ScrumBoardItBundle\Security\GitHubAuthenticator
        arguments:
            - '@router'
-           - '%github%'
+           - 
+              host: https://api.github.com/
            - '@api.caller'
    jira.api:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
            - '@security.token_storage'
-           - '%jira%'
+           - 
+              host: "%jira_url%"
+              complexity_field: "%jira_complexity_field%"
+              printed_tag: "%jira_printed_tag%"
            - '@api.caller'
    github.api:
        class: ScrumBoardItBundle\Services\Api\ApiGithub
        arguments:
            - '@security.token_storage'
-           - '%github%'
+           - 
+              host: https://api.github.com/
            - '@api.caller'

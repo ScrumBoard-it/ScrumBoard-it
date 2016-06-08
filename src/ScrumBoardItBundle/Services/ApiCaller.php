@@ -75,7 +75,8 @@ class ApiCaller
      * @param string $url
      * @param string $content
      */
-    public function puting(User $user, $url, $content) {
+    public function puting(User $user, $url, $content)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_URL, $url);
