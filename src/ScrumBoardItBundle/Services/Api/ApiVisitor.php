@@ -143,7 +143,7 @@ class ApiVisitor extends AbstractApi
         $task->setTimeBox($timeBox);
         $task->setUserStory($isUS);
         $task->setProofOfConcept($isProofOfConcept);
-        $task->setPrinted(in_array($this->count, $this->printedIssues));
+        $task->setPrinted(in_array($task->getId(), $this->printedIssues));
         
         return $task;
     }
@@ -282,7 +282,7 @@ class ApiVisitor extends AbstractApi
             $issues = $this->getSelectedIssues($request, $selected);
             $printedIssues = $session->get('printed_issues');
             foreach ($issues as $issue) {
-                $printedIssues[$issue['issue']->getId()] = $issue->getId();
+                $printedIssues[$issue->getId()] = $issue->getId();
             }
             $session->set('printed_issues', $printedIssues);
         }
