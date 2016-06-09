@@ -18,19 +18,45 @@
         </div>
         <div class="row">
             <form id="issues_search" class="form-inline">
-                <div class="form-group col-md-4">
-                    {{ form_row(form.project, {'attr': {'class': 'form-control search_project'} }) }}
-                </div>
-                <div class="form-group col-md-4">
-                    {{ form_row(form.sprint, {'attr': {'class': 'form-control search_sprint'} }) }}
-                </div>
+                <div class="form-group col-md-4">{{ form_row(form.project, {'attr':
+                    {'class': 'form-control search_project'} }) }}</div>
+                <div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
+                    {'class': 'form-control search_sprint'} }) }}</div>
             </form>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Choix des templates d'impression:
+                    </div>
+                    <div class="context-menu-input">
+                        {{ form_start(configuration_form) }}
+
+                            {% for type in configuration_form if 'token' not in type.vars.name %}
+                                <h5>{{ form_label(type) }}</h5>
+                                    {% for choice in type %}
+                                        {{ form_widget(choice) }}
+                                        <img src="{{ asset('bundles/scrumboardit/images/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"
+                                             height="150" width="150" />
+                                   {% endfor %}
+                            {% endfor %}
+
+                            <button class="btn btn-def btn-block" type="submit" value="SaveTemplate">Valider</button>
+
+                        {{ form_end(configuration_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             {% if not issues|length %}
             <div class="col-md-12">
                 <div class="alert alert-info" role="alert">
-                    <p>Veuillez renseigner ci-dessus un projet en cours contenant des tickets.</p>
+                    <p>Veuillez renseigner ci-dessus un projet en cours contenant des
+                        tickets.</p>
                 </div>
             </div>
             {% endif %}
@@ -71,8 +97,8 @@
                         </div>
                         <ul class="list-group" id="printQueue"></ul>
                         <div class="btn-group">
-                            <button id="submitPrint" class="btn btn-default">Imprimer</button>
-                            <button id="addFlag" class="btn btn-default">Traité</button>
+                            <button id="submitPrint" class="btn btn-default">imprimer</button>
+                            <button id="addFlag" class="btn btn-default">traité</button>
                         </div>
                     </div>
                 </form>
@@ -83,33 +109,9 @@
                     <div class="panel-heading">
                         Déjà imprimé(s) <span class="badge">0</span>
                     </div>
-                    <ul class="list-group selectable">
-                        {% for issue in issues if issue.printed %}
-                            {{ block('issue') }}
-                        {% endfor %}
+                    <ul class="list-group selectable">{% for issue in issues if
+                        issue.printed %} {{ block('issue') }} {% endfor %}
                     </ul>
-                </div>
-            </div>
-        </div>
-        <div class="context-menu-input">
-            <div>
-                <div>
-                    {{ form_start(template) }}
-
-                        {% for type in template if 'token' not in type.vars.name %}
-                            <h5>{{ form_label(type) }}</h5>
-                                {% for choix in type %}
-                                    {{ form_widget(choix) }}
-                                    <img src="{{ asset('bundles/scrumboardit/images/' ~type.vars.name~ '_template' ~ loop.index ~ '.png') }}"
-                                         height="150" width="150" />
-                               {% endfor %}
-                        {% endfor %}
-
-                        {{ form_rest(template) }}
-
-                        <button class="btn btn-def btn-block" type="submit" value="SaveTemplate">Valider</button>
-
-                    {{ form_end(template) }}
                 </div>
             </div>
         </div>

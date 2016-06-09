@@ -2,7 +2,9 @@
 
 namespace ScrumBoardItBundle\Entity;
 
-class Template
+use Symfony\Component\HttpFoundation\Request;
+
+class Configuration
 {
     /**
      * User Story
@@ -22,12 +24,28 @@ class Template
      */
     private $poc;
 
+    public function __construct(Request $request)
+    {
+        $session = $request->getSession();
+        if(null !== $session->get('template')){
+            $this->userStory = $session->get('template')['user_story'];
+            $this->subTask = $session->get('template')['sub_task'];
+            $this->poc = $session->get('template')['poc'];
+        }else{
+            $this->userStory = 0;
+            $this->subTask = 0;
+            $this->poc = 0;
+        }
+    }
+
+
     /**
      * User Story getter
      *
      * @return number
      */
-    function getUserStory() {
+    function getUserStory()
+    {
         return $this->userStory;
     }
 
@@ -36,7 +54,8 @@ class Template
      *
      * @return number
      */
-    function getSubTask() {
+    function getSubTask()
+    {
         return $this->subTask;
     }
 
@@ -45,7 +64,8 @@ class Template
      *
      * @return number
      */
-    function getPoc() {
+    function getPoc()
+    {
         return $this->poc;
     }
 
@@ -54,7 +74,8 @@ class Template
      * @param number $userStory
      * @return self
      */
-    function setUserStory($userStory) {
+    function setUserStory($userStory)
+    {
         $this->userStory = $userStory;
 
         return $this;
@@ -65,7 +86,8 @@ class Template
      * @param number $subTask
      * @return self
      */
-    function setSubTask($subTask) {
+    function setSubTask($subTask)
+    {
         $this->subTask = $subTask;
 
         return $this;
@@ -76,11 +98,10 @@ class Template
      * @param number $poc
      * @return self
      */
-    function setPoc($poc) {
+    function setPoc($poc)
+    {
         $this->poc = $poc;
 
         return $this;
     }
-
-
 }

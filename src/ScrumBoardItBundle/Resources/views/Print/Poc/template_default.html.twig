@@ -1,0 +1,10 @@
+{% extends 'ScrumBoardItBundle::Print/Task/template_default.html.twig' %}
+
+{% block content %}
+    <div class="gauche">
+        <h2>P<br/>O<br/>C<br/></h2>
+    </div>
+    <div class="droite">
+        {{parent()}}
+    </div>
+{% endblock %}

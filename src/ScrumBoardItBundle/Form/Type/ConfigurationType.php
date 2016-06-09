@@ -7,7 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class TemplateType extends AbstractType
+
+class ConfigurationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,29 +16,29 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userStory', ChoiceType::class, array(
-                'label' => 'Choix du template pour les user story:',
+            ->add('user_story', ChoiceType::class, array(
                 'expanded' => true,
+                'label' => false,
                 'choices' => array(
-                    1 => 1,
-                    2 => 2,
-                    3 => 3
+                    'default' => 0,
+                    'custom1' => 1,
+                    'custom2' => 2
                 ),
             ))
-            ->add('subTask', ChoiceType::class, array(
-                'label' => 'Choix du template pour les sub task:',
+            ->add('sub_task', ChoiceType::class, array(
                 'expanded' => true,
+                'label' => false,
                 'choices' => array(
-                    1 => 1,
-                    2 => 2,
-                    3 => 3
+                    'default' => 0,
+                    'custom1' => 1,
+                    'custom2' => 2
                 ),
             ))
             ->add('poc', ChoiceType::class, array(
-                'label' => 'Choix du template pour les POC:',
                 'expanded' => true,
+                'label' => false,
                 'choices' => array(
-                    1 => 1
+                    'default' => 0
                 ),
             ));
     }
@@ -48,7 +49,7 @@ class TemplateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Template'
+            'data_class' => 'ScrumBoardItBundle\Entity\Configuration'
         ));
     }
 

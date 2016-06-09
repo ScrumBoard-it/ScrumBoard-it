@@ -9,6 +9,19 @@ body {
 	font-size: 18pt;
 }
 
+table
+{
+    border-collapse: collapse;
+    margin-left: 8mm;
+    bottom: 0;
+    position: absolute;
+}
+
+td{
+    border: 1px solid black;
+    padding-right: 20mm;
+}
+
 .container {
 	width: 210mm;
 }
@@ -45,14 +58,25 @@ body {
 	overflow: hidden;
 }
 
-.post-it.us {
+.post-it.userstory {
 	width: 127mm;
 	background-color: #ffcc00;
 	margin-left: 12mm;
+    position: relative;
 }
 
 .post-it.poc {
 	background-color: #9ee425;
+}
+
+.post-it .gauche {
+   float:left;
+   border-right: 1px solid black;
+   padding-bottom: 20%;
+}
+
+.post-it .droite {
+   overflow: hidden;
 }
 
 .post-it.subtask {

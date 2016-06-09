@@ -8,7 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
-use ScrumBoardItBundle\Form\Type\TemplateType;
+use ScrumBoardItBundle\Form\Type\ConfigurationType;
+use ScrumBoardItBundle\Entity\Configuration;
 
 /**
  * Controller of navigation.
@@ -43,43 +44,24 @@ class DefaultController extends Controller
 
         $searchEntity = new SearchEntity($searchFilters);
         $form = $this->createForm($service->getFormType(), $searchEntity);
-        $template = $this->buildTemplate($session, $request);
+
+        $sessionConfiguration = new Configuration($request);
+
+        $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
+
+        $configurationForm->handleRequest($request);
+
+        $session->set('template', array(
+            'user_story' => $configurationForm->get('user_story')->getData(),
+            'sub_task' => $configurationForm->get('sub_task')->getData(),
+            'poc' => $configurationForm->get('poc')->getData()
+        ));
 
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
-            'template' => $template->createView(),
+            'configuration_form' => $configurationForm->createView(),
             'issues' => $issues
         ));
-    }
-
-    /**
-     *
-     * @param TemplateType $template
-     * @param Session $session
-     * @param Request $request
-     * @return TemplateType
-     */
-    public function buildTemplate($session, Request $request)
-    {
-        $template = $this->createForm(TemplateType::class);
-        if(null !== $session->get('template')){
-            foreach ($template as $indice => $data) {
-                $template->get($indice) -> setData($session->get('template')[$indice]);
-            }
-        }else{
-            foreach ($template as $indice => $data) {
-                $template->get($indice) -> setData(1);
-            }
-        }
-        $template->handleRequest($request);
-
-        $session->set('template', array(
-            'userStory' => $template->get('userStory')->getData(),
-            'subTask' => $template->get('subTask')->getData(),
-            'poc' => $template->get('poc')->getData()
-        ));
-
-        return $template;
     }
 
     /**
@@ -97,15 +79,17 @@ class DefaultController extends Controller
         $selected = $request->request->get('issues');
 
         $session = $request->getSession();
-        $template = array(
-            'userStory' => $session->get('template')['userStory'],
-            'subTask' => $session->get('template')['subTask'],
-            'poc' => $session->get('template')['poc']
+        $templateForm = $this->createForm(ConfigurationType::class);
+        $templateForm->getData();
+        $templates = array(
+          'user_story' => $templateForm->get('user_story')[$session->get('template')['user_story']],
+          'sub_task' => $templateForm->get('sub_task')[$session->get('template')['sub_task']],
+          'poc' => $templateForm->get('poc')[$session->get('template')['poc']]
         );
 
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
             'issues' => $service->getSelectedIssues($request, $selected),
-            'template' => $template
+            'templates' => $templates
         ));
     }
 
