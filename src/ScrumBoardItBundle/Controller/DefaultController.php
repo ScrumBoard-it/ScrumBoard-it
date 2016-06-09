@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->redirect('login');
+        return $this->redirect('welcome');
     }
 
     /**
@@ -84,5 +84,15 @@ class DefaultController extends Controller
      */
     public function VisitorAction()
     {
+    }
+    
+    /**
+     * @Route("/welcome", name="welcome")
+     * 
+     * @return Response
+     */
+    public function welcomeAction()
+    {
+        return $this->render('ScrumBoardItBundle:Default:presentation.html.twig');
     }
 }

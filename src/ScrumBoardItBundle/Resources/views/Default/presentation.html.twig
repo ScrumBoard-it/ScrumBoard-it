@@ -1,0 +1,59 @@
+{% extends "::base.html.twig" %}
+{% block title %}Bienvenue - ScrumBoard-it{% endblock %}
+{% block stylesheets %}
+    <!-- Bootstrap -->
+    {% stylesheets
+        'bundles/scrumboardit/css/bootstrap.min.css'
+        'bundles/scrumboardit/css/style.css'
+        'bundles/scrumboardit/css/jquery.contextMenu.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    {% javascripts
+        '@ScrumBoardItBundle/Resources/public/js/bootstrap.min.js'
+        '@ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="header">
+		<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+		<div class=log>
+			Déjà un compte ?<br/>
+			<a href="{{ path('login') }}">Se connecter</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Bienvenue dans ScrumBoard-it, l'outil d'impression de post-it !</h1>
+			<h2>Vous pouvez :</h2>
+			<ul>
+				<li>Vous connecter à un compte d'un ou plusieurs Bugtracker (Jira, GitHub, ...)</li>
+				<li>Récupérer et afficher les tickets en cours et/ou futurs qui vous sont affiliés</li>
+				<li>Filtrez votre recherche de tickets par projet/sprint/milestone</li>
+				<li>Imprimer vos tickets sur des post-it parmi plusieurs choix de visuels</li>
+				<li>Trier vos tickets entre ceux en attente d'impression et ceux déjà imprimés</li>
+			</ul>
+			<h2>Un tour rapide de l'application...</h2>
+			<ul>
+				<li>Le gabbarit d'impression des post-it est disponible <a href="{{ path('print_patron') }}">ici</a></li>
+				<li>Rendez-vous sur la <a href="{{ path('login') }}">page de login</a> pour vous connecter à votre compte</li>
+				<li>Choisissez dans la liste des projets celui qui présente des tickets à imprimer</li>
+				<li>Filtrez si vous le souhaitez votre recherche avec la barre de sprints/milestones</li>
+				<li>Sélectionnez les tickets que vous souhaitez imprimer et ajoutez-les à la file d'impression</li>
+				<li>Une fois tous vos post-it ajoutés, cliquez sur "imprimer"</li>
+				<li>Préparez les post-it sur le gabbarit d'impression selon la page de prévisualisation, et insérez-le dans la pile de feuille de votre imprimante</li>
+				<li>Sur la page de prévisualisation, cliquez droit puis "imprimer" pour lancer l'impression</li>
+				<li>Une fois l'impression terminée, sur le tableau de bord cliquez sur le bouton "traité" pour valider l'impression des tickets</li>
+			</ul>
+			Besoin de concret ? <a href="{{ path('discover') }}">Cliquez ici pour vous connecter avec un compte visiteur</a>.
+		</div>
+	</div>
+</div>
+{% endblock %}
