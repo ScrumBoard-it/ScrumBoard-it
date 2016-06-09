@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Form\Type\Search;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -7,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Github search type
+ * Github search type.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
@@ -23,15 +24,15 @@ class GithubSearchType extends AbstractType
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Choisissez un dépôt'
+            'placeholder' => 'Choisissez un dépôt',
         ))
             ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones actifs',
             'choices' => $githubSearch->getSprints(),
             'placeholder' => 'Sélectionnez un milestone (optionnel)',
             'attr' => (empty($githubSearch->getProject()) || empty($githubSearch->getSprints())) ? array(
-                'disabled' => 'disabled'
-            ) : array()
+                'disabled' => 'disabled',
+            ) : array(),
         ));
     }
 
@@ -41,7 +42,7 @@ class GithubSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity'
+            'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity',
         ));
     }
 

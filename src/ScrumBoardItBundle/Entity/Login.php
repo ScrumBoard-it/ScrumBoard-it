@@ -1,39 +1,44 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity;
 
 /**
- * Description of login
+ * Description of login.
  *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
 class Login
 {
     /**
-     * Username
+     * Username.
+     *
      * @var string
      */
     private $username;
-    
+
     /**
-     * Password
+     * Password.
+     *
      * @var password
      */
     private $password;
-    
+
     /**
-     * Api
+     * Api.
+     *
      * @var string
      */
     private $api;
-    
+
     /**
-     * Remember Me
-     * @var boolean
+     * Remember Me.
+     *
+     * @var bool
      */
     private $rememberMe = false;
 
     /**
-     * Username getter
+     * Username getter.
      *
      * @return string
      */
@@ -43,7 +48,7 @@ class Login
     }
 
     /**
-     * Password getter
+     * Password getter.
      *
      * @return string
      */
@@ -53,7 +58,7 @@ class Login
     }
 
     /**
-     * Api getter
+     * Api getter.
      *
      * @return string
      */
@@ -63,9 +68,9 @@ class Login
     }
 
     /**
-     * Remember Me getter
+     * Remember Me getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function getRememberMe()
     {
@@ -73,8 +78,10 @@ class Login
     }
 
     /**
-     * Username setter
+     * Username setter.
+     *
      * @param string $username
+     *
      * @return self
      */
     public function setUsername($username)
@@ -85,8 +92,10 @@ class Login
     }
 
     /**
-     * Password setter
+     * Password setter.
+     *
      * @param string $password
+     *
      * @return self
      */
     public function setPassword($password)
@@ -97,8 +106,10 @@ class Login
     }
 
     /**
-     * Api setter
+     * Api setter.
+     *
      * @param string $api
+     *
      * @return self
      */
     public function setApi($api)
@@ -109,8 +120,10 @@ class Login
     }
 
     /**
-     * Remember Me setter
-     * @param boolean $rememberMe
+     * Remember Me setter.
+     *
+     * @param bool $rememberMe
+     *
      * @return self
      */
     public function setRememberMe($rememberMe)

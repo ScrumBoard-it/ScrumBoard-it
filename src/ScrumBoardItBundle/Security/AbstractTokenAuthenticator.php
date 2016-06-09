@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -13,32 +14,36 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use ScrumBoardItBundle\Services\ApiCaller;
 
 /**
- * Abstract Token Authenticator
+ * Abstract Token Authenticator.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
 {
     /**
-     * Router
+     * Router.
+     *
      * @var Router
      */
     private $router;
 
     /**
-     * Data
+     * Data.
+     *
      * @var array
      */
     protected $data;
 
     /**
-     * Remember Me
-     * @var boolean
+     * Remember Me.
+     *
+     * @var bool
      */
     private $rememberMe = false;
 
     /**
-     * Api Caller
+     * Api Caller.
+     *
      * @var ApiCaller
      */
     protected $apiCaller;
@@ -86,7 +91,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
             'exception' => $exception,
-            'message' => "Nom d'utilisateur ou mot de passe incorrect"
+            'message' => "Nom d'utilisateur ou mot de passe incorrect",
         ));
     }
 
@@ -105,9 +110,9 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
             'exception' => $authException,
-            'message' => "Authentification nécessaire"
+            'message' => 'Authentification nécessaire',
         ));
-        
+
         return new RedirectResponse($this->router->generate('login'));
     }
 
@@ -120,7 +125,7 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     * Return Api identificator
+     * Return Api identificator.
      *
      * @return string
      */

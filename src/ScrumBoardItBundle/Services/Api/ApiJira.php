@@ -1,49 +1,49 @@
 <?php
+
 namespace ScrumBoardItBundle\Services\Api;
 
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
- * Api Jira
+ * Api Jira.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ApiJira extends AbstractApi
 {
     /**
-     * Rest API
+     * Rest API.
      *
      * @var string
      */
     const REST_API = 'rest/api/latest/';
 
     /**
-     * Rest AGILE
+     * Rest AGILE.
      *
      * @var string
      */
     const REST_AGILE = 'rest/agile/latest/';
-    
+
     /**
-     * Label for User Story
+     * Label for User Story.
      *
      * @var string
      */
     const LABEL_US = 'Récit';
-    
+
     /**
-     * Label for Subtask
+     * Label for Subtask.
      *
      * @var string
      */
     const LABEL_SUBTASK = 'Sous-tâche';
-    
+
     /**
-     * Label for Bogue
+     * Label for Bogue.
      *
      * @var string
      */
@@ -54,18 +54,21 @@ class ApiJira extends AbstractApi
      */
     public function searchIssues($searchFilters = array())
     {
-        if (! empty($searchFilters['sprint'])) {
-            $api = $this->getIssuesApi('sprint=' . $searchFilters['sprint']);
+        if (!empty($searchFilters['sprint'])) {
+            $api = $this->getIssuesApi('sprint='.$searchFilters['sprint']);
             $data = $this->apiCaller->call($this->getUser(), $api);
+
             return $this->getIssues($data['content']);
         }
-        
+
         return array();
     }
 
     /**
-     * Return issues based on API results
+     * Return issues based on API results.
+     *
      * @param \stdClass $data
+     *
      * @return array
      */
     private function getIssues($data)
@@ -87,17 +90,17 @@ class ApiJira extends AbstractApi
                     $task->setProofOfConcept(true);
                     break;
             }
-            
+
             $task->setId($issue->key);
-            $number = str_replace($issue->fields->project->key . '-', '', $issue->key);
+            $number = str_replace($issue->fields->project->key.'-', '', $issue->key);
             $task->setNumber($number);
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
-            $task->setPrinted((! empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
+            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
             $task->setTimeBox($issue->fields->timeestimate);
             $issues[$issue->id] = $task;
         }
-        
+
         return $issues;
     }
 
@@ -107,17 +110,19 @@ class ApiJira extends AbstractApi
     public function getSelectedIssues(Request $request, $selected = array())
     {
         $sprint = $request->getSession()->get('filters')['sprint'];
-        if (! empty($selected)) {
-            $jql = 'issueKey IN (' . implode(',', $selected) . ')';
-        } elseif (! empty($sprint)) {
+        if (!empty($selected)) {
+            $jql = 'issueKey IN ('.implode(',', $selected).')';
+        } elseif (!empty($sprint)) {
             $template = 'sprint=%d AND status not in (Closed)';
             $jql = sprintf($template, $sprint);
         }
-        if (! empty($jql)) {
+        if (!empty($jql)) {
             $url = $this->getIssuesApi(urlencode($jql));
             $data = $this->apiCaller->call($this->getUser(), $url);
+
             return $this->getIssues($data['content']);
         }
+
         return array();
     }
 
@@ -131,23 +136,23 @@ class ApiJira extends AbstractApi
             $this->initFilters($session);
         }
         $searchFilters = $request->get('jira_search') ?: array();
-        
+
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
         }
-        
+
         $searchFilters['projects'] = $this->getProjects();
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        
+
         if (empty($searchFilters['sprint'])) {
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
         }
-        
+
         $session->set('filters', array(
             'project' => $searchFilters['project'],
-            'sprint' => $searchFilters['sprint']
+            'sprint' => $searchFilters['sprint'],
         ));
-        
+
         return $searchFilters;
     }
 
@@ -158,9 +163,9 @@ class ApiJira extends AbstractApi
     {
         if (!empty($selected)) {
             foreach ($selected as $issue) {
-                $api = $this->getFlagIssuesApi() . $issue;
-                $tag = '"' . $this->config['printed_tag'] . '"';
-                $content = '{"update":{"labels":[{"add":' . $tag . '}]}}';
+                $api = $this->getFlagIssuesApi().$issue;
+                $tag = '"'.$this->config['printed_tag'].'"';
+                $content = '{"update":{"labels":[{"add":'.$tag.'}]}}';
                 $this->apiCaller->puting($this->getUser(), $api, $content);
             }
         }
@@ -179,16 +184,16 @@ class ApiJira extends AbstractApi
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
             }
-            if (! empty($sprints['Futurs'])) {
+            if (!empty($sprints['Futurs'])) {
                 asort($sprints['Futurs'], SORT_NATURAL | SORT_FLAG_CASE);
             }
         }
-        
+
         return $sprints;
     }
 
     /**
-     * Projects getter
+     * Projects getter.
      *
      * @return array
      */
@@ -201,7 +206,7 @@ class ApiJira extends AbstractApi
             $projects[$project->name] = $project->id;
         }
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
-        
+
         return $projects;
     }
 
@@ -214,50 +219,56 @@ class ApiJira extends AbstractApi
     }
 
     /**
-     * Sprint API getter
+     * Sprint API getter.
+     *
      * @param int $project
+     *
      * @return string
      */
     private function getSprintApi($project)
     {
-        $api = self::REST_AGILE . 'board/' . $project . '/sprint?state=active&state=future';
-        
-        return $this->config['host'] . $api;
+        $api = self::REST_AGILE.'board/'.$project.'/sprint?state=active&state=future';
+
+        return $this->config['host'].$api;
     }
 
     /**
-     * Project API getter
+     * Project API getter.
+     *
      * @param int $maxResults
+     *
      * @return string
      */
     private function getProjectApi($maxResults = '-1')
     {
-        $api = self::REST_AGILE . 'board?maxResults=' . $maxResults;
-        
-        return $this->config['host'] . $api;
+        $api = self::REST_AGILE.'board?maxResults='.$maxResults;
+
+        return $this->config['host'].$api;
     }
 
     /**
-     * Issues API getter
+     * Issues API getter.
+     *
      * @param string $jql
+     *
      * @return string
      */
     private function getIssuesApi($jql = '')
     {
-        $api = self::REST_API . 'search?jql=' . $jql;
-        
-        return $this->config['host'] . $api;
+        $api = self::REST_API.'search?jql='.$jql;
+
+        return $this->config['host'].$api;
     }
-    
+
     /**
-     * addFlag API getter
+     * addFlag API getter.
      *
      * @return string
      */
     private function getFlagIssuesApi()
     {
-        $api = self::REST_API . 'issue/';
-        
-        return $this->config['host'] .$api;
+        $api = self::REST_API.'issue/';
+
+        return $this->config['host'].$api;
     }
 }

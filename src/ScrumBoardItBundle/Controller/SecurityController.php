@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,7 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
- * Controller of security
+ * Controller of security.
+ *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class SecurityController extends Controller
@@ -17,6 +19,7 @@ class SecurityController extends Controller
      * @Route("/login", name="login")
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function loginAction(Request $request)
@@ -35,7 +38,7 @@ class SecurityController extends Controller
 
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
             'form' => $form->createView(),
-            'error' => $error
+            'error' => $error,
         ));
     }
 

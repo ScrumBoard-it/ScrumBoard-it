@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -19,7 +20,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         // $rootNode =
         $treeBuilder->root('scrum_board_it');
-        
+
         return $treeBuilder;
     }
 }
