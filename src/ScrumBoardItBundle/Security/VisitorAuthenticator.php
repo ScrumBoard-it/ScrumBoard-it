@@ -26,6 +26,7 @@ class VisitorAuthenticator extends AbstractTokenAuthenticator
     {
         $user->setDisplayName('Visiteur');
         $user->setApi('discover');
+        $user->setImgUrl('bundles/scrumboardit/images/visitor.png');
         
         return true;
     }

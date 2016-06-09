@@ -1,3 +1,4 @@
+<<<<<<< 0611e2ec03e0804b931bb5ee6f2c5c5fc1bc1d38
 {% extends "ScrumBoardItBundle::base.html.twig" %}
 
 {% block title %}
@@ -9,7 +10,7 @@
         <div class="header">
             <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
             <div class="log">
-                <img class="logImg" src="{{ app.user.imgUrl }}" height="24" width="24" />
+                <img class="logImg" src="{{ asset(app.user.imgUrl) }}"/>
                 <span>{{ app.user.displayName }}</span><br />
                 <a href="./logout">
                     <span class="glyphicon glyphicon-off">Déconnexion</span>
@@ -142,6 +143,127 @@
                     $('.search_sprint').attr('disabled', 'disabled');
                 }
                 $form.submit();
+=======
+{% extends "ScrumBoardItBundle::base.html.twig" %} {% block title
+%}Accueil - {{ parent() }}{% endblock %} {% block body %}
+<div class="container">
+	<div class="header">
+		<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+		<div class="log">
+			<img class="logImg" src="{{ asset(app.user.imgUrl) }}" height="24"
+				width="24" /> <span>{{ app.user.displayName }}</span><br /> <a
+				href="./logout"><span class="glyphicon glyphicon-off">Déconnexion</span></a>
+		</div>
+	</div>
+	<div class="row">
+		<form id="issues_search" class="form-inline">
+			<div class="form-group col-md-4">{{ form_row(form.project, {'attr':
+				{'class': 'form-control search_project'} }) }}</div>
+			<div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
+				{'class': 'form-control search_sprint'} }) }}</div>
+		</form>
+	</div>
+	<div class="row">
+		{% if not issues|length %}
+		<div class="col-md-12">
+			<div class="alert alert-info" role="alert">
+				<p>Veuillez renseigner ci-dessus un projet en cours contenant des
+					tickets.</p>
+			</div>
+		</div>
+		{% endif %}
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					À imprimer <span class="badge">0</span>
+				</div>
+				<ul class="list-group selectable">
+					{% for issue in issues if not issue.printed %} {% block issue %}
+					<li class="list-group-item {{ issue.type }}"><input type="checkbox"
+						name="issues[]" value="{{ issue.id }}" /> <span>{{ issue.id }}</span>
+						<span>{{ issue.title }}</span> <span class="badge">{{
+							issue.complexity }}</span></li> {% endblock %} {% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<form action="{{ path('print') }}" method="POST">
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">
+						File d'impression <span class="badge">0</span>
+					</div>
+					<ul class="list-group" id="printQueue"></ul>
+					<div class="btn-group">
+						<button id="submitPrint" class="btn btn-default">imprimer</button>
+						<button id="addFlag" class="btn btn-default">traité</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					Déjà imprimé(s) <span class="badge">0</span>
+				</div>
+				<ul class="list-group selectable">{% for issue in issues if
+					issue.printed %} {{ block('issue') }} {% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %} {% block javascripts %} {{ parent() }}
+<script>
+            $(function () {
+                $(".panel").each(function () {
+                    panel = $(this);
+                    panel.find('.panel-heading .badge').text(panel.find('ul').children("li").length);
+                });
+                $(".selectable").selectable({filter: "li"});
+                $.contextMenu({
+                    // define which elements trigger this menu
+                    selector: "li.ui-selected",
+                    // define the elements of the menu
+                    items: {
+                        opt: {
+                            name: "Envoyer à l'impression",
+                            callback: function (key, opt) {
+                                panel = opt.$trigger.parents(".panel");
+                                list = opt.$trigger.parent();
+                                selected = list.children("li.ui-selected");
+                                selected.removeClass("ui-selected").appendTo("#printQueue");
+                                panel.find(".panel-heading .badge").text(list.children("li").length);
+                                $("#printQueue").parents(".panel").find(".panel-heading .badge").text($("#printQueue li").length);
+                            }
+                        },
+                    }
+                });
+                $("#submitPrint").click(function () {
+                    $form = $(this).parents('form');
+                    $form.attr('action', "{{ path('print') }}");
+                    $form.find(':checkbox').prop('checked', true);
+                    $form.attr('target', '_blank');
+                    $form.submit();
+                });
+                $("#addFlag").click(function () {
+                    $form = $(this).parents('form');
+                    $form.attr('action', "{{ path('add_flag') }}");
+                    $form.find(':checkbox').prop('checked', true);
+                    $form.submit();
+                    
+                });
+                $("#issues_search").find('select').change(function() {
+                    $form = $(this).parents('form');
+                    if ($(this).hasClass('search_project') && $('.search_sprint').size()) {
+                        $('.search_sprint').val('');
+                        $('.search_sprint').attr('disabled', 'disabled');
+                    }
+                    $form.submit();
+                });
+>>>>>>> Insert Visitor avatar
             });
         });
     </script>
