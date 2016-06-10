@@ -93,6 +93,10 @@ class DefaultController extends Controller
      */
     public function welcomeAction()
     {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect('home');
+        }
+        
         return $this->render('ScrumBoardItBundle:Default:presentation.html.twig');
     }
 }
