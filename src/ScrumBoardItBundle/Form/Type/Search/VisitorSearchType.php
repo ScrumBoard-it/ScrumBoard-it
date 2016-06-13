@@ -20,13 +20,13 @@ class VisitorSearchType extends AbstractType
     {
         $visitorSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'label' => 'Projets',
+            'label' => 'Repositories',
             'choices' => $visitorSearch->getProjects(),
             'empty_data' => null,
             'placeholder' => 'Sélectionnez un projet'
         ))
         ->add('sprint', ChoiceType::class, array(
-            'label' => 'Milestones actifs',
+            'label' => 'Milestones',
             'choices' => $visitorSearch->getSprints(),
             'placeholder' => 'Sélectionnez un filtre (optionnel)',
             'attr' => (empty($visitorSearch->getProject()) || empty($visitorSearch->getSprints())) ? array(
