@@ -18,27 +18,26 @@ class ConfigurationType extends AbstractType
         $builder
             ->add('user_story', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => false,
+                'label' => 'Choix du template des User Story: ',
                 'choices' => array(
                     'default' => 0,
-                    'custom1' => 1,
-                    'custom2' => 2
+                    'custom1' => 1
                 ),
             ))
             ->add('sub_task', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => false,
+                'label' => 'Choix du template des Sub Task: ',
                 'choices' => array(
                     'default' => 0,
-                    'custom1' => 1,
-                    'custom2' => 2
+                    'custom1' => 1
                 ),
             ))
             ->add('poc', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => false,
+                'label' => 'Choix du template des Poc: ',
                 'choices' => array(
-                    'default' => 0
+                    'default' => 0,
+                    'custom1' => 1
                 ),
             ));
     }

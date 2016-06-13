@@ -1,5 +1,16 @@
 {% extends 'ScrumBoardItBundle::Print/Task/template_default.html.twig' %}
 
-{% block project %}
-    US
+{% block complexity %}{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    <div class="bottom">
+        <div class="right">
+            {% if issue.complexity %}
+                {{ issue.complexity }}
+            {% elseif issue.timeBox %}
+                {{ issue.timeBox / 3600 }} h
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

@@ -7,13 +7,15 @@
                 <div class="bv">{{ issue.businessValue }}</div>
             {% endif %}
 
-            <div class="comp">
-                {% if issue.complexity %}
-                    {{ issue.complexity }}
-                {% elseif issue.timeBox %}
-                    {{ issue.timeBox / 3600 }} h
-                {% endif %}
-            </div>
+            {% block complexity %}
+                <div class="comp">
+                    {% if issue.complexity %}
+                        {{ issue.complexity }}
+                    {% elseif issue.timeBox %}
+                        {{ issue.timeBox / 3600 }} h
+                    {% endif %}
+                </div>
+            {% endblock %}
 
             {% block project %}
                 {{ issue.project }}

@@ -38,7 +38,7 @@
                                 <h5>{{ form_label(type) }}</h5>
                                     {% for choice in type %}
                                         {{ form_widget(choice) }}
-                                        <img src="{{ asset('bundles/scrumboardit/images/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"
+                                        <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"
                                              height="150" width="150" />
                                    {% endfor %}
                             {% endfor %}

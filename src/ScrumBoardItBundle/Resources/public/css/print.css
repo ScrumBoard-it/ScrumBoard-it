@@ -1,121 +1,148 @@
 @page {
-	margin: 0;
+    margin: 0;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	font-family: Arial;
-	font-size: 18pt;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 18pt;
 }
 
-table
-{
+.post-it table {
     border-collapse: collapse;
     margin-left: 8mm;
-    bottom: 0;
+    bottom: 3mm;
     position: absolute;
+    background-color: inherit;
 }
 
-td{
+.post-it td {
     border: 1px solid black;
     padding-right: 20mm;
 }
 
 .container {
-	width: 210mm;
+    width: 210mm;
 }
 
 .item6 {
-	page-break-after: always;
+    page-break-after: always;
 }
 
 .base .post-it {
-	border: 1px solid #000;
+    border: 1px solid #000;
 }
 
 .item1, .item3, .item5 {
-	margin-left: 12mm;
+    margin-left: 12mm;
 }
 
 .item2, .item4, .item6 {
-	margin-left: 20mm;
+    margin-left: 20mm;
 }
 
 .sf-toolbar {
-	display: none !important;
+    display: none !important;
 }
 
 .post-it {
-	/*background-color: #fcdf03;*/
-	background-color: #b4cf4a;
-	width: 76mm;
-	height: 76mm;
-	float: left;
-	margin-top: 12mm;
-	text-align: center;
-	page-break-inside: avoid;
-	overflow: hidden;
+    /*background-color: #fcdf03;*/
+    background-color: #b4cf4a;
+    width: 76mm;
+    height: 76mm;
+    float: left;
+    margin-top: 12mm;
+    text-align: center;
+    page-break-inside: avoid;
+    overflow: hidden;
 }
 
 .post-it.userstory {
-	width: 127mm;
-	background-color: #ffcc00;
-	margin-left: 12mm;
+    width: 127mm;
+    background-color: #ffcc00;
+    margin-left: 12mm;
     position: relative;
 }
 
 .post-it.poc {
-	background-color: #9ee425;
-}
-
-.post-it .gauche {
-   float:left;
-   border-right: 1px solid black;
-   padding-bottom: 20%;
-}
-
-.post-it .droite {
-   overflow: hidden;
+    background-color: #9ee425;
+    position: relative;
 }
 
 .post-it.subtask {
-	background-color: #ff2282;
+    background-color: #ff2282;
+    position: relative;
 }
 
 .post-it .header {
-	line-height: 12mm;
-	margin: 0 auto;
-	width: 90%;
-	position: relative;
-	border-bottom: 1px solid #000;
+    line-height: 12mm;
+    margin: 0 auto;
+    width: 90%;
+    position: relative;
+    border-bottom: 1px solid #000;
 }
 
 .post-it .header .id {
-	position: absolute;
-	left: 0;
+    position: absolute;
+    left: 0;
 }
 
 .post-it .header .comp {
-	position: absolute;
-	right: 0;
+    position: absolute;
+    right: 0;
 }
 
 .post-it .header .bv {
-	position: absolute;
-	right: 0;
-	padding-right: 10mm;
+    position: absolute;
+    right: 0;
+    padding-right: 10mm;
 }
 
 .post-it .summary {
-	margin: 0 auto;
-	width: 90%;
-	font-size: 22pt;
+    margin: 0 auto;
+    width: 90%;
+    height: 10%;
+    overflow: hidden;
+    font-size: 22pt;
 }
 
 .post-it .description {
 	margin: 5mm auto;
 	width: 90%;
-	font-size: 16pt;
+    height: 40mm;
+    font-size: 16pt;
     font-family: monospace;
+	overflow: hidden;
+}
+
+.post-it .left {
+    float: left;
+    border-right: 1px solid black;
+    padding-bottom: 15%;
+    position: absolute;
+}
+
+.post-it .right {
+    position: relative;
+    float: right;
+    width: 85%;
+}
+
+.post-it .bottom .right {
+    float: right;
+    width: auto;
+    bottom: 8mm;
+
+}
+
+.post-it .bottom {
+    bottom: 8mm;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.post-it.poc .bottom {
+    position: absolute;
+    border-top: 1px solid black;
 }
