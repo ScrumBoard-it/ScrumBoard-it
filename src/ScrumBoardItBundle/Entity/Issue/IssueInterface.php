@@ -1,65 +1,74 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
- * Issue Interface
+ * Issue Interface.
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 interface IssueInterface
 {
     /**
-     * Project getter
+     * Project getter.
      *
      * @return string
      */
     public function getProject();
 
     /**
-     * Project setter
+     * Project setter.
+     *
      * @param string $project
+     *
      * @return string
      */
     public function setProject($project);
 
     /**
-     * ID getter
+     * ID getter.
      *
      * @return number
      */
     public function getId();
 
     /**
-     * ID setter
+     * ID setter.
+     *
      * @param number $id
+     *
      * @return number
      */
     public function setId($id);
 
     /**
-     * Title getter
+     * Title getter.
      *
      * @return string
      */
     public function getTitle();
 
     /**
-     * Title setter
+     * Title setter.
+     *
      * @param string $title
+     *
      * @return string
      */
     public function setTitle($title);
 
     /**
-     * Complexity getter
+     * Complexity getter.
      *
      * @return number
      */
     public function getComplexity();
 
     /**
-     * Complexity setter
+     * Complexity setter.
+     *
      * @param number $complexity
+     *
      * @return number
      */
     public function setComplexity($complexity);

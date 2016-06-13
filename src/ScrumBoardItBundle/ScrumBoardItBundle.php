@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

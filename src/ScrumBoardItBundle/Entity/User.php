@@ -1,60 +1,69 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * Description of user
+ * Description of user.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class User implements UserInterface, EquatableInterface
 {
     /**
-     * Username
+     * Username.
+     *
      * @var string
      */
     private $username;
 
     /**
-     * Email
+     * Email.
+     *
      * @var string
      */
     private $email;
 
     /**
-     * Display Name
+     * Display Name.
+     *
      * @var string
      */
     private $displayName;
 
     /**
-     * Img Url
+     * Img Url.
+     *
      * @var string
      */
     private $imgUrl;
 
     /**
-     * Connector
+     * Connector.
+     *
      * @var string
      */
     private $connector;
 
     /**
-     * Salt
+     * Salt.
+     *
      * @var string
      */
     private $salt;
 
     /**
-     * Roles
+     * Roles.
+     *
      * @var array
      */
     private $roles;
 
     /**
-     * Hash
+     * Hash.
+     *
      * @var string
      */
     private $hash;
@@ -66,14 +75,14 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -81,18 +90,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Roles setter
+     * Roles setter.
+     *
      * @param array $roles
+     *
      * @return self;
      */
     public function setRoles($roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSalt()
     {
@@ -100,19 +112,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Salt setter
+     * Salt setter.
+     *
      * @param string $salt
+     *
      * @return self
      */
     public function setSalt($salt)
     {
         $this->salt = $salt;
-        
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -120,19 +134,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Username setter
+     * Username setter.
+     *
      * @param string $username
+     *
      * @return self
      */
     public function setUsername($username)
     {
         $this->username = $username;
-        
+
         return $this;
     }
 
     /**
-     * Email getter
+     * Email getter.
      *
      * @return string
      */
@@ -142,19 +158,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Email setter
+     * Email setter.
+     *
      * @param string $email
+     *
      * @return self
      */
     public function setEmail($email)
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
     /**
-     * Display Name getter
+     * Display Name getter.
      *
      * @return string
      */
@@ -164,19 +182,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * DisplayName setter
+     * DisplayName setter.
+     *
      * @param string $displayName
+     *
      * @return self
      */
     public function setDisplayName($displayName)
     {
         $this->displayName = $displayName;
-        
+
         return $this;
     }
 
     /**
-     * Img Url getter
+     * Img Url getter.
      *
      * @return string
      */
@@ -186,19 +206,21 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Img Url setter
+     * Img Url setter.
+     *
      * @param string $imgUrl
+     *
      * @return self
      */
     public function setImgUrl($imgUrl)
     {
         $this->imgUrl = $imgUrl;
-        
+
         return $this;
     }
 
     /**
-     * Connector getter
+     * Connector getter.
      *
      * @return string
      */
@@ -208,31 +230,36 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Connector setter
+     * Connector setter.
+     *
      * @param string $connector
+     *
      * @return self
      */
     public function setApi($connector)
     {
         $this->connector = $connector;
-        
+
         return $this;
     }
 
     /**
-     * Hash setter
+     * Hash setter.
+     *
      * @param string $hash
+     *
      * @return self
      */
     public function setHash($hash)
     {
         $this->hash = base64_encode($hash);
-        
+
         return $this;
     }
 
     /**
-     * Hash getter
+     * Hash getter.
+     *
      * @return string
      */
     public function getHash()
@@ -241,31 +268,31 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user)
     {
-        if (! $user instanceof User) {
+        if (!$user instanceof self) {
             return false;
         }
-        
+
         if ($this->salt !== $user->getSalt()) {
             return false;
         }
-        
+
         if ($this->username !== $user->getUsername()) {
             return false;
         }
-        
+
         if ($this->hash !== $user->getHash()) {
             return false;
         }
-        
+
         return true;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPassword()
     {

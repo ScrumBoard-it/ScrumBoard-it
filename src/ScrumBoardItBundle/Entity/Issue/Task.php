@@ -1,8 +1,9 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
- * Description of Task
+ * Description of Task.
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */

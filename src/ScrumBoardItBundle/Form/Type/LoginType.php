@@ -9,10 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 /**
- * Login type
+ * Login type.
  *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
@@ -28,25 +27,25 @@ class LoginType extends AbstractType
                 'label' => false,
                 'attr' => array(
                     'placeholder' => "Nom d'utilisateur",
-                    'class' => "form-control"
-                )
+                    'class' => 'form-control',
+                ),
 
             ))
             ->add('password', PasswordType::class, array(
                 'label' => false,
                 'attr' => array(
-                    'placeholder' => "Mot de passe",
-                    'class' => "form-control"
+                    'placeholder' => 'Mot de passe',
+                    'class' => 'form-control',
                 ),
             ))
             ->add('api', ChoiceType::class, array(
-                'label' => "Se connecter à :",
+                'label' => 'Se connecter à :',
                 'choices' => array(
                     'GitHub' => 'github',
-                    'Jira' => 'jira'
+                    'Jira' => 'jira',
                 ),
                 'attr' => array(
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ),
             ))
             ->add('_remember_me', CheckboxType::class, array(
@@ -62,7 +61,7 @@ class LoginType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Login'
+            'data_class' => 'ScrumBoardItBundle\Entity\Login',
         ));
     }
 

@@ -1,93 +1,107 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
- * Description of AbstractIssue
+ * Description of AbstractIssue.
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class AbstractIssue implements IssueInterface, \JsonSerializable
 {
     /**
-     * Type
+     * Type.
+     *
      * @var string
      */
     private $type;
 
     /**
-     * Link
+     * Link.
+     *
      * @var string
      */
     private $link;
 
     /**
-     * Printed
-     * @var boolean
+     * Printed.
+     *
+     * @var bool
      */
     private $printed;
 
     /**
-     * User Story
-     * @var boolean
+     * User Story.
+     *
+     * @var bool
      */
     private $userStory;
 
     /**
-     * Proof of Concept
-     * @var boolean
+     * Proof of Concept.
+     *
+     * @var bool
      */
     private $proofOfConcept;
 
     /**
-     * Project
+     * Project.
+     *
      * @var string
      */
     private $project;
 
     /**
-     * ID
+     * ID.
+     *
      * @var number
      */
     private $id;
 
     /**
-     * Number
+     * Number.
+     *
      * @var number
      */
     private $number;
 
     /**
-     * Title
+     * Title.
+     *
      * @var string
      */
     private $title;
 
     /**
-     * Complexity
+     * Complexity.
+     *
      * @var number
      */
     private $complexity;
 
     /**
-     * Business Value
+     * Business Value.
+     *
      * @var number
      */
     private $businessValue;
 
     /**
-     * Description
+     * Description.
+     *
      * @var string
      */
     private $description;
 
     /**
-     * Time Box
+     * Time Box.
+     *
      * @var string
      */
     private $timeBox;
 
     /**
-     * Type getter
+     * Type getter.
      *
      * @return Type
      */
@@ -97,19 +111,21 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Type setter
+     * Type setter.
+     *
      * @param string $type
+     *
      * @return self
      */
     public function setType($type)
     {
         $this->type = $type;
-        
+
         return $this;
     }
 
     /**
-     * Link getter
+     * Link getter.
      *
      * @return string
      */
@@ -119,21 +135,23 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Link setter
+     * Link setter.
+     *
      * @param string $link
+     *
      * @return self
      */
     public function setLink($link)
     {
         $this->link = $link;
-        
+
         return $this;
     }
 
     /**
-     * Printed getter
+     * Printed getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPrinted()
     {
@@ -141,21 +159,23 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Printed setter
+     * Printed setter.
+     *
      * @param unknown $printed
+     *
      * @return self
      */
     public function setPrinted($printed)
     {
         $this->printed = $printed;
-        
+
         return $this;
     }
 
     /**
-     * User Story getter
+     * User Story getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function isUserStory()
     {
@@ -163,21 +183,23 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * User Story setter
+     * User Story setter.
+     *
      * @param unknown $value
+     *
      * @return self
      */
     public function setUserStory($value)
     {
         $this->userStory = $value;
-        
+
         return $this;
     }
 
     /**
-     * Proof of Concept getter
+     * Proof of Concept getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function isProofOfConcept()
     {
@@ -185,19 +207,21 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Proof of Concept setter
-     * @param boolean $proofOfConcept
+     * Proof of Concept setter.
+     *
+     * @param bool $proofOfConcept
+     *
      * @return self
      */
     public function setProofOfConcept($proofOfConcept)
     {
         $this->proofOfConcept = $proofOfConcept;
-        
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getProject()
     {
@@ -205,17 +229,17 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setProject($project)
     {
         $this->project = $project;
-        
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -223,17 +247,17 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setId($id)
     {
         $this->id = $id;
-        
+
         return $this;
     }
 
     /**
-     * Number getter
+     * Number getter.
      *
      * @return number
      */
@@ -243,19 +267,21 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Number setter
+     * Number setter.
+     *
      * @param number $number
+     *
      * @return self
      */
     public function setNumber($number)
     {
         $this->number = $number;
-        
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -263,17 +289,17 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setTitle($title)
     {
         $this->title = $title;
-        
+
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getComplexity()
     {
@@ -281,17 +307,17 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setComplexity($complexity)
     {
         $this->complexity = $complexity;
-        
+
         return $this;
     }
 
     /**
-     * Business Value getter
+     * Business Value getter.
      *
      * @return number
      */
@@ -301,19 +327,21 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Business Value Setter
+     * Business Value Setter.
+     *
      * @param number $value
+     *
      * @return self
      */
     public function setBusinessValue($value)
     {
         $this->businessValue = $value;
-        
+
         return $this;
     }
 
     /**
-     * Description getter
+     * Description getter.
      *
      * @return string
      */
@@ -323,18 +351,20 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Description setter
+     * Description setter.
+     *
      * @param string $description
      */
     public function setDescription($description)
     {
         $this->description = $description;
-        
+
         return $this;
     }
 
     /**
-     * Time Box getter
+     * Time Box getter.
+     *
      * @return string
      */
     public function getTimeBox()
@@ -343,14 +373,16 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
-     * Time Box setter
+     * Time Box setter.
+     *
      * @param string $timeBox
+     *
      * @return self
      */
     public function setTimeBox($timeBox)
     {
         $this->timeBox = $timeBox;
-        
+
         return $this;
     }
 
@@ -371,7 +403,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
             'complexity' => $this->getComplexity(),
             'business_Value' => $this->getBusinessValue(),
             'description' => $this->getDescription(),
-            'time_box' => $this->getTimeBox()
+            'time_box' => $this->getTimeBox(),
         );
     }
 }

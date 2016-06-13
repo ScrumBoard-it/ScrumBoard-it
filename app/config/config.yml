@@ -70,11 +70,3 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-# ScrumBoard-it config
-scrum_board_it:
-    jira: 
-        host: "%jira_url%"
-        complexity_field: "%jira_complexity_field%"
-    github:
-        host: https://api.github.com/

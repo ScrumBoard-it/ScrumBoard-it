@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,15 +21,16 @@ class PrintController extends Controller
     }
 
     /**
-     * Launch the Print Manager
+     * Launch the Print Manager.
      *
      * @param array $issues
+     *
      * @return Response
      */
     public function ticketsAction($issues)
     {
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
-            'issues' => $issues
+            'issues' => $issues,
         ));
     }
 }

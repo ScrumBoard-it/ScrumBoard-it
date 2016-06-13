@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Security\User;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -7,36 +8,36 @@ use ScrumBoardItBundle\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
- * User Provider
+ * User Provider.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class WebServiceUserProvider implements UserProviderInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadUserByUsername($username)
     {
         return new User($username, [
-            'ROLE_AUTHENTICATED'
+            'ROLE_AUTHENTICATED',
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function refreshUser(UserInterface $user)
     {
-        if (! $user instanceof User) {
+        if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
-        
+
         return $user;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Services\Api;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -8,7 +9,7 @@ use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 
 /**
- * Api Github
+ * Api Github.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
@@ -20,13 +21,13 @@ class ApiGithub extends AbstractApi
     public function getProjects()
     {
         $api = $this->getProjectApi();
-        
+
         // Multipagination
         $projects = array();
         do {
             $page = $this->apiCaller->call($this->getUser(), $api);
             foreach ($page['content'] as $project) {
-                $projects['Propriétaire: ' . $project->owner->login][$project->name] = $project->full_name;
+                $projects['Propriétaire: '.$project->owner->login][$project->name] = $project->full_name;
                 if ($page['links'][0]['rel'] === 'first') {
                     $api = null;
                 } else {
@@ -37,12 +38,12 @@ class ApiGithub extends AbstractApi
             }
         } while (!empty($api));
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
-        
+
         return $projects;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSprints($project)
     {
@@ -54,7 +55,7 @@ class ApiGithub extends AbstractApi
                 $sprints['Actif'][$sprint->title] = $sprint->number;
             }
         }
-        
+
         return $sprints;
     }
 
@@ -70,23 +71,26 @@ class ApiGithub extends AbstractApi
             foreach ($data['content'] as $issue) {
                 array_push($issues, $this->getIssue($issue, $searchFilters['project']));
             }
-            
+
             return $issues;
         }
+
         return;
     }
 
     /**
-     * Return issue based on API result
+     * Return issue based on API result.
+     *
      * @param \stdClass $issue
-     * @param string $project
+     * @param string    $project
+     *
      * @return IssueInterface
      */
     private function getIssue($issue, $project)
     {
         $task = new Task();
         $labels = $issue->labels;
-        
+
         foreach ($labels as $label) {
             switch ($label->name) {
                 case 'Printed':
@@ -105,22 +109,31 @@ class ApiGithub extends AbstractApi
                     break;
             }
         }
-        
+
         $parameters = array();
         // Search for parameters in square brackets
         preg_match_all("/\[(.*?)\]/", $issue->body, $parameters);
         foreach ($parameters[1] as $parameter) {
             $values = explode(':', $parameter);
-            if (trim($values[0]) === 'CT') {
-                $task->setComplexity(trim($values[1]));
+            switch (trim($values[0])) {
+                // Complexity field
+                case 'CT':
+                    $task->setComplexity(trim($values[1]));
+                    break;
+                // Time Box field
+                case 'TB':
+                    $task->setTimeBox(trim($values[1]));
+                    break;
+                default:
+                    break;
             }
         }
-        
+
         $task->setId($issue->number);
         $task->setNumber($issue->number);
         $task->setProject(explode('/', $project)[1]);
         $task->setTitle($issue->title);
-        
+
         return $task;
     }
 
@@ -135,13 +148,13 @@ class ApiGithub extends AbstractApi
             $issues = $this->searchIssues($filters);
         } else {
             foreach ($selected as $selectedIssue) {
-                $url = $this->getBaseApi($filters['project']) . '/issues/' . $selectedIssue;
+                $url = $this->getBaseApi($filters['project']).'/issues/'.$selectedIssue;
                 $data = $this->apiCaller->call($this->getUser(), $url);
                 $issue = $this->getIssue($data['content'], $filters['project']);
                 array_push($issues, $issue);
             }
         }
-        
+
         return $issues;
     }
 
@@ -155,24 +168,24 @@ class ApiGithub extends AbstractApi
             $this->initFilters($session);
         }
         $searchFilters = $request->get('github_search') ?: array();
-        
+
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
         }
-        
+
         $searchFilters['projects'] = $this->getProjects();
         $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        
+
         // Initialise sprint even no sprint is selected
         if (empty($searchFilters['sprint'])) {
             $searchFilters['sprint'] = null;
         }
-        
+
         $session->set('filters', array(
             'project' => $searchFilters['project'],
-            'sprint' => $searchFilters['sprint']
+            'sprint' => $searchFilters['sprint'],
         ));
-        
+
         return $searchFilters;
     }
 
@@ -183,8 +196,8 @@ class ApiGithub extends AbstractApi
     {
         if (!empty($selected)) {
             foreach ($selected as $issue) {
-                $url = $this->getBaseApi($request->getSession()->get('filters')['project']) .
-                '/issues/' . $issue . '/labels';
+                $url = $this->getBaseApi($request->getSession()->get('filters')['project']).
+                '/issues/'.$issue.'/labels';
                 $content = '["Printed"]';
                 $this->apiCaller->send($this->getUser(), $url, $content, 1);
             }
@@ -192,7 +205,7 @@ class ApiGithub extends AbstractApi
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getFormType()
     {
@@ -200,57 +213,63 @@ class ApiGithub extends AbstractApi
     }
 
     /**
-     * Return url for searching projects
+     * Return url for searching projects.
      *
      * @return string
      */
     private function getProjectApi()
     {
         $api = 'user/repos';
-        
-        return $this->config['host'] . $api;
+
+        return $this->config['host'].$api;
     }
 
     /**
-     * Return url for searching sprints
+     * Return url for searching sprints.
+     *
      * @param string $project
+     *
      * @return string
      */
     private function getSprintApi($project)
     {
         $api = $this->getBaseApi($project);
-        
-        return $api . '/milestones';
+
+        return $api.'/milestones';
     }
 
     /**
-     * Return base url for the api
+     * Return base url for the api.
+     *
      * @param string $project
+     *
      * @return string
      */
     private function getBaseApi($project)
     {
-        $api = 'repos/' . $project;
-        
-        return $this->config['host'] . $api;
+        $api = 'repos/'.$project;
+
+        return $this->config['host'].$api;
     }
 
     /**
-     * Return url for searching issues
+     * Return url for searching issues.
+     *
      * @param array $searchFilters
+     *
      * @return string
      */
     private function getIssueApi($searchFilters)
     {
         if (!empty($searchFilters['project'])) {
-            $api = $this->getBaseApi($searchFilters['project']) . '/issues';
+            $api = $this->getBaseApi($searchFilters['project']).'/issues';
             if (!empty($searchFilters['sprint'])) {
-                $api .= '?milestone=' . $searchFilters['sprint'];
+                $api .= '?milestone='.$searchFilters['sprint'];
             }
-            
+
             return $api;
         }
-        
+
         return;
     }
 }

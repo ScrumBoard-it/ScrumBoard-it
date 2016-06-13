@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -17,29 +18,9 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('scrum_board_it');
-        
-        $rootNode->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('jira')
-                    ->children()
-                        ->scalarNode('host')
-                            ->isRequired()
-                        ->end()
-                        ->scalarNode('complexity_field')
-                            ->isRequired()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('github')
-                    ->children()
-                        ->scalarNode('host')
-                            ->isRequired()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
-        
+        // $rootNode =
+        $treeBuilder->root('scrum_board_it');
+
         return $treeBuilder;
     }
 }

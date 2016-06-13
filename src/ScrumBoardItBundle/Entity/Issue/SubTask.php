@@ -1,17 +1,18 @@
 <?php
+
 namespace ScrumBoardItBundle\Entity\Issue;
 
 /**
- * Description of SubTask
+ * Description of SubTask.
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
 class SubTask extends AbstractIssue
 {
     /**
-     * Task
+     * Task.
      *
-     * @var Task $task
+     * @var Task
      */
     private $task;
 
@@ -24,7 +25,7 @@ class SubTask extends AbstractIssue
     }
 
     /**
-     * Task getter
+     * Task getter.
      *
      * @return Task
      */
@@ -34,14 +35,14 @@ class SubTask extends AbstractIssue
     }
 
     /**
-     * Task setter
+     * Task setter.
      *
      * @return self
      */
     public function setTask($task)
     {
         $this->task = $task;
-        
+
         return $this;
     }
 
@@ -51,7 +52,7 @@ class SubTask extends AbstractIssue
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), array(
-            'task' => $this->getTask()
+            'task' => $this->getTask(),
         ));
     }
 }
