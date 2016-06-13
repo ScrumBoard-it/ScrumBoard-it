@@ -78,14 +78,14 @@ class DefaultController extends Controller
 
         return $this->redirect('home');
     }
-    
+
     /**
      * @Route("/discover", name="discover")
      */
     public function VisitorAction()
     {
     }
-    
+
     /**
      * @Route("/welcome", name="welcome")
      * 
@@ -96,7 +96,7 @@ class DefaultController extends Controller
         if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
             return $this->redirect('home');
         }
-        
+
         return $this->render('ScrumBoardItBundle:Default:presentation.html.twig');
     }
 }

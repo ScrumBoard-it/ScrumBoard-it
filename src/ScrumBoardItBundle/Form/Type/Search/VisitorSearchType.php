@@ -1,4 +1,5 @@
 <?php
+
 namespace ScrumBoardItBundle\Form\Type\Search;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -7,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Visitor search type
+ * Visitor search type.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
@@ -23,15 +24,15 @@ class VisitorSearchType extends AbstractType
             'label' => 'Repositories',
             'choices' => $visitorSearch->getProjects(),
             'empty_data' => null,
-            'placeholder' => 'Sélectionnez un projet'
+            'placeholder' => 'Sélectionnez un projet',
         ))
         ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones',
             'choices' => $visitorSearch->getSprints(),
             'placeholder' => 'Sélectionnez un filtre (optionnel)',
             'attr' => (empty($visitorSearch->getProject()) || empty($visitorSearch->getSprints())) ? array(
-                'disabled' => 'disabled'
-            ) : array()
+                'disabled' => 'disabled',
+            ) : array(),
         ));
     }
 
@@ -41,7 +42,7 @@ class VisitorSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity'
+            'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity',
         ));
     }
 
