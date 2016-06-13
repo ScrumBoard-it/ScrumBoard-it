@@ -111,8 +111,10 @@ class ApiGithub extends AbstractApi
         }
 
         $parameters = array();
+        $body = '';
         // Search for parameters in square brackets
         preg_match_all("/\[(.*?)\]/", $issue->body, $parameters);
+        $body = preg_replace("/\[(.*?)\]/", '', $issue->body);
         foreach ($parameters[1] as $parameter) {
             $values = explode(':', $parameter);
             switch (trim($values[0])) {
@@ -133,6 +135,7 @@ class ApiGithub extends AbstractApi
         $task->setNumber($issue->number);
         $task->setProject(explode('/', $project)[1]);
         $task->setTitle($issue->title);
+        $task->setDescription($body);
 
         return $task;
     }
