@@ -23,14 +23,12 @@
                 <div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
                     {'class': 'form-control search_sprint'} }) }}</div>
             </form>
+            <a href="#configuration" class="toggle btn config-btn">
+                <img src="{{ asset('bundles/scrumboardit/images/config.png')}}" height="40" width="40"/></a>
         </div>
 
-        <div class="row">
+        <div id="configuration" class="well hidden">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Choix des templates d'impression:
-                    </div>
                     <div class="context-menu-input">
                         {{ form_start(configuration_form) }}
 
@@ -38,16 +36,15 @@
                                 <h5>{{ form_label(type) }}</h5>
                                     {% for choice in type %}
                                         {{ form_widget(choice) }}
-                                        <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"
-                                             height="150" width="150" />
+                                        <label for="configuration_{{ type.vars.name }}_{{loop.index0 }}">
+                                            <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"/>
+                                        </label>
                                    {% endfor %}
                             {% endfor %}
 
-                            <button class="btn btn-def btn-block" type="submit" value="SaveTemplate">Valider</button>
-
-                        {{ form_end(configuration_form) }}
+                            {{ form_end(configuration_form) }}
+                            <br/><button class="btn btn-default btn-block" type="submit" value="SaveTemplate">Valider</button>
                     </div>
-                </div>
             </div>
         </div>
 
@@ -167,6 +164,11 @@
                 }
                 $form.submit();
             });
+        });
+        $('.toggle').click(function (event) {
+            event.preventDefault();
+            var target = $(this).attr('href');
+            $(target).toggleClass('hidden show');
         });
     </script>
 {% endblock %}

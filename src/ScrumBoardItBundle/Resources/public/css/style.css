@@ -116,3 +116,7 @@ hr.soften {
 .form-control {
 	margin-bottom: 20px;
 }
+
+.config-btn {
+    float: right;
+}
