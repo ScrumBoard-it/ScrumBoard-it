@@ -1,5 +1,5 @@
 {% extends "::base.html.twig" %}
-{% block title %}Bienvenue - ScrumBoard-it{% endblock %}
+{% block title %}Accueil - ScrumBoard-it{% endblock %}
 {% block stylesheets %}
     {% stylesheets
         'bundles/scrumboardit/css/present.css'
@@ -64,8 +64,12 @@
     </section>
     <section class="section group colored_section">
     	<div class="col span_1_of_2 titre">
-    		Connectez-vous avec votre compte Jira ou GitHub
-    		<br><a href="{{ path('login') }}">Page de connexion</a>
+    		<div>
+    			Connectez-vous avec votre compte Jira ou GitHub
+    		</div>
+    		<div>
+    			<a href="{{ path('login') }}">Page de connexion</a>
+    		</div>
     	</div>
     	<div class="col span_1_of_2 icon_field">
     		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/login.png') }}"/>
@@ -76,14 +80,22 @@
     		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/print_base.jpg') }}"/>
     	</div>
     	<div class="col span_1_of_2 titre">
-    		Un gabbarit d'impression intuitif pour vous indiquer le placement des post-it
-    		<br/><a href="{{ path('print_patron') }}">Imprimer le gabbarit</a>
+    		<div>
+    			Un gabarit d'impression intuitif pour vous indiquer le placement des post-it
+    		</div>
+			<div>
+				<a href="{{ path('print_patron') }}">Imprimer le gabbarit</a>
+			</div>
     	</div>
     </section>
     <section class="section group colored_section">
     	<div class="col span_1_of_2 titre">
-    		Découvrez ScrumBoard-it par vous-même, sans avoir de compte Jira ou GitHub !
-    		<br><a href="{{ path('discover') }}">Découvir l'application par un compte GitHub</a>
+    		<div>
+    			Découvrez ScrumBoard-it par vous-même, sans avoir de compte Jira ou GitHub !
+    		</div>
+    		<div>
+    			<a href="{{ path('discover') }}">Découvir l'application par un compte GitHub</a>
+    		</div>
     	</div>
     	<div class="col span_1_of_2 icon_field">
     		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/visiting.png') }}"/>

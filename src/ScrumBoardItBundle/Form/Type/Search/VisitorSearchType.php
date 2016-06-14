@@ -23,7 +23,6 @@ class VisitorSearchType extends AbstractType
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Repositories',
             'choices' => $visitorSearch->getProjects(),
-            'empty_data' => null,
             'placeholder' => 'Sélectionnez un projet',
         ))
         ->add('sprint', ChoiceType::class, array(

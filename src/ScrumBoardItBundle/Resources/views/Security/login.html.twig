@@ -38,8 +38,7 @@
                         <div class="error">{{ error.message|trans({},'messages') }}</div>
 					{% endif %}
 
-                    {{ form_rest(form) }}
-
+                {{ form_rest(form) }}
                 {{ form_end(form) }}
 			</div>
 			Nouveau ici ? <a href="{{ path('discover') }}">Connectez-vous en tant que visiteur</a>

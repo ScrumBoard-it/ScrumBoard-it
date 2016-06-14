@@ -10,17 +10,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ApiVisitor extends AbstractApi
 {
     /**
-     * Issues.
-     *
      * @var array
      */
     private $issues;
+
     /**
-     * Issues ids existing.
+     * Issue id incrementor.
      *
-     * @var array
+     * @var number
      */
-    private $count = 1;
+    private $currentIssueIndex = 0;
 
     /**
      * Array of printed issues' ids.
@@ -33,7 +32,7 @@ class ApiVisitor extends AbstractApi
     {
         $session = $requestStack->getCurrentRequest()->getSession();
         parent::__construct($token, $config, $apiCaller);
-        $this->printedIssues = $session->has('printed_issues') ? $session->get('printed_issues') : array();
+        $this->printedIssues = $session->get('printed_issues', []);
         $this->generateIssues();
     }
 
@@ -44,25 +43,25 @@ class ApiVisitor extends AbstractApi
     {
         $this->issues = array(
             1 => array(
-                1 => array(
+                array(
                     'issue' => $this->createIssue(1, 'task', 'Appli SNDF', "Création d'itinéraire",
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir rechercher l'itinéraire le plus rapide AFIN DE pouvoir me diriger de façon optimale.",
                         5, null, true, false),
                     'sprint' => 1,
                 ),
-                2 => array(
+                array(
                     'issue' => $this->createIssue(4, 'subtask', 'Appli SNDF', "Récupérer un itinéraire de l'API Navitia",
                         "Hydrater la recherche utilisateur avec les données renvoyées par l'API de Navitia",
                         null, 14400, false, false),
                     'sprint' => 1,
                 ),
-                3 => array(
+                array(
                     'issue' => $this->createIssue(3, 'task', 'Appli SNDF', 'Recherche de gare',
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir obtenir des informations actualisée sur une gare AFIN DE pouvoir choisir judicieusement mes correspondances.",
                         5, null, true, false),
                     'sprint' => 1,
                 ),
-                4 => array(
+                array(
                     'issue' => $this->createIssue(2, 'subtask', 'Appli SNDF', "Contacter l'API Navitia",
                         "Permettre une transmission fonctionnelle entre l'application et l'API Navitia",
                         null, 115200, false, false),
@@ -70,49 +69,49 @@ class ApiVisitor extends AbstractApi
                 ),
             ),
             2 => array(
-                1 => array(
+                array(
                     'issue' => $this->createIssue(1, 'subtask', 'Site Thabès', "Service d'authentification",
                         "Création d'un service d'authentification par identifiant et mot de passe",
                         null, 57600, false, false),
                     'sprint' => 1,
                 ),
-                2 => array(
+                array(
                     'issue' => $this->createIssue(2, 'task', 'Site Thabès', 'Sécurité',
                         "EN TANT QU'administrateur du site, JE SOUHAITERAIS une répartition des droits de lecture et d'écriture sur les données du site AFIN DE protéger ces données.",
                         13, null, true, false),
                     'sprint' => 1,
                 ),
-                3 => array(
+                array(
                     'issue' => $this->createIssue(4, 'subtask', 'Site Thabès', "Comptes d'utilisateurs",
                         "Création d'un compte administrateur et de 10 comptes collaborateurs",
                         null, 28800, false, false),
                     'sprint' => 1,
                 ),
-                4 => array(
+                array(
                     'issue' => $this->createIssue(5, 'subtask', 'Site Thabès', 'Protection des données',
                         "Cryptage des données du serveur et des tokens d'authentification",
                         null, 28800, false, false),
                     'sprint' => 1,
                 ),
-                5 => array(
+                array(
                     'issue' => $this->createIssue(6, 'task', 'Site Thabès', "Page d'accueil",
                         "Page d'accueil dynamique (animations)",
                         null, 115200, false, true),
                     'sprint' => 1,
                 ),
-                6 => array(
+                array(
                     'issue' => $this->createIssue(7, 'task', 'Site Thabès', "Logo de l'entreprise",
                         "EN TANT QUE directeur de l'entreprise, J'AIMERAIS que le logo de mon entreprise soit visible dans l'en-tête du site AFIN DE rendre le site plus identifiable.",
                         3, null, true, false),
                     'sprint' => 1,
                 ),
-                7 => array(
+                array(
                     'issue' => $this->createIssue(9, 'task', 'Site Thabès', 'Champ de recherche',
                         "Proposer des choix pertinents à l'utlisateur quand celui-ci tape dans la barre de recherche",
                         null, 115200, false, true),
                     'sprint' => 2,
                 ),
-                8 => array(
+                array(
                     'issue' => $this->createIssue(8, 'task', 'Site Thabès', 'Formulaire de contact',
                         "EN TANT QU'utilisateur, J'AIMERAIS pouvoir envoyer un mail par le site à l'entreprise Thabès AFIN DE pouvoir contacter l'entreprise Thabès simplement",
                         8, null, true, false),
@@ -138,7 +137,7 @@ class ApiVisitor extends AbstractApi
     private function createIssue($number, $type, $project, $title, $description, $complexity, $timeBox, $isUS, $isProofOfConcept)
     {
         $task = new Task();
-        $task->setId($this->count++);
+        $task->setId(++$this->currentIssueIndex);
         $task->setNumber($number);
         $task->setType($type);
         $task->setProject($project);

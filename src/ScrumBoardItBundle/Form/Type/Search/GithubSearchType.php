@@ -23,7 +23,6 @@ class GithubSearchType extends AbstractType
         $builder->add('project', ChoiceType::class, array(
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
-            'empty_data' => null,
             'placeholder' => 'Choisissez un dépôt',
         ))
             ->add('sprint', ChoiceType::class, array(

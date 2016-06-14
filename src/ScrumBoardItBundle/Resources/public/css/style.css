@@ -41,7 +41,6 @@
 }
 
 #issues_search select {
-	HEAD margin-bottom: 20px;
 	margin-bottom: 20px;
 }
 
@@ -110,8 +109,8 @@ hr.soften {
 }
 
 .logImg {
-	height:24px;
-	width:24px;
+	height: 24px;
+	width: 24px;
 }
 
 .form-control {
