@@ -24,7 +24,9 @@
     {% endblock %}
 
     {% block content %}
-        <div class="summary">{{ issue.title }}</div>
-        <div class="description">{{ issue.description }}</div>
+        <div class="content">
+            <div class="summary">{{ issue.title }}</div>
+            <div class="description">{{ issue.description }}</div>
+        </div>
     {% endblock %}
 </div>

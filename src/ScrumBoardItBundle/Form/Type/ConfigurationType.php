@@ -26,7 +26,7 @@ class ConfigurationType extends AbstractType
             ))
             ->add('sub_task', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => 'Choix du template des Sub Task: ',
+                'label' => 'Choix du template des Subtask: ',
                 'choices' => array(
                     'default' => 0,
                     'custom1' => 1

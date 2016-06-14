@@ -99,6 +99,12 @@ body {
     padding-right: 10mm;
 }
 
+.post-it .content {
+	position: relative;
+    overflow: hidden;
+    max-height: 50mm;
+}
+
 .post-it .summary {
     margin: 0 auto;
     width: 90%;
@@ -132,17 +138,18 @@ body {
 .post-it .bottom .right {
     float: right;
     width: auto;
-    bottom: 8mm;
+    bottom: 0;
 
 }
 
 .post-it .bottom {
-    bottom: 8mm;
+    bottom: 2mm;
     width: 90%;
     margin-left: 5%;
 }
 
 .post-it.poc .bottom {
     position: absolute;
+    float: bottom;
     border-top: 1px solid black;
 }
