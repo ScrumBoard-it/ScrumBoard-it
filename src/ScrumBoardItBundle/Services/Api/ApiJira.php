@@ -200,12 +200,18 @@ class ApiJira extends AbstractApi
      */
     public function getProjects()
     {
-        $api = $this->getProjectApi();
-        $data = $this->apiCaller->call($this->getUser(), $api);
         $projects = array();
-        foreach ($data['content']->values as $project) {
-            $projects[$project->name] = $project->id;
-        }
+        $startAt = 0;
+        $maxResults = 50;
+        $api = $this->getProjectApi($maxResults);
+        do {
+            $data = $this->apiCaller->call($this->getUser(), $api.'&startAt='.$startAt);
+            foreach ($data['content']->values as $project) {
+                $projects[$project->name] = $project->id;
+            }
+            // Multipagination
+            $startAt += $maxResults;
+        } while (!$data['content']->isLast);
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
 
         return $projects;
@@ -240,7 +246,7 @@ class ApiJira extends AbstractApi
      *
      * @return string
      */
-    private function getProjectApi($maxResults = '-1')
+    private function getProjectApi($maxResults = '50')
     {
         $api = self::REST_AGILE.'board?maxResults='.$maxResults;
 
