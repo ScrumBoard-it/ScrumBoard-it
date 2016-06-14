@@ -102,7 +102,11 @@ body {
 .post-it .content {
 	position: relative;
     overflow: hidden;
-    max-height: 50mm;
+    max-height: 62mm;
+}
+
+.with-bottom .content {
+    max-height: 52mm;
 }
 
 .post-it .summary {
@@ -114,7 +118,7 @@ body {
 }
 
 .post-it .description {
-	margin: 5mm auto;
+	margin: 3mm auto;
 	width: 90%;
     height: 40mm;
     font-size: 16pt;
