@@ -50,6 +50,12 @@ class ApiJira extends AbstractApi
     const LABEL_BOGUE = 'Bogue';
 
     /**
+     * Max number of api results.
+     * 
+     * @var number
+     */
+    const MAX_RESULTS = 50;
+    /**
      * {@inheritdoc}
      */
     public function searchIssues($searchFilters = array())
@@ -202,15 +208,14 @@ class ApiJira extends AbstractApi
     {
         $projects = array();
         $startAt = 0;
-        $maxResults = 50;
-        $api = $this->getProjectApi($maxResults);
+        $api = $this->getProjectApi();
         do {
             $data = $this->apiCaller->call($this->getUser(), $api.'&startAt='.$startAt);
             foreach ($data['content']->values as $project) {
                 $projects[$project->name] = $project->id;
             }
             // Multipagination
-            $startAt += $maxResults;
+            $startAt += self::MAX_RESULTS;
         } while (!$data['content']->isLast);
         ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -246,7 +251,7 @@ class ApiJira extends AbstractApi
      *
      * @return string
      */
-    private function getProjectApi($maxResults = '50')
+    private function getProjectApi($maxResults = self::MAX_RESULTS)
     {
         $api = self::REST_AGILE.'board?maxResults='.$maxResults;
 
