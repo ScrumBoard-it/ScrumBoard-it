@@ -46,26 +46,22 @@ class DefaultController extends Controller
         $form = $this->createForm($service->getFormType(), $searchEntity);
 
         $sessionConfiguration = new Configuration($request);
-
         $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
-
         $configurationForm->handleRequest($request);
-
         $session->set('template', array(
             'user_story' => $configurationForm->get('user_story')->getData(),
             'sub_task' => $configurationForm->get('sub_task')->getData(),
-            'poc' => $configurationForm->get('poc')->getData()
+            'poc' => $configurationForm->get('poc')->getData(),
         ));
 
         return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
             'form' => $form->createView(),
             'configuration_form' => $configurationForm->createView(),
-            'issues' => $issues
+            'issues' => $issues,
         ));
     }
 
     /**
-     *
      * @Route("/print", name="print")
      * @Secure("has_role('ROLE_AUTHENTICATED')")
      *
@@ -84,12 +80,12 @@ class DefaultController extends Controller
         $templates = array(
           'user_story' => $templateForm->get('user_story')[$session->get('template')['user_story']],
           'sub_task' => $templateForm->get('sub_task')[$session->get('template')['sub_task']],
-          'poc' => $templateForm->get('poc')[$session->get('template')['poc']]
+          'poc' => $templateForm->get('poc')[$session->get('template')['poc']],
         );
 
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
             'issues' => $service->getSelectedIssues($request, $selected),
-            'templates' => $templates
+            'templates' => $templates,
         ));
     }
 

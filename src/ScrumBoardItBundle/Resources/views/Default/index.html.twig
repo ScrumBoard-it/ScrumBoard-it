@@ -23,8 +23,8 @@
                 <div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
                     {'class': 'form-control search_sprint'} }) }}</div>
             </form>
-            <a href="#configuration" class="toggle btn config-btn">
-                <img src="{{ asset('bundles/scrumboardit/images/config.png')}}" height="40" width="40"/></a>
+            <a href="#configuration" class="toggle config-btn counter-clockwise">
+                <span class="glyphicon glyphicon-cog"></span></a>
         </div>
 
         <div id="configuration" class="well hidden">
@@ -169,6 +169,14 @@
             event.preventDefault();
             var target = $(this).attr('href');
             $(target).toggleClass('hidden show');
+
+            animateClass = " btn-rotation";
+            $('.toggle').addClass( animateClass );
+            $('.toggle').toggleClass('counter-clockwise clockwise');
+
+            window.setTimeout( function() {
+              $('.toggle').removeClass( animateClass );
+            }, 200 );
         });
     </script>
 {% endblock %}

@@ -119,4 +119,31 @@ hr.soften {
 
 .config-btn {
     float: right;
+    margin-right: 1%;
+    font-size: 3em;
+    color: #696969;
+}
+
+.btn-rotation {
+	animation-duration: .5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.clockwise {
+    animation-name: clockwise;
+}
+
+.counter-clockwise {
+    animation-name: counter-clockwise;
+}
+
+@keyframes clockwise {
+	from { transform: scale( 1 ) rotate( 0deg );   }
+	to   { transform: scale( 1 ) rotate( 360deg ); }
+}
+
+@keyframes counter-clockwise {
+	from { transform: scale( 1 ) rotate( 360deg );   }
+	to   { transform: scale( 1 ) rotate( 0deg ); }
 }

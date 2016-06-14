@@ -7,19 +7,22 @@ use Symfony\Component\HttpFoundation\Request;
 class Configuration
 {
     /**
-     * User Story
+     * User Story.
+     *
      * @var number
      */
     private $userStory;
 
     /**
-     * Sub Task
+     * Sub Task.
+     *
      * @var number
      */
     private $subTask;
 
     /**
-     * Poc
+     * Poc.
+     *
      * @var number
      */
     private $poc;
@@ -27,54 +30,55 @@ class Configuration
     public function __construct(Request $request)
     {
         $session = $request->getSession();
-        if(null !== $session->get('template')){
+        if (null !== $session->get('template')) {
             $this->userStory = $session->get('template')['user_story'];
             $this->subTask = $session->get('template')['sub_task'];
             $this->poc = $session->get('template')['poc'];
-        }else{
+        } else {
             $this->userStory = 0;
             $this->subTask = 0;
             $this->poc = 0;
         }
     }
 
-
     /**
-     * User Story getter
+     * User Story getter.
      *
      * @return number
      */
-    function getUserStory()
+    public function getUserStory()
     {
         return $this->userStory;
     }
 
     /**
-     * Sub Task getter
+     * Sub Task getter.
      *
      * @return number
      */
-    function getSubTask()
+    public function getSubTask()
     {
         return $this->subTask;
     }
 
     /**
-     * Poc getter
+     * Poc getter.
      *
      * @return number
      */
-    function getPoc()
+    public function getPoc()
     {
         return $this->poc;
     }
 
     /**
-     * User Story setter
+     * User Story setter.
+     *
      * @param number $userStory
+     *
      * @return self
      */
-    function setUserStory($userStory)
+    public function setUserStory($userStory)
     {
         $this->userStory = $userStory;
 
@@ -82,11 +86,13 @@ class Configuration
     }
 
     /**
-     * Sub Task setter
+     * Sub Task setter.
+     *
      * @param number $subTask
+     *
      * @return self
      */
-    function setSubTask($subTask)
+    public function setSubTask($subTask)
     {
         $this->subTask = $subTask;
 
@@ -94,11 +100,13 @@ class Configuration
     }
 
     /**
-     * Poc setter
+     * Poc setter.
+     *
      * @param number $poc
+     *
      * @return self
      */
-    function setPoc($poc)
+    public function setPoc($poc)
     {
         $this->poc = $poc;
 
