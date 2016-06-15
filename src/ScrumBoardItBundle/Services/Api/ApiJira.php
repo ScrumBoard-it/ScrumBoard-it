@@ -2,7 +2,6 @@
 
 namespace ScrumBoardItBundle\Services\Api;
 
-use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
@@ -14,54 +13,15 @@ use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
  */
 class ApiJira extends AbstractApi
 {
-    /**
-     * Rest API.
-     *
-     * @var string
-     */
     const REST_API = 'rest/api/latest/';
-
-    /**
-     * Rest AGILE.
-     *
-     * @var string
-     */
     const REST_AGILE = 'rest/agile/latest/';
-
-    /**
-     * Label for User Story.
-     *
-     * @var string
-     */
     const LABEL_US = 'Récit';
-
-    /**
-     * Label for Subtask.
-     *
-     * @var string
-     */
     const LABEL_SUBTASK = 'Sous-tâche';
-
-    /**
-     * Label for Bogue.
-     *
-     * @var string
-     */
     const LABEL_BOGUE = 'Bogue';
-
-    /**
-     * Label for a POC
-     *
-     * @var string
-     */
     const LABEL_POC = 'POC';
-
-    /**
-     * Max number of api results.
-     * 
-     * @var number
-     */
+    const LABEL_POST_IT = 'Post-it';
     const MAX_RESULTS = 50;
+
     /**
      * {@inheritdoc}
      */
@@ -96,7 +56,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setDescription($issue->fields->description);
-            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
+            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === self::LABEL_POST_IT));
             $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
             $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
             if ($issue->fields->issuetype->name === self::LABEL_SUBTASK) {
