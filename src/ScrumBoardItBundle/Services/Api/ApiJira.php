@@ -50,6 +50,13 @@ class ApiJira extends AbstractApi
     const LABEL_BOGUE = 'Bogue';
 
     /**
+     * Label for a POC
+     *
+     * @var string
+     */
+    const LABEL_POC = 'POC';
+
+    /**
      * Max number of api results.
      * 
      * @var number
@@ -82,20 +89,6 @@ class ApiJira extends AbstractApi
         $issues = array();
         foreach ($data->issues as $issue) {
             $task = new Task();
-            switch ($issue->fields->issuetype->name) {
-                case $this::LABEL_US:
-                    $task->setComplexity($issue->fields->{$this->config['complexity_field']});
-                    $task->setUserStory(true);
-                    break;
-                case $this::LABEL_SUBTASK:
-                    $task->setType('subtask');
-                    break;
-                case $this::LABEL_BOGUE:
-                    break;
-                default:
-                    $task->setProofOfConcept(true);
-                    break;
-            }
 
             $task->setId($issue->key);
             $number = str_replace($issue->fields->project->key.'-', '', $issue->key);
@@ -104,6 +97,14 @@ class ApiJira extends AbstractApi
             $task->setTitle($issue->fields->summary);
             $task->setDescription($issue->fields->description);
             $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === 'Post-it'));
+            $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
+            $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
+            if ($issue->fields->issuetype->name === self::LABEL_SUBTASK) {
+                $task->setType('subtask');
+            }
+            if (property_exists($issue->fields, $this->config['complexity_field'])) {
+                $task->setComplexity($issue->fields->{$this->config['complexity_field']});
+            }
             $task->setTimeBox($issue->fields->timeestimate);
             $issues[$issue->id] = $task;
         }

@@ -161,7 +161,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Printed setter.
      *
-     * @param unknown $printed
+     * @param bool $printed
      *
      * @return self
      */
@@ -185,7 +185,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * User Story setter.
      *
-     * @param unknown $value
+     * @param bool $value
      *
      * @return self
      */
