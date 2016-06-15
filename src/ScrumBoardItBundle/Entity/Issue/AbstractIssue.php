@@ -301,6 +301,25 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
+    public function getShortTitle()
+    {
+        $short_title = $this->title;
+        $lenght = 30;
+        if(empty($this->description) or strlen($this->description)<20)
+        {
+            $lenght += 30;
+        }
+        if(strlen($short_title)>$lenght)
+        {
+            $short_title = substr($short_title, 0, $lenght);
+            $short_title .= '...';
+        }
+        return $short_title;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getComplexity()
     {
         return $this->complexity;
@@ -348,6 +367,31 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getShortDescription()
+    {
+        $short_description = $this->description;
+        $lenght = 100;
+        if($this->userStory)
+        {
+            if(strlen($short_description)>$lenght*2)
+            {
+                $short_description = substr($short_description, 0, $lenght*2);
+                $short_description .= '...';
+            }
+            return $short_description;
+        }
+
+        if(strlen($short_description)>$lenght)
+        {
+            $short_description = substr($short_description, 0, $lenght);
+            $short_description .= '...';
+        }
+        return $short_description;
     }
 
     /**
@@ -400,9 +444,11 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
             'project' => $this->getProject(),
             'id' => $this->getId(),
             'title' => $this->getTitle(),
+            'short_title' => $this->getShortTitle(),
             'complexity' => $this->getComplexity(),
             'business_Value' => $this->getBusinessValue(),
             'description' => $this->getDescription(),
+            'short_description' => $this->getShortDescription(),
             'time_box' => $this->getTimeBox(),
         );
     }

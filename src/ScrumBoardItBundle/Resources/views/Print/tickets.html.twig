@@ -40,7 +40,11 @@
 					{{ issue.description }}
 				</div>
 			</div>
-        {% endfor %}
-    </div>
+			<div class="summary">{% if issue.proofOfConcept %}[POC]{% endif %} {{
+				issue.shortTitle }}</div>
+			<div class="description">{{ issue.shortDescription }}</div>
+		</div>
+		{% endfor %}
+	</div>
 </body>
 </html>
