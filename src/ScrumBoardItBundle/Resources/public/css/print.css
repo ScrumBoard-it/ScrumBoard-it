@@ -100,7 +100,7 @@ body {
 }
 
 .post-it .content {
-	position: relative;
+    position: relative;
     overflow: hidden;
     max-height: 62mm;
 }
@@ -128,9 +128,16 @@ body {
 
 .post-it .left {
     float: left;
-    border-right: 1px solid black;
-    padding-bottom: 15%;
     position: absolute;
+}
+.poc .left {
+    font-weight: bold;
+    font-size: 25pt;
+    border-right: 1px solid black;
+    padding-top: 5mm;
+    padding-bottom: 8mm;
+    margin-left: 3mm;
+    padding-right: 2mm;
 }
 
 .post-it .right {
@@ -140,9 +147,10 @@ body {
 }
 
 .post-it .bottom .right {
-    float: right;
+    right: 3mm;
     width: auto;
     bottom: 0;
+    position: absolute;
 }
 
 .post-it .bottom {

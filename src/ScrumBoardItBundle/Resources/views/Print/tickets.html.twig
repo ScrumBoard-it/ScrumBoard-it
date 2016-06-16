@@ -10,12 +10,12 @@
 {% endstylesheets %}
 </head>
 <body>
-	<div class="container">
-		{% for issue in issues %}
+    <div class="container">
+        {% for issue in issues %}
             {% set i = (loop.index0 % 6) + 1 %}
 
             {% set type = issue.type|capitalize %}
-			{% if issue.userStory %}
+            {% if issue.userStory %}
                 {% set type = 'Userstory' %}
                 {% set selectTemplate = templates['user_story'].config.options['label'] %}
             {% elseif issue.proofOfConcept %}
@@ -28,7 +28,7 @@
                 {% set selectTemplate = 'default' %}
             {% endif %}
             {% include 'ScrumBoardItBundle::Print/' ~type~ '/template_' ~selectTemplate~ '.html.twig' with {'i': i, 'issue': issue, 'type': type|lower} only %}
-		{% endfor %}
-	</div>
+        {% endfor %}
+    </div>
 </body>
 </html>

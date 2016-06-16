@@ -36,14 +36,13 @@ class DefaultController extends Controller
      */
     public function homeAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector().'.api');
+        $apiService = $this->get($this->getUser()->getConnector().'.api');
         $session = $request->getSession();
 
-        $searchFilters = $service->getSearchFilters($request);
-        $issues = $service->searchIssues($searchFilters);
+        $searchFilters = $apiService->getSearchFilters($request);
+        $issues = $apiService->searchIssues($searchFilters);
 
-        $searchEntity = new SearchEntity($searchFilters);
-        $form = $this->createForm($service->getFormType(), $searchEntity);
+        $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
 
         $sessionConfiguration = new Configuration($request);
         $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
@@ -71,7 +70,7 @@ class DefaultController extends Controller
      */
     public function printAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector().'.api');
+        $apiService = $this->get($this->getUser()->getConnector().'.api');
         $selected = $request->request->get('issues');
 
         $session = $request->getSession();
@@ -84,7 +83,7 @@ class DefaultController extends Controller
         );
 
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
-            'issues' => $service->getSelectedIssues($request, $selected),
+            'issues' => $apiService->getSelectedIssues($request, $selected),
             'templates' => $templates,
         ));
     }
@@ -99,9 +98,9 @@ class DefaultController extends Controller
      */
     public function addFlagAction(Request $request)
     {
-        $service = $this->get($this->getUser()->getConnector().'.api');
+        $apiService = $this->get($this->getUser()->getConnector().'.api');
         $selected = $request->request->get('issues');
-        $service->addFlag($request, $selected);
+        $apiService->addFlag($request, $selected);
 
         return $this->redirect('home');
     }
