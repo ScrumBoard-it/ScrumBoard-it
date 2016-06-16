@@ -304,7 +304,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function getShortTitle()
     {
         $short_title = $this->title;
-        $lenght = 30;
+        $lenght = 15;
 
         if(empty($this->description) or strlen($this->description)<20) {
             $lenght += 30;
@@ -380,8 +380,8 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
         if($this->userStory) {
 
-            if(strlen($short_description)>$lenght*2) {
-                $short_description = substr($short_description, 0, $lenght*2);
+            if(strlen($short_description)>$lenght*1.5) {
+                $short_description = substr($short_description, 0, $lenght*1.5);
                 $short_description .= '...';
             }
 
