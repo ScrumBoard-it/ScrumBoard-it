@@ -306,11 +306,11 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
         $shortTitle = $this->title;
         $lenght = 15;
 
-        if(empty($this->description) or strlen($this->description) < 20) {
+        if (empty($this->description) or strlen($this->description) < 20) {
             $lenght += 30;
         }
 
-        if(strlen($shortTitle) > $lenght) {
+        if (strlen($shortTitle) > $lenght) {
             $shortTitle = substr($shortTitle, 0, $lenght);
             $shortTitle .= '...';
         }
@@ -378,17 +378,16 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
         $shortDescription = preg_replace('/http\:\/\/.*\s/isU', '', $this->description);
         $lenght = 75;
 
-        if($this->userStory) {
-
-            if(strlen($shortDescription) > $lenght*1.5) {
-                $shortDescription = substr($shortDescription, 0, $lenght*1.5);
+        if ($this->userStory) {
+            if (strlen($shortDescription) > $lenght * 1.5) {
+                $shortDescription = substr($shortDescription, 0, $lenght * 1.5);
                 $shortDescription .= '...';
             }
 
             return $shortDescription;
         }
 
-        if(strlen($shortDescription) > $lenght) {
+        if (strlen($shortDescription) > $lenght) {
             $shortDescription = substr($shortDescription, 0, $lenght);
             $shortDescription .= '...';
         }
