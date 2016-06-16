@@ -303,19 +303,19 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
      */
     public function getShortTitle()
     {
-        $short_title = $this->title;
+        $shortTitle = $this->title;
         $lenght = 15;
 
         if(empty($this->description) or strlen($this->description)<20) {
             $lenght += 30;
         }
 
-        if(strlen($short_title)>$lenght) {
-            $short_title = substr($short_title, 0, $lenght);
-            $short_title .= '...';
+        if(strlen($shortTitle)>$lenght) {
+            $shortTitle = substr($shortTitle, 0, $lenght);
+            $shortTitle .= '...';
         }
 
-        return $short_title;
+        return $shortTitle;
     }
 
     /**
@@ -375,25 +375,25 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
      */
     public function getShortDescription()
     {
-        $short_description = $this->description;
-        $lenght = 100;
+        $shortDescription = $this->description;
+        $lenght = 75;
 
         if($this->userStory) {
 
-            if(strlen($short_description)>$lenght*1.5) {
-                $short_description = substr($short_description, 0, $lenght*1.5);
-                $short_description .= '...';
+            if(strlen($shortDescription)>$lenght*1.5) {
+                $shortDescription = substr($shortDescription, 0, $lenght*1.5);
+                $shortDescription .= '...';
             }
 
-            return $short_description;
+            return $shortDescription;
         }
 
-        if(strlen($short_description)>$lenght) {
-            $short_description = substr($short_description, 0, $lenght);
-            $short_description .= '...';
+        if(strlen($shortDescription)>$lenght) {
+            $shortDescription = substr($shortDescription, 0, $lenght);
+            $shortDescription .= '...';
         }
 
-        return $short_description;
+        return $shortDescription;
     }
 
     /**
