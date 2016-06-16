@@ -301,6 +301,26 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      */
+    public function getShortTitle()
+    {
+        $shortTitle = $this->title;
+        $lenght = 15;
+
+        if(empty($this->description) or strlen($this->description) < 20) {
+            $lenght += 30;
+        }
+
+        if(strlen($shortTitle) > $lenght) {
+            $shortTitle = substr($shortTitle, 0, $lenght);
+            $shortTitle .= '...';
+        }
+
+        return $shortTitle;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getComplexity()
     {
         return $this->complexity;
@@ -348,6 +368,32 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getShortDescription()
+    {
+        $shortDescription = $this->description;
+        $lenght = 75;
+
+        if($this->userStory) {
+
+            if(strlen($shortDescription) > $lenght*1.5) {
+                $shortDescription = substr($shortDescription, 0, $lenght*1.5);
+                $shortDescription .= '...';
+            }
+
+            return $shortDescription;
+        }
+
+        if(strlen($shortDescription) > $lenght) {
+            $shortDescription = substr($shortDescription, 0, $lenght);
+            $shortDescription .= '...';
+        }
+
+        return $shortDescription;
     }
 
     /**
@@ -400,9 +446,11 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
             'project' => $this->getProject(),
             'id' => $this->getId(),
             'title' => $this->getTitle(),
+            'short_title' => $this->getShortTitle(),
             'complexity' => $this->getComplexity(),
             'business_Value' => $this->getBusinessValue(),
             'description' => $this->getDescription(),
+            'short_description' => $this->getShortDescription(),
             'time_box' => $this->getTimeBox(),
         );
     }
