@@ -144,7 +144,7 @@ class ApiVisitor extends AbstractApi
         $task->setTitle($title);
         $task->setDescription($description);
         $task->setComplexity($complexity);
-        $task->setTimeBox($timeBox);
+        $task->setTimeBox(round($timeBox / 3600, 0).' h');
         $task->setUserStory($isUS);
         $task->setProofOfConcept($isProofOfConcept);
         $task->setPrinted(in_array($task->getId(), $this->printedIssues));
