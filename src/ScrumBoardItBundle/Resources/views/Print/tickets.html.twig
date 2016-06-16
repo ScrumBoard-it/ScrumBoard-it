@@ -11,40 +11,27 @@
 </head>
 <body>
     <div class="container">
-        {% for issue in issues %}
-			{% set i = (loop.index0 % 6) + 1 %}
-			<div
-				class="post-it {% if issue.userStory %}us{% endif %} {% if issue.proofOfConcept %}poc{% endif %} item{{ i }} {{ issue.type }}">
-				<div class="header">
-					<div class="id">
-						{{ issue.number }}
-					</div>
-					{% if issue.businessValue is defined %}
-						<div class="bv">
-							{{ issue.businessValue }}
-						</div>
-					{% endif %}
-					<div class="comp">
-						{% if issue.complexity %}
-							{{ issue.complexity }}
-						{% elseif issue.timeBox %}
-							{{ issue.timeBox / 3600 }}h
-						{% endif %}
-					</div>
-					{{ issue.project }}
-				</div>
-				<div class="summary">
-					{% if issue.proofOfConcept %}[POC]{% endif %} {{ issue.title }}
-				</div>
-				<div class="description">
-					{{ issue.description }}
-				</div>
-			</div>
-			<div class="summary">{% if issue.proofOfConcept %}[POC]{% endif %} {{
-				issue.shortTitle }}</div>
-			<div class="description">{{ issue.shortDescription }}</div>
-		</div>
-		{% endfor %}
-	</div>
+        {% for issue in issues %} {% set i = (loop.index0 % 6) + 1 %}
+        <div
+            class="post-it {% if issue.userStory %}us{% endif %} {% if issue.proofOfConcept %}poc{% endif %} item{{ i }} {{ issue.type }}">
+            <div class="header">
+                <div class="id">{{ issue.number }}</div>
+                {% if issue.businessValue is defined %}
+                <div class="bv">{{ issue.businessValue }}</div>
+                    {% endif %}
+                <div class="comp">{% if issue.complexity %} {{ issue.complexity }}
+                    {% elseif issue.timeBox %} {{ issue.timeBox / 3600 }} h {% endif %}
+                </div>
+
+                {{ issue.project }}
+            </div>
+            <div class="summary">
+                {% if issue.proofOfConcept %}[POC]{% endif %}
+                {{issue.shortTitle }}
+            </div>
+            <div class="description">{{ issue.shortDescription }}</div>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

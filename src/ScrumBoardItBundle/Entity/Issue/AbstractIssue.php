@@ -305,15 +305,16 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     {
         $short_title = $this->title;
         $lenght = 30;
-        if(empty($this->description) or strlen($this->description)<20)
-        {
+
+        if(empty($this->description) or strlen($this->description)<20) {
             $lenght += 30;
         }
-        if(strlen($short_title)>$lenght)
-        {
+
+        if(strlen($short_title)>$lenght) {
             $short_title = substr($short_title, 0, $lenght);
             $short_title .= '...';
         }
+
         return $short_title;
     }
 
@@ -376,21 +377,22 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     {
         $short_description = $this->description;
         $lenght = 100;
-        if($this->userStory)
-        {
-            if(strlen($short_description)>$lenght*2)
-            {
+
+        if($this->userStory) {
+
+            if(strlen($short_description)>$lenght*2) {
                 $short_description = substr($short_description, 0, $lenght*2);
                 $short_description .= '...';
             }
+
             return $short_description;
         }
 
-        if(strlen($short_description)>$lenght)
-        {
+        if(strlen($short_description)>$lenght) {
             $short_description = substr($short_description, 0, $lenght);
             $short_description .= '...';
         }
+
         return $short_description;
     }
 
