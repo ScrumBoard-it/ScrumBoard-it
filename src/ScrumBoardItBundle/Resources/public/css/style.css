@@ -40,15 +40,8 @@
 	right: 1em;
 }
 
-#issues_search select { <<<<<<<
-	HEAD margin-bottom: 20px; =======
+#issues_search select {
 	margin-bottom: 20px;
-	>>>>>>>
-	d80ea57
-	...
-	Debug
-	after
-	merging
 }
 
 .container {
@@ -87,10 +80,6 @@
 	margin: auto;
 }
 
-#formJira {
-	margin: auto;
-}
-
 hr.soften {
 	height: 3px;
 	background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0),
@@ -117,6 +106,11 @@ hr.soften {
 
 .log {
 	float: right;
+}
+
+.logImg {
+	height: 24px;
+	width: 24px;
 }
 
 .form-control {

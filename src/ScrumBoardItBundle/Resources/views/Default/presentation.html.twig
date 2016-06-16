@@ -1,0 +1,105 @@
+{% extends "::base.html.twig" %}
+{% block title %}Accueil - ScrumBoard-it{% endblock %}
+{% block stylesheets %}
+    {% stylesheets
+        'bundles/scrumboardit/css/present.css'
+        'bundles/scrumboardit/css/style.css'
+        'bundles/scrumboardit/css/jquery.contextMenu.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    {% javascripts
+        '@ScrumBoardItBundle/Resources/public/js/bootstrap.min.js'
+        '@ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+<div class="container">
+    <header>
+       	<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+       	<div class=log>
+       		Déjà un compte ?<br/>
+       		<a href="{{ path('login') }}">Se connecter</a>
+       	</div>
+    </header>
+    <section class="section group colored_section">
+        <div class="titre col span_1_of_2">
+        	Bienvenue dans ScrumBoard-it, l'outil d'impression de post-it !
+        </div>
+        <div class="icon_field col span_1_of_2">
+        	<img class="icon_medium" src="{{ asset('bundles/scrumboardit/images/welcome/print_post-it.jpg') }}"/>
+        </div>
+    </section>
+    <section class="section group">
+        <div class="col span_1_of_3">
+        	<div class="titre">
+        		Recherchez les tickets en cours et/ou futurs qui vous sont affiliés dans votre Bugtracker
+        	</div>
+        	<div class="icon_field">
+        		<img class="icon_medium"src="{{ asset('bundles/scrumboardit/images/welcome/search.png') }}" />
+        	</div>
+        </div>
+        <div class="col span_1_of_3">
+        	<div class="titre">
+        		Imprimez vos tickets sur des post-it parmi plusieurs choix de visuels
+        	</div>
+        	<div class="icon_field">
+        		<img class="icon_medium"src="{{ asset('bundles/scrumboardit/images/welcome/templates.png') }}" />
+        	</div>
+        </div>
+        <div class="col span_1_of_3">
+        	<div class="titre">
+        		Triez vos tickets entre ceux en attente d'impression et ceux déjà imprimés
+        	</div>
+        	<div class="icon_field">
+        		<img class="icon_medium" src="{{ asset('bundles/scrumboardit/images/welcome/print_queue.png') }}"/>
+        	</div>
+    	</div>
+    </section>
+    <section class="section group colored_section">
+    	<div class="col span_1_of_2 titre">
+    		<div>
+    			Connectez-vous avec votre compte Jira ou GitHub
+    		</div>
+    		<div>
+    			<a href="{{ path('login') }}">Page de connexion</a>
+    		</div>
+    	</div>
+    	<div class="col span_1_of_2 icon_field">
+    		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/login.png') }}"/>
+    	</div>
+    </section>
+    <section class="section group">
+    	<div class="col span_1_of_2 icon_field">
+    		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/print_base.jpg') }}"/>
+    	</div>
+    	<div class="col span_1_of_2 titre">
+    		<div>
+    			Un gabarit d'impression intuitif pour vous indiquer le placement des post-it
+    		</div>
+			<div>
+				<a href="{{ path('print_patron') }}">Imprimer le gabbarit</a>
+			</div>
+    	</div>
+    </section>
+    <section class="section group colored_section">
+    	<div class="col span_1_of_2 titre">
+    		<div>
+    			Découvrez ScrumBoard-it par vous-même, sans avoir de compte Jira ou GitHub !
+    		</div>
+    		<div>
+    			<a href="{{ path('discover') }}">Découvir l'application par un compte GitHub</a>
+    		</div>
+    	</div>
+    	<div class="col span_1_of_2 icon_field">
+    		<img class="icon_large" src="{{ asset('bundles/scrumboardit/images/welcome/visiting.png') }}"/>
+    	</div>
+    </section>
+</div>
+{% endblock %}

@@ -13,6 +13,7 @@ security:
                 authenticators:
                     - jira_token_authenticator
                     - github_token_authenticator
+                    - visitor_token_authenticator
                 entry_point: jira_token_authenticator
             logout:
                 path: /logout

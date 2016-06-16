@@ -2,36 +2,34 @@
 
 namespace ScrumBoardItBundle\Form\Type\Search;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
 
 /**
- * Jira search type.
+ * Visitor search type.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class JiraSearchType extends AbstractType
+class VisitorSearchType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $jiraSearch = $options['data'];
+        $visitorSearch = $options['data'];
         $builder->add('project', ChoiceType::class, array(
-            'label' => 'Tableaux',
-            'choices' => $jiraSearch->getProjects(),
-            'placeholder' => 'Choisissez un tableau',
-            'attr' => array(
-                'id' => $jiraSearch->getProject(),
-            ),
+            'label' => 'Repositories',
+            'choices' => $visitorSearch->getProjects(),
+            'placeholder' => 'Sélectionnez un projet',
         ))
-            ->add('sprint', ChoiceType::class, array(
-            'label' => 'Sprints non terminés',
-            'choices' => $jiraSearch->getSprints(),
-            'attr' => (empty($jiraSearch->getProject()) || empty($jiraSearch->getSprint())) ? array(
+        ->add('sprint', ChoiceType::class, array(
+            'label' => 'Milestones',
+            'choices' => $visitorSearch->getSprints(),
+            'placeholder' => 'Sélectionnez un filtre (optionnel)',
+            'attr' => (empty($visitorSearch->getProject()) || empty($visitorSearch->getSprints())) ? array(
                 'disabled' => 'disabled',
             ) : array(),
         ));
@@ -52,6 +50,6 @@ class JiraSearchType extends AbstractType
      */
     public function getName()
     {
-        return 'jira_search';
+        return 'visitor_search';
     }
 }

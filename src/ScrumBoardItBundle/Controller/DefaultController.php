@@ -16,12 +16,16 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
-     *
+     * 
      * @return Response
      */
     public function indexAction()
     {
-        return $this->redirect('login');
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect('home');
+        }
+
+        return $this->render('ScrumBoardItBundle:Default:presentation.html.twig');
     }
 
     /**
@@ -77,5 +81,13 @@ class DefaultController extends Controller
         $service->addFlag($request, $selected);
 
         return $this->redirect('home');
+    }
+
+    /**
+     * @Route("/discover", name="discover")
+     */
+    public function visitorAction()
+    {
+        // No action, Guard authenticates the user as a visitor and redirect to home
     }
 }
