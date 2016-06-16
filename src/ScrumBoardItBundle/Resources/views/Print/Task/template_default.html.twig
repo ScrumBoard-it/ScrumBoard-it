@@ -12,7 +12,7 @@
                     {% if issue.complexity %}
                         {{ issue.complexity }}
                     {% elseif issue.timeBox %}
-                        {{ issue.timeBox / 3600 }} h
+                        {{ issue.timeBox }}
                     {% endif %}
                 </div>
             {% endblock %}

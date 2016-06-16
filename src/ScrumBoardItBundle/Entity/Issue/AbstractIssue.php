@@ -375,8 +375,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
      */
     public function getShortDescription()
     {
-        $shortDescription = $this->description;
-        preg_replace('/http\:\/\/.*\s/isU', '', $shortDescription);
+        $shortDescription = preg_replace('/http\:\/\/.*\s/isU', '', $this->description);
         $lenght = 75;
 
         if($this->userStory) {
