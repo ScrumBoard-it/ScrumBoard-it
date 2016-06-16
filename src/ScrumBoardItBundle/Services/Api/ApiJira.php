@@ -65,7 +65,7 @@ class ApiJira extends AbstractApi
             if (property_exists($issue->fields, $this->config['complexity_field'])) {
                 $task->setComplexity($issue->fields->{$this->config['complexity_field']});
             }
-            $task->setTimeBox($issue->fields->timeestimate);
+            $task->setTimeBox(round($issue->fields->aggregatetimeoriginalestimate / 3600, 0).' h');
             $issues[$issue->id] = $task;
         }
 
