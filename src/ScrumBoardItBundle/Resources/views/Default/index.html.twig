@@ -4,6 +4,11 @@
     Tableau de bord - {{ parent() }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'ScrumBoardItBundle:js:index.js.twig' %}
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="header">
@@ -29,24 +34,24 @@
 
         <div id="configuration" class="well hidden">
             <div class="col-md-12">
-                    <div class="context-menu-input">
-                        {{ form_start(configuration_form) }}
+                <div class="context-menu-input">
+                    {{ form_start(configuration_form) }}
 
-                            {% for type in configuration_form if 'token' not in type.vars.name %}
-                                <h5>{{ form_label(type) }}</h5>
-                                    {% for choice in type %}
-                                        {{ form_widget(choice) }}
-                                        <label for="configuration_{{ type.vars.name }}_{{loop.index0 }}">
-                                            <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"/>
-                                        </label>
-                                   {% endfor %}
+                        {% for type in configuration_form if 'token' not in type.vars.name %}
+                            <h5>{{ form_label(type) }}</h5>
+                            {% for choice in type %}
+                                {{ form_widget(choice) }}
+                                <label for="configuration_{{ type.vars.name }}_{{loop.index0 }}">
+                                    <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"/>
+                                </label>
                             {% endfor %}
+                        {% endfor %}
 
-                            <div class="text-center">
-                                <button class="btn btn-primary" type="submit">Valider</button>
-                            </div>
-                            {{ form_end(configuration_form) }}
-                    </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" type="submit">Valider</button>
+                        </div>
+                    {{ form_end(configuration_form) }}
+                </div>
             </div>
         </div>
 
