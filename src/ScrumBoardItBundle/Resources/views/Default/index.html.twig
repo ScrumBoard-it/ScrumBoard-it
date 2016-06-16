@@ -52,7 +52,7 @@
                                             {% if issue.complexity is not empty %}
                                                 {{ issue.complexity }}
                                             {% elseif issue.timebox is not empty %}
-                                                {{ issue.timeBox / 3600 }}h
+                                                {{ issue.timeBox }}
                                             {% endif %}
                                         </span>
                                     {% endspaceless %}
