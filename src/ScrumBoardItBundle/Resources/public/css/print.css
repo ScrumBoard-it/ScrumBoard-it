@@ -134,10 +134,9 @@ body {
     font-weight: bold;
     font-size: 25pt;
     border-right: 1px solid black;
-    padding-top: 5mm;
-    padding-bottom: 8mm;
     margin-left: 3mm;
     padding-right: 2mm;
+    height: 60mm;
 }
 
 .post-it .right {

@@ -23,10 +23,12 @@
         </div>
         <div class="row">
             <form id="issues_search" class="form-inline">
-                <div class="form-group col-md-4">{{ form_row(form.project, {'attr':
-                    {'class': 'form-control search_project'} }) }}</div>
-                <div class="form-group col-md-4">{{ form_row(form.sprint, {'attr':
-                    {'class': 'form-control search_sprint'} }) }}</div>
+                <div class="form-group col-md-4">
+                    {{ form_row(form.project, {'attr': {'class': 'form-control search_project'} }) }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form_row(form.sprint, {'attr': {'class': 'form-control search_sprint'} }) }}
+                </div>
             </form>
             <a href="#configuration" class="toggle config-btn counter-clockwise">
                 <span class="glyphicon glyphicon-cog"></span></a>
@@ -113,8 +115,10 @@
                     <div class="panel-heading">
                         Déjà imprimé(s) <span class="badge">0</span>
                     </div>
-                    <ul class="list-group selectable">{% for issue in issues if
-                        issue.printed %} {{ block('issue') }} {% endfor %}
+                    <ul class="list-group selectable">
+                        {% for issue in issues if issue.printed %}
+                            {{ block('issue') }}
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
