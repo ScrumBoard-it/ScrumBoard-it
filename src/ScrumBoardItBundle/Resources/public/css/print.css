@@ -26,20 +26,8 @@ body {
     width: 210mm;
 }
 
-.item6 {
-    page-break-after: always;
-}
-
 .base .post-it {
     border: 1px solid #000;
-}
-
-.item1, .item3, .item5 {
-    margin-left: 12mm;
-}
-
-.item2, .item4, .item6 {
-    margin-left: 20mm;
 }
 
 .sf-toolbar {
@@ -56,6 +44,8 @@ body {
     text-align: center;
     page-break-inside: avoid;
     overflow: hidden;
+    margin-left: 10mm;
+    margin-right : 10mm;
 }
 
 .post-it.userstory {
