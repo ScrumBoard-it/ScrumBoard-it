@@ -1,0 +1,32 @@
+<div class="post-it {{ type }} item{{ i }} {{ issue.type }}">
+    {% block header %}
+        <div class="header">
+            <div class="id">{{ issue.number }}</div>
+
+            {% if issue.businessValue is defined %}
+                <div class="bv">{{ issue.businessValue }}</div>
+            {% endif %}
+
+            {% block complexity %}
+                <div class="comp">
+                    {% if issue.complexity %}
+                        {{ issue.complexity }}
+                    {% elseif issue.timeBox %}
+                        {{ issue.timeBox }}
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% block project %}
+                {{ issue.project }}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <div class="content">
+            <div class="summary">{{ issue.shortTitle }}</div>
+            <div class="description">{{ issue.shortDescription }}</div>
+        </div>
+    {% endblock %}
+</div>

@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% form_theme form "ScrumBoardItBundle::fields.html.twig" %}
+{% form_theme form "ScrumBoardItBundle:Form:fields.html.twig" %}
 
 {% block title %}
     ScrumBoard-it
@@ -22,7 +22,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     {% javascripts
         '@ScrumBoardItBundle/Resources/public/js/bootstrap.min.js'
-        '@ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js' %}
+        '@ScrumBoardItBundle/Resources/public/js/jquery.contextMenu.js'
+    %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
