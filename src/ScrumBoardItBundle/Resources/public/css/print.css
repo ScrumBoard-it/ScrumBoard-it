@@ -51,7 +51,6 @@ body {
 .post-it.userstory {
     width: 127mm;
     background-color: #ffcc00;
-    margin-left: 12mm;
     position: relative;
 }
 
