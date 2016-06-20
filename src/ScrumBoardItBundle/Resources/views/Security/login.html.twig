@@ -15,6 +15,9 @@
 
 				{{ form_start(form) }}
 
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+					{% endif %}
                     <div class="form-group input-group">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-user"></span>
@@ -34,9 +37,6 @@
                         {{ form_row(form._remember_me) }}
                         <button class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
                     </div>
-                    {% if error %}
-                        <div class="error">{{ error.message|trans({},'messages') }}</div>
-					{% endif %}
 
                 {{ form_rest(form) }}
                 {{ form_end(form) }}

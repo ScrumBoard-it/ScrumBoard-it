@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
+use ScrumBoardItBundle\Form\Type\RegistrationType;
 
 /**
  * Controller of navigation.
@@ -18,7 +19,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="index")
-     * 
+     *
      * @return Response
      */
     public function indexAction()
@@ -111,5 +112,30 @@ class DefaultController extends Controller
     public function visitorAction()
     {
         // No action, Guard authenticates the user as a visitor and redirect to home
+    }
+
+    /**
+     * @Route("/registration", name="registration")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function RegistrationAction(Request $request)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+            return $this->redirect('home');
+        }
+
+        $form = $this->createForm(RegistrationType::class);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            return $this->redirect('login');
+        }
+
+        return $this->render('ScrumBoardItBundle:Default:registration.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

@@ -5,3 +5,11 @@
         {{ form_errors(form) }}
     </div>
 {% endblock %}
+
+{% block form_errors %}
+    {% for error in errors %}
+        <div class='alert alert-danger'>
+            {{ error.messageTemplate|trans(error.messageParameters) }}
+        </div>
+    {% endfor %}
+{% endblock %}
