@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DatabaseUser
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\DatabaseUserRepository")
  */
 class DatabaseUser
