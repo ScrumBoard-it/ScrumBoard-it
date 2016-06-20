@@ -148,3 +148,48 @@ hr.soften {
 	from { transform: scale( 1 ) rotate( 360deg );   }
 	to   { transform: scale( 1 ) rotate( 0deg ); }
 }
+
+.icon-large {
+    height: 360px;
+    width: 640px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon-medium {
+    height: 270px;
+    width: 480px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sctn {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.flexible {
+    display: flex;
+}
+
+.sctn:nth-child(even) {
+    background-color: #e2f3ff;
+}
+
+.txt-home {
+    margin: auto;
+    text-align: center;
+    font-size: 22px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.title-home {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.btn-home {
+    margin-top: 15px;
+}

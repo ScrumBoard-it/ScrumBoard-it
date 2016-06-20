@@ -1,6 +1,7 @@
 {% extends "::base.html.twig" %}
-
-{% form_theme form "ScrumBoardItBundle:Form:fields.html.twig" %}
+{% if form is defined %}
+    {% form_theme form "ScrumBoardItBundle:Form:fields.html.twig" %}
+{% endif %}
 
 {% block title %}
     ScrumBoard-it
@@ -15,6 +16,7 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block javascripts %}
