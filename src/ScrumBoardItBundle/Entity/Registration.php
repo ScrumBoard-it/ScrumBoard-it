@@ -2,102 +2,127 @@
 
 namespace ScrumBoardItBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of registration.
+ * Registration
  *
- * @author Antony Pradel <antony.pradel@canaltp.fr>
+ * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\RegistrationRepository")
  */
 class Registration
 {
     /**
-     * Username.
+     * @var int
      *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
     /**
-     * Password.
+     * @var string
      *
-     * @var password
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
     /**
-     * Jira url.
-     *
-     * @Assert\Url(
-     *    message = "L'url '{{ value }}' n'est pas valide",
-     * )
      * @var string
+     *
+     * @ORM\Column(name="jira_url", type="string", length=255, nullable=true)
      */
     private $jiraUrl;
 
+
     /**
-     * Username getter.
+     * Get id
      *
-     * @return string
+     * @return int
      */
-    function getUsername() {
-        return $this->username;
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
-     * Password getter.
-     *
-     * @return string
-     */
-    function getPassword() {
-        return $this->password;
-    }
-
-    /**
-     * Jira url getter.
-     *
-     * @return string
-     */
-    function getJiraUrl() {
-        return $this->jiraUrl;
-    }
-
-    /**
-     * Username setter.
+     * Set username
      *
      * @param string $username
      *
-     * @return self
+     * @return Registration
      */
-    function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Password setter.
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set password
      *
      * @param string $password
      *
-     * @return self
+     * @return Registration
      */
-    function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Jira url setter.
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set jiraUrl
      *
      * @param string $jiraUrl
      *
-     * @return self
+     * @return Registration
      */
-    function setJiraUrl($jiraUrl) {
+    public function setJiraUrl($jiraUrl)
+    {
         $this->jiraUrl = $jiraUrl;
 
         return $this;
     }
+
+    /**
+     * Get jiraUrl
+     *
+     * @return string
+     */
+    public function getJiraUrl()
+    {
+        return $this->jiraUrl;
+    }
 }
+
