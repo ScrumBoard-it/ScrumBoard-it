@@ -11,6 +11,7 @@ use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
 use ScrumBoardItBundle\Form\Type\RegistrationType;
+use ScrumBoardItBundle\Entity\Registration;
 
 /**
  * Controller of navigation.
@@ -127,10 +128,16 @@ class DefaultController extends Controller
             return $this->redirect('home');
         }
 
-        $form = $this->createForm(RegistrationType::class);
+        $user = new Registration();
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
             return $this->redirect('login');
         }
 
