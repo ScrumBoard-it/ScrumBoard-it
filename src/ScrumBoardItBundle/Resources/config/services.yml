@@ -1,25 +1,31 @@
 services:
    webservice_user_provider:
        class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
+       arguments:
+           - '@doctrine.orm.entity_manager'
    api.caller:
        class: ScrumBoardItBundle\Services\ApiCaller
-   jira_token_authenticator:
-       class: ScrumBoardItBundle\Security\JiraAuthenticator
+  # jira_token_authenticator:
+  #    class: ScrumBoardItBundle\Security\JiraAuthenticator
+  #     arguments:
+  #         - '@router'
+  #         - 
+  #            host: "%jira_url%"
+  #            complexity_field: "%jira_complexity_field%"
+  #            printed_tag: "%jira_printed_tag%"
+  #         - '@api.caller'
+  # github_token_authenticator:
+  #     class: ScrumBoardItBundle\Security\GitHubAuthenticator
+  #     arguments:
+  #         - '@router'
+  #         - 
+  #            host: https://api.github.com/
+  #         - '@api.caller'
+   sbi_authenticator:
+       class: ScrumBoardItBundle\Security\SbiAuthenticator
        arguments:
            - '@router'
-           - 
-              host: "%jira_url%"
-              complexity_field: "%jira_complexity_field%"
-              printed_tag: "%jira_printed_tag%"
-           - '@api.caller'
-   github_token_authenticator:
-       class: ScrumBoardItBundle\Security\GitHubAuthenticator
-       arguments:
-           - '@router'
-           - 
-              host: https://api.github.com/
-           - '@api.caller'
-   visitor_token_authenticator:
+   visitor_authenticator:
        class: ScrumBoardItBundle\Security\VisitorAuthenticator
        arguments:
            - '@router'

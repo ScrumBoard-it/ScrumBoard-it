@@ -52,7 +52,7 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Registration',
+            'data_class' => 'ScrumBoardItBundle\Entity\SbiUser',
         ));
     }
 

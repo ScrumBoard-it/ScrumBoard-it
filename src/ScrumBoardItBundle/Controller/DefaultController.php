@@ -12,6 +12,7 @@ use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
 use ScrumBoardItBundle\Form\Type\RegistrationType;
 use ScrumBoardItBundle\Entity\Registration;
+use ScrumBoardItBundle\Entity\SbiUser;
 
 /**
  * Controller of navigation.
@@ -25,7 +26,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect('home');
         }
 
@@ -34,11 +35,18 @@ class DefaultController extends Controller
 
     /**
      * @Route("/home", name="home")
-     * @Secure("has_role('ROLE_AUTHENTICATED')")
+     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function homeAction(Request $request)
     {
-        $apiService = $this->get($this->getUser()->getConnector().'.api');
+        return new Response(
+            '<body>Congratulations, you are authenticated by your ScrumBoard-it account as '.$this->getUser()->getUsername().' !'.
+            '<br/>All services will be back soon<br/><a href="logout">Logout</a></body>'
+        );
+        
+        // All api services to review
+        
+        /* $apiService = $this->get($this->getUser()->getConnector().'.api');
         $session = $request->getSession();
 
         $searchFilters = $apiService->getSearchFilters($request);
@@ -59,12 +67,12 @@ class DefaultController extends Controller
             'form' => $form->createView(),
             'configuration_form' => $configurationForm->createView(),
             'issues' => $issues,
-        ));
+        )); */
     }
 
     /**
      * @Route("/print", name="print")
-     * @Secure("has_role('ROLE_AUTHENTICATED')")
+     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -92,7 +100,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag", name="add_flag")
-     * @Secure("has_role('ROLE_AUTHENTICATED')")
+     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -109,6 +117,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/discover", name="discover")
+     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function visitorAction()
     {
@@ -124,11 +133,11 @@ class DefaultController extends Controller
      */
     public function RegistrationAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTHENTICATED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect('home');
         }
 
-        $user = new Registration();
+        $user = new SbiUser();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
