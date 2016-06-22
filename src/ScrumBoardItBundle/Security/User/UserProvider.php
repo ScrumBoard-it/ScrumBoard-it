@@ -6,20 +6,20 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityManager;
-use ScrumBoardItBundle\Entity\SbiUser;
+use ScrumBoardItBundle\Entity\User;
 
 /**
  * User Provider.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class WebServiceUserProvider implements UserProviderInterface
-{   
+class UserProvider implements UserProviderInterface
+{
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +30,7 @@ class WebServiceUserProvider implements UserProviderInterface
          * if it don't exist, return null
          */
         return $this->em
-            ->getRepository('ScrumBoardItBundle:SbiUser')
+            ->getRepository('ScrumBoardItBundle:User')
             ->findOneBy(array('username' => $username));
     }
 
@@ -39,7 +39,7 @@ class WebServiceUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof SbiUser) {
+        if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
@@ -51,6 +51,6 @@ class WebServiceUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'ScrumBoardBundle\Entity\SbiUser';
+        return $class === 'ScrumBoardBundle\Entity\User';
     }
 }

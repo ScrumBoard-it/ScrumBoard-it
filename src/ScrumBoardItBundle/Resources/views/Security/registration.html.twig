@@ -20,6 +20,9 @@
 				{{ form_start(form) }}
                     {{ form_errors(form.password.first) }}
                     {{ form_errors(form) }}
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+					{% endif %}
                     {{ form_row(form.username) }}
                     {{ form_label(form.password.first) }}
                     {{ form_widget(form.password.first) }}

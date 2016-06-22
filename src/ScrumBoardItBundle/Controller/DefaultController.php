@@ -10,9 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
-use ScrumBoardItBundle\Form\Type\RegistrationType;
-use ScrumBoardItBundle\Entity\Registration;
-use ScrumBoardItBundle\Entity\SbiUser;
 
 /**
  * Controller of navigation.
@@ -43,9 +40,9 @@ class DefaultController extends Controller
             '<body>Congratulations, you are authenticated by your ScrumBoard-it account as '.$this->getUser()->getUsername().' !'.
             '<br/>All services will be back soon<br/><a href="logout">Logout</a></body>'
         );
-        
+
         // All api services to review
-        
+
         /* $apiService = $this->get($this->getUser()->getConnector().'.api');
         $session = $request->getSession();
 
@@ -122,36 +119,5 @@ class DefaultController extends Controller
     public function visitorAction()
     {
         // No action, Guard authenticates the user as a visitor and redirect to home
-    }
-
-    /**
-     * @Route("/registration", name="registration")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function RegistrationAction(Request $request)
-    {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect('home');
-        }
-
-        $user = new SbiUser();
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirect('login');
-        }
-
-        return $this->render('ScrumBoardItBundle:Default:registration.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 }

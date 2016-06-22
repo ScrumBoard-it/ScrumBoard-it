@@ -13,9 +13,9 @@ security:
                 authenticators:
                    # - jira_token_authenticator
                    # - github_token_authenticator
-                    - sbi_authenticator
+                    - main_authenticator
                     - visitor_authenticator
-                entry_point: sbi_authenticator
+                entry_point: main_authenticator
             logout:
                 path: /logout
                 target: /
@@ -24,7 +24,7 @@ security:
             
     providers:
         webservice:
-            id: webservice_user_provider
+            id: user_provider
     
     encoders:
         ScrumBoardItBundle\Entity\User: bcrypt

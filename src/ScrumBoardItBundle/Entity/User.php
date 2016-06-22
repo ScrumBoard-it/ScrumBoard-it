@@ -7,12 +7,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * SbiUser
+ * User.
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\SbiUserRepository")
  */
-class SbiUser implements UserInterface, EquatableInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @var int
@@ -32,8 +32,13 @@ class SbiUser implements UserInterface, EquatableInterface
 
     /**
      * @var string
+     */
+    private $plainPassword;
+
+    /**
+     * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=64)
      */
     private $password;
 
@@ -45,13 +50,6 @@ class SbiUser implements UserInterface, EquatableInterface
     private $roles;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="salt", type="integer", nullable=true)
-     */
-    private $salt;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="jiraUrl", type="string", length=255, nullable=true)
@@ -61,12 +59,12 @@ class SbiUser implements UserInterface, EquatableInterface
     public function __construct()
     {
         $this->roles = array(
-            'IS_AUTHENTICATED_FULLY'
+            'IS_AUTHENTICATED_FULLY',
         );
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -76,11 +74,11 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
      *
-     * @return SbiUser
+     * @return User
      */
     public function setUsername($username)
     {
@@ -90,9 +88,7 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get username
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -100,11 +96,35 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set password
+     * Set plainPassword.
+     *
+     * @param unknown $plainPassword
+     *
+     * @return self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get plainPassword.
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set password.
      *
      * @param string $password
      *
-     * @return SbiUser
+     * @return User
      */
     public function setPassword($password)
     {
@@ -114,9 +134,7 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get password
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getPassword()
     {
@@ -124,11 +142,11 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set roles
+     * Set roles.
      *
      * @param array $roles
      *
-     * @return SbiUser
+     * @return User
      */
     public function setRoles($roles)
     {
@@ -138,9 +156,7 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get roles
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -148,35 +164,19 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set salt
-     *
-     * @param integer $salt
-     *
-     * @return SbiUser
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getSalt()
     {
-        return $this->salt;
+        return;
     }
 
     /**
-     * Set jiraUrl
+     * Set jiraUrl.
      *
      * @param string $jiraUrl
      *
-     * @return SbiUser
+     * @return User
      */
     public function setJiraUrl($jiraUrl)
     {
@@ -186,7 +186,7 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get jiraUrl
+     * Get jiraUrl.
      *
      * @return string
      */
@@ -196,29 +196,25 @@ class SbiUser implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user)
     {
         if ($user->getUsername() !== $this->username) {
             return false;
         }
-    
+
         if ($user->getPassword() !== $this->password) {
             return false;
         }
-    
-        if ($user->getSalt() !== $this->salt) {
-            return false;
-        }
-    
+
         return true;
     }
 }

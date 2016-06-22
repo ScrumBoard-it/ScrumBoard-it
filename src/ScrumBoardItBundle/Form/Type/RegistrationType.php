@@ -34,8 +34,9 @@ class RegistrationType extends AbstractType
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'options' => array('attr' => array('class' => 'form-control')),
                 'required' => true,
-                'first_options'  => array('label' => 'Mot de passe:'),
+                'first_options' => array('label' => 'Mot de passe:'),
                 'second_options' => array('label' => 'Confirmer le mot de passe:'),
+                'property_path' => 'plainPassword',
             ))
             ->add('jira_url', TextType::class, array(
                 'label' => "Inidiqer l'url de votre Jira:",
@@ -52,7 +53,7 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\SbiUser',
+            'data_class' => 'ScrumBoardItBundle\Entity\User',
         ));
     }
 

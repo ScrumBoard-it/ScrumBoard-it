@@ -1,6 +1,6 @@
 services:
-   webservice_user_provider:
-       class: ScrumBoardItBundle\Security\User\WebServiceUserProvider
+   user_provider:
+       class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
    api.caller:
@@ -21,10 +21,11 @@ services:
   #         - 
   #            host: https://api.github.com/
   #         - '@api.caller'
-   sbi_authenticator:
-       class: ScrumBoardItBundle\Security\SbiAuthenticator
+   main_authenticator:
+       class: ScrumBoardItBundle\Security\MainAuthenticator
        arguments:
            - '@router'
+           - '@security.encoder_factory'
    visitor_authenticator:
        class: ScrumBoardItBundle\Security\VisitorAuthenticator
        arguments:

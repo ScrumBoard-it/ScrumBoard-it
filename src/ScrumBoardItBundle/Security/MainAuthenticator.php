@@ -8,24 +8,29 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Router;
 
-class SbiAuthenticator extends AbstractGuardAuthenticator
+class MainAuthenticator extends AbstractGuardAuthenticator
 {
     /**
-     * Router.
-     * 
      * @var Router
      */
     private $router;
-    
-    public function __construct(Router $router)
+
+    /**
+     * @var EncoderFactoryInterface
+     */
+    private $encoderService;
+
+    public function __construct(Router $router, EncoderFactoryInterface $encoderService)
     {
         $this->router = $router;
+        $this->encoderService = $encoderService;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -34,13 +39,13 @@ class SbiAuthenticator extends AbstractGuardAuthenticator
         // Check if request comes from the login form
         if ($request->getPathInfo() == '/login' && $request->isMethod('POST')) {
             $login = $request->request->get('login');
-            
+
             return $login;
         }
-    
+
         return;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -48,15 +53,17 @@ class SbiAuthenticator extends AbstractGuardAuthenticator
     {
         return $userProvider->loadUserByUsername($credentials['username']);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $credentials['password'] === $user->getPassword();
+        $encoder = $this->encoderService->getEncoder($user);
+
+        return $encoder->isPasswordValid($user->getPassword(), $credentials['password'], $user->getSalt());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -67,7 +74,7 @@ class SbiAuthenticator extends AbstractGuardAuthenticator
             'message' => "Nom d'utilisateur ou mot de passe incorrect",
         ));
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -75,7 +82,7 @@ class SbiAuthenticator extends AbstractGuardAuthenticator
     {
         return new RedirectResponse($this->router->generate('home'));
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -85,10 +92,10 @@ class SbiAuthenticator extends AbstractGuardAuthenticator
             'exception' => $authException,
             'message' => 'Authentification nécessaire',
         ));
-    
+
         return new RedirectResponse($this->router->generate('login'));
     }
-    
+
     /**
      * {@inheritdoc}
      */
