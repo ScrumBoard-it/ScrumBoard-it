@@ -5,11 +5,12 @@ namespace ScrumBoardItBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Form\Type\LoginType;
 use ScrumBoardItBundle\Form\Type\RegistrationType;
 use ScrumBoardItBundle\Entity\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller of security.
@@ -93,5 +94,15 @@ class SecurityController extends Controller
      */
     public function logoutAction()
     {
+        // No action, Symfony security removes the session and redirects to the welcome page
+    }
+
+    /**
+     * @Route("/discover", name="discover")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     */
+    public function visitorAction()
+    {
+        // No action, Guard authenticates the user as a visitor and redirects to the home page
     }
 }

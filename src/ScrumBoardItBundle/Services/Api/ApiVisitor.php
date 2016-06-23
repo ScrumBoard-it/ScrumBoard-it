@@ -7,6 +7,11 @@ use ScrumBoardItBundle\Form\Type\Search\VisitorSearchType;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Visitor service.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class ApiVisitor extends AbstractApi
 {
     /**
@@ -28,10 +33,9 @@ class ApiVisitor extends AbstractApi
      */
     private $printedIssues;
 
-    public function __construct(RequestStack $requestStack, $token, $config, $apiCaller)
+    public function __construct(RequestStack $requestStack)
     {
         $session = $requestStack->getCurrentRequest()->getSession();
-        parent::__construct($token, $config, $apiCaller);
         $this->printedIssues = $session->get('printed_issues', []);
         $this->generateIssues();
     }

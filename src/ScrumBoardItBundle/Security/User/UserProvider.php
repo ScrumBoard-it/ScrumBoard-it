@@ -25,13 +25,22 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
+        if ($username === 'visitor') {
+            $user = new User();
+            $user->setUsername($username);
+
+            return $user->setApi('discover.api');
+        }
+
         /* Get user by username in database
          * if exist, return new hydrated User
          * if it don't exist, return null
          */
-        return $this->em
+        $user = $this->em
             ->getRepository('ScrumBoardItBundle:User')
             ->findOneBy(array('username' => $username));
+
+        return $user;
     }
 
     /**

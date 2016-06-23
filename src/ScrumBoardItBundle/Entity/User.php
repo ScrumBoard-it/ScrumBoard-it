@@ -56,6 +56,11 @@ class User implements UserInterface, EquatableInterface
      */
     private $jiraUrl;
 
+    /**
+     * @var string
+     */
+    private $api;
+
     public function __construct()
     {
         $this->roles = array(
@@ -78,7 +83,7 @@ class User implements UserInterface, EquatableInterface
      *
      * @param string $username
      *
-     * @return User
+     * @return self
      */
     public function setUsername($username)
     {
@@ -98,7 +103,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * Set plainPassword.
      *
-     * @param unknown $plainPassword
+     * @param string $plainPassword
      *
      * @return self
      */
@@ -124,7 +129,7 @@ class User implements UserInterface, EquatableInterface
      *
      * @param string $password
      *
-     * @return User
+     * @return self
      */
     public function setPassword($password)
     {
@@ -146,7 +151,7 @@ class User implements UserInterface, EquatableInterface
      *
      * @param array $roles
      *
-     * @return User
+     * @return self
      */
     public function setRoles($roles)
     {
@@ -176,7 +181,7 @@ class User implements UserInterface, EquatableInterface
      *
      * @param string $jiraUrl
      *
-     * @return User
+     * @return self
      */
     public function setJiraUrl($jiraUrl)
     {
@@ -193,6 +198,30 @@ class User implements UserInterface, EquatableInterface
     public function getJiraUrl()
     {
         return $this->jiraUrl;
+    }
+
+    /**
+     * Get api.
+     * 
+     * @return bool
+     */
+    public function getApi()
+    {
+        return $this->api;
+    }
+
+    /**
+     * Set api.
+     *
+     * @param bool $authType
+     *
+     * @return self
+     */
+    public function setApi($api)
+    {
+        $this->api = $api;
+
+        return $this;
     }
 
     /**

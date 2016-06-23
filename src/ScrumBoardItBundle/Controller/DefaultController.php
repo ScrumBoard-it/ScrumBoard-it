@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
@@ -31,19 +31,33 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/home", name="home")
-     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Route("/bugtracker", name="bugtracker")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homeAction(Request $request)
+    public function bugtrackerAction()
     {
+        // OAuth for Jira & GitHub entry point
+
         return new Response(
             '<body>Congratulations, you are authenticated by your ScrumBoard-it account as '.$this->getUser()->getUsername().' !'.
             '<br/>All services will be back soon<br/><a href="logout">Logout</a></body>'
-        );
+            );
+    }
 
-        // All api services to review
+    /**
+     * @Route("/home", name="home")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     */
+    public function homeAction(Request $request)
+    {
+        $apiService = !empty($this->getUser()->getApi()) ? $this->get($this->getUser()->getApi()) : null;
 
-        /* $apiService = $this->get($this->getUser()->getConnector().'.api');
+        if (!$apiService) {
+            return $this->redirect('bugtracker');
+        }
+
         $session = $request->getSession();
 
         $searchFilters = $apiService->getSearchFilters($request);
@@ -64,12 +78,12 @@ class DefaultController extends Controller
             'form' => $form->createView(),
             'configuration_form' => $configurationForm->createView(),
             'issues' => $issues,
-        )); */
+        ));
     }
 
     /**
      * @Route("/print", name="print")
-     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -77,7 +91,7 @@ class DefaultController extends Controller
      */
     public function printAction(Request $request)
     {
-        $apiService = $this->get($this->getUser()->getConnector().'.api');
+        $apiService = $this->get($this->getUser()->getApi());
         $selected = $request->request->get('issues');
 
         $session = $request->getSession();
@@ -97,7 +111,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag", name="add_flag")
-     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -105,19 +119,10 @@ class DefaultController extends Controller
      */
     public function addFlagAction(Request $request)
     {
-        $apiService = $this->get($this->getUser()->getConnector().'.api');
+        $apiService = $this->get($this->getUser()->getApi());
         $selected = $request->request->get('issues');
         $apiService->addFlag($request, $selected);
 
         return $this->redirect('home');
-    }
-
-    /**
-     * @Route("/discover", name="discover")
-     * @Secure("has_role('IS_AUTHENTICATED_FULLY')")
-     */
-    public function visitorAction()
-    {
-        // No action, Guard authenticates the user as a visitor and redirect to home
     }
 }

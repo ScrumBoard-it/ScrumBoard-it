@@ -3,24 +3,6 @@ services:
        class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
-   api.caller:
-       class: ScrumBoardItBundle\Services\ApiCaller
-  # jira_token_authenticator:
-  #    class: ScrumBoardItBundle\Security\JiraAuthenticator
-  #     arguments:
-  #         - '@router'
-  #         - 
-  #            host: "%jira_url%"
-  #            complexity_field: "%jira_complexity_field%"
-  #            printed_tag: "%jira_printed_tag%"
-  #         - '@api.caller'
-  # github_token_authenticator:
-  #     class: ScrumBoardItBundle\Security\GitHubAuthenticator
-  #     arguments:
-  #         - '@router'
-  #         - 
-  #            host: https://api.github.com/
-  #         - '@api.caller'
    main_authenticator:
        class: ScrumBoardItBundle\Security\MainAuthenticator
        arguments:
@@ -30,9 +12,12 @@ services:
        class: ScrumBoardItBundle\Security\VisitorAuthenticator
        arguments:
            - '@router'
-           - 
-              host: https://api.github.com/
-           - '@api.caller'
+   discover.api:
+       class: ScrumBoardItBundle\Services\Api\ApiVisitor
+       arguments:
+           - '@request_stack'
+   api.caller:
+       class: ScrumBoardItBundle\Services\ApiCaller
    jira.api:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
@@ -45,14 +30,6 @@ services:
    github.api:
        class: ScrumBoardItBundle\Services\Api\ApiGithub
        arguments:
-           - '@security.token_storage'
-           - 
-              host: https://api.github.com/
-           - '@api.caller'
-   discover.api:
-       class: ScrumBoardItBundle\Services\Api\ApiVisitor
-       arguments:
-           - '@request_stack'
            - '@security.token_storage'
            - 
               host: https://api.github.com/

@@ -11,14 +11,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use ScrumBoardItBundle\Services\ApiCaller;
 
 /**
- * Abstract Token Authenticator.
+ * Abstract authenticator.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
+abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
 {
     /**
      * Router.
@@ -27,49 +26,15 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
      */
     private $router;
 
-    /**
-     * Data.
-     *
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * Remember Me.
-     *
-     * @var bool
-     */
-    private $rememberMe = false;
-
-    /**
-     * Api Caller.
-     *
-     * @var ApiCaller
-     */
-    protected $apiCaller;
-
-    public function __construct(Router $router, $data, $ApiCaller)
+    public function __construct(Router $router)
     {
         $this->router = $router;
-        $this->data = $data;
-        $this->apiCaller = $ApiCaller;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCredentials(Request $request)
-    {
-        // Check if request comes from the login form and if the requested api is the current one
-        if ($request->getPathInfo() == '/login' && $request->isMethod('POST')) {
-            $login = $request->request->get('login');
-            if (!empty($login['api']) && $login['api'] == $this->getApi()) {
-                return $login;
-            }
-        }
-
-        return;
-    }
+    abstract public function getCredentials(Request $request);
 
     /**
      * {@inheritdoc}
@@ -121,13 +86,6 @@ abstract class AbstractTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return $this->rememberMe;
+        return false;
     }
-
-    /**
-     * Return Api identificator.
-     *
-     * @return string
-     */
-    abstract protected function getApi();
 }

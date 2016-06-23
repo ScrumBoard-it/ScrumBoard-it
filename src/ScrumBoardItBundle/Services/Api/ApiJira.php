@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
- * Api Jira.
+ * Jira service.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
