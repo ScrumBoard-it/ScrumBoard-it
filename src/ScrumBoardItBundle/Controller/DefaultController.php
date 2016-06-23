@@ -134,4 +134,24 @@ class DefaultController extends Controller
 
         return $this->redirect('home');
     }
+
+    /**
+     * @Route("/github", name="github")
+     *
+     */
+    public function githubConnection (Request $request)
+    {
+        $clientManager = $this->container->get('fos_oauth_server.client_manager.default');
+        $client = $clientManager->createClient();
+        $client->setRedirectUris(array('https://api.github.com/user'));
+        $client->setAllowedGrantTypes(array('token', 'authorization_code'));
+        $clientManager->updateClient($client);
+
+        return $this->redirect($this->generateUrl('fos_oauth_server_authorize', array(
+            'client_id'     => $client->getPublicId(),
+            'redirect_uri'  => 'https://api.github.com/user',
+            'response_type' => 'code',
+            'scope' => 'user',
+        )));
+    }
 }

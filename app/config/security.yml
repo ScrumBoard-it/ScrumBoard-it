@@ -21,11 +21,29 @@ security:
                 target: /
             remember_me:
                 secret:   '%secret%'
-            
+
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: webservice
+                check_path: /oauth/v2/auth_login_check
+                login_path: /oauth/v2/auth_login
+            anonymous: true
+            context: test_connect
+
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true
+
     providers:
         webservice:
             id: user_provider
-    
+
     encoders:
         ScrumBoardItBundle\Entity\User: bcrypt
     

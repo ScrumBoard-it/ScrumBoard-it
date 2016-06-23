@@ -70,3 +70,10 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        ScrumBoardItBundle\Entity\Client
+    access_token_class:  ScrumBoardItBundle\Entity\AccessToken
+    refresh_token_class: ScrumBoardItBundle\Entity\RefreshToken
+    auth_code_class:     ScrumBoardItBundle\Entity\AuthCode
