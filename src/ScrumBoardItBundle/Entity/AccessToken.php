@@ -24,7 +24,7 @@ class AccessToken extends BaseAccessToken
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\SbiUser")
+     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\User")
      */
     protected $username;
 }

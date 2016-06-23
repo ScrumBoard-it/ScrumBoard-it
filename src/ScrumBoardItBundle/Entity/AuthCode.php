@@ -24,7 +24,7 @@ class AuthCode extends BaseAuthCode
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\SbiUser")
+     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\User")
      */
     protected $username;
 }

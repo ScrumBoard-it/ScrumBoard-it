@@ -24,7 +24,7 @@ class RefreshToken extends BaseRefreshToken
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\SbiUser")
+     * @ORM\ManyToOne(targetEntity="ScrumBoardItBundle\Entity\User")
      */
     protected $username;
 }
