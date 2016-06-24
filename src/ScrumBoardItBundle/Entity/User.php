@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  * User.
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\SbiUserRepository")
+ * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\UserRepository")
  */
 class User implements UserInterface, EquatableInterface
 {
