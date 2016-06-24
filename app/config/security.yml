@@ -21,24 +21,14 @@ security:
                 target: /
             remember_me:
                 secret:   '%secret%'
-
-        oauth_token:
-            pattern:    ^/oauth/v2/token
-            security:   false
-
-        oauth_authorize:
-            pattern:    ^/oauth/v2/auth
-            form_login:
-                provider: webservice
-                check_path: /oauth/v2/auth_login_check
-                login_path: /oauth/v2/auth_login
-            anonymous: true
-            context: test_connect
-
-        api:
-            pattern:    ^/api
-            fos_oauth:  true
-            stateless:  true
+            oauth:
+                resource_owners:
+                    github:          "/login/check-github"
+                login_path:        /bugtracker
+                use_forward:       false
+                failure_path:      /bugtracker
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider
 
     providers:
         webservice:

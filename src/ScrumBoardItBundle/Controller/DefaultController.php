@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Form\Type\BugtrackerType;
-
+use ScrumBoardItBundle\Entity\User;
 /**
  * Controller of navigation.
  */
@@ -38,17 +38,18 @@ class DefaultController extends Controller
      */
     public function bugtrackerAction(Request $request)
     {
-        $form = $this->createForm(BugtrackerType::class);
+        // OAuth for Jira & GitHub entry point
+        $form =  $this->createForm(BugtrackerType::class);
         $form->handleRequest($request);
-
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-
+        if($form->get('api')->getData()) {
+            $api = $form->get('api')->getData();
+            $this->getUser()->setApi($api.'.api');
+            return $this->redirect($this->generateUrl('hwi_oauth_service_redirect', array(
+                'service' => $api
+            )));
+        }
         return $this->render('ScrumBoardItBundle:Security:bugtracker.html.twig', array(
             'form' => $form->createView(),
-            'error' => $error,
         ));
     }
 
@@ -133,25 +134,5 @@ class DefaultController extends Controller
         }
 
         return $this->redirect('home');
-    }
-
-    /**
-     * @Route("/github", name="github")
-     *
-     */
-    public function githubConnection (Request $request)
-    {
-        $clientManager = $this->container->get('fos_oauth_server.client_manager.default');
-        $client = $clientManager->createClient();
-        $client->setRedirectUris(array('https://api.github.com/user'));
-        $client->setAllowedGrantTypes(array('token', 'authorization_code'));
-        $clientManager->updateClient($client);
-
-        return $this->redirect($this->generateUrl('fos_oauth_server_authorize', array(
-            'client_id'     => $client->getPublicId(),
-            'redirect_uri'  => 'https://api.github.com/user',
-            'response_type' => 'code',
-            'scope' => 'user',
-        )));
     }
 }

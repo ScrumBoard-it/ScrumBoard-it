@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new ScrumBoardItBundle\ScrumBoardItBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -71,9 +71,10 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-fos_oauth_server:
-    db_driver: orm       # Drivers available: orm, mongodb, or propel
-    client_class:        ScrumBoardItBundle\Entity\Client
-    access_token_class:  ScrumBoardItBundle\Entity\AccessToken
-    refresh_token_class: ScrumBoardItBundle\Entity\RefreshToken
-    auth_code_class:     ScrumBoardItBundle\Entity\AuthCode
+hwi_oauth:
+    firewall_names: [main]
+    resource_owners:
+        github:
+            type:                github
+            client_id:           a6b20a8350fc4d1e4047
+            client_secret:       596815a00845087c5b291903c090f721ae39878c

@@ -29,7 +29,7 @@
 		"incenteev/composer-parameter-handler" : "^2.0",
 		"symfony/assetic-bundle" : "^2.8",
 		"guzzlehttp/guzzle": "^6.2",
-        "friendsofsymfony/oauth-server-bundle": "^1.5.2"
+		"hwi/oauth-bundle": "0.5.x-dev"
 	},
 	"require-dev" : {
 		"sensio/generator-bundle" : "^3.0",

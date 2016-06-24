@@ -58,16 +58,6 @@ class Login
     }
 
     /**
-     * Api getter.
-     *
-     * @return string
-     */
-    public function getApi()
-    {
-        return $this->api;
-    }
-
-    /**
      * Remember Me getter.
      *
      * @return bool
@@ -101,20 +91,6 @@ class Login
     public function setPassword($password)
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Api setter.
-     *
-     * @param string $api
-     *
-     * @return self
-     */
-    public function setApi($api)
-    {
-        $this->api = $api;
 
         return $this;
     }
