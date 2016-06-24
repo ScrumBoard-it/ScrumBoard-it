@@ -20,3 +20,6 @@ hwi_oauth_login:
 
 github_login:
     path: /login/check-github
+
+jira-login:
+    path: /login/check-jira

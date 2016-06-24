@@ -31,26 +31,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/bugtracker", name="bugtracker")
+     * @Route("/bugtracker/{api}", name="bugtracker", defaults={"api" = null})
      * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function bugtrackerAction(Request $request)
+    public function bugtrackerAction($api)
     {
-        // OAuth for Jira & GitHub entry point
-        $form =  $this->createForm(BugtrackerType::class);
-        $form->handleRequest($request);
-        if($form->get('api')->getData()) {
-            $api = $form->get('api')->getData();
+        if($api) {
             $this->getUser()->setApi($api.'.api');
             return $this->redirect($this->generateUrl('hwi_oauth_service_redirect', array(
                 'service' => $api
             )));
         }
-        return $this->render('ScrumBoardItBundle:Security:bugtracker.html.twig', array(
-            'form' => $form->createView(),
-        ));
+
+        return $this->render('ScrumBoardItBundle:Default:bugtracker.html.twig');
     }
 
     /**

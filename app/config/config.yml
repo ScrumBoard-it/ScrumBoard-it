@@ -78,3 +78,12 @@ hwi_oauth:
             type:                github
             client_id:           a6b20a8350fc4d1e4047
             client_secret:       596815a00845087c5b291903c090f721ae39878c
+            options:
+                csrf: true
+        jira:
+            type:               jira
+            client_id:           ID
+            client_secret:       SECRET
+            base_url:            %jira_url%
+            options:
+                csrf: true

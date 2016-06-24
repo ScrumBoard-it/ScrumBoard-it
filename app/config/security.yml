@@ -24,6 +24,7 @@ security:
             oauth:
                 resource_owners:
                     github:          "/login/check-github"
+                    jira:           "/login/check-jira"
                 login_path:        /bugtracker
                 use_forward:       false
                 failure_path:      /bugtracker

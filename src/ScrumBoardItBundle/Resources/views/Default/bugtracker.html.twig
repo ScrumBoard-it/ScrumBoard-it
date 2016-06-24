@@ -1,10 +1,22 @@
 {% extends "ScrumBoardItBundle::base.html.twig" %}
-
+{% block title %}Bugtracker - ScrumBoard-it{% endblock %}
 {% block body %}
-    <div class="text-center">
-        {{ form_start(form) }}
-            {{ form_row(form.api) }}
-            <button class="btn btn-def" type="submit" value="Connexion">Valider</button>
-        {{ form_end(form) }}
+    <div class="container">
+        <header>
+            <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+            <div class="log">
+                <a href="./logout">
+                    <span class="glyphicon glyphicon-off">Déconnexion</span>
+                </a>
+            </div>
+        </header>
+        <div class="text-center">
+            <div class="btn-group-vertical">
+            <h1 class="page-header text-center">Sélectionner une api:</h1>
+            <div class="btn-group-vertical">
+                <a href="{{ path('bugtracker', {'api': 'github'}) }}"class="btn btn-primary btn-lg">GitHub</a><br/>
+                <a href="{{ path('bugtracker', {'api': 'jira'}) }}" class="btn btn-warning btn-lg">Jira</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
