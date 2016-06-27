@@ -11,10 +11,10 @@ security:
             anonymous: ~
             guard:
                 authenticators:
-                   # - jira_token_authenticator
-                   # - github_token_authenticator
                     - main_authenticator
                     - visitor_authenticator
+                    - jira_authenticator
+                    - github_authenticator
                 entry_point: main_authenticator
             logout:
                 path: /logout

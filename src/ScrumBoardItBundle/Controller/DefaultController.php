@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
+use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
  * Controller of navigation.
@@ -36,8 +37,21 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function bugtrackerAction()
+    public function bugtrackerAction(Request $request)
     {
+        $form = $this->createForm(LoginType::class);
+        $form->handleRequest($request);
+        
+        $authenticationUtils = $this->get('security.authentication_utils');
+        
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        
+        return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
+            'form' => $form->createView(),
+            'error' => $error,
+        ));
+        
         // OAuth for Jira & GitHub entry point
 
         return new Response(

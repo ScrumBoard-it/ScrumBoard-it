@@ -14,7 +14,15 @@
 				<hr class="soften">
 
 				{{ form_start(form) }}
-
+					<div class="page-header text-center">
+						<h1>
+                        {% if app.request.get('_route') == 'login' %}
+                    		Connexion
+					    {% else %}
+							Choix de l'API
+					    {% endif %}
+						</h1>
+					</div>
                     {% if error %}
                         <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
 					{% endif %}
@@ -30,7 +38,7 @@
                         </span>
                         {{ form_row(form.password) }}
                     </div>
-                    <div>
+                    <div class="{% if app.request.get('_route') == 'login' %}hidden{% endif %}">
                         {{ form_row(form.api) }}
                     </div>
                     <div class="form-group">

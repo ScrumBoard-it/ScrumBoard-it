@@ -60,6 +60,11 @@ class User implements UserInterface, EquatableInterface
      * @var string
      */
     private $api;
+    
+    /**
+     * @var string
+     */
+    private $hash;
 
     public function __construct()
     {
@@ -221,6 +226,18 @@ class User implements UserInterface, EquatableInterface
     {
         $this->api = $api;
 
+        return $this;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    public function setHash($hash)
+    {
+        $this->hash = base64_encode($hash);
+        
         return $this;
     }
 
