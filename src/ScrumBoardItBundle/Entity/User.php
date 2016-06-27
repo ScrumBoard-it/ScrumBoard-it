@@ -60,7 +60,7 @@ class User implements UserInterface, EquatableInterface
      * @var string
      */
     private $api;
-    
+
     /**
      * @var string
      */
@@ -207,7 +207,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * Get api.
-     * 
+     *
      * @return bool
      */
     public function getApi()
@@ -218,7 +218,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * Set api.
      *
-     * @param bool $authType
+     * @param string $api
      *
      * @return self
      */
@@ -229,15 +229,27 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
+    /**
+     * Get Hash.
+     *
+     * @return string
+     */
     public function getHash()
     {
         return $this->hash;
     }
 
+    /**
+     * Set Hash.
+     * 
+     * @param string $hash
+     *
+     * @return self
+     */
     public function setHash($hash)
     {
         $this->hash = base64_encode($hash);
-        
+
         return $this;
     }
 

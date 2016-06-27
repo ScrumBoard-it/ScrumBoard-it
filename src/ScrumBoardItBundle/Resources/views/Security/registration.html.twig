@@ -5,34 +5,34 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-	<div class="row ">
-		<div class="Absolute-Center is-Responsive">
-			<div id="formJira">
+    <div class="container">
+        <div class="row ">
+            <div class="Absolute-Center is-Responsive">
+                <div id="formJira">
 
-				<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
-				<hr class="soften">
+                    <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+                    <hr class="soften">
 
-                <div class="page-header text-center">
-                    <h1>Inscription</h1>
+                    <div class="page-header text-center">
+                        <h1>Inscription</h1>
+                    </div>
+
+                    {{ form_start(form) }}
+                        {{ form_errors(form.password.first) }}
+                        {{ form_errors(form) }}
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                        {% endif %}
+                        {{ form_row(form.username) }}
+                        {{ form_label(form.password.first) }}
+                        {{ form_widget(form.password.first) }}
+                        {{ form_label(form.password.second) }}
+                        {{ form_widget(form.password.second) }}
+                        {{ form_row(form.jira_url) }}
+                        <button class="btn btn-def btn-block" type="submit">S'inscrire</button>
+                    {{ form_end(form) }}
                 </div>
-
-				{{ form_start(form) }}
-                    {{ form_errors(form.password.first) }}
-                    {{ form_errors(form) }}
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
-					{% endif %}
-                    {{ form_row(form.username) }}
-                    {{ form_label(form.password.first) }}
-                    {{ form_widget(form.password.first) }}
-                    {{ form_label(form.password.second) }}
-                    {{ form_widget(form.password.second) }}
-                    {{ form_row(form.jira_url) }}
-                    <button class="btn btn-def btn-block" type="submit">S'inscrire</button>
-                {{ form_end(form) }}
-			</div>
-		</div>
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
 {% endblock%}

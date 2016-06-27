@@ -41,23 +41,16 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
-        
+
         $authenticationUtils = $this->get('security.authentication_utils');
-        
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        
+
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
             'form' => $form->createView(),
             'error' => $error,
         ));
-        
-        // OAuth for Jira & GitHub entry point
-
-        return new Response(
-            '<body>Congratulations, you are authenticated by your ScrumBoard-it account as '.$this->getUser()->getUsername().' !'.
-            '<br/>All services will be back soon<br/><a href="logout">Logout</a></body>'
-            );
     }
 
     /**

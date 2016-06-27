@@ -5,52 +5,52 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-	<div class="row ">
-		<div class="Absolute-Center is-Responsive">
-			<div id="formJira">
+    <div class="container">
+        <div class="row ">
+            <div class="Absolute-Center is-Responsive">
+                <div id="formJira">
 
-				<img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
-				<hr class="soften">
+                    <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+                    <hr class="soften">
 
-				{{ form_start(form) }}
-					<div class="page-header text-center">
-						<h1>
-                        {% if app.request.get('_route') == 'login' %}
-                    		Connexion
-					    {% else %}
-							Choix de l'API
-					    {% endif %}
-						</h1>
-					</div>
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
-					{% endif %}
-                    <div class="form-group input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </span>
-                        {{ form_row(form.username) }}
-                    </div>
-                    <div class="form-group input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-lock"></span>
-                        </span>
-                        {{ form_row(form.password) }}
-                    </div>
-                    <div class="{% if app.request.get('_route') == 'login' %}hidden{% endif %}">
-                        {{ form_row(form.api) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form._remember_me) }}
-                        <button class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
-                    </div>
+                    {{ form_start(form) }}
+                        <div class="page-header text-center">
+                            <h1>
+                                {% if app.request.get('_route') == 'login' %}
+                                    Connexion
+                                {% else %}
+                                    Choix de l'API
+                                {% endif %}
+                            </h1>
+                        </div>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                        {% endif %}
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </span>
+                            {{ form_row(form.username) }}
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
+                            {{ form_row(form.password) }}
+                        </div>
+                        <div class="{% if app.request.get('_route') == 'login' %}hidden{% endif %}">
+                            {{ form_row(form.api) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form._remember_me) }}
+                            <button class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
+                        </div>
 
-                {{ form_rest(form) }}
-                {{ form_end(form) }}
-			</div>
-			Nouveau ici ? <a href="{{ path('discover') }}">Connectez-vous en tant que visiteur</a>
-		</div>
-	</div>
-</div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+                Nouveau ici ? <a href="{{ path('discover') }}">Connectez-vous en tant que visiteur</a>
+            </div>
+        </div>
+    </div>
 {% endblock%}

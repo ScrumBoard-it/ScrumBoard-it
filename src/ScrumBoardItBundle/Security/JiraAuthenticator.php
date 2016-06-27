@@ -3,7 +3,6 @@
 namespace ScrumBoardItBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use ScrumBoardItBundle\Services\ApiCaller;
 
 /**
  * Jira Authenticator.
