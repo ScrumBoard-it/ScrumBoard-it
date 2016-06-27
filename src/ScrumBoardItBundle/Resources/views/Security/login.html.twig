@@ -6,6 +6,15 @@
 
 {% block body %}
     <div class="container">
+        {% if app.request.get('_route') == 'bugtracker' %}
+            <div class="header">
+                <div class="log">
+                    <a href="./logout">
+                        <span class="glyphicon glyphicon-off">Déconnexion</span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
         <div class="row ">
             <div class="Absolute-Center is-Responsive">
                 <div id="formJira">

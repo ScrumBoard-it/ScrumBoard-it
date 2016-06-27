@@ -11,6 +11,7 @@ use ScrumBoardItBundle\Form\Type\RegistrationType;
 use ScrumBoardItBundle\Entity\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * Controller of security.
@@ -64,22 +65,25 @@ class SecurityController extends Controller
         $form->handleRequest($request);
         $error = null;
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $password = $this->get('security.password_encoder')
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());
-                    $user->setPassword($password);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($user);
-                    $em->flush();
+                $user->setPassword($password);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
-                    return $this->redirect('login');
-                } catch (UniqueConstraintViolationException $e) {
-                    $error = new UniqueConstraintViolationException("Désolé, ce nom d'utilisateur est déjà utilisé...");
-                } catch (\Exception $e) {
-                    $error = new \Exception("Une erreur s'est produite, veuillez réessayer.");
-                }
+                $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $this->get('security.token_storage')->setToken($token);
+                $this->get('session')->set('_security_main', serialize($token));
+
+                return $this->redirect('login');
+
+            } catch (UniqueConstraintViolationException $e) {
+                $error = new \Exception("Désolé, ce nom d'utilisateur est déjà utilisé...");
+            } catch (\Exception $e) {
+                $error = new \Exception("Une erreur s'est produite, veuillez réessayer.");
             }
         }
 
