@@ -66,6 +66,21 @@ class User implements UserInterface, EquatableInterface
      */
     private $hash;
 
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $displayName;
+
+    /**
+     * @var string
+     */
+    private $imgUrl;
+
     public function __construct()
     {
         $this->roles = array(
@@ -249,6 +264,78 @@ class User implements UserInterface, EquatableInterface
     public function setHash($hash)
     {
         $this->hash = base64_encode($hash);
+
+        return $this;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get display name.
+     *
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Set display name.
+     *
+     * @param string $displayName
+     *
+     * @return self
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Get img url.
+     *
+     * @return string
+     */
+    public function getImgUrl()
+    {
+        return $this->imgUrl;
+    }
+
+    /**
+     * Set img url.
+     *
+     * @param string $imgUrl
+     *
+     * @return self
+     */
+    public function setImgUrl($imgUrl)
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

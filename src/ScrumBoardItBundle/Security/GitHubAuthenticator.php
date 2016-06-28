@@ -39,10 +39,10 @@ class GitHubAuthenticator extends ApiAuthenticator
         $results = $this->apiCaller->call($user, $url);
 
         if ($results['http_code'] === 200 && !empty($results['content'])) {
-            /* $data = $results['content'];
+            $data = $results['content'];
             $user->setEmail($data->email);
             $user->setDisplayName($data->name);
-            $user->setImgUrl($data->avatar_url); */
+            $user->setImgUrl($data->avatar_url);
             $user->setApi($this->getApi().'.api');
 
             return true;

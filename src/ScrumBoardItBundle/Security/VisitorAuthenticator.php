@@ -29,9 +29,9 @@ class VisitorAuthenticator extends AbstractAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // $user->setDisplayName('Visiteur');
-        // $user->setApi('discover');
-        // $user->setImgUrl('bundles/scrumboardit/images/visitor.png');
+        $user->setApi('discover.api');
+        $user->setDisplayName('Visiteur');
+        $user->setImgUrl('bundles/scrumboardit/images/visitor.png');
 
         return true;
     }
