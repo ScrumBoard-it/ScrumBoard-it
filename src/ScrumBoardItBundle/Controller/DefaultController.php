@@ -11,6 +11,7 @@ use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Configuration;
 use ScrumBoardItBundle\Form\Type\BugtrackerType;
+use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
  * Controller of navigation.
@@ -65,17 +66,17 @@ class DefaultController extends Controller
 
             $searchFilters = $apiService->getSearchFilters($request);
             $issues = $apiService->searchIssues($searchFilters);
-
             $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
 
-            $sessionConfiguration = new Configuration($request);
-            $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
+            $configurationForm = $this->createForm(ConfigurationType::class, $user);
             $configurationForm->handleRequest($request);
-            $session->set('template', array(
+            $user->setConfiguration(array(
                 'user_story' => $configurationForm->get('user_story')->getData(),
                 'sub_task' => $configurationForm->get('sub_task')->getData(),
                 'poc' => $configurationForm->get('poc')->getData(),
             ));
+
+            $em->flush();
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
@@ -100,13 +101,14 @@ class DefaultController extends Controller
         $apiService = $this->get($this->getUser()->getApi());
         $selected = $request->request->get('issues');
 
-        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('ScrumBoardItBundle:User')->find($this->getUser()->getId());
+        $configuration = $user->getConfiguration();
         $templateForm = $this->createForm(ConfigurationType::class);
-        $templateForm->getData();
         $templates = array(
-          'user_story' => $templateForm->get('user_story')[$session->get('template')['user_story']],
-          'sub_task' => $templateForm->get('sub_task')[$session->get('template')['sub_task']],
-          'poc' => $templateForm->get('poc')[$session->get('template')['poc']],
+          'user_story' => $templateForm->get('user_story')[$configuration['user_story']],
+          'sub_task' => $templateForm->get('sub_task')[$configuration['sub_task']],
+          'poc' => $templateForm->get('poc')[$configuration['poc']],
         );
 
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(
