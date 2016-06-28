@@ -24,26 +24,29 @@ services:
            - '@router'
            - '@api.caller'
            - '@security.token_storage'
-           - 
+           -
               host: https://api.github.com/
    discover.api:
        class: ScrumBoardItBundle\Services\Api\ApiVisitor
        arguments:
            - '@request_stack'
+           - '@security.token_storage'
    api.caller:
        class: ScrumBoardItBundle\Services\ApiCaller
    jira.api:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
            - '@security.token_storage'
-           - 
+           -
               complexity_field: "%jira_complexity_field%"
               printed_tag: "%jira_printed_tag%"
            - '@api.caller'
+           - '@doctrine.orm.entity_manager'
    github.api:
        class: ScrumBoardItBundle\Services\Api\ApiGithub
        arguments:
            - '@security.token_storage'
-           - 
+           -
               host: https://api.github.com/
            - '@api.caller'
+           - '@doctrine.orm.entity_manager'

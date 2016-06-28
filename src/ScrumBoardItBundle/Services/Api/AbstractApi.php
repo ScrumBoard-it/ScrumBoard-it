@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Abstract Api.
@@ -35,17 +36,21 @@ abstract class AbstractApi
      */
     private $user;
 
+    protected $em;
+
     /**
      * Constructor.
      *
      * @param TokenStorage $token
      * @param array
+     * @param EntityManager $em
      */
-    public function __construct(TokenStorage $token, $config, $apiCaller)
+    public function __construct(TokenStorage $token, $config, $apiCaller, EntityManager $em)
     {
         $this->user = $token->getToken()->getUser();
         $this->config = $config;
         $this->apiCaller = $apiCaller;
+        $this->em = $em;
     }
 
     /**
@@ -69,6 +74,18 @@ abstract class AbstractApi
             'project' => null,
             'sprint' => null,
         ));
+    }
+
+    /**
+     * Get configuration.
+     *
+     * @return User
+     */
+    public function getDatabaseUser()
+    {
+        $user = $this->em->getRepository('ScrumBoardItBundle:User')->find($this->getUser()->getId());
+
+        return $user;
     }
 
     /**

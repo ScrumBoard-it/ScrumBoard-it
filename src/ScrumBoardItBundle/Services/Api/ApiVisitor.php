@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\VisitorSearchType;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Visitor service.
@@ -33,11 +34,23 @@ class ApiVisitor extends AbstractApi
      */
     private $printedIssues;
 
-    public function __construct(RequestStack $requestStack)
+    /**
+     * @var TokenStorage
+     */
+    protected $tokenStorage;
+
+    /**
+     * Constructor.
+     *
+     * @param RequestStack $requestStack
+     * @param TokenStorage $tokenStorage
+     */
+    public function __construct(RequestStack $requestStack, TokenStorage $tokenStorage)
     {
         $session = $requestStack->getCurrentRequest()->getSession();
         $this->printedIssues = $session->get('printed_issues', []);
         $this->generateIssues();
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -295,5 +308,15 @@ class ApiVisitor extends AbstractApi
             }
             $session->set('printed_issues', $printedIssues);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDatabaseUser()
+    {
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        return $user;
     }
 }

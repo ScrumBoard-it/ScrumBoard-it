@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
-use ScrumBoardItBundle\Entity\Configuration;
 use ScrumBoardItBundle\Form\Type\BugtrackerType;
-use ScrumBoardItBundle\Form\Type\LoginType;
 
 /**
  * Controller of navigation.
@@ -62,12 +60,12 @@ class DefaultController extends Controller
     {
         if (!empty($this->getUser()->getApi())) {
             $apiService = $this->get($this->getUser()->getApi());
-            $session = $request->getSession();
 
             $searchFilters = $apiService->getSearchFilters($request);
             $issues = $apiService->searchIssues($searchFilters);
             $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
 
+            $user = $apiService->getDatabaseUser();
             $configurationForm = $this->createForm(ConfigurationType::class, $user);
             $configurationForm->handleRequest($request);
             $user->setConfiguration(array(
@@ -76,7 +74,7 @@ class DefaultController extends Controller
                 'poc' => $configurationForm->get('poc')->getData(),
             ));
 
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
@@ -100,10 +98,9 @@ class DefaultController extends Controller
     {
         $apiService = $this->get($this->getUser()->getApi());
         $selected = $request->request->get('issues');
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('ScrumBoardItBundle:User')->find($this->getUser()->getId());
+        $user = $apiService->getDatabaseUser();
         $configuration = $user->getConfiguration();
+
         $templateForm = $this->createForm(ConfigurationType::class);
         $templates = array(
           'user_story' => $templateForm->get('user_story')[$configuration['user_story']],
@@ -131,8 +128,7 @@ class DefaultController extends Controller
             $apiService = $this->get($this->getUser()->getApi());
             $selected = $request->request->get('issues');
             $apiService->addFlag($request, $selected);
-        } catch(\Exception $e) {
-            
+        } catch (\Exception $e) {
         }
 
         return $this->redirect('home');
