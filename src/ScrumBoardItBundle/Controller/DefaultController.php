@@ -24,7 +24,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_CONFIGURED')) {
             return $this->redirect('home');
         }
 
@@ -33,7 +33,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/bugtracker", name="bugtracker")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_AUTHENTICATED')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -55,42 +55,41 @@ class DefaultController extends Controller
 
     /**
      * @Route("/home", name="home")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_AUTHENTICATED','IS_CONFIGURED')")
      */
     public function homeAction(Request $request)
     {
-        $apiService = !empty($this->getUser()->getApi()) ? $this->get($this->getUser()->getApi()) : null;
+        if (!empty($this->getUser()->getApi())) {
+            $apiService = $this->get($this->getUser()->getApi());
+            $session = $request->getSession();
 
-        if (!$apiService) {
-            return $this->redirect('bugtracker');
+            $searchFilters = $apiService->getSearchFilters($request);
+            $issues = $apiService->searchIssues($searchFilters);
+
+            $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
+
+            $sessionConfiguration = new Configuration($request);
+            $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
+            $configurationForm->handleRequest($request);
+            $session->set('template', array(
+                'user_story' => $configurationForm->get('user_story')->getData(),
+                'sub_task' => $configurationForm->get('sub_task')->getData(),
+                'poc' => $configurationForm->get('poc')->getData(),
+            ));
+
+            return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
+                'form' => $form->createView(),
+                'configuration_form' => $configurationForm->createView(),
+                'issues' => $issues,
+            ));
         }
 
-        $session = $request->getSession();
-
-        $searchFilters = $apiService->getSearchFilters($request);
-        $issues = $apiService->searchIssues($searchFilters);
-
-        $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
-
-        $sessionConfiguration = new Configuration($request);
-        $configurationForm = $this->createForm(ConfigurationType::class, $sessionConfiguration);
-        $configurationForm->handleRequest($request);
-        $session->set('template', array(
-            'user_story' => $configurationForm->get('user_story')->getData(),
-            'sub_task' => $configurationForm->get('sub_task')->getData(),
-            'poc' => $configurationForm->get('poc')->getData(),
-        ));
-
-        return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-            'form' => $form->createView(),
-            'configuration_form' => $configurationForm->createView(),
-            'issues' => $issues,
-        ));
+        return $this->redirect('bugtracker');
     }
 
     /**
      * @Route("/print", name="print")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_CONFIGURED')")
      *
      * @param Request $request
      *
@@ -118,7 +117,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/flag", name="add_flag")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('IS_CONFIGURED')")
      *
      * @param Request $request
      *

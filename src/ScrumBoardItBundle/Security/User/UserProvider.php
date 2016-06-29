@@ -32,13 +32,12 @@ class UserProvider implements UserProviderInterface
             return $user->setApi('discover.api');
         }
 
-        /* Get user by username in database
-         * if exist, return new hydrated User
-         * if it don't exist, return null
-         */
         $user = $this->em
             ->getRepository('ScrumBoardItBundle:User')
-            ->findOneBy(array('username' => $username));
+            ->findOneByUsername($username)
+            ->setRoles(array(
+                'IS_AUTHENTICATED',
+            ));
 
         return $user;
     }

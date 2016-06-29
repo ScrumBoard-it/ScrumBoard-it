@@ -28,3 +28,5 @@ security:
     
     encoders:
         ScrumBoardItBundle\Entity\User: bcrypt
+    
+    access_denied_url: /home

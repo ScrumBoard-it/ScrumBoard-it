@@ -29,6 +29,7 @@ class JiraAuthenticator extends ApiAuthenticator
             $user->setDisplayName($content->displayName);
             $user->setImgUrl($content->avatarUrls->{'24x24'});
             $user->setApi($this->getApi().'.api');
+            $user->addRole('IS_CONFIGURED');
 
             return true;
         }

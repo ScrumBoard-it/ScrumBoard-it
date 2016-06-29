@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  * User.
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="ScrumBoardItBundle\Repository\UserRepository")
+ * @ORM\Entity
  */
 class User implements UserInterface, EquatableInterface
 {
@@ -44,15 +44,13 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @var array
-     *
-     * @ORM\Column(name="roles", type="array", nullable=true)
      */
     private $roles;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="jiraUrl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="jira_url", type="string", length=255, nullable=true)
      */
     private $jiraUrl;
 
@@ -84,7 +82,7 @@ class User implements UserInterface, EquatableInterface
     public function __construct()
     {
         $this->roles = array(
-            'IS_AUTHENTICATED_FULLY',
+            'IS_AUTHENTICATED',
         );
     }
 
@@ -181,6 +179,16 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
+     * Add a role.
+     *
+     * @param string $role
+     */
+    public function addRole($role)
+    {
+        array_push($this->roles, $role);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getRoles()
@@ -223,7 +231,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * Get api.
      *
-     * @return bool
+     * @return string
      */
     public function getApi()
     {
@@ -352,11 +360,7 @@ class User implements UserInterface, EquatableInterface
      */
     public function isEqualTo(UserInterface $user)
     {
-        if ($user->getUsername() !== $this->username) {
-            return false;
-        }
-
-        if ($user->getPassword() !== $this->password) {
+        if ($user->getUsername() !== $this->username || $user->getPassword() !== $this->password) {
             return false;
         }
 

@@ -44,6 +44,7 @@ class GitHubAuthenticator extends ApiAuthenticator
             $user->setDisplayName($data->name);
             $user->setImgUrl($data->avatar_url);
             $user->setApi($this->getApi().'.api');
+            $user->addRole('IS_CONFIGURED');
 
             return true;
         }

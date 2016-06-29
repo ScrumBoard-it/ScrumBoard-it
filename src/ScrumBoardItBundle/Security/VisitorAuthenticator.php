@@ -32,6 +32,7 @@ class VisitorAuthenticator extends AbstractAuthenticator
         $user->setApi('discover.api');
         $user->setDisplayName('Visiteur');
         $user->setImgUrl('bundles/scrumboardit/images/visitor.png');
+        $user->addRole('IS_CONFIGURED');
 
         return true;
     }
