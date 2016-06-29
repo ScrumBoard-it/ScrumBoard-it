@@ -17,10 +17,14 @@
     <strong>Entrez vos identifiants correspondants:</strong>
     {{ parent() }}
     <div class="alert alert-info text-center">
-        Url Jira: drgrefgrzegyfzshjfcbhfbezjhfbjeng <br/>
-        <a href='#' class='btn btn-default btn-sm'>
-            Editez l'url
-        </a>
+    	<div>
+    	    {% if app.user.jiraUrl is defined %}
+        		Url Jira: {{ app.user.jiraUrl }} <br/>
+		    {% else %}
+				Connexion à Jira impossible : aucune URL n'est définie
+		    {% endif %}
+		</div>
+		<a href='#' class='btn btn-default btn-sm'>Editer l'url</a>
     </div>
 {% endblock %}
 
