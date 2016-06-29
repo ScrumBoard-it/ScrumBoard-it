@@ -6,60 +6,52 @@
 
 {% block body %}
     <div class="container">
-        {% if app.request.get('_route') == 'bugtracker' %}
-            <div class="header">
-                <div class="log">
-                    <a href="./logout">
-                        <span class="glyphicon glyphicon-off">Déconnexion</span>
-                    </a>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row ">
-            <div class="Absolute-Center is-Responsive">
-                <div id="formJira">
+        <div class="header">
+            <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+            {% block header %}{% endblock %}
+        </div>
+        <div class="page-header text-center">
+            <h1>
+                {% block header_title %}
+                    Connectez-vous à votre compte ScrumBoard-it
+                {% endblock %}
+            </h1>
+        </div>
 
-                    <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
-                    <hr class="soften">
-
+        <div class="row form">
+            <div class="col-md-2 col-sm-offset-5">
                     {{ form_start(form) }}
-                        <div class="page-header text-center">
-                            <h1>
-                                {% if app.request.get('_route') == 'login' %}
-                                    Connexion
-                                {% else %}
-                                    Choix de l'API
-                                {% endif %}
-                            </h1>
-                        </div>
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
-                        {% endif %}
-                        <div class="form-group input-group">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-user"></span>
-                            </span>
-                            {{ form_row(form.username) }}
-                        </div>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-lock"></span>
-                            </span>
-                            {{ form_row(form.password) }}
-                        </div>
-                        <div class="{% if app.request.get('_route') == 'login' %}hidden{% endif %}">
-                            {{ form_row(form.api) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form._remember_me) }}
-                            <button class="btn btn-def btn-block" type="submit" value="Connexion">login</button>
-                        </div>
+                        {% block form %}
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                            {% endif %}
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                {{ form_row(form.username) }}
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                                {{ form_row(form.password) }}
+                            </div>
+                        {% endblock %}
+                            <div class="form-group">
+                                {{ form_row(form._remember_me) }}
+                            </div>
+                        <button class="btn btn-primary btn-block" type="submit" value="Connexion">Login</button>
 
                     {{ form_rest(form) }}
                     {{ form_end(form) }}
-                </div>
-                Nouveau ici ? <a href="{{ path('discover') }}">Connectez-vous en tant que visiteur</a>
             </div>
+        </div>
+        <div class="text-center bottom">
+            {% block bottom %}
+                    Nouveau ici ? <a href="{{ path('discover') }}">Connectez-vous en tant que visiteur</a> <br/>
+                    Ou créez votre compte <a href="{{ path('registration') }}">ici.</a>
+            {% endblock %}
         </div>
     </div>
 {% endblock%}

@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
-class LoginType extends AbstractType
+class BugtrackerType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -35,6 +35,16 @@ class LoginType extends AbstractType
                 'label' => false,
                 'attr' => array(
                     'placeholder' => 'Mot de passe',
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('api', ChoiceType::class, array(
+                'label' => 'Se connecter au bugtracker:',
+                'choices' => array(
+                    'GitHub' => 'github',
+                    'Jira' => 'jira',
+                ),
+                'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
@@ -60,6 +70,6 @@ class LoginType extends AbstractType
      */
     public function getName()
     {
-        return 'login';
+        return 'bugtracker';
     }
 }

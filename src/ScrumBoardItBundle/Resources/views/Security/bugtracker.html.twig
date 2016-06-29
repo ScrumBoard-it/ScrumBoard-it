@@ -1,0 +1,27 @@
+{% extends "ScrumBoardItBundle:Security:login.html.twig" %}
+
+{% block header %}
+    <div class="log">
+        <a href="./logout">
+            <span class="glyphicon glyphicon-off">Déconnexion</span>
+        </a>
+    </div>
+{% endblock %}
+
+{% block header_title %}
+    Choisissez votre bugtracker
+{% endblock %}
+
+{% block form %}
+    {{ form_row(form.api) }}
+    <strong>Entrez vos identifiants correspondants:</strong>
+    {{ parent() }}
+    <div class="alert alert-info text-center">
+        Url Jira: drgrefgrzegyfzshjfcbhfbezjhfbjeng <br/>
+        <a href='#' class='btn btn-default btn-sm'>
+            Editez l'url
+        </a>
+    </div>
+{% endblock %}
+
+{% block bottom %}{% endblock %}
