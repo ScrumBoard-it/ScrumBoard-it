@@ -84,6 +84,6 @@ hwi_oauth:
             type:               jira
             client_id:           ID
             client_secret:       SECRET
-            base_url:            %jira_url%
+            base_url:            http://jira.canaltp.fr/
             options:
                 csrf: true
