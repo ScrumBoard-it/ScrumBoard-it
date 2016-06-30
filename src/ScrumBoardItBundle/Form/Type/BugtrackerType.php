@@ -8,7 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * Login type.
@@ -47,11 +46,6 @@ class BugtrackerType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control',
                 ),
-            ))
-            ->add('_remember_me', CheckboxType::class, array(
-                'label' => 'Se souvenir de moi',
-                'required' => false,
-                'property_path' => 'rememberMe',
             ));
     }
 

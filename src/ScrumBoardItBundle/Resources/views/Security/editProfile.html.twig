@@ -1,0 +1,42 @@
+{% block form %}
+    
+{% endblock %}
+
+{% extends "ScrumBoardItBundle::base.html.twig" %}
+
+{% block title %}
+    Editer votre compte - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+            <div class="log">
+            	<a class="btn btn-danger" href="{{ path('home') }}">Retour</a>
+            </div>
+        </div>
+        <div class="page-header text-center">
+            <h1>Editer votre compte ScrumBoard-it</h1>
+        </div>
+        <div class="row form">
+            <div class="col-md-4 col-sm-offset-4">
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                    {% endif %}
+                    {{ form_row(form.jira_url) }}
+                    <div class="col-md-3 col-sm-offset-5">
+                        <button class="btn btn-success" type="submit">Enregistrer</button>
+                    </div>
+                    <div class="col-md-3 col-sm-offset-5">
+                        
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="text-center">
+		</div>
+    </div>
+{% endblock%}

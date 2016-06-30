@@ -12,7 +12,7 @@
     Choisissez votre bugtracker
 {% endblock %}
 
-{% block form %}
+{% block userForm %}
     {{ form_row(form.api) }}
     <strong>Entrez vos identifiants correspondants:</strong>
     {{ parent() }}
@@ -28,4 +28,5 @@
     </div>
 {% endblock %}
 
+{% block rememberMe %}{% endblock %}
 {% block bottom %}{% endblock %}

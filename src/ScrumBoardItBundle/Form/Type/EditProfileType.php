@@ -13,11 +13,13 @@ class EditProfileType extends AbstractType
     {
         $builder
         ->add('jira_url', TextType::class, array(
-            'label' => false,
+            'label' => 'Nouvelle adresse Jira:',
             'attr' => array(
-                'placeholder' => 'Définissez la nouvelle adresse de votre application Jira',
+                'placeholder' => 'http://jira.domaine.com/',
                 'class' => 'form-control',
-            ), ));
+            ),
+            'property_path' => 'jiraUrl',
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

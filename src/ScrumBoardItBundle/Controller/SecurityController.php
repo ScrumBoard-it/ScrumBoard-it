@@ -114,18 +114,25 @@ class SecurityController extends Controller
      * @Route("/edit_profile", name="edit_profile")
      * @Security("has_role('IS_AUTHENTICATED')")
      */
-    public function editProfileAction()
+    public function editProfileAction(Request $request)
     {
-        $form = $this->createForm(EditProfileType::class);
+        $userForm = new User();
+        $form = $this->createForm(EditProfileType::class, $userForm);
+        $form->handleRequest($request);
         $error = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userToken = $this->getUser();
             try {
-                // Persist jiraUrl in the database
+                $em = $this->getDoctrine()->getManager();
+                $user = $em->getRepository('ScrumBoardItBundle:User')->find($userToken->getId());
+                $user->setJiraUrl($userForm->getJiraUrl());
+                $userToken->setJiraUrl($userForm->getJiraUrl());
+                $em->flush();
 
                 return $this->redirect('home');
             } catch (\Exception $e) {
-                $error = "Une erreur s'est produite, veuillez réesayer.";
+                $error = new \Exception("Une erreur s'est produite, veuillez réesayer.");
             }
         }
 

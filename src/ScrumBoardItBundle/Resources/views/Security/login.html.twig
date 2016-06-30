@@ -21,7 +21,7 @@
         <div class="row form">
             <div class="col-md-2 col-sm-offset-5">
                     {{ form_start(form) }}
-                        {% block form %}
+                        {% block userForm %}
                             {% if error %}
                                 <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
                             {% endif %}
@@ -38,10 +38,12 @@
                                 {{ form_row(form.password) }}
                             </div>
                         {% endblock %}
-                            <div class="form-group">
+                        {% block rememberMe %}
+                             <div class="form-group">
                                 {{ form_row(form._remember_me) }}
                             </div>
-                        <button class="btn btn-primary btn-block" type="submit" value="Connexion">Login</button>
+                        {% endblock %}
+                        <button class="btn btn-primary btn-block" type="submit" value="Connexion">Connexion</button>
 
                     {{ form_rest(form) }}
                     {{ form_end(form) }}
