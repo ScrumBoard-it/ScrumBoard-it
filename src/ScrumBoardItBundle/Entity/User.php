@@ -45,7 +45,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * @var array
      */
-    private $roles;
+    private $roles = array();
 
     /**
      * @var string

@@ -34,10 +34,7 @@ class UserProvider implements UserProviderInterface
 
         $user = $this->em
             ->getRepository('ScrumBoardItBundle:User')
-            ->findOneByUsername($username)
-            ->setRoles(array(
-                'IS_AUTHENTICATED',
-            ));
+            ->findOneByUsername($username);
 
         return $user;
     }

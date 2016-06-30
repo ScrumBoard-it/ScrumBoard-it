@@ -75,7 +75,7 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, array(
             'exception' => $authException,
-            'message' => 'Authentification nécessaire',
+            'message' => "Une erreur s'est produite, veuillez vous reconnecter.",
         ));
 
         return new RedirectResponse($this->router->generate('login'));

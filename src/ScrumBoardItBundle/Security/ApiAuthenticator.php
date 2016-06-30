@@ -45,7 +45,7 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
     {
         // Check if request comes from the login form and if the requested api is the current one
         if ($request->getPathInfo() == '/bugtracker' && $request->isMethod('POST')) {
-            $login = $request->request->get('login');
+            $login = $request->request->get('bugtracker');
             if (!empty($login['api']) && $login['api'] == $this->getApi()) {
                 return $login;
             }
