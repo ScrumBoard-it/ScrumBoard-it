@@ -3,6 +3,7 @@
 namespace ScrumBoardItBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
@@ -49,7 +50,15 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @var string
-     *
+     * @Assert\Regex(
+     *     pattern="/\S*\/$/",
+     *     match=true,
+     *     message="L'url doit finir par '/'"
+     * )
+     * @Assert\Url(
+     *    protocols = {"http"},
+     *    message = "Url invalide"
+     * )
      * @ORM\Column(name="jira_url", type="string", length=255, nullable=true)
      */
     private $jiraUrl;
@@ -263,8 +272,8 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set Hash.
-     * 
+     * Set hash.
+     *
      * @param string $hash
      *
      * @return self
