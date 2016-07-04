@@ -8,7 +8,11 @@
     <div class="container">
         <div class="header">
             <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
-            {% block header %}{% endblock %}
+            {% block header %}
+                <div class="log">
+                	<a class="btn btn-danger" href="{{ path('index') }}">Retour</a>
+                </div>
+            {% endblock %}
         </div>
         <div class="page-header text-center">
             <h1>
