@@ -30,7 +30,7 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect('home');
         }
 
@@ -57,7 +57,7 @@ class SecurityController extends Controller
      */
     public function registrationAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY_FULLY')) {
             return $this->redirect('home');
         }
 
@@ -112,7 +112,7 @@ class SecurityController extends Controller
 
     /**
      * @Route("/edit_profile", name="edit_profile")
-     * @Security("has_role('IS_AUTHENTICATED')")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function editProfileAction(Request $request)
     {

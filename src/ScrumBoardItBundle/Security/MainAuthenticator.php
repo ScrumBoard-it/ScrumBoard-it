@@ -44,7 +44,7 @@ class MainAuthenticator extends AbstractAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         $encoder = $this->encoderService->getEncoder($user);
-        $user->addRole('IS_AUTHENTICATED');
+        $user->addRole('IS_AUTHENTICATED_FULLY');
 
         return $encoder->isPasswordValid($user->getPassword(), $credentials['password'], $user->getSalt());
     }
