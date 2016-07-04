@@ -1,5 +1,5 @@
 {% block form %}
-    
+
 {% endblock %}
 
 {% extends "ScrumBoardItBundle::base.html.twig" %}
@@ -21,22 +21,25 @@
         </div>
         <div class="row form">
             <div class="col-md-4 col-sm-offset-4">
-                {{ form_start(form) }}
-                    {{ form_errors(form) }}
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
-                    {% endif %}
-                    {{ form_row(form.jira_url) }}
-                    <div class="col-md-3 col-sm-offset-5">
-                        <button class="btn btn-success" type="submit">Enregistrer</button>
+                <div class="alert alert-info text-center">
+                    <label>Adresse Jira actuelle:</label>
+                    <div class="form-control-static">
+                        {{ app.user.jiraUrl }}
                     </div>
-                    <div class="col-md-3 col-sm-offset-5">
-                        
-                    </div>
-                {{ form_end(form) }}
+                </div>
+                <div class="form-group">
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                        {% endif %}
+                        {{ form_row(form.jira_url) }}
+                        <div class="col-md-3 col-sm-offset-5">
+                            <button class="btn btn-success" type="submit">Enregistrer</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
-        <div class="text-center">
-		</div>
     </div>
 {% endblock%}
