@@ -88,13 +88,6 @@ class User implements UserInterface, EquatableInterface
      */
     private $imgUrl;
 
-    public function __construct()
-    {
-        $this->roles = array(
-            'IS_AUTHENTICATED',
-        );
-    }
-
     /**
      * Get id.
      *

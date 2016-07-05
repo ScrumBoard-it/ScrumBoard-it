@@ -37,7 +37,6 @@ services:
        arguments:
            - '@security.token_storage'
            - 
-              host: "%jira_url%"
               complexity_field: "%jira_complexity_field%"
               printed_tag: "%jira_printed_tag%"
            - '@api.caller'

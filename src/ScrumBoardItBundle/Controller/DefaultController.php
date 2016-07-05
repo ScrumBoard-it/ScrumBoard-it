@@ -24,7 +24,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY','IS_CONFIGURED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', 'IS_CONFIGURED')) {
             return $this->redirect('home');
         }
 

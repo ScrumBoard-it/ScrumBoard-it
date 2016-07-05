@@ -39,7 +39,7 @@ class RegistrationType extends AbstractType
                 'property_path' => 'plainPassword',
             ))
             ->add('jira_url', TextType::class, array(
-                'label' => "Inidiqer l'url de votre Jira:",
+                'label' => "Indiquer l'url de votre Jira:",
                 'attr' => array(
                     'class' => 'form-control',
                 ),

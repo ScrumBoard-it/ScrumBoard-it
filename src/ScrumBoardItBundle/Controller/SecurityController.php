@@ -30,7 +30,7 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY', 'IS_CONFIGURED')) {
             return $this->redirect('home');
         }
 
@@ -41,7 +41,7 @@ class SecurityController extends Controller
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
+        
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
             'form' => $form->createView(),
             'error' => $error,
@@ -57,7 +57,7 @@ class SecurityController extends Controller
      */
     public function registrationAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY_FULLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect('home');
         }
 
@@ -71,6 +71,7 @@ class SecurityController extends Controller
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
+                $user->addRole('IS_AUTHENTICATED_FULLY');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
@@ -80,7 +81,6 @@ class SecurityController extends Controller
                 $this->get('session')->set('_security_main', serialize($token));
 
                 return $this->redirect('login');
-
             } catch (UniqueConstraintViolationException $e) {
                 $error = new \Exception("Désolé, ce nom d'utilisateur est déjà utilisé...");
             } catch (\Exception $e) {

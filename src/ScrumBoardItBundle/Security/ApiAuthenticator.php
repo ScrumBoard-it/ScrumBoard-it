@@ -5,9 +5,7 @@ namespace ScrumBoardItBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use ScrumBoardItBundle\Services\ApiCaller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 abstract class ApiAuthenticator extends AbstractAuthenticator
@@ -19,6 +17,7 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
 
     /**
      * Api caller service.
+     *
      * @var ApiCaller
      */
     protected $apiCaller;
@@ -39,7 +38,7 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCredentials(Request $request)
     {
@@ -50,9 +49,10 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
                 return $login;
             }
         }
+
         return;
     }
-    
+
     /**
      * Api name.
      */

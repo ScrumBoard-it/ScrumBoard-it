@@ -14,9 +14,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
  */
 class GitHubAuthenticator extends ApiAuthenticator
 {
-
     /**
      * Api configuration.
+     *
      * @var array
      */
     private $config;
