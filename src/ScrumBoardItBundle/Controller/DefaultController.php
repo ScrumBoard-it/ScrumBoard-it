@@ -125,9 +125,13 @@ class DefaultController extends Controller
      */
     public function addFlagAction(Request $request)
     {
-        $apiService = $this->get($this->getUser()->getApi());
-        $selected = $request->request->get('issues');
-        $apiService->addFlag($request, $selected);
+        try {
+            $apiService = $this->get($this->getUser()->getApi());
+            $selected = $request->request->get('issues');
+            $apiService->addFlag($request, $selected);
+        } catch(\Exception $e) {
+            
+        }
 
         return $this->redirect('home');
     }
