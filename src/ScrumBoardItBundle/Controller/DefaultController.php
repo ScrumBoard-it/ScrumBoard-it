@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
-use ScrumBoardItBundle\Form\Type\BugtrackerType;
 use ScrumBoardItBundle\Entity\User;
 /**
  * Controller of navigation.
@@ -38,10 +37,11 @@ class DefaultController extends Controller
      */
     public function bugtrackerAction($api)
     {
-        if($api) {
+        if ($api) {
             $this->getUser()->setApi($api.'.api');
+
             return $this->redirect($this->generateUrl('hwi_oauth_service_redirect', array(
-                'service' => $api
+                'service' => $api,
             )));
         }
 

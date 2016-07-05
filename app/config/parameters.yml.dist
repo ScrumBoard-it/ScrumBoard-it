@@ -22,3 +22,7 @@ parameters:
     jira_complexity_field: customfield_11108
     jira_businessvalue_field: customfield_11109
     jira_printed_tag:   Post-it
+    jira_printed_tag:   Post-it
+    
+    client_id_github: 9c0dd4a806481bc49471
+    client_secret_github: 2b3b1b5ab10c3be52b27bbe6ca1eaa954be17433

@@ -76,8 +76,8 @@ hwi_oauth:
     resource_owners:
         github:
             type:                github
-            client_id:           a6b20a8350fc4d1e4047
-            client_secret:       596815a00845087c5b291903c090f721ae39878c
+            client_id:           "%client_id_github%"
+            client_secret:       "%client_secret_github%"
             options:
                 csrf: true
         jira:
