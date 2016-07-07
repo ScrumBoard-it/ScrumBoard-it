@@ -36,9 +36,13 @@ class GitHubAuthenticator extends ApiAuthenticator
         $user->setHash("$login:$password");
 
         $url = $this->config['host'].'user';
-        $results = $this->apiCaller->call($user, $url);
+        try {
+            $results = $this->apiCaller->call($user, $url);
+        } catch (\Exception $e) {
+            return false;
+        }
 
-        if ($results['http_code'] === 200 && !empty($results['content'])) {
+        if (!empty($results['content'])) {
             $data = $results['content'];
             $user->setEmail($data->email);
             $user->setDisplayName($data->name);

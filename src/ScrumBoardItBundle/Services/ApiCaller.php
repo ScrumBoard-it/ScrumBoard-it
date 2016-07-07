@@ -5,6 +5,7 @@ namespace ScrumBoardItBundle\Services;
 use ScrumBoardItBundle\Entity\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
+use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * Api Caller.
@@ -32,17 +33,15 @@ class ApiCaller
         try {
             $response = $client->get($url);
         } catch (\Exception $e) {
-            return;
+            throw new InvalidApiResponseException();
         }
 
         $links = Psr7\parse_header($response->getHeader('Link'));
         $content = json_decode($response->getBody());
-        $httpCode = $response->getStatusCode();
 
         return array(
             'links' => $links,
             'content' => $content,
-            'http_code' => $httpCode,
         );
     }
 

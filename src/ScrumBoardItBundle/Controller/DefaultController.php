@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Form\Type\BugtrackerType;
+use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * Controller of navigation.
@@ -61,10 +62,6 @@ class DefaultController extends Controller
         if (!empty($this->getUser()->getApi())) {
             $apiService = $this->get($this->getUser()->getApi());
 
-            $searchFilters = $apiService->getSearchFilters($request);
-            $issues = $apiService->searchIssues($searchFilters);
-            $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
-
             $user = $apiService->getDatabaseUser();
             $configurationForm = $this->createForm(ConfigurationType::class, $user);
             $configurationForm->handleRequest($request);
@@ -73,8 +70,22 @@ class DefaultController extends Controller
                 'sub_task' => $configurationForm->get('sub_task')->getData(),
                 'poc' => $configurationForm->get('poc')->getData(),
             ));
-
             $this->getDoctrine()->getManager()->flush();
+
+            try {
+                $searchFilters = $apiService->getSearchFilters($request);
+                $issues = $apiService->searchIssues($searchFilters);
+                $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
+            } catch (InvalidApiResponseException $e) {
+                $form = $this->createForm($apiService->getFormType(), new SearchEntity($request->request->get('filters')));
+
+                return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
+                    'form' => $form->createView(),
+                    'configuration_form' => $configurationForm->createView(),
+                    'issues' => null,
+                    'error' => $e,
+                ));
+            }
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),

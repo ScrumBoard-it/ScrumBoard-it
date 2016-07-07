@@ -21,9 +21,13 @@ class JiraAuthenticator extends ApiAuthenticator
         $user->setHash("$login:$password");
 
         $url = $user->getJiraUrl().'/rest/api/latest/user?username='.$login;
-        $results = $this->apiCaller->call($user, $url);
+        try {
+            $results = $this->apiCaller->call($user, $url);
+        } catch (\Exception $e) {
+            return false;
+        }
 
-        if ($results['http_code'] === 200 && !empty($results['content'])) {
+        if (!empty($results['content'])) {
             $content = $results['content'];
             $user->setEmail($content->emailAddress);
             $user->setDisplayName($content->displayName);
