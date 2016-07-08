@@ -201,3 +201,7 @@ hr.soften {
 .btn-home {
     margin-top: 15px;
 }
+
+.required:after {
+    content: " *";
+}
