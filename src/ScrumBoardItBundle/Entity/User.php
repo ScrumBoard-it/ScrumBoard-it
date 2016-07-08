@@ -2,139 +2,104 @@
 
 namespace ScrumBoardItBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * Description of user.
+ * User.
  *
- * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ * @ORM\Table(name="users")
+ * @ORM\Entity
  */
 class User implements UserInterface, EquatableInterface
 {
     /**
-     * Username.
+     * @var int
      *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
     /**
-     * Email.
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
+     * @var string
      *
+     * @ORM\Column(name="password", type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @var array
+     */
+    private $roles = array();
+
+    /**
+     * @var string
+     * @Assert\Regex(
+     *     pattern="/\S*\/$/",
+     *     match=true,
+     *     message="L'url doit finir par '/'"
+     * )
+     * @Assert\Url(
+     *    protocols = {"http"},
+     *    message = "Url invalide"
+     * )
+     * @ORM\Column(name="jira_url", type="string", length=255, nullable=true)
+     */
+    private $jiraUrl;
+
+    /**
+     * @var string
+     */
+    private $api;
+
+    /**
+     * @var string
+     */
+    private $hash;
+
+    /**
      * @var string
      */
     private $email;
 
     /**
-     * Display Name.
-     *
      * @var string
      */
     private $displayName;
 
     /**
-     * Img Url.
-     *
      * @var string
      */
     private $imgUrl;
 
     /**
-     * Connector.
+     * Get id.
      *
-     * @var string
+     * @return int
      */
-    private $connector;
-
-    /**
-     * Salt.
-     *
-     * @var string
-     */
-    private $salt;
-
-    /**
-     * Roles.
-     *
-     * @var array
-     */
-    private $roles;
-
-    /**
-     * Hash.
-     *
-     * @var string
-     */
-    private $hash;
-
-    public function __construct($username, array $roles)
+    public function getId()
     {
-        $this->username = $username;
-        $this->roles = $roles;
+        return $this->id;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * Roles setter.
-     *
-     * @param array $roles
-     *
-     * @return self;
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * Salt setter.
-     *
-     * @param string $salt
-     *
-     * @return self
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Username setter.
+     * Set username.
      *
      * @param string $username
      *
@@ -148,103 +113,159 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Email getter.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getEmail()
+    public function getUsername()
     {
-        return $this->email;
+        return $this->username;
     }
 
     /**
-     * Email setter.
+     * Set plainPassword.
      *
-     * @param string $email
+     * @param string $plainPassword
      *
      * @return self
      */
-    public function setEmail($email)
+    public function setPlainPassword($plainPassword)
     {
-        $this->email = $email;
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
     /**
-     * Display Name getter.
+     * Get plainPassword.
      *
      * @return string
      */
-    public function getDisplayName()
+    public function getPlainPassword()
     {
-        return $this->displayName;
+        return $this->plainPassword;
     }
 
     /**
-     * DisplayName setter.
+     * Set password.
      *
-     * @param string $displayName
+     * @param string $password
      *
      * @return self
      */
-    public function setDisplayName($displayName)
+    public function setPassword($password)
     {
-        $this->displayName = $displayName;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Img Url getter.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getImgUrl()
+    public function getPassword()
     {
-        return $this->imgUrl;
+        return $this->password;
     }
 
     /**
-     * Img Url setter.
+     * Set roles.
      *
-     * @param string $imgUrl
+     * @param array $roles
      *
      * @return self
      */
-    public function setImgUrl($imgUrl)
+    public function setRoles($roles)
     {
-        $this->imgUrl = $imgUrl;
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * Connector getter.
+     * Add a role.
      *
-     * @return string
+     * @param string $role
      */
-    public function getConnector()
+    public function addRole($role)
     {
-        return $this->connector;
+        array_push($this->roles, $role);
     }
 
     /**
-     * Connector setter.
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSalt()
+    {
+        return;
+    }
+
+    /**
+     * Set jiraUrl.
      *
-     * @param string $connector
+     * @param string $jiraUrl
      *
      * @return self
      */
-    public function setApi($connector)
+    public function setJiraUrl($jiraUrl)
     {
-        $this->connector = $connector;
+        $this->jiraUrl = $jiraUrl;
 
         return $this;
     }
 
     /**
-     * Hash setter.
+     * Get jiraUrl.
+     *
+     * @return string
+     */
+    public function getJiraUrl()
+    {
+        return $this->jiraUrl;
+    }
+
+    /**
+     * Get api.
+     *
+     * @return string
+     */
+    public function getApi()
+    {
+        return $this->api;
+    }
+
+    /**
+     * Set api.
+     *
+     * @param string $api
+     *
+     * @return self
+     */
+    public function setApi($api)
+    {
+        $this->api = $api;
+
+        return $this;
+    }
+
+    /**
+     * Get Hash.
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * Set hash.
      *
      * @param string $hash
      *
@@ -258,13 +279,82 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Hash getter.
+     * Get email.
      *
      * @return string
      */
-    public function getHash()
+    public function getEmail()
     {
-        return $this->hash;
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get display name.
+     *
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    /**
+     * Set display name.
+     *
+     * @param string $displayName
+     *
+     * @return self
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Get img url.
+     *
+     * @return string
+     */
+    public function getImgUrl()
+    {
+        return $this->imgUrl;
+    }
+
+    /**
+     * Set img url.
+     *
+     * @param string $imgUrl
+     *
+     * @return self
+     */
+    public function setImgUrl($imgUrl)
+    {
+        $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
     }
 
     /**
@@ -272,30 +362,10 @@ class User implements UserInterface, EquatableInterface
      */
     public function isEqualTo(UserInterface $user)
     {
-        if (!$user instanceof self) {
-            return false;
-        }
-
-        if ($this->salt !== $user->getSalt()) {
-            return false;
-        }
-
-        if ($this->username !== $user->getUsername()) {
-            return false;
-        }
-
-        if ($this->hash !== $user->getHash()) {
+        if ($user->getUsername() !== $this->username || $user->getPassword() !== $this->password) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPassword()
-    {
-        // Mot de passe encodé dans le hash
     }
 }

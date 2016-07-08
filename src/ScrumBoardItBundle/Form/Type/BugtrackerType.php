@@ -7,14 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Login type.
  *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
-class LoginType extends AbstractType
+class BugtrackerType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -37,10 +37,15 @@ class LoginType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('_remember_me', CheckboxType::class, array(
-                'label' => 'Se souvenir de moi',
-                'required' => false,
-                'property_path' => 'rememberMe',
+            ->add('api', ChoiceType::class, array(
+                'label' => 'Se connecter au bugtracker:',
+                'choices' => array(
+                    'GitHub' => 'github',
+                    'Jira' => 'jira',
+                ),
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ));
     }
 
@@ -59,6 +64,6 @@ class LoginType extends AbstractType
      */
     public function getName()
     {
-        return 'login';
+        return 'bugtracker';
     }
 }

@@ -6,15 +6,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
- * Login type.
+ * Registration type.
  *
  * @author Antony Pradel <antony.pradel@canaltp.fr>
  */
-class LoginType extends AbstractType
+class RegistrationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -23,24 +23,27 @@ class LoginType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, array(
-                'label' => false,
+                'label' => "Nom d'utilisateur:",
                 'attr' => array(
-                    'placeholder' => "Nom d'utilisateur",
                     'class' => 'form-control',
                 ),
-
+                'required' => true,
             ))
-            ->add('password', PasswordType::class, array(
-                'label' => false,
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'options' => array('attr' => array('class' => 'form-control')),
+                'required' => true,
+                'first_options' => array('label' => 'Mot de passe:'),
+                'second_options' => array('label' => 'Confirmer le mot de passe:'),
+                'property_path' => 'plainPassword',
+            ))
+            ->add('jira_url', TextType::class, array(
+                'label' => "Indiquer l'url de votre Jira:",
                 'attr' => array(
-                    'placeholder' => 'Mot de passe',
                     'class' => 'form-control',
                 ),
-            ))
-            ->add('_remember_me', CheckboxType::class, array(
-                'label' => 'Se souvenir de moi',
                 'required' => false,
-                'property_path' => 'rememberMe',
             ));
     }
 
@@ -50,7 +53,7 @@ class LoginType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Login',
+            'data_class' => 'ScrumBoardItBundle\Entity\User',
         ));
     }
 
@@ -59,6 +62,6 @@ class LoginType extends AbstractType
      */
     public function getName()
     {
-        return 'login';
+        return 'registration';
     }
 }

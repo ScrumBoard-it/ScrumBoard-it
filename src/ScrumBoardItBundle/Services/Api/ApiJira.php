@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 
 /**
- * Api Jira.
+ * Jira service.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
@@ -19,7 +19,6 @@ class ApiJira extends AbstractApi
     const LABEL_SUBTASK = 'Sous-tâche';
     const LABEL_BOGUE = 'Bogue';
     const LABEL_POC = 'POC';
-    const LABEL_POST_IT = 'Post-it';
     const MAX_RESULTS = 50;
 
     /**
@@ -56,7 +55,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setDescription($issue->fields->description);
-            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === self::LABEL_POST_IT));
+            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === $this->config['printed_tag']));
             $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
             $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
             if ($issue->fields->issuetype->name === self::LABEL_SUBTASK) {
@@ -202,7 +201,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_AGILE.'board/'.$project.'/sprint?state=active&state=future';
 
-        return $this->config['host'].$api;
+        return $this->getUser()->getJiraUrl().$api;
     }
 
     /**
@@ -216,7 +215,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_AGILE.'board?maxResults='.$maxResults;
 
-        return $this->config['host'].$api;
+        return $this->getUser()->getJiraUrl().$api;
     }
 
     /**
@@ -230,7 +229,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_API.'search?jql='.$jql;
 
-        return $this->config['host'].$api;
+        return $this->getUser()->getJiraUrl().$api;
     }
 
     /**
@@ -242,6 +241,6 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_API.'issue/';
 
-        return $this->config['host'].$api;
+        return $this->getUser()->getJiraUrl().$api;
     }
 }

@@ -9,18 +9,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class JiraAuthenticator extends AbstractTokenAuthenticator
+class JiraAuthenticator extends ApiAuthenticator
 {
     /**
      * {@inheritdoc}
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $login = $user->getUsername();
+        $login = $credentials['username'];
         $password = $credentials['password'];
         $user->setHash("$login:$password");
 
-        $url = $this->data['host'].'/rest/api/latest/user?username='.$login;
+        $url = $user->getJiraUrl().'/rest/api/latest/user?username='.$login;
         $results = $this->apiCaller->call($user, $url);
 
         if ($results['http_code'] === 200 && !empty($results['content'])) {
@@ -28,7 +28,8 @@ class JiraAuthenticator extends AbstractTokenAuthenticator
             $user->setEmail($content->emailAddress);
             $user->setDisplayName($content->displayName);
             $user->setImgUrl($content->avatarUrls->{'24x24'});
-            $user->setApi($this->getApi());
+            $user->setApi($this->getApi().'.api');
+            $user->addRole('IS_CONFIGURED');
 
             return true;
         }

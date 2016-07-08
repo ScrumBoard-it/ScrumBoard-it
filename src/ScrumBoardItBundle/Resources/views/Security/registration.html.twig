@@ -1,0 +1,42 @@
+{% extends "ScrumBoardItBundle::base.html.twig" %}
+
+{% block title %}
+    Inscription - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+			<div class="log">
+            	<a class="btn btn-danger" href="{{ path('index') }}">Retour</a>
+            </div>
+        </div>
+        <div class="page-header text-center">
+            <h1>Inscription</h1>
+        </div>
+        <div class="row form">
+            <div class="col-md-4 col-sm-offset-4">
+                    {{ form_start(form) }}
+                        {{ form_errors(form.password.first) }}
+                        {{ form_errors(form) }}
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                        {% endif %}
+                        {{ form_row(form.username) }}
+                        {{ form_label(form.password.first) }}
+                        {{ form_widget(form.password.first) }}
+                        {{ form_label(form.password.second) }}
+                        {{ form_widget(form.password.second) }}
+                        {{ form_row(form.jira_url) }}
+                        <div class="col-md-3 col-sm-offset-5">
+                            <button class="btn btn-success" type="submit">S'inscrire</button>
+                        </div>
+                        <div class="bottom">
+                            * Champs obligatoires
+                        </div>
+                    {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock%}

@@ -4,24 +4,39 @@ namespace ScrumBoardItBundle\Security\User;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ScrumBoardItBundle\Entity\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Doctrine\ORM\EntityManager;
+use ScrumBoardItBundle\Entity\User;
 
 /**
  * User Provider.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class WebServiceUserProvider implements UserProviderInterface
+class UserProvider implements UserProviderInterface
 {
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function loadUserByUsername($username)
     {
-        return new User($username, [
-            'ROLE_AUTHENTICATED',
-        ]);
+        if ($username === 'visitor') {
+            $user = new User();
+            $user->setUsername($username);
+
+            return $user->setApi('discover.api');
+        }
+
+        $user = $this->em
+            ->getRepository('ScrumBoardItBundle:User')
+            ->findOneByUsername($username);
+
+        return $user;
     }
 
     /**

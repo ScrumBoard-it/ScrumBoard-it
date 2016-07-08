@@ -5,14 +5,19 @@ namespace ScrumBoardItBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class VisitorAuthenticator extends AbstractTokenAuthenticator
+/**
+ * Visitor authenticator.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
+class VisitorAuthenticator extends AbstractAuthenticator
 {
     /**
      * {@inheritdoc}
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() == '/discover') {
+        if ($request->getPathInfo() === '/discover' && !$request->isMethod('POST')) {
             return array(
                 'username' => 'visitor',
             );
@@ -24,18 +29,14 @@ class VisitorAuthenticator extends AbstractTokenAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
+        $user->setApi('discover.api');
         $user->setDisplayName('Visiteur');
-        $user->setApi('discover');
         $user->setImgUrl('bundles/scrumboardit/images/visitor.png');
+        $user->setRoles(array(
+            'IS_AUTHENTICATED_FULLY',
+            'IS_CONFIGURED',
+        ));
 
         return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getApi()
-    {
-        return 'discover';
     }
 }

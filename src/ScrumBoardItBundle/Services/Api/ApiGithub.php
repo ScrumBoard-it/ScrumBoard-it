@@ -9,7 +9,7 @@ use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
 
 /**
- * Api Github.
+ * GitHub service.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
