@@ -89,6 +89,23 @@ abstract class AbstractApi
     }
 
     /**
+     * Initialize filters for Api calls.
+     *
+     * @param array $searchFilters
+     *
+     * @return array
+     */
+    protected function initSearchFilters($searchFilters)
+    {
+        $init = array_fill_keys(array('projects', 'sprints', 'project', 'sprint'), null);
+        if (empty($searchFilters)) {
+            $searchFilters = array();
+        }
+
+        return array_merge($init, $searchFilters);
+    }
+
+    /**
      * Return type of the form.
      *
      * @return AbstractType

@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Entity\Search\SearchEntity;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Form\Type\BugtrackerType;
-use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * Controller of navigation.
@@ -72,25 +71,15 @@ class DefaultController extends Controller
             ));
             $this->getDoctrine()->getManager()->flush();
 
-            try {
-                $searchFilters = $apiService->getSearchFilters($request);
-                $issues = $apiService->searchIssues($searchFilters);
-                $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
-            } catch (InvalidApiResponseException $e) {
-                $form = $this->createForm($apiService->getFormType(), new SearchEntity($request->request->get('filters')));
-
-                return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
-                    'form' => $form->createView(),
-                    'configuration_form' => $configurationForm->createView(),
-                    'issues' => null,
-                    'error' => $e,
-                ));
-            }
+            $apiSearch = $apiService->getSearchFilters($request);
+            $issues = $apiService->searchIssues($apiSearch['search_filters']);
+            $form = $this->createForm($apiService->getFormType(), new SearchEntity($apiSearch['search_filters']));
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
                 'configuration_form' => $configurationForm->createView(),
                 'issues' => $issues,
+                'error' => isset($apiSearch['error']) ? $apiSearch['error'] : null,
             ));
         }
 
@@ -140,6 +129,7 @@ class DefaultController extends Controller
             $selected = $request->request->get('issues');
             $apiService->addFlag($request, $selected);
         } catch (\Exception $e) {
+            $this->get('logger')->error('Error during insertion of the printed tag');
         }
 
         return $this->redirect('home');

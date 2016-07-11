@@ -5,6 +5,7 @@ namespace ScrumBoardItBundle\Services\Api;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
+use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * Jira service.
@@ -104,18 +105,23 @@ class ApiJira extends AbstractApi
      */
     public function getSearchFilters(Request $request)
     {
+        $result = array();
         $session = $request->getSession();
         if ($session->has('filters')) {
             $this->initFilters($session);
         }
-        $searchFilters = $request->get('jira_search') ?: array();
+        $searchFilters = $this->initSearchFilters($request->get('jira_search'));
 
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
         }
 
-        $searchFilters['projects'] = $this->getProjects();
-        $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        try {
+            $searchFilters['projects'] = $this->getProjects();
+            $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        } catch (InvalidApiResponseException $e) {
+            $result['error'] = $e;
+        }
 
         if (empty($searchFilters['sprint'])) {
             $searchFilters['sprint'] = isset($searchFilters['sprints']['Actif']) ? array_values($searchFilters['sprints']['Actif'])[0] : null;
@@ -125,8 +131,9 @@ class ApiJira extends AbstractApi
             'project' => $searchFilters['project'],
             'sprint' => $searchFilters['sprint'],
         ));
+        $result['search_filters'] = $searchFilters;
 
-        return $searchFilters;
+        return $result;
     }
 
     /**

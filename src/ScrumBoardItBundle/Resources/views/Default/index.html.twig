@@ -60,8 +60,8 @@
         <div class="row">
             {% if not issues|length %}
             <div class="col-md-12">
-                {% if error is defined %}
-					<div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
                 {% endif %}
                 <div class="alert alert-info" role="alert">
                     <p>Veuillez renseigner ci-dessus un projet en cours contenant des

@@ -7,6 +7,7 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
+use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * GitHub service.
@@ -166,18 +167,23 @@ class ApiGithub extends AbstractApi
      */
     public function getSearchFilters(Request $request)
     {
+        $result = array();
         $session = $request->getSession();
         if ($session->has('filters')) {
             $this->initFilters($session);
         }
-        $searchFilters = $request->get('github_search') ?: array();
+        $searchFilters = $this->initSearchFilters($request->get('github_search'));
 
         if (empty($searchFilters['project'])) {
             $searchFilters['project'] = null;
         }
 
-        $searchFilters['projects'] = $this->getProjects();
-        $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        try {
+            $searchFilters['projects'] = $this->getProjects();
+            $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
+        } catch (InvalidApiResponseException $e) {
+            $result['error'] = $e;
+        }
 
         // Initialise sprint even no sprint is selected
         if (empty($searchFilters['sprint'])) {
@@ -188,8 +194,9 @@ class ApiGithub extends AbstractApi
             'project' => $searchFilters['project'],
             'sprint' => $searchFilters['sprint'],
         ));
+        $result['search_filters'] = $searchFilters;
 
-        return $searchFilters;
+        return $result;
     }
 
     /**

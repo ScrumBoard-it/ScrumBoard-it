@@ -11,7 +11,7 @@ class InvalidApiResponseException extends \Exception
 {
     public function __construct()
     {
-        $message = sprintf('Erreur lors de la connexion au service distant.');
+        $message = sprintf('Le service distant ne répond pas ou a rencontré une erreur. Veuillez réessayer.');
         parent::__construct($message);
     }
 }
