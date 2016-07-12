@@ -7,7 +7,6 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
-use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * GitHub service.
@@ -181,7 +180,7 @@ class ApiGithub extends AbstractApi
         try {
             $searchFilters['projects'] = $this->getProjects();
             $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        } catch (InvalidApiResponseException $e) {
+        } catch (\Exception $e) {
             $result['error'] = $e;
         }
 

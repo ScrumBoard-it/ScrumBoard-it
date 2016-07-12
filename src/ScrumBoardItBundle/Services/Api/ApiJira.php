@@ -5,7 +5,6 @@ namespace ScrumBoardItBundle\Services\Api;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
-use ScrumBoardItBundle\Exception\InvalidApiResponseException;
 
 /**
  * Jira service.
@@ -119,7 +118,7 @@ class ApiJira extends AbstractApi
         try {
             $searchFilters['projects'] = $this->getProjects();
             $searchFilters['sprints'] = $this->getSprints($searchFilters['project']);
-        } catch (InvalidApiResponseException $e) {
+        } catch (\Exception $e) {
             $result['error'] = $e;
         }
 

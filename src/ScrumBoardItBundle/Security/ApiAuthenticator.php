@@ -50,6 +50,7 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
     {
         parent::onAuthenticationFailure($request, $exception);
 
+        // Re-use the previous valid token to not disconnect the user
         $token = new UsernamePasswordToken($this->user, null, 'main', $this->user->getRoles());
         $this->token->setToken($token);
         $request->getSession()->set('_security_main', serialize($token));

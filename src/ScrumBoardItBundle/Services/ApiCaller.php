@@ -6,6 +6,9 @@ use ScrumBoardItBundle\Entity\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use ScrumBoardItBundle\Exception\InvalidApiResponseException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\BadResponseException;
+use ScrumBoardItBundle\Exception\BadConnectionException;
 
 /**
  * Api Caller.
@@ -32,8 +35,10 @@ class ApiCaller
         ]);
         try {
             $response = $client->get($url);
-        } catch (\Exception $e) {
+        } catch (BadResponseException $e) {
             throw new InvalidApiResponseException();
+        } catch (ConnectException $e) {
+            throw new BadConnectionException();
         }
 
         $links = Psr7\parse_header($response->getHeader('Link'));

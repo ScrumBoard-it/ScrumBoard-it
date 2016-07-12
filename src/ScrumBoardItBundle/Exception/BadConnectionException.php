@@ -7,11 +7,11 @@ namespace ScrumBoardItBundle\Exception;
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class InvalidApiResponseException extends \Exception
+class BadConnectionException extends \Exception
 {
     public function __construct()
     {
-        $message = sprintf('Le service distant a rencontré une erreur. Veuillez réessayer.');
+        $message = sprintf('Le service distant ne répond pas. Veuillez réessayer plus tard.');
         parent::__construct($message);
     }
 }
