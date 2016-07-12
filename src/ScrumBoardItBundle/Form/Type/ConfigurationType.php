@@ -22,6 +22,7 @@ class ConfigurationType extends AbstractType
                     'default' => 0,
                     'custom1' => 1,
                 ),
+                'property_path' => 'configuration[user_story]',
             ))
             ->add('sub_task', ChoiceType::class, array(
                 'expanded' => true,
@@ -30,6 +31,7 @@ class ConfigurationType extends AbstractType
                     'default' => 0,
                     'custom1' => 1,
                 ),
+                'property_path' => 'configuration[sub_task]',
             ))
             ->add('poc', ChoiceType::class, array(
                 'expanded' => true,
@@ -38,6 +40,7 @@ class ConfigurationType extends AbstractType
                     'default' => 0,
                     'custom1' => 1,
                 ),
+                'property_path' => 'configuration[poc]',
             ));
     }
 
@@ -47,7 +50,7 @@ class ConfigurationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Configuration',
+            'data_class' => 'ScrumBoardItBundle\Entity\User',
         ));
     }
 

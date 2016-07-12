@@ -64,6 +64,13 @@ class User implements UserInterface, EquatableInterface
     private $jiraUrl;
 
     /**
+     * @var number
+     *
+     * @ORM\Column(name="configuration", type="array", nullable=true)
+     */
+    private $configuration;
+
+    /**
      * @var string
      */
     private $api;
@@ -228,6 +235,38 @@ class User implements UserInterface, EquatableInterface
     public function getJiraUrl()
     {
         return $this->jiraUrl;
+    }
+
+    /**
+     * Set configuration.
+     *
+     * @param array $configuration
+     *
+     * @return self
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+
+        return $this;
+    }
+
+    /**
+     * Get configuration.
+     *
+     * @return array
+     */
+    public function getConfiguration()
+    {
+        if (empty($this->configuration)) {
+            $this->configuration = array(
+                'user_story' => 0,
+                'sub_task' => 0,
+                'poc' => 0,
+            );
+        }
+
+        return $this->configuration;
     }
 
     /**

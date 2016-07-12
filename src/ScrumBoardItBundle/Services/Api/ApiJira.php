@@ -58,13 +58,19 @@ class ApiJira extends AbstractApi
             $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === $this->config['printed_tag']));
             $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
             $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
+
             if ($issue->fields->issuetype->name === self::LABEL_SUBTASK) {
                 $task->setType('subtask');
             }
+
             if (property_exists($issue->fields, $this->config['complexity_field'])) {
                 $task->setComplexity($issue->fields->{$this->config['complexity_field']});
             }
-            $task->setTimeBox(round($issue->fields->aggregatetimeoriginalestimate / 3600, 0).' h');
+
+            if ($issue->fields->aggregatetimeoriginalestimate > 0) {
+                $task->setTimeBox(round($issue->fields->aggregatetimeoriginalestimate / 3600, 0).' h');
+            }
+
             $issues[$issue->id] = $task;
         }
 
