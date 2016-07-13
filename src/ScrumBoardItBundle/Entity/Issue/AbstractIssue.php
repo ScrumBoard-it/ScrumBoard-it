@@ -10,100 +10,79 @@ namespace ScrumBoardItBundle\Entity\Issue;
 class AbstractIssue implements IssueInterface, \JsonSerializable
 {
     /**
-     * Type.
-     *
      * @var string
      */
     private $type;
 
     /**
-     * Link.
-     *
      * @var string
      */
     private $link;
 
     /**
-     * Printed.
-     *
      * @var bool
      */
     private $printed;
 
     /**
-     * User Story.
-     *
      * @var bool
      */
     private $userStory;
 
     /**
-     * Proof of Concept.
-     *
      * @var bool
      */
     private $proofOfConcept;
 
     /**
-     * Project.
-     *
      * @var string
      */
     private $project;
 
     /**
-     * ID.
-     *
      * @var number
      */
     private $id;
 
     /**
-     * Number.
-     *
      * @var number
      */
     private $number;
 
     /**
-     * Title.
-     *
      * @var string
      */
     private $title;
 
     /**
-     * Complexity.
-     *
      * @var number
      */
     private $complexity;
 
     /**
-     * Business Value.
-     *
      * @var number
      */
     private $businessValue;
 
     /**
-     * Description.
-     *
      * @var string
      */
     private $description;
 
     /**
-     * Time Box.
-     *
      * @var string
      */
     private $timeBox;
 
     /**
+     * @var number
+     */
+    private $returnOnInvestment;
+
+    /**
      * Type getter.
      *
-     * @return Type
+     * @return string
      */
     public function getType()
     {
@@ -427,6 +406,30 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setTimeBox($timeBox)
     {
         $this->timeBox = $timeBox;
+
+        return $this;
+    }
+
+    /**
+     * Return On Investment getter.
+     *
+     * @return number
+     */
+    public function getReturnOnInvestment()
+    {
+        return $this->returnOnInvestment;
+    }
+
+    /**
+     * Return On Investment setter.
+     *
+     * @return self
+     */
+    public function setReturnOnInvestment()
+    {
+        if (!empty($this->businessValue) && !empty($this->complexity) && $this->businessValue > 0 && $this->complexity > 0) {
+            $this->returnOnInvestment = round($this->businessValue / $this->complexity, 2);
+        }
 
         return $this;
     }

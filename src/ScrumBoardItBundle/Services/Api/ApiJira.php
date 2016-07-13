@@ -75,6 +75,7 @@ class ApiJira extends AbstractApi
                 $task->setBusinessValue($issue->fields->{$this->config['businessvalue_field']});
             }
 
+            $task->setReturnOnInvestment();
             $issues[$issue->id] = $task;
         }
 

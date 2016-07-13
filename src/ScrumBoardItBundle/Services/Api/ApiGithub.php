@@ -140,6 +140,7 @@ class ApiGithub extends AbstractApi
         $task->setProject(explode('/', $project)[1]);
         $task->setTitle($issue->title);
         $task->setDescription($body);
+        $task->setReturnOnInvestment();
 
         return $task;
     }
