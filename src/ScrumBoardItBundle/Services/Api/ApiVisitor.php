@@ -291,7 +291,9 @@ class ApiVisitor extends AbstractApi
             'sprint' => $searchFilters['sprint'],
         ));
 
-        return $searchFilters;
+        return array(
+            'search_filters' => $searchFilters,
+        );
     }
 
     /**

@@ -61,10 +61,6 @@ class DefaultController extends Controller
         if (!empty($this->getUser()->getApi())) {
             $apiService = $this->get($this->getUser()->getApi());
 
-            $searchFilters = $apiService->getSearchFilters($request);
-            $issues = $apiService->searchIssues($searchFilters);
-            $form = $this->createForm($apiService->getFormType(), new SearchEntity($searchFilters));
-
             $user = $apiService->getDatabaseUser();
             $configurationForm = $this->createForm(ConfigurationType::class, $user);
             $configurationForm->handleRequest($request);
@@ -73,13 +69,17 @@ class DefaultController extends Controller
                 'sub_task' => $configurationForm->get('sub_task')->getData(),
                 'poc' => $configurationForm->get('poc')->getData(),
             ));
-
             $this->getDoctrine()->getManager()->flush();
+
+            $apiSearch = $apiService->getSearchFilters($request);
+            $issues = $apiService->searchIssues($apiSearch['search_filters']);
+            $form = $this->createForm($apiService->getFormType(), new SearchEntity($apiSearch['search_filters']));
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
                 'configuration_form' => $configurationForm->createView(),
                 'issues' => $issues,
+                'error' => isset($apiSearch['error']) ? $apiSearch['error'] : null,
             ));
         }
 
@@ -129,6 +129,7 @@ class DefaultController extends Controller
             $selected = $request->request->get('issues');
             $apiService->addFlag($request, $selected);
         } catch (\Exception $e) {
+            $this->get('logger')->error('Error during insertion of the printed tag');
         }
 
         return $this->redirect('home');
