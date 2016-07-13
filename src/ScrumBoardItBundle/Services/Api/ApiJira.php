@@ -71,6 +71,10 @@ class ApiJira extends AbstractApi
                 $task->setTimeBox(round($issue->fields->aggregatetimeoriginalestimate / 3600, 0).' h');
             }
 
+            if (property_exists($issue->fields, $this->config['businessvalue_field'])) {
+                $task->setBusinessValue($issue->fields->{$this->config['businessvalue_field']});
+            }
+
             $issues[$issue->id] = $task;
         }
 
