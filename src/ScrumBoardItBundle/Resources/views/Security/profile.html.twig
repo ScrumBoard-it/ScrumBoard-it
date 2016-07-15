@@ -1,0 +1,30 @@
+{% extends "ScrumBoardItBundle::base.html.twig" %}
+
+{% block title %}
+    Editer votre compte - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="header">
+            <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
+            <div class="log">
+            	<a class="btn btn-danger" href="{{ path('home') }}">Retour</a>
+            </div>
+        </div>
+        <div class="page-header text-center">
+            <h1>Editer votre compte ScrumBoard-it</h1>
+        </div>
+        <div class="col-md-2">
+      		<h2>Menu</h2>
+            <ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="">Général</a></li>
+            	<li><a href="#">Jira</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+        	<div id="contenu" class="well">
+        	</div>
+        </div>
+    </div>
+{% endblock%}

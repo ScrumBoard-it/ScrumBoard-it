@@ -12,7 +12,7 @@ use ScrumBoardItBundle\Entity\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use ScrumBoardItBundle\Form\Type\EditProfileType;
+use ScrumBoardItBundle\Form\Type\ProfileType;
 
 /**
  * Controller of security.
@@ -111,13 +111,13 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/edit_profile", name="edit_profile")
+     * @Route("/profile", name="profile")
      * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
-    public function editProfileAction(Request $request)
+    public function profileAction(Request $request)
     {
         $userForm = new User();
-        $form = $this->createForm(EditProfileType::class, $userForm);
+        $form = $this->createForm(ProfileType::class, $userForm);
         $form->handleRequest($request);
         $error = null;
 
@@ -136,7 +136,7 @@ class SecurityController extends Controller
             }
         }
 
-        return $this->render('ScrumBoardItBundle:Security:editProfile.html.twig', array(
+        return $this->render('ScrumBoardItBundle:Security:profile.html.twig', array(
             'form' => $form->createView(),
             'error' => $error,
         ));
