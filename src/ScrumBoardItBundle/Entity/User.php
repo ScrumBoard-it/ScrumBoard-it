@@ -64,7 +64,7 @@ class User implements UserInterface, EquatableInterface
     private $jiraUrl;
 
     /**
-     * @var number
+     * @var int
      *
      * @ORM\Column(name="configuration", type="array", nullable=true)
      */

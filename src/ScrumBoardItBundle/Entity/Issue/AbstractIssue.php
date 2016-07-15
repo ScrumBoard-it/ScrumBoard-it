@@ -40,12 +40,12 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     private $project;
 
     /**
-     * @var number
+     * @var int
      */
     private $id;
 
     /**
-     * @var number
+     * @var int
      */
     private $number;
 
@@ -55,12 +55,12 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     private $title;
 
     /**
-     * @var number
+     * @var int
      */
     private $complexity;
 
     /**
-     * @var number
+     * @var int
      */
     private $businessValue;
 
@@ -75,7 +75,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     private $timeBox;
 
     /**
-     * @var number
+     * @var int
      */
     private $returnOnInvestment;
 
@@ -238,7 +238,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Number getter.
      *
-     * @return number
+     * @return int
      */
     public function getNumber()
     {
@@ -248,7 +248,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Number setter.
      *
-     * @param number $number
+     * @param int $number
      *
      * @return self
      */
@@ -318,7 +318,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Business Value getter.
      *
-     * @return number
+     * @return int
      */
     public function getBusinessValue()
     {
@@ -328,7 +328,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Business Value Setter.
      *
-     * @param number $value
+     * @param int $value
      *
      * @return self
      */
@@ -413,7 +413,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Return On Investment getter.
      *
-     * @return number
+     * @return int
      */
     public function getReturnOnInvestment()
     {
@@ -427,8 +427,8 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
      */
     public function setReturnOnInvestment()
     {
-        if (!empty($this->businessValue) && !empty($this->complexity) && $this->businessValue > 0 && $this->complexity > 0) {
-            $this->returnOnInvestment = round($this->businessValue / $this->complexity, 2);
+        if (is_numeric($this->complexity) && is_numeric($this->businessValue) && $this->complexity > 0 && $this->businessValue > $this->complexity) {
+            $this->returnOnInvestment = round($this->businessValue / $this->complexity, 0);
         }
 
         return $this;

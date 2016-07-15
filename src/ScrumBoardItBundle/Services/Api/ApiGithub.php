@@ -128,7 +128,7 @@ class ApiGithub extends AbstractApi
                     break;
                 // Business value field
                 case 'BV':
-                    $task->setBusinessValue($values[1]);
+                    $task->setBusinessValue(trim($values[1]));
                     break;
                 default:
                     break;

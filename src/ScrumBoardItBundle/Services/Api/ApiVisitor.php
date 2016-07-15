@@ -23,7 +23,7 @@ class ApiVisitor extends AbstractApi
     /**
      * Issue id incrementor.
      *
-     * @var number
+     * @var int
      */
     private $currentIssueIndex = 0;
 
@@ -63,7 +63,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(1, 'task', 'Appli SNDF', "Création d'itinéraire",
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir rechercher l'itinéraire le plus rapide AFIN DE pouvoir me diriger de façon optimale.",
-                        5, null, 150, true, false),
+                        '5 h', null, 150, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -75,7 +75,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(3, 'task', 'Appli SNDF', 'Recherche de gare',
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir obtenir des informations actualisée sur une gare AFIN DE pouvoir choisir judicieusement mes correspondances.",
-                        5, null, 40, true, false),
+                        '5 h', null, 40, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -95,7 +95,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(2, 'task', 'Site Thabès', 'Sécurité',
                         "EN TANT QU'administrateur du site, JE SOUHAITERAIS une répartition des droits de lecture et d'écriture sur les données du site AFIN DE protéger ces données.",
-                        13, null, 20, true, false),
+                        '13 h', null, 20, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -119,7 +119,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(7, 'task', 'Site Thabès', "Logo de l'entreprise",
                         "EN TANT QUE directeur de l'entreprise, J'AIMERAIS que le logo de mon entreprise soit visible dans l'en-tête du site AFIN DE rendre le site plus identifiable.",
-                        3, null, 60, true, false),
+                        '3 h', null, 60, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -131,25 +131,10 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(8, 'task', 'Site Thabès', 'Formulaire de contact',
                         "EN TANT QU'utilisateur, J'AIMERAIS pouvoir envoyer un mail par le site à l'entreprise Thabès AFIN DE pouvoir contacter l'entreprise Thabès simplement",
-                        8, null, 50, true, false),
+                        '8 h', null, 50, true, false),
                     'sprint' => 2,
                 ),
             ),
-            /* Permit to print template example when uncommented
-             3 => array(
-                array(
-                    'issue' => $this->createIssue('N°','task', 'PROJECT', 'TITLE', 'DESCRIPTION', 'CT', 'TB', 'BV', true, false),
-                    'sprint' => 1
-                ),
-                array(
-                    'issue' => $this->createIssue('N°','subtask', 'PROJECT', 'TITLE', 'DESCRIPTION', 'CT', 'TB', null, false, false),
-                    'sprint' => 1,
-                ),
-                array(
-                    'issue' => $this->createIssue('N°','task', 'PROJECT', 'TITLE', 'DESCRIPTION', 'CT', 'TB', null, false, true),
-                    'sprint' => 1,
-                ),
-            ),*/
         );
     }
 
@@ -159,8 +144,9 @@ class ApiVisitor extends AbstractApi
      * @param string $type
      * @param string $title
      * @param string $description
-     * @param number $complexity
-     * @param number $timeBox
+     * @param int    $complexity
+     * @param int    $timeBox
+     * @param int    $businnessValue
      * @param bool   $isUS
      * @param bool   $isProofOfConcept
      *
@@ -202,7 +188,6 @@ class ApiVisitor extends AbstractApi
         return array(
             'Appli SNDF' => 1,
             'Site Thabès' => 2,
-            // 'Tickets test' => 3,
         );
     }
 
@@ -226,11 +211,6 @@ class ApiVisitor extends AbstractApi
                         'Sprint 2' => 2,
                     ),
                 ),
-                /*3 => array(
-                    'Actif' => array(
-                        'Sprint 1' => 1,
-                    ),
-                ),*/
             );
 
             return $sprints[$project];
