@@ -12,7 +12,6 @@ use ScrumBoardItBundle\Entity\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use ScrumBoardItBundle\Form\Type\ProfileType;
 
 /**
  * Controller of security.
@@ -108,37 +107,5 @@ class SecurityController extends Controller
     public function visitorAction()
     {
         // No action, Guard authenticates the user as a visitor and redirects to the home page
-    }
-
-    /**
-     * @Route("/profile", name="profile")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
-     */
-    public function profileAction(Request $request)
-    {
-        $userForm = new User();
-        $form = $this->createForm(ProfileType::class, $userForm);
-        $form->handleRequest($request);
-        $error = null;
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userToken = $this->getUser();
-            try {
-                $em = $this->getDoctrine()->getManager();
-                $user = $em->getRepository('ScrumBoardItBundle:User')->find($userToken->getId());
-                $user->setJiraUrl($userForm->getJiraUrl());
-                $userToken->setJiraUrl($userForm->getJiraUrl());
-                $em->flush();
-
-                return $this->redirect('home');
-            } catch (\Exception $e) {
-                $error = new \Exception("Une erreur s'est produite, veuillez réesayer.");
-            }
-        }
-
-        return $this->render('ScrumBoardItBundle:Security:profile.html.twig', array(
-            'form' => $form->createView(),
-            'error' => $error,
-        ));
     }
 }

@@ -3,6 +3,10 @@ services:
        class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
+   profile_processor:
+     class: ScrumBoardItBundle\Services\ProfileService
+     arguments:
+           - '@form.factory'
    main_authenticator:
        class: ScrumBoardItBundle\Security\MainAuthenticator
        arguments:

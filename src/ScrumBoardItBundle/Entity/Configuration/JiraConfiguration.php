@@ -5,7 +5,7 @@ namespace ScrumBoardItBundle\Entity\Configuration;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JiraConfiguration
+ * JiraConfiguration.
  *
  * @ORM\Table(name="configuration\jira_configuration")
  */
@@ -55,9 +55,8 @@ class JiraConfiguration
      */
     private $businnessvalueField;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -67,9 +66,9 @@ class JiraConfiguration
     }
 
     /**
-     * Set userId
+     * Set userId.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return JiraConfiguration
      */
@@ -81,7 +80,7 @@ class JiraConfiguration
     }
 
     /**
-     * Get userId
+     * Get userId.
      *
      * @return int
      */
@@ -91,7 +90,7 @@ class JiraConfiguration
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -105,7 +104,7 @@ class JiraConfiguration
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -115,7 +114,7 @@ class JiraConfiguration
     }
 
     /**
-     * Set complexityField
+     * Set complexityField.
      *
      * @param string $complexityField
      *
@@ -129,7 +128,7 @@ class JiraConfiguration
     }
 
     /**
-     * Get complexityField
+     * Get complexityField.
      *
      * @return string
      */
@@ -139,7 +138,7 @@ class JiraConfiguration
     }
 
     /**
-     * Set printedTag
+     * Set printedTag.
      *
      * @param string $printedTag
      *
@@ -153,7 +152,7 @@ class JiraConfiguration
     }
 
     /**
-     * Get printedTag
+     * Get printedTag.
      *
      * @return string
      */
@@ -163,7 +162,7 @@ class JiraConfiguration
     }
 
     /**
-     * Set businnessvalueField
+     * Set businnessvalueField.
      *
      * @param string $businnessvalueField
      *
@@ -177,7 +176,7 @@ class JiraConfiguration
     }
 
     /**
-     * Get businnessvalueField
+     * Get businnessvalueField.
      *
      * @return string
      */
