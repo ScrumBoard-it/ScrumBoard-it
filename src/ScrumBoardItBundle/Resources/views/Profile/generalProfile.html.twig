@@ -2,10 +2,9 @@
 <div class="row form">
 	<div class="col-md-4">
         {{ form_start(form) }}
-        	{{ form_widget(form.old_password) }}
+            {{ form_widget(form.old_password) }}
             {{ form_widget(form.new_password.first) }}
             {{ form_widget(form.new_password.second) }}
         {{ form_rest(form) }}
-        {{ form_end(form) }}
     </div>
 </div>

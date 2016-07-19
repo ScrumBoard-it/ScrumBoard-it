@@ -27,6 +27,6 @@ security:
             id: user_provider
     
     encoders:
-        ScrumBoardItBundle\Entity\User: bcrypt
+        ScrumBoardItBundle\Entity\Mapping\User: bcrypt
     
     access_denied_url: /home

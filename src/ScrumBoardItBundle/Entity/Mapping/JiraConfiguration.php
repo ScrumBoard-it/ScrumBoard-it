@@ -1,13 +1,14 @@
 <?php
 
-namespace ScrumBoardItBundle\Entity\Configuration;
+namespace ScrumBoardItBundle\Entity\Mapping;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * JiraConfiguration.
  *
- * @ORM\Table(name="configuration\jira_configuration")
+ * @ORM\Table(name="jira_configuration")
+ * @ORM\Entity
  */
 class JiraConfiguration
 {
@@ -30,7 +31,7 @@ class JiraConfiguration
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -44,9 +45,9 @@ class JiraConfiguration
     /**
      * @var string
      *
-     * @ORM\Column(name="printed_tag", type="string", length=255)
+     * @ORM\Column(name="printed_tag", type="string", length=255, nullable=true)
      */
-    private $printedTag;
+    private $printedTag = 'Post-it';
 
     /**
      * @var string

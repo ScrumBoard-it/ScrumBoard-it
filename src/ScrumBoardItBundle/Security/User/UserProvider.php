@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityManager;
-use ScrumBoardItBundle\Entity\User;
+use ScrumBoardItBundle\Entity\Mapping\User;
 
 /**
  * User Provider.
@@ -33,7 +33,7 @@ class UserProvider implements UserProviderInterface
         }
 
         $user = $this->em
-            ->getRepository('ScrumBoardItBundle:User')
+            ->getRepository('ScrumBoardItBundle:Mapping\User')
             ->findOneByUsername($username);
 
         return $user;
@@ -56,6 +56,6 @@ class UserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'ScrumBoardBundle\Entity\User';
+        return $class === 'ScrumBoardBundle\Entity\Mapping\User';
     }
 }

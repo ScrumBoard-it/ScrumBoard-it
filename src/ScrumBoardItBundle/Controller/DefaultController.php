@@ -41,6 +41,13 @@ class DefaultController extends Controller
         $form = $this->createForm(BugtrackerType::class);
         $form->handleRequest($request);
 
+        $em = $this->getDoctrine()->getManager();
+        $options = array(
+            'jira' => $em->getRepository('ScrumBoardItBundle:Mapping\JiraConfiguration')
+                ->findOneby(array('userId' => $this->getUser()->getId())),
+        );
+
+        dump($options);
         $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
@@ -48,6 +55,7 @@ class DefaultController extends Controller
 
         return $this->render('ScrumBoardItBundle:Security:bugtracker.html.twig', array(
             'form' => $form->createView(),
+            'options' => $options,
             'error' => $error,
         ));
     }

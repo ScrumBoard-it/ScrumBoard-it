@@ -59,6 +59,6 @@ class GeneralProfileType extends AbstractType
      */
     public function getName()
     {
-        return 'general';
+        return 'general_profile';
     }
 }

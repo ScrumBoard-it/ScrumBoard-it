@@ -18,16 +18,23 @@
         <div class="col-md-2">
       		<h2>Menu</h2>
             <ul class="nav nav-pills nav-stacked">
-				<li class="active"><a href="{{ path('profile') }}?page=general">Général</a></li>
-            	<li><a href="{{ path('profile') }}?page=jira">Jira</a></li>
+				<li class=""><a href="{{ path('profile') }}?page=general">Général</a></li>
+            	<li class=""><a href="{{ path('profile') }}?page=jira">Jira</a></li>
             </ul>
         </div>
         <div class="col-md-10">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
+            {% endif %}
+            {% if info %}
+                <div class="alert alert-info">{{ info }}</div>
+            {% endif %}
         	<div id="" class="container well">
         		{{ include('ScrumBoardItBundle:Profile:' ~ include ~ 'Profile.html.twig', { 'form': form }) }}
                 <div class="col-md-4 col-sm-offset-5">
                     <button class="btn btn-success" type="submit">Enregistrer les modifications</button>
                 </div>
+                {{ form_end(form) }}
         	</div>
         </div>
     </div>

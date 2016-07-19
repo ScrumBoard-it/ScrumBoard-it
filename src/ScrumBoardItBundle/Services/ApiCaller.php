@@ -2,7 +2,7 @@
 
 namespace ScrumBoardItBundle\Services;
 
-use ScrumBoardItBundle\Entity\User;
+use ScrumBoardItBundle\Entity\Mapping\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use ScrumBoardItBundle\Exception\InvalidApiResponseException;

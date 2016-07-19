@@ -37,13 +37,6 @@ class RegistrationType extends AbstractType
                 'first_options' => array('label' => 'Mot de passe:'),
                 'second_options' => array('label' => 'Confirmer le mot de passe:'),
                 'property_path' => 'plainPassword',
-            ))
-            ->add('jira_url', TextType::class, array(
-                'label' => "Indiquer l'url de votre Jira:",
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-                'required' => false,
             ));
     }
 
@@ -53,7 +46,7 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\User',
+            'data_class' => 'ScrumBoardItBundle\Entity\Mapping\User',
         ));
     }
 

@@ -8,10 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Form\Type\LoginType;
 use ScrumBoardItBundle\Form\Type\RegistrationType;
-use ScrumBoardItBundle\Entity\User;
+use ScrumBoardItBundle\Entity\Mapping\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 
 /**
  * Controller of security.
@@ -73,6 +74,14 @@ class SecurityController extends Controller
                 $user->addRole('IS_AUTHENTICATED_FULLY');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
+                $em->flush();
+                $userId = $em->getRepository('ScrumBoardItBundle:Mapping\User')
+                    ->findOneByUsername($user->getUsername())
+                    ->getId();
+
+                $jiraConfiguration = new JiraConfiguration();
+                $jiraConfiguration->setUserId($userId);
+                $em->persist($jiraConfiguration);
                 $em->flush();
 
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
