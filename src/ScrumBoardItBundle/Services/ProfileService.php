@@ -149,4 +149,19 @@ class ProfileService
         $this->em->persist($jiraConfiguration);
         $this->em->flush();
     }
+
+    public function getIncludeTemplate($page)
+    {
+        switch ($page) {
+            case 'jira':
+                $include = 'jira';
+                break;
+            case 'general':
+            default:
+                $include = 'general';
+                break;
+        }
+
+        return 'ScrumBoardItBundle:Profile:'.$include.'Profile.html.twig';
+    }
 }

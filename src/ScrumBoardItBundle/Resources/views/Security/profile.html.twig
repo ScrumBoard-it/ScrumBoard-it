@@ -30,10 +30,12 @@
                 <div class="alert alert-info">{{ info }}</div>
             {% endif %}
         	<div id="" class="container well">
-        		{{ include('ScrumBoardItBundle:Profile:' ~ include ~ 'Profile.html.twig', { 'form': form }) }}
-                <div class="col-md-4 col-sm-offset-5">
-                    <button class="btn btn-success" type="submit">Enregistrer les modifications</button>
-                </div>
+        		{{ form_start(form) }}
+                    {{ form_errors(form) }}
+            		{{ include(include, { 'form': form }) }}
+                    <div class="col-md-4 col-sm-offset-5">
+                        <button class="btn btn-success" type="submit">Enregistrer les modifications</button>
+                    </div>
                 {{ form_end(form) }}
         	</div>
         </div>

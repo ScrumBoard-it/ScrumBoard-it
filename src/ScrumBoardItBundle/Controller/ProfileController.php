@@ -18,6 +18,9 @@ class ProfileController extends Controller
      */
     public function profileAction(Request $request)
     {
+        if($this->getUser()->getUsername() === 'visitor') {
+            return $this->redirect('home');
+        }
         $page = $request->get('page', 'general');
         $profileService = $this->get('profile.service');
         $form = $profileService->getForm($request, $this->getUser(), $page);
@@ -34,9 +37,9 @@ class ProfileController extends Controller
 
         return $this->render('ScrumBoardItBundle:Security:profile.html.twig', array(
             'form' => $form->createView(),
-            'include' => $page,
             'info' => $info,
             'error' => $error,
+            'include' => $profileService->getIncludeTemplate($page),
         ));
     }
 }

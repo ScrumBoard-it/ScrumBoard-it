@@ -56,7 +56,7 @@ class JiraConfiguration
     /**
      * @var string
      *
-     * @ORM\Column(name="printed_tag", type="string", length=255, nullable=true)
+     * @ORM\Column(name="printed_tag", type="string", length=255)
      */
     private $printedTag = 'Post-it';
 
