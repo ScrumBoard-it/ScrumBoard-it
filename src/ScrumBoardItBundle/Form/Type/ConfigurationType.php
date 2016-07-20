@@ -21,6 +21,7 @@ class ConfigurationType extends AbstractType
                 'choices' => array(
                     'default' => 0,
                     'custom1' => 1,
+                    'custom2' => 2,
                 ),
                 'property_path' => 'configuration[user_story]',
             ))

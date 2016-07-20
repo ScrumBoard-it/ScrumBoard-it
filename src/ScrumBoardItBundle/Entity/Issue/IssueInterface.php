@@ -21,23 +21,23 @@ interface IssueInterface
      *
      * @param string $project
      *
-     * @return string
+     * @return self
      */
     public function setProject($project);
 
     /**
      * ID getter.
      *
-     * @return number
+     * @return int
      */
     public function getId();
 
     /**
      * ID setter.
      *
-     * @param number $id
+     * @param int $id
      *
-     * @return number
+     * @return self
      */
     public function setId($id);
 
@@ -53,23 +53,23 @@ interface IssueInterface
      *
      * @param string $title
      *
-     * @return string
+     * @return self
      */
     public function setTitle($title);
 
     /**
      * Complexity getter.
      *
-     * @return number
+     * @return int
      */
     public function getComplexity();
 
     /**
      * Complexity setter.
      *
-     * @param number $complexity
+     * @param int $complexity
      *
-     * @return number
+     * @return self
      */
     public function setComplexity($complexity);
 }

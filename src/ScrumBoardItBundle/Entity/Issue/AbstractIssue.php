@@ -10,100 +10,79 @@ namespace ScrumBoardItBundle\Entity\Issue;
 class AbstractIssue implements IssueInterface, \JsonSerializable
 {
     /**
-     * Type.
-     *
      * @var string
      */
     private $type;
 
     /**
-     * Link.
-     *
      * @var string
      */
     private $link;
 
     /**
-     * Printed.
-     *
      * @var bool
      */
     private $printed;
 
     /**
-     * User Story.
-     *
      * @var bool
      */
     private $userStory;
 
     /**
-     * Proof of Concept.
-     *
      * @var bool
      */
     private $proofOfConcept;
 
     /**
-     * Project.
-     *
      * @var string
      */
     private $project;
 
     /**
-     * ID.
-     *
-     * @var number
+     * @var int
      */
     private $id;
 
     /**
-     * Number.
-     *
-     * @var number
+     * @var int
      */
     private $number;
 
     /**
-     * Title.
-     *
      * @var string
      */
     private $title;
 
     /**
-     * Complexity.
-     *
-     * @var number
+     * @var int
      */
     private $complexity;
 
     /**
-     * Business Value.
-     *
-     * @var number
+     * @var int
      */
     private $businessValue;
 
     /**
-     * Description.
-     *
      * @var string
      */
     private $description;
 
     /**
-     * Time Box.
-     *
      * @var string
      */
     private $timeBox;
 
     /**
+     * @var int
+     */
+    private $returnOnInvestment;
+
+    /**
      * Type getter.
      *
-     * @return Type
+     * @return string
      */
     public function getType()
     {
@@ -259,7 +238,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Number getter.
      *
-     * @return number
+     * @return int
      */
     public function getNumber()
     {
@@ -269,7 +248,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Number setter.
      *
-     * @param number $number
+     * @param int $number
      *
      * @return self
      */
@@ -339,7 +318,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Business Value getter.
      *
-     * @return number
+     * @return int
      */
     public function getBusinessValue()
     {
@@ -349,7 +328,7 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     /**
      * Business Value Setter.
      *
-     * @param number $value
+     * @param int $value
      *
      * @return self
      */
@@ -427,6 +406,30 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     public function setTimeBox($timeBox)
     {
         $this->timeBox = $timeBox;
+
+        return $this;
+    }
+
+    /**
+     * Return On Investment getter.
+     *
+     * @return int
+     */
+    public function getReturnOnInvestment()
+    {
+        return $this->returnOnInvestment;
+    }
+
+    /**
+     * Return On Investment setter.
+     *
+     * @return self
+     */
+    public function setReturnOnInvestment()
+    {
+        if (is_numeric($this->complexity) && is_numeric($this->businessValue) && $this->complexity > 0 && $this->businessValue > $this->complexity) {
+            $this->returnOnInvestment = round($this->businessValue / $this->complexity, 0);
+        }
 
         return $this;
     }

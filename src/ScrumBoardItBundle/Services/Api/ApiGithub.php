@@ -126,6 +126,10 @@ class ApiGithub extends AbstractApi
                 case 'TB':
                     $task->setTimeBox(trim($values[1]));
                     break;
+                // Business value field
+                case 'BV':
+                    $task->setBusinessValue(trim($values[1]));
+                    break;
                 default:
                     break;
             }
@@ -136,6 +140,7 @@ class ApiGithub extends AbstractApi
         $task->setProject(explode('/', $project)[1]);
         $task->setTitle($issue->title);
         $task->setDescription($body);
+        $task->setReturnOnInvestment();
 
         return $task;
     }

@@ -23,7 +23,7 @@ class ApiVisitor extends AbstractApi
     /**
      * Issue id incrementor.
      *
-     * @var number
+     * @var int
      */
     private $currentIssueIndex = 0;
 
@@ -63,25 +63,25 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(1, 'task', 'Appli SNDF', "Création d'itinéraire",
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir rechercher l'itinéraire le plus rapide AFIN DE pouvoir me diriger de façon optimale.",
-                        5, null, true, false),
+                        '5 h', null, 150, true, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(4, 'subtask', 'Appli SNDF', "Récupérer un itinéraire de l'API Navitia",
                         "Hydrater la recherche utilisateur avec les données renvoyées par l'API de Navitia",
-                        null, 14400, false, false),
+                        null, 14400, null, false, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(3, 'task', 'Appli SNDF', 'Recherche de gare',
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir obtenir des informations actualisée sur une gare AFIN DE pouvoir choisir judicieusement mes correspondances.",
-                        5, null, true, false),
+                        '5 h', null, 40, true, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(2, 'subtask', 'Appli SNDF', "Contacter l'API Navitia",
                         "Permettre une transmission fonctionnelle entre l'application et l'API Navitia",
-                        null, 115200, false, false),
+                        null, 115200, null, false, false),
                     'sprint' => 1,
                 ),
             ),
@@ -89,49 +89,49 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(1, 'subtask', 'Site Thabès', "Service d'authentification",
                         "Création d'un service d'authentification par identifiant et mot de passe",
-                        null, 57600, false, false),
+                        null, 57600, null, false, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(2, 'task', 'Site Thabès', 'Sécurité',
                         "EN TANT QU'administrateur du site, JE SOUHAITERAIS une répartition des droits de lecture et d'écriture sur les données du site AFIN DE protéger ces données.",
-                        13, null, true, false),
+                        '13 h', null, 20, true, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(4, 'subtask', 'Site Thabès', "Comptes d'utilisateurs",
                         "Création d'un compte administrateur et de 10 comptes collaborateurs",
-                        null, 28800, false, false),
+                        null, 28800, null, false, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(5, 'subtask', 'Site Thabès', 'Protection des données',
                         "Cryptage des données du serveur et des tokens d'authentification",
-                        null, 28800, false, false),
+                        null, 28800, null, false, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(6, 'task', 'Site Thabès', "Page d'accueil",
                         "Page d'accueil dynamique (animations)",
-                        null, 115200, false, true),
+                        null, 115200, null, false, true),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(7, 'task', 'Site Thabès', "Logo de l'entreprise",
                         "EN TANT QUE directeur de l'entreprise, J'AIMERAIS que le logo de mon entreprise soit visible dans l'en-tête du site AFIN DE rendre le site plus identifiable.",
-                        3, null, true, false),
+                        '3 h', null, 60, true, false),
                     'sprint' => 1,
                 ),
                 array(
                     'issue' => $this->createIssue(9, 'task', 'Site Thabès', 'Champ de recherche',
                         "Proposer des choix pertinents à l'utlisateur quand celui-ci tape dans la barre de recherche",
-                        null, 115200, false, true),
+                        null, 115200, null, false, true),
                     'sprint' => 2,
                 ),
                 array(
                     'issue' => $this->createIssue(8, 'task', 'Site Thabès', 'Formulaire de contact',
                         "EN TANT QU'utilisateur, J'AIMERAIS pouvoir envoyer un mail par le site à l'entreprise Thabès AFIN DE pouvoir contacter l'entreprise Thabès simplement",
-                        8, null, true, false),
+                        '8 h', null, 50, true, false),
                     'sprint' => 2,
                 ),
             ),
@@ -144,14 +144,15 @@ class ApiVisitor extends AbstractApi
      * @param string $type
      * @param string $title
      * @param string $description
-     * @param number $complexity
-     * @param number $timeBox
+     * @param int    $complexity
+     * @param int    $timeBox
+     * @param int    $businnessValue
      * @param bool   $isUS
      * @param bool   $isProofOfConcept
      *
      * @return Task
      */
-    private function createIssue($number, $type, $project, $title, $description, $complexity, $timeBox, $isUS, $isProofOfConcept)
+    private function createIssue($number, $type, $project, $title, $description, $complexity, $timeBox, $businnessValue, $isUS, $isProofOfConcept)
     {
         $task = new Task();
         $task->setId(++$this->currentIssueIndex);
@@ -162,6 +163,8 @@ class ApiVisitor extends AbstractApi
         $task->setDescription($description);
         $task->setComplexity($complexity);
         $task->setTimeBox(round($timeBox / 3600, 0).' h');
+        $task->setBusinessValue($businnessValue);
+        $task->setReturnOnInvestment();
         $task->setUserStory($isUS);
         $task->setProofOfConcept($isProofOfConcept);
         $task->setPrinted(in_array($task->getId(), $this->printedIssues));

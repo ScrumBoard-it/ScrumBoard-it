@@ -40,6 +40,7 @@ services:
            -
               complexity_field: "%jira_complexity_field%"
               printed_tag: "%jira_printed_tag%"
+              businessvalue_field: "%jira_businessvalue_field%"
            - '@api.caller'
            - '@doctrine.orm.entity_manager'
    github.api:

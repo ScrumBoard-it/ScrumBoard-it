@@ -19,14 +19,14 @@ class SearchEntity
     /**
      * Project ID.
      *
-     * @var number
+     * @var int
      */
     private $project;
 
     /**
      * Sprint ID.
      *
-     * @var number
+     * @var int
      */
     private $sprint;
 
