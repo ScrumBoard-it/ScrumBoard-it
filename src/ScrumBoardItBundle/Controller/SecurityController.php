@@ -12,7 +12,6 @@ use ScrumBoardItBundle\Entity\Mapping\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 
 /**
  * Controller of security.
@@ -68,22 +67,7 @@ class SecurityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($password);
-                $user->addRole('IS_AUTHENTICATED_FULLY');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-                $userId = $em->getRepository('ScrumBoardItBundle:Mapping\User')
-                    ->findOneByUsername($user->getUsername())
-                    ->getId();
-
-                $jiraConfiguration = new JiraConfiguration();
-                $jiraConfiguration->setUserId($userId);
-                $em->persist($jiraConfiguration);
-                $em->flush();
-
+                $this->get('profile.service')->register($user);
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $this->get('security.token_storage')->setToken($token);
                 $this->get('session')->set('_security_main', serialize($token));

@@ -6,15 +6,14 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Profile\GeneralProfileType;
 use ScrumBoardItBundle\Form\Type\Profile\JiraProfileType;
-use ScrumBoardItBundle\Entity\Profile\JiraProfileEntity;
 use ScrumBoardItBundle\Entity\Profile\GeneralProfileEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ScrumBoardItBundle\Entity\Mapping\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle;
+use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 
 class ProfileService
 {
@@ -29,21 +28,22 @@ class ProfileService
     private $em;
 
     /**
-     * @var User
-     */
-    private $user;
-
-    /**
      * @var EncoderFactoryInterface
      */
     private $encoderService;
 
-    public function __construct(FormFactory $formFactory, EntityManager $em, TokenStorage $token, EncoderFactoryInterface $encoderService)
+    public function __construct(FormFactory $formFactory, EntityManager $em, EncoderFactoryInterface $encoderService)
     {
         $this->formFactory = $formFactory;
         $this->em = $em;
-        $this->user = $token->getToken()->getUser();
         $this->encoderService = $encoderService;
+    }
+
+    public function setUser(User $user)
+    {
+        $user = $user;
+
+        return $this;
     }
 
     /**
@@ -54,31 +54,34 @@ class ProfileService
      *
      * @return FormInterface
      */
-    public function getForm(Request $request, $page)
+    public function getForm(Request $request, User $user, $page)
     {
         switch ($page) {
             case 'jira':
                 $formType = JiraProfileType::class;
-                $entity = JiraProfileEntity::class;
+                $entity = JiraConfiguration::class;
+                $options = array(
+                    'data' => $this->getJiraConfiguration($user), );
                 break;
             case 'general':
             default:
                 $formType = GeneralProfileType::class;
                 $entity = GeneralProfileEntity::class;
+                $options = array();
                 break;
         }
-        $form = $this->formFactory->create($formType, new $entity());
+        $form = $this->formFactory->create($formType, new $entity(), $options);
         $form->handleRequest($request);
 
         return $form;
     }
 
-    public function persist(Form $form)
+    public function persist(Form $form, User $user)
     {
         $data = $form->getData();
         switch ($form->getName()) {
             case 'general_profile':
-                $this->persistGeneralProfile($data);
+                $this->persistGeneralProfile($data, $user);
                 break;
             case 'jira_profile':
                 $this->persistJiraProfile($data);
@@ -87,39 +90,63 @@ class ProfileService
         }
     }
 
-    private function persistGeneralProfile($data)
+    private function persistGeneralProfile($data, User $user)
     {
-        $encoder = $this->encoderService->getEncoder($this->user);
+        $encoder = $this->encoderService->getEncoder($user);
         $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
-            ->find($this->user->getId());
+            ->find($user->getId());
         if ($encoder->isPasswordValid($user->getPassword(), $data->getOldPassword(), $user->getSalt())) {
             $user->setPassword($encoder->encodePassword($data->getNewPassword(), $user->getSalt()));
-            $this->user->setPassword($user->getPassword());
+            $user->setPassword($user->getPassword());
             try {
                 $this->em->flush();
             } catch (\Exception $e) {
-                throw $e;
-                // throw new \Exception('Une erreur est survenue, veuillez rééssayer.');
+                throw new \Exception('Une erreur est survenue, veuillez rééssayer.');
             }
         } else {
             throw new \Exception('Mot de passe intial erroné.');
         }
     }
 
-    private function persistJiraProfile($data)
+    private function persistJiraProfile(JiraConfiguration $jiraConfiguration)
     {
+        if (empty($jiraConfiguration->getPrintedTag())) {
+            $jiraConfiguration->setPrintedTag('Post-it');
+        }
         try {
-            $jiraConfiguration = $this->em->getRepository('ScrumBoardItBundle:Mapping\JiraConfiguration')
-                ->findOneBy(array(
-                    'userId' => $this->user->getId(),
-            ));
-            $jiraConfiguration->setUrl($data->getUrl());
-            $jiraConfiguration->setPrintedTag($data->getPrintedTag());
-            $jiraConfiguration->setComplexityField($data->getComplexityField());
-            $jiraConfiguration->setBusinnessValueField($data->getBusinnessValueField());
             $this->em->flush();
         } catch (\Exception $e) {
             throw new \Exception('Une erreur est survenue, veuillez rééssayer.');
         }
+    }
+
+    public function getJiraConfiguration(User $user)
+    {
+        try {
+            return $this->em->getRepository('ScrumBoardItBundle:Mapping\JiraConfiguration')
+            ->findOneBy(array(
+                'userId' => $user->getId(),
+            ));
+        } catch (\Exception $e) {
+            throw new \Exception("Nous n'avons pas pu récupérer votre profil, veuillez rééssayer.");
+        }
+    }
+
+    public function register(User $user)
+    {
+        $password = $this->encoderService->getEncoder($user)
+            ->encodePassword($user->getPlainPassword(), $user->getSalt());
+        $user->setPassword($password);
+        $user->addRole('IS_AUTHENTICATED_FULLY');
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $jiraConfiguration = new JiraConfiguration();
+        $userId = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
+        ->findOneByUsername($user->getUsername())
+        ->getId();
+        $jiraConfiguration->setUserId($userId);
+        $this->em->persist($jiraConfiguration);
+        $this->em->flush();
     }
 }

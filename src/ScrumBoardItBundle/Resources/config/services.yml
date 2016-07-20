@@ -8,7 +8,6 @@ services:
      arguments:
            - '@form.factory'
            - '@doctrine.orm.entity_manager'
-           - '@security.token_storage'
            - '@security.encoder_factory'
    main_authenticator:
        class: ScrumBoardItBundle\Security\MainAuthenticator
@@ -25,6 +24,7 @@ services:
            - '@router'
            - '@api.caller'
            - '@security.token_storage'
+           - '@profile.service'
    github_authenticator:
        class: ScrumBoardItBundle\Security\GitHubAuthenticator
        arguments:
@@ -44,10 +44,7 @@ services:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
            - '@security.token_storage'
-           -
-              complexity_field: "%jira_complexity_field%"
-              printed_tag: "%jira_printed_tag%"
-              businessvalue_field: "%jira_businessvalue_field%"
+           - '@profile.service'
            - '@api.caller'
            - '@doctrine.orm.entity_manager'
    github.api:

@@ -17,10 +17,12 @@ class JiraProfileType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $jiraConfiguration = $options['data'];
         $builder
             ->add('url', TextType::class, array(
                 'label' => 'URL de votre application Jira',
                 'required' => false,
+                'data' => $jiraConfiguration->getUrl(),
                 'attr' => array(
                     'placeholder' => 'Nouvelle URL Jira',
                     'class' => 'form-control',
@@ -29,6 +31,7 @@ class JiraProfileType extends AbstractType
             ->add('printed_tag', TextType::class, array(
                 'label' => 'Etiquette des tickets imprimés',
                 'required' => false,
+                'data' => $jiraConfiguration->getPrintedTag(),
                 'attr' => array(
                     'placeholder' => 'Nouveau tag',
                     'class' => 'form-control',
@@ -38,6 +41,7 @@ class JiraProfileType extends AbstractType
             ->add('complexity_field', TextType::class, array(
                 'label' => "Nom du champ de la complexité technique d'un ticket (non obligatoire)",
                 'required' => false,
+                'data' => $jiraConfiguration->getComplexityField(),
                 'attr' => array(
                     'placeholder' => 'Nouveau nom de champ de complexité',
                     'class' => 'form-control',
@@ -47,6 +51,7 @@ class JiraProfileType extends AbstractType
             ->add('businnessvalue_field', TextType::class, array(
                 'label' => "Nom du champ de la valeur commerciale d'un ticket (non obligatoire)",
                 'required' => false,
+                'data' => $jiraConfiguration->getBusinnessValueField(),
                 'attr' => array(
                     'placeholder' => 'Nouveau nom de champ de valeur commerciale',
                     'class' => 'form-control',
@@ -61,7 +66,7 @@ class JiraProfileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\Profile\JiraProfileEntity',
+            'data_class' => 'ScrumBoardItBundle\Entity\Mapping\JiraConfiguration',
         ));
     }
 

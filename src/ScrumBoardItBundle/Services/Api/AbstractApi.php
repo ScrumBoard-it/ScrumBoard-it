@@ -83,7 +83,7 @@ abstract class AbstractApi
      */
     public function getDatabaseUser()
     {
-        $user = $this->em->getRepository('ScrumBoardItBundle:User')->find($this->getUser()->getId());
+        $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')->find($this->getUser()->getId());
 
         return $user;
     }

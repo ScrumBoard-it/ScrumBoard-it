@@ -3,6 +3,7 @@
 namespace ScrumBoardItBundle\Entity\Mapping;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JiraConfiguration.
@@ -32,6 +33,16 @@ class JiraConfiguration
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     *
+     * @Assert\Regex(
+     *     pattern="/\S*\/$/",
+     *     match=true,
+     *     message="L'url doit finir par '/'"
+     * )
+     * @Assert\Url(
+     *    protocols = {"http"},
+     *    message = "Url invalide"
+     * )
      */
     private $url;
 

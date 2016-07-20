@@ -47,7 +47,6 @@ class DefaultController extends Controller
                 ->findOneby(array('userId' => $this->getUser()->getId())),
         );
 
-        dump($options);
         $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
