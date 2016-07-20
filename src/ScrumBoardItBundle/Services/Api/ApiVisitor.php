@@ -63,7 +63,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(1, 'task', 'Appli SNDF', "Création d'itinéraire",
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir rechercher l'itinéraire le plus rapide AFIN DE pouvoir me diriger de façon optimale.",
-                        '5 h', null, 150, true, false),
+                        5, null, 150, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -75,7 +75,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(3, 'task', 'Appli SNDF', 'Recherche de gare',
                         "EN TANT QU'utilisateur, JE SOUHAITERAIS pouvoir obtenir des informations actualisée sur une gare AFIN DE pouvoir choisir judicieusement mes correspondances.",
-                        '5 h', null, 40, true, false),
+                        5, null, 40, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -95,7 +95,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(2, 'task', 'Site Thabès', 'Sécurité',
                         "EN TANT QU'administrateur du site, JE SOUHAITERAIS une répartition des droits de lecture et d'écriture sur les données du site AFIN DE protéger ces données.",
-                        '13 h', null, 20, true, false),
+                        13, null, 20, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -119,7 +119,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(7, 'task', 'Site Thabès', "Logo de l'entreprise",
                         "EN TANT QUE directeur de l'entreprise, J'AIMERAIS que le logo de mon entreprise soit visible dans l'en-tête du site AFIN DE rendre le site plus identifiable.",
-                        '3 h', null, 60, true, false),
+                        3, null, 60, true, false),
                     'sprint' => 1,
                 ),
                 array(
@@ -131,7 +131,7 @@ class ApiVisitor extends AbstractApi
                 array(
                     'issue' => $this->createIssue(8, 'task', 'Site Thabès', 'Formulaire de contact',
                         "EN TANT QU'utilisateur, J'AIMERAIS pouvoir envoyer un mail par le site à l'entreprise Thabès AFIN DE pouvoir contacter l'entreprise Thabès simplement",
-                        '8 h', null, 50, true, false),
+                        8, null, 50, true, false),
                     'sprint' => 2,
                 ),
             ),
