@@ -14,9 +14,20 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle;
 use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
+use ScrumBoardItBundle\Form\Type\ConfigurationType;
 
+/**
+ * Profile Service.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 class ProfileService
 {
+    /**
+     * @var string
+     */
+    const DEFAULT_TAG = 'Post-it';
+
     /**
      * @var FormFactory
      */
@@ -37,13 +48,6 @@ class ProfileService
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->encoderService = $encoderService;
-    }
-
-    public function setUser(User $user)
-    {
-        $user = $user;
-
-        return $this;
     }
 
     /**
@@ -76,6 +80,12 @@ class ProfileService
         return $form;
     }
 
+    /**
+     * Persist data form.
+     *
+     * @param Form $form
+     * @param User $user
+     */
     public function persist(Form $form, User $user)
     {
         $data = $form->getData();
@@ -90,6 +100,14 @@ class ProfileService
         }
     }
 
+    /**
+     * Persist General data form.
+     *
+     * @param \stdClass $data
+     * @param User      $user
+     *
+     * @throws \Exception
+     */
     private function persistGeneralProfile($data, User $user)
     {
         $encoder = $this->encoderService->getEncoder($user);
@@ -108,10 +126,17 @@ class ProfileService
         }
     }
 
+    /**
+     * Persist Jira data form.
+     *
+     * @param JiraConfiguration $jiraConfiguration
+     *
+     * @throws \Exception
+     */
     private function persistJiraProfile(JiraConfiguration $jiraConfiguration)
     {
         if (empty($jiraConfiguration->getPrintedTag())) {
-            $jiraConfiguration->setPrintedTag('Post-it');
+            $jiraConfiguration->setPrintedTag(self::DEFAULT_TAG);
         }
         try {
             $this->em->flush();
@@ -120,6 +145,15 @@ class ProfileService
         }
     }
 
+    /**
+     * Jira configuration getter.
+     *
+     * @param User $user
+     *
+     * @throws \Exception
+     *
+     * @return object
+     */
     public function getJiraConfiguration(User $user)
     {
         try {
@@ -132,6 +166,11 @@ class ProfileService
         }
     }
 
+    /**
+     * Register new user.
+     *
+     * @param User $user
+     */
     public function register(User $user)
     {
         $password = $this->encoderService->getEncoder($user)
@@ -143,13 +182,20 @@ class ProfileService
 
         $jiraConfiguration = new JiraConfiguration();
         $userId = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
-        ->findOneByUsername($user->getUsername())
-        ->getId();
+            ->findOneByUsername($user->getUsername())
+            ->getId();
         $jiraConfiguration->setUserId($userId);
         $this->em->persist($jiraConfiguration);
         $this->em->flush();
     }
 
+    /**
+     * Return template name for the profile page.
+     *
+     * @param string $page
+     *
+     * @return string
+     */
     public function getIncludeTemplate($page)
     {
         switch ($page) {
@@ -163,5 +209,40 @@ class ProfileService
         }
 
         return 'ScrumBoardItBundle:Profile:'.$include.'Profile.html.twig';
+    }
+
+    /**
+     * Set and return new template configuration.
+     *
+     * @param Request $request
+     * @param User    $user
+     *
+     * @return User
+     */
+    public function setTemplateConfiguration(Request $request, User $user)
+    {
+        $configurationForm = $this->formFactory->create(ConfigurationType::class, $user);
+        $configurationForm->handleRequest($request);
+        $user->setConfiguration(array(
+            'user_story' => $configurationForm->get('user_story')->getData(),
+            'sub_task' => $configurationForm->get('sub_task')->getData(),
+            'poc' => $configurationForm->get('poc')->getData(),
+        ));
+        $this->em->flush();
+
+        return $configurationForm;
+    }
+
+    /**
+     * Return an array of the user database configurations.
+     *
+     * @param User $user
+     *
+     * @return array
+     */
+    public function getUserConfiguration(User $user) {
+        return array(
+            'jira' => $this->getJiraConfiguration($user),
+        );
     }
 }

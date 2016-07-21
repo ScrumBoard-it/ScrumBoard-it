@@ -10,6 +10,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+/**
+ * Abstract Api Authenticator.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
+ */
 abstract class ApiAuthenticator extends AbstractAuthenticator
 {
     /**

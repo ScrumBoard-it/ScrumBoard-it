@@ -5,6 +5,9 @@ namespace ScrumBoardItBundle\Services\Api;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use ScrumBoardItBundle\Services\ApiCaller;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Jira service.
@@ -21,10 +24,10 @@ class ApiJira extends AbstractApi
     const LABEL_POC = 'POC';
     const MAX_RESULTS = 50;
 
-    public function __construct($token, $config, $apiCaller, $em)
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
     {
         parent::__construct($token, $config, $apiCaller, $em);
-        $this->config = $config->getJiraConfiguration($this->getUser());
+        $this->config = $config->getJiraConfiguration($this->user);
     }
     /**
      * {@inheritdoc}
@@ -33,7 +36,7 @@ class ApiJira extends AbstractApi
     {
         if (!empty($searchFilters['sprint'])) {
             $api = $this->getIssuesApi('sprint='.$searchFilters['sprint']);
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
 
             return $this->getIssues($data['content']);
         }
@@ -101,7 +104,7 @@ class ApiJira extends AbstractApi
         }
         if (!empty($jql)) {
             $url = $this->getIssuesApi(urlencode($jql));
-            $data = $this->apiCaller->call($this->getUser(), $url);
+            $data = $this->apiCaller->call($this->user, $url);
 
             return $this->getIssues($data['content']);
         }
@@ -155,7 +158,7 @@ class ApiJira extends AbstractApi
                 $api = $this->getFlagIssuesApi().$issue;
                 $tag = '"'.$this->config->getPrintedTag().'"';
                 $content = '{"update":{"labels":[{"add":'.$tag.'}]}}';
-                $this->apiCaller->puting($this->getUser(), $api, $content);
+                $this->apiCaller->puting($this->user, $api, $content);
             }
         }
     }
@@ -168,7 +171,7 @@ class ApiJira extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
             foreach ($data['content']->values as $sprint) {
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
@@ -192,7 +195,7 @@ class ApiJira extends AbstractApi
         $startAt = 0;
         $api = $this->getProjectApi();
         do {
-            $data = $this->apiCaller->call($this->getUser(), $api.'&startAt='.$startAt);
+            $data = $this->apiCaller->call($this->user, $api.'&startAt='.$startAt);
             foreach ($data['content']->values as $project) {
                 $projects[$project->name] = $project->id;
             }

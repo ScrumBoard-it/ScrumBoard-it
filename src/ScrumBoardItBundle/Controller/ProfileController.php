@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Controller for Profile page.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class ProfileController extends Controller
 {
@@ -18,7 +20,7 @@ class ProfileController extends Controller
      */
     public function profileAction(Request $request)
     {
-        if($this->getUser()->getUsername() === 'visitor') {
+        if ($this->getUser()->getUsername() === 'visitor') {
             return $this->redirect('home');
         }
         $page = $request->get('page', 'general');

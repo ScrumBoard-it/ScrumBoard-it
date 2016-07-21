@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 /**
  * General Profile type.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class GeneralProfileType extends AbstractType
 {
@@ -20,8 +22,9 @@ class GeneralProfileType extends AbstractType
     {
         $builder
             ->add('old_password', PasswordType::class, array(
+                'label' => 'Entrez votre mot de passe actuel:',
                 'attr' => array(
-                    'placeholder' => 'Ancien mot de passe',
+                    'placeholder' => 'Mot de passe actuel',
                     'class' => 'form-control',
                 ),
                 'required' => true,
@@ -30,14 +33,17 @@ class GeneralProfileType extends AbstractType
             ->add('new_password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'options' => array('attr' => array('class' => 'form-control')),
                 'required' => true,
-                'first_options' => array('attr' => array(
+                'first_options' => array(
+                    'label' => 'Entrez un nouveau mot de passe:',
+                    'attr' => array(
                     'placeholder' => 'Nouveau mot de passe',
                     'class' => 'form-control',
                 )),
-                'second_options' => array('attr' => array(
-                    'placeholder' => 'Confirmez le nouveau mot de passe',
+                'second_options' => array(
+                    'label' => 'Confirmez le nouveau mot de passe:',
+                    'attr' => array(
+                    'placeholder' => 'Nouveau mot de passe',
                     'class' => 'form-control',
                 )),
                 'property_path' => 'newPassword',

@@ -11,11 +11,11 @@ security:
             anonymous: ~
             guard:
                 authenticators:
-                    - main_authenticator
-                    - visitor_authenticator
-                    - jira_authenticator
-                    - github_authenticator
-                entry_point: main_authenticator
+                    - main.authenticator
+                    - visitor.authenticator
+                    - jira.authenticator
+                    - github.authenticator
+                entry_point: main.authenticator
             logout:
                 path: /logout
                 target: /
@@ -24,7 +24,7 @@ security:
             
     providers:
         webservice:
-            id: user_provider
+            id: user.provider
     
     encoders:
         ScrumBoardItBundle\Entity\Mapping\User: bcrypt

@@ -1,5 +1,5 @@
 services:
-   user_provider:
+   user.provider:
        class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
@@ -9,23 +9,23 @@ services:
            - '@form.factory'
            - '@doctrine.orm.entity_manager'
            - '@security.encoder_factory'
-   main_authenticator:
+   main.authenticator:
        class: ScrumBoardItBundle\Security\MainAuthenticator
        arguments:
            - '@router'
            - '@security.encoder_factory'
-   visitor_authenticator:
+   visitor.authenticator:
        class: ScrumBoardItBundle\Security\VisitorAuthenticator
        arguments:
            - '@router'
-   jira_authenticator:
+   jira.authenticator:
        class: ScrumBoardItBundle\Security\JiraAuthenticator
        arguments:
            - '@router'
            - '@api.caller'
            - '@security.token_storage'
            - '@profile.service'
-   github_authenticator:
+   github.authenticator:
        class: ScrumBoardItBundle\Security\GitHubAuthenticator
        arguments:
            - '@router'

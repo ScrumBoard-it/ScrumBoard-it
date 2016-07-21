@@ -36,10 +36,8 @@ class SecurityController extends Controller
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
 
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->get('security.authentication_utils')->getLastAuthenticationError();
 
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
             'form' => $form->createView(),

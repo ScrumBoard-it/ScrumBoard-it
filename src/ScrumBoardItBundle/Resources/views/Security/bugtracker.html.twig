@@ -1,11 +1,7 @@
 {% extends "ScrumBoardItBundle:Security:login.html.twig" %}
 
 {% block header %}
-    <div class="log">
-        <a href="./logout">
-            <span class="glyphicon glyphicon-off">Déconnexion</span>
-        </a>
-    </div>
+    {{ include('ScrumBoardItBundle:Default:logNavBar.html.twig') }}
 {% endblock %}
 
 {% block header_title %}

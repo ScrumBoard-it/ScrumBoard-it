@@ -4,6 +4,8 @@ namespace ScrumBoardItBundle\Entity\Profile;
 
 /**
  * GeneralProfileEntity.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class GeneralProfileEntity
 {

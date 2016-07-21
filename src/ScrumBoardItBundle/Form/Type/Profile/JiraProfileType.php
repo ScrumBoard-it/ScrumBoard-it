@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Jira Profile type.
+ *
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class JiraProfileType extends AbstractType
 {

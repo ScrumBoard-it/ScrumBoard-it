@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\EntityManager;
+use ScrumBoardItBundle\Services\ApiCaller;
 
 /**
  * Abstract Api.
@@ -16,51 +17,41 @@ use Doctrine\ORM\EntityManager;
 abstract class AbstractApi
 {
     /**
-     * Config.
+     * Api configuration.
      *
-     * @var array
+     * @var unknown
      */
     protected $config;
 
     /**
-     * Api Caller.
-     *
      * @var ApiCaller
      */
     protected $apiCaller;
 
     /**
-     * User.
-     *
      * @var User
      */
-    private $user;
+    protected $user;
 
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
     /**
      * Constructor.
      *
-     * @param TokenStorage $token
-     * @param array
+     * @param TokenStorage  $token
+     * @param unknown       $config
+     * @param ApiCaller     $apiCaller
      * @param EntityManager $em
      */
-    public function __construct(TokenStorage $token, $config, $apiCaller, EntityManager $em)
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
     {
         $this->user = $token->getToken()->getUser();
         $this->config = $config;
         $this->apiCaller = $apiCaller;
         $this->em = $em;
-    }
-
-    /**
-     * User getter.
-     *
-     * @return User
-     */
-    protected function getUser()
-    {
-        return $this->user;
     }
 
     /**
@@ -83,7 +74,7 @@ abstract class AbstractApi
      */
     public function getDatabaseUser()
     {
-        $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')->find($this->getUser()->getId());
+        $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')->find($this->user->getId());
 
         return $user;
     }

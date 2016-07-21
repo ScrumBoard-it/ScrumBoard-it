@@ -25,7 +25,7 @@ class ApiGithub extends AbstractApi
         // Multipagination
         $projects = array();
         do {
-            $page = $this->apiCaller->call($this->getUser(), $api);
+            $page = $this->apiCaller->call($this->user, $api);
             foreach ($page['content'] as $project) {
                 $projects['Propriétaire: '.$project->owner->login][$project->name] = $project->full_name;
                 if ($page['links'][0]['rel'] === 'first') {
@@ -50,7 +50,7 @@ class ApiGithub extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
             foreach ($data['content'] as $sprint) {
                 $sprints['Actif'][$sprint->title] = $sprint->number;
             }
@@ -66,7 +66,7 @@ class ApiGithub extends AbstractApi
     {
         $api = $this->getIssueApi($searchFilters);
         if (!empty($api)) {
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
             $issues = array();
             foreach ($data['content'] as $issue) {
                 array_push($issues, $this->getIssue($issue, $searchFilters['project']));
@@ -157,7 +157,7 @@ class ApiGithub extends AbstractApi
         } else {
             foreach ($selected as $selectedIssue) {
                 $url = $this->getBaseApi($filters['project']).'/issues/'.$selectedIssue;
-                $data = $this->apiCaller->call($this->getUser(), $url);
+                $data = $this->apiCaller->call($this->user, $url);
                 $issue = $this->getIssue($data['content'], $filters['project']);
                 array_push($issues, $issue);
             }
@@ -213,7 +213,7 @@ class ApiGithub extends AbstractApi
                 $url = $this->getBaseApi($request->getSession()->get('filters')['project']).
                 '/issues/'.$issue.'/labels';
                 $content = '["Printed"]';
-                $this->apiCaller->send($this->getUser(), $url, $content, 1);
+                $this->apiCaller->send($this->user, $url, $content, 1);
             }
         }
     }
