@@ -17,11 +17,11 @@ use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 
 /**
- * Profile Service.
+ * Profile Provider.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class ProfileService
+class ProfileProvider
 {
     /**
      * @var string
@@ -240,7 +240,8 @@ class ProfileService
      *
      * @return array
      */
-    public function getUserConfiguration(User $user) {
+    public function getUserConfiguration(User $user)
+    {
         return array(
             'jira' => $this->getJiraConfiguration($user),
         );

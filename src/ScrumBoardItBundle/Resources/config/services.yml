@@ -3,8 +3,8 @@ services:
        class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
-   profile.service:
-     class: ScrumBoardItBundle\Services\ProfileService
+   profile.provider:
+     class: ScrumBoardItBundle\Services\ProfileProvider
      arguments:
            - '@form.factory'
            - '@doctrine.orm.entity_manager'
@@ -24,7 +24,7 @@ services:
            - '@router'
            - '@api.caller'
            - '@security.token_storage'
-           - '@profile.service'
+           - '@profile.provider'
    github.authenticator:
        class: ScrumBoardItBundle\Security\GitHubAuthenticator
        arguments:
@@ -44,7 +44,7 @@ services:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
            - '@security.token_storage'
-           - '@profile.service'
+           - '@profile.provider'
            - '@api.caller'
            - '@doctrine.orm.entity_manager'
    github.api:

@@ -65,7 +65,7 @@ class SecurityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('profile.service')->register($user);
+                $this->get('profile.provider')->register($user);
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $this->get('security.token_storage')->setToken($token);
                 $this->get('session')->set('_security_main', serialize($token));

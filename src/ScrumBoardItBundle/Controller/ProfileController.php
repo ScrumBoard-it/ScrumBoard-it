@@ -24,7 +24,7 @@ class ProfileController extends Controller
             return $this->redirect('home');
         }
         $page = $request->get('page', 'general');
-        $profileService = $this->get('profile.service');
+        $profileService = $this->get('profile.provider');
         $form = $profileService->getForm($request, $this->getUser(), $page);
         $info = null;
         $error = null;

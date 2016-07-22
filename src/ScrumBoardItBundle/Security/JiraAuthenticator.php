@@ -3,10 +3,10 @@
 namespace ScrumBoardItBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use ScrumBoardItBundle\Services\ProfileService;
 use ScrumBoardItBundle\Services\ApiCaller;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use ScrumBoardItBundle\Services\ProfileProvider;
 
 /**
  * Jira Authenticator.
@@ -15,12 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
  */
 class JiraAuthenticator extends ApiAuthenticator
 {
-    private $profileService;
+    private $profileProvider;
 
-    public function __construct(Router $router, ApiCaller $apiCaller, TokenStorage $token, ProfileService $profileService)
+    public function __construct(Router $router, ApiCaller $apiCaller, TokenStorage $token, ProfileProvider $profileProvider)
     {
         parent::__construct($router, $apiCaller, $token);
-        $this->profileService = $profileService;
+        $this->profileProvider = $profileProvider;
     }
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class JiraAuthenticator extends ApiAuthenticator
         $password = $credentials['password'];
         $user->setHash("$login:$password");
 
-        $url = $this->profileService->getJiraConfiguration($user)->getUrl().'/rest/api/latest/user?username='.$login;
+        $url = $this->profileProvider->getJiraConfiguration($user)->getUrl().'/rest/api/latest/user?username='.$login;
         try {
             $results = $this->apiCaller->call($user, $url);
         } catch (\Exception $e) {

@@ -39,13 +39,13 @@ class GeneralProfileType extends AbstractType
                     'attr' => array(
                     'placeholder' => 'Nouveau mot de passe',
                     'class' => 'form-control',
-                )),
+                ), ),
                 'second_options' => array(
                     'label' => 'Confirmez le nouveau mot de passe:',
                     'attr' => array(
                     'placeholder' => 'Nouveau mot de passe',
                     'class' => 'form-control',
-                )),
+                ), ),
                 'property_path' => 'newPassword',
             ));
     }
