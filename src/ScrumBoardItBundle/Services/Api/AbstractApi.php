@@ -19,7 +19,7 @@ abstract class AbstractApi
     /**
      * Api configuration.
      *
-     * @var unknown
+     * @var mixed
      */
     protected $config;
 
@@ -42,7 +42,7 @@ abstract class AbstractApi
      * Constructor.
      *
      * @param TokenStorage  $token
-     * @param unknown       $config
+     * @param mixed         $config
      * @param ApiCaller     $apiCaller
      * @param EntityManager $em
      */
