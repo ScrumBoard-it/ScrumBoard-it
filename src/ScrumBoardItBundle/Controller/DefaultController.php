@@ -41,13 +41,14 @@ class DefaultController extends Controller
         $form = $this->createForm(BugtrackerType::class);
         $form->handleRequest($request);
 
-        $authenticationUtils = $this->get('security.authentication_utils');
+        $options = $this->get('profile.provider')->getUserConfiguration($this->getUser());
 
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->get('security.authentication_utils')->getLastAuthenticationError();
 
         return $this->render('ScrumBoardItBundle:Security:bugtracker.html.twig', array(
             'form' => $form->createView(),
+            'options' => $options,
             'error' => $error,
         ));
     }
@@ -60,16 +61,9 @@ class DefaultController extends Controller
     {
         if (!empty($this->getUser()->getApi())) {
             $apiService = $this->get($this->getUser()->getApi());
+            $profileService = $this->get('profile.provider');
 
-            $user = $apiService->getDatabaseUser();
-            $configurationForm = $this->createForm(ConfigurationType::class, $user);
-            $configurationForm->handleRequest($request);
-            $user->setConfiguration(array(
-                'user_story' => $configurationForm->get('user_story')->getData(),
-                'sub_task' => $configurationForm->get('sub_task')->getData(),
-                'poc' => $configurationForm->get('poc')->getData(),
-            ));
-            $this->getDoctrine()->getManager()->flush();
+            $configurationForm = $profileService->setTemplateConfiguration($request, $apiService->getDatabaseUser());
 
             $apiSearch = $apiService->getSearchFilters($request);
             $issues = $apiService->searchIssues($apiSearch['search_filters']);

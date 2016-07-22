@@ -51,7 +51,7 @@ class ConfigurationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ScrumBoardItBundle\Entity\User',
+            'data_class' => 'ScrumBoardItBundle\Entity\Mapping\User',
         ));
     }
 

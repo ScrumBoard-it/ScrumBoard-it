@@ -1,0 +1,15 @@
+<div class="navbar pull-right">
+    <nav class="nav-collapse" role="navigation">
+        <ul class="nav">
+        <li class="dropdown">
+                <a data-toggle="dropdown" class="log-btn dropdown-toggle glyphicon glyphicon-user" href="#"> {{ app.user.username }} <b class="caret"></b></a> 
+                <ul class="dropdown-menu">
+                    {% if app.user.username != 'visitor' %}
+                        <li><a href="{{ path('profile') }}">Editer mon profil</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>

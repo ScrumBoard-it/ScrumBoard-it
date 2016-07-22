@@ -1,9 +1,8 @@
 <?php
 
-namespace ScrumBoardItBundle\Entity;
+namespace ScrumBoardItBundle\Entity\Mapping;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
@@ -47,21 +46,6 @@ class User implements UserInterface, EquatableInterface
      * @var array
      */
     private $roles = array();
-
-    /**
-     * @var string
-     * @Assert\Regex(
-     *     pattern="/\S*\/$/",
-     *     match=true,
-     *     message="L'url doit finir par '/'"
-     * )
-     * @Assert\Url(
-     *    protocols = {"http"},
-     *    message = "Url invalide"
-     * )
-     * @ORM\Column(name="jira_url", type="string", length=255, nullable=true)
-     */
-    private $jiraUrl;
 
     /**
      * @var int
@@ -211,30 +195,6 @@ class User implements UserInterface, EquatableInterface
     public function getSalt()
     {
         return;
-    }
-
-    /**
-     * Set jiraUrl.
-     *
-     * @param string $jiraUrl
-     *
-     * @return self
-     */
-    public function setJiraUrl($jiraUrl)
-    {
-        $this->jiraUrl = $jiraUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get jiraUrl.
-     *
-     * @return string
-     */
-    public function getJiraUrl()
-    {
-        return $this->jiraUrl;
     }
 
     /**

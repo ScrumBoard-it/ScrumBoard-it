@@ -5,6 +5,9 @@ namespace ScrumBoardItBundle\Services\Api;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use ScrumBoardItBundle\Services\ApiCaller;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Jira service.
@@ -21,6 +24,11 @@ class ApiJira extends AbstractApi
     const LABEL_POC = 'POC';
     const MAX_RESULTS = 50;
 
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
+    {
+        parent::__construct($token, $config, $apiCaller, $em);
+        $this->config = $config->getJiraConfiguration($this->user);
+    }
     /**
      * {@inheritdoc}
      */
@@ -28,7 +36,7 @@ class ApiJira extends AbstractApi
     {
         if (!empty($searchFilters['sprint'])) {
             $api = $this->getIssuesApi('sprint='.$searchFilters['sprint']);
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
 
             return $this->getIssues($data['content']);
         }
@@ -55,7 +63,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setDescription($issue->fields->description);
-            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === $this->config['printed_tag']));
+            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === $this->config->getPrintedTag()));
             $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
             $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
 
@@ -63,16 +71,16 @@ class ApiJira extends AbstractApi
                 $task->setType('subtask');
             }
 
-            if (property_exists($issue->fields, $this->config['complexity_field'])) {
-                $task->setComplexity($issue->fields->{$this->config['complexity_field']});
+            if (property_exists($issue->fields, $this->config->getComplexityField())) {
+                $task->setComplexity($issue->fields->{$this->config->getComplexityField()});
             }
 
             if ($issue->fields->aggregatetimeoriginalestimate > 0) {
                 $task->setTimeBox(round($issue->fields->aggregatetimeoriginalestimate / 3600, 0).' h');
             }
 
-            if (property_exists($issue->fields, $this->config['businessvalue_field'])) {
-                $task->setBusinessValue($issue->fields->{$this->config['businessvalue_field']});
+            if (property_exists($issue->fields, $this->config->getBusinnessValueField())) {
+                $task->setBusinessValue($issue->fields->{$this->config->getBusinnessValueField()});
             }
 
             $task->setReturnOnInvestment();
@@ -96,7 +104,7 @@ class ApiJira extends AbstractApi
         }
         if (!empty($jql)) {
             $url = $this->getIssuesApi(urlencode($jql));
-            $data = $this->apiCaller->call($this->getUser(), $url);
+            $data = $this->apiCaller->call($this->user, $url);
 
             return $this->getIssues($data['content']);
         }
@@ -148,9 +156,9 @@ class ApiJira extends AbstractApi
         if (!empty($selected)) {
             foreach ($selected as $issue) {
                 $api = $this->getFlagIssuesApi().$issue;
-                $tag = '"'.$this->config['printed_tag'].'"';
+                $tag = '"'.$this->config->getPrintedTag().'"';
                 $content = '{"update":{"labels":[{"add":'.$tag.'}]}}';
-                $this->apiCaller->puting($this->getUser(), $api, $content);
+                $this->apiCaller->puting($this->user, $api, $content);
             }
         }
     }
@@ -163,7 +171,7 @@ class ApiJira extends AbstractApi
         $sprints = array();
         if ($project !== null) {
             $api = $this->getSprintApi($project);
-            $data = $this->apiCaller->call($this->getUser(), $api);
+            $data = $this->apiCaller->call($this->user, $api);
             foreach ($data['content']->values as $sprint) {
                 $state = $sprint->state == 'active' ? 'Actif' : 'Futurs';
                 $sprints[$state][$sprint->name] = $sprint->id;
@@ -187,7 +195,7 @@ class ApiJira extends AbstractApi
         $startAt = 0;
         $api = $this->getProjectApi();
         do {
-            $data = $this->apiCaller->call($this->getUser(), $api.'&startAt='.$startAt);
+            $data = $this->apiCaller->call($this->user, $api.'&startAt='.$startAt);
             foreach ($data['content']->values as $project) {
                 $projects[$project->name] = $project->id;
             }
@@ -218,7 +226,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_AGILE.'board/'.$project.'/sprint?state=active&state=future';
 
-        return $this->getUser()->getJiraUrl().$api;
+        return $this->config->getUrl().$api;
     }
 
     /**
@@ -232,7 +240,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_AGILE.'board?maxResults='.$maxResults;
 
-        return $this->getUser()->getJiraUrl().$api;
+        return $this->config->getUrl().$api;
     }
 
     /**
@@ -246,7 +254,7 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_API.'search?jql='.$jql;
 
-        return $this->getUser()->getJiraUrl().$api;
+        return $this->config->getUrl().$api;
     }
 
     /**
@@ -258,6 +266,6 @@ class ApiJira extends AbstractApi
     {
         $api = self::REST_API.'issue/';
 
-        return $this->getUser()->getJiraUrl().$api;
+        return $this->config->getUrl().$api;
     }
 }

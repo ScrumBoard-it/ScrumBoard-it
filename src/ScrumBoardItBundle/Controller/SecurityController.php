@@ -8,11 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use ScrumBoardItBundle\Form\Type\LoginType;
 use ScrumBoardItBundle\Form\Type\RegistrationType;
-use ScrumBoardItBundle\Entity\User;
+use ScrumBoardItBundle\Entity\Mapping\User;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use ScrumBoardItBundle\Form\Type\EditProfileType;
 
 /**
  * Controller of security.
@@ -37,10 +36,8 @@ class SecurityController extends Controller
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
 
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->get('security.authentication_utils')->getLastAuthenticationError();
 
         return $this->render('ScrumBoardItBundle:Security:login.html.twig', array(
             'form' => $form->createView(),
@@ -68,14 +65,7 @@ class SecurityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($password);
-                $user->addRole('IS_AUTHENTICATED_FULLY');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-
+                $this->get('profile.provider')->register($user);
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $this->get('security.token_storage')->setToken($token);
                 $this->get('session')->set('_security_main', serialize($token));
@@ -108,37 +98,5 @@ class SecurityController extends Controller
     public function visitorAction()
     {
         // No action, Guard authenticates the user as a visitor and redirects to the home page
-    }
-
-    /**
-     * @Route("/edit_profile", name="edit_profile")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
-     */
-    public function editProfileAction(Request $request)
-    {
-        $userForm = new User();
-        $form = $this->createForm(EditProfileType::class, $userForm);
-        $form->handleRequest($request);
-        $error = null;
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userToken = $this->getUser();
-            try {
-                $em = $this->getDoctrine()->getManager();
-                $user = $em->getRepository('ScrumBoardItBundle:User')->find($userToken->getId());
-                $user->setJiraUrl($userForm->getJiraUrl());
-                $userToken->setJiraUrl($userForm->getJiraUrl());
-                $em->flush();
-
-                return $this->redirect('home');
-            } catch (\Exception $e) {
-                $error = new \Exception("Une erreur s'est produite, veuillez réesayer.");
-            }
-        }
-
-        return $this->render('ScrumBoardItBundle:Security:editProfile.html.twig', array(
-            'form' => $form->createView(),
-            'error' => $error,
-        ));
     }
 }
