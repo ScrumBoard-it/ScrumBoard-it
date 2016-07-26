@@ -14,13 +14,17 @@
         <div class="header">
             <img src="{{ asset('bundles/scrumboardit/images/header.png') }}" />
             {{ include('ScrumBoardItBundle:Default:logNavBar.html.twig') }}
-	</div>
+		</div>
+
         <div class="row">
             <form id="issues_search" class="form-inline">
                 <div class="form-group col-md-4">
                     {{ form_row(form.project, {'attr': {'class': 'form-control search_project'} }) }}
                 </div>
-                <div class="form-group col-md-4">
+            	<div class="col-md-1 fav-btn">
+            		<button type="button" id="favorite" class="btn btn-warning"><span class="glyphicon glyphicon-star-empty"></span></button>
+            	</div>
+            	<div class="form-group col-md-4">
                     {{ form_row(form.sprint, {'attr': {'class': 'form-control search_sprint'} }) }}
                 </div>
             </form>

@@ -36,7 +36,8 @@ class ApiCaller
         try {
             $response = $client->get($url);
         } catch (BadResponseException $e) {
-            throw new InvalidApiResponseException();
+            throw $e;
+            // throw new InvalidApiResponseException();
         } catch (ConnectException $e) {
             throw new BadConnectionException();
         }

@@ -8,6 +8,7 @@ use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ScrumBoardItBundle\Services\ApiCaller;
 use Doctrine\ORM\EntityManager;
+use ScrumBoardItBundle\Services\ProfileProvider;
 
 /**
  * Jira service.
@@ -170,6 +171,7 @@ class ApiJira extends AbstractApi
     {
         $sprints = array();
         if ($project !== null) {
+            dump('sprint');
             $api = $this->getSprintApi($project);
             $data = $this->apiCaller->call($this->user, $api);
             foreach ($data['content']->values as $sprint) {
@@ -202,7 +204,7 @@ class ApiJira extends AbstractApi
             // Multipagination
             $startAt += self::MAX_RESULTS;
         } while (!$data['content']->isLast);
-        ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
+        ksort($projects, SORT_NATURAL);
 
         return $projects;
     }
@@ -213,6 +215,33 @@ class ApiJira extends AbstractApi
     public function getFormType()
     {
         return JiraSearchType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addFavorite(Request $request, ProfileProvider $profileProvider)
+    {
+        $searchFilters = $this->initSearchFilters($request->get('jira_search'));
+
+        if (!empty($searchFilters['project'])) {
+            $url = $this->getFavoriteApi($searchFilters['project']);
+            $projectName = $this->apiCaller->call($this->user, $url)['content']->name;
+
+            $favorites = $profileProvider->getFavorites($this->user);
+            $jiraFavorites = $favorites->getJira();
+            $jiraFavorites[$searchFilters['project']] = $projectName;
+            $favorites->setJira($jiraFavorites);
+            $profileProvider->editFavorites($favorites);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFavorites(Request $request, ProfileProvider $profileProvider)
+    {
+        return $profileProvider->getFavorites($this->user)->getJira();
     }
 
     /**
@@ -265,6 +294,13 @@ class ApiJira extends AbstractApi
     private function getFlagIssuesApi()
     {
         $api = self::REST_API.'issue/';
+
+        return $this->config->getUrl().$api;
+    }
+
+    private function getFavoriteApi($board)
+    {
+        $api = self::REST_AGILE.'board/'.$board;
 
         return $this->config->getUrl().$api;
     }

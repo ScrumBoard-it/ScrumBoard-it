@@ -67,7 +67,8 @@ class DefaultController extends Controller
 
             $apiSearch = $apiService->getSearchFilters($request);
             $issues = $apiService->searchIssues($apiSearch['search_filters']);
-            $form = $this->createForm($apiService->getFormType(), new SearchEntity($apiSearch['search_filters']));
+            $favorites = $apiService->getFavorites($request, $profileService);
+            $form = $this->createForm($apiService->getFormType(), new SearchEntity($apiSearch['search_filters']), array('favorites' => $favorites));
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
@@ -125,6 +126,22 @@ class DefaultController extends Controller
         } catch (\Exception $e) {
             $this->get('logger')->error('Error during insertion of the printed tag');
         }
+
+        return $this->redirect('home');
+    }
+
+    /**
+     * @Route("/fav", name="favorite")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function favorite(Request $request)
+    {
+        $apiService = $this->get($this->getUser()->getApi());
+        $profileService = $this->get('profile.provider');
+        $apiService->addFavorite($request, $profileService);
 
         return $this->redirect('home');
     }

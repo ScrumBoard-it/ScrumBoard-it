@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle\Services\ApiCaller;
+use ScrumBoardItBundle\Entity\Mapping\Favorites;
+use ScrumBoardItBundle\Services\ProfileProvider;
+use ScrumBoardItBundle\Entity\Mapping\User;
 
 /**
  * Abstract Api.
@@ -135,7 +138,7 @@ abstract class AbstractApi
     abstract public function getSelectedIssues(Request $request, $selected);
 
     /**
-     * Return the searc list.
+     * Return the search list.
      *
      * @param Request $request
      *
@@ -149,4 +152,22 @@ abstract class AbstractApi
      * @param array $selected
      */
     abstract public function addFlag(Request $request, $selected);
+
+    /**
+     * Return the favorites projects of one bugtracker.
+     *
+     * @param User            $user
+     * @param ProfileProvider $profileProvider
+     *
+     * @return array
+     */
+    abstract public function getFavorites(Request $request, ProfileProvider $profileProvider);
+
+    /**
+     * Add a project to the favorite list.
+     *
+     * @param Request         $request
+     * @param ProfileProvider $profileProvider
+     */
+    abstract public function addFavorite(Request $request, ProfileProvider $profileProvider);
 }

@@ -24,6 +24,8 @@ class VisitorSearchType extends AbstractType
             'label' => 'Repositories',
             'choices' => $visitorSearch->getProjects(),
             'placeholder' => 'Sélectionnez un projet',
+            'preferred_choices' => $options['favorites'],
+
         ))
         ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones',
@@ -42,6 +44,7 @@ class VisitorSearchType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity',
+            'favorites' => array(),
         ));
     }
 

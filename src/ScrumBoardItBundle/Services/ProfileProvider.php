@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle;
 use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
+use ScrumBoardItBundle\Entity\Mapping\Favorites;
 
 /**
  * Profile Provider.
@@ -180,12 +181,18 @@ class ProfileProvider
         $this->em->persist($user);
         $this->em->flush();
 
-        $jiraConfiguration = new JiraConfiguration();
         $userId = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
             ->findOneByUsername($user->getUsername())
             ->getId();
+
+        $jiraConfiguration = new JiraConfiguration();
         $jiraConfiguration->setUserId($userId);
         $this->em->persist($jiraConfiguration);
+
+        $favorites = new Favorites();
+        $favorites->setUserId($userId);
+        $this->em->persist($favorites);
+
         $this->em->flush();
     }
 
@@ -245,5 +252,35 @@ class ProfileProvider
         return array(
             'jira' => $this->getJiraConfiguration($user),
         );
+    }
+
+    /**
+     * Return the favorites user's projects.
+     *
+     * @param User $user
+     *
+     * @throws \Exception
+     *
+     * @return Favorites
+     */
+    public function getFavorites(User $user)
+    {
+        if ($user->getUsername() === 'visitor') {
+            return new Favorites();
+        }
+        try {
+            return $this->em->getRepository('ScrumBoardItBundle:Mapping\Favorites')
+                ->findOneBy(array(
+                    'userId' => $user->getId(),
+            ));
+        } catch (\Exception $e) {
+            // throw new \Exception('Erreur lors de la récupération des favoris.');
+            throw $e;
+        }
+    }
+
+    public function editFavorites(Favorites $favorites)
+    {
+        $this->em->flush($favorites);
     }
 }

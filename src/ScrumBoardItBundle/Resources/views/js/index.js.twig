@@ -45,6 +45,11 @@
             }
             $form.submit();
         });
+        $("#favorite").click(function () {
+            $form = $(this).parents('form');
+            $form.attr('action', "{{ path('favorite') }}");
+            $form.submit();
+        });
     });
 
     $('.toggle').click(function (event) {
