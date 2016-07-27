@@ -31,6 +31,7 @@ class ProfileController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             try {
                 $profileService->persist($form, $this->getUser());
+                $form = $profileService->getForm($request, $this->getUser(), $page);
                 $info = 'Les modifications ont été enregistrées.';
             } catch (\Exception $e) {
                 $error = $e;

@@ -55,11 +55,10 @@ class ApiVisitor extends AbstractApi
      */
     public function __construct(RequestStack $requestStack, TokenStorage $tokenStorage)
     {
-        $session = $requestStack->getCurrentRequest()->getSession();
-        $this->printedIssues = $session->get('printed_issues', []);
-        $this->generateIssues();
+        $this->session = $requestStack->getCurrentRequest()->getSession();
+        $this->printedIssues = $this->session->get('printed_issues', []);
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->generateIssues();
     }
 
     /**

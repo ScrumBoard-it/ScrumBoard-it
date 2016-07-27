@@ -27,7 +27,7 @@ class JiraSearchType extends AbstractType
             'attr' => array(
                 'id' => $jiraSearch->getProject(),
             ),
-            'preferred_choices' => array_keys($options['favorites']),
+            'preferred_choices' => $options['favorites'],
         ))
             ->add('sprint', ChoiceType::class, array(
             'label' => 'Sprints non terminés',

@@ -171,7 +171,6 @@ class ApiJira extends AbstractApi
     {
         $sprints = array();
         if ($project !== null) {
-            dump('sprint');
             $api = $this->getSprintApi($project);
             $data = $this->apiCaller->call($this->user, $api);
             foreach ($data['content']->values as $sprint) {
@@ -204,7 +203,7 @@ class ApiJira extends AbstractApi
             // Multipagination
             $startAt += self::MAX_RESULTS;
         } while (!$data['content']->isLast);
-        ksort($projects, SORT_NATURAL);
+        ksort($projects, SORT_NATURAL | SORT_FLAG_CASE);
 
         return $projects;
     }
@@ -226,11 +225,13 @@ class ApiJira extends AbstractApi
 
         if (!empty($searchFilters['project'])) {
             $url = $this->getFavoriteApi($searchFilters['project']);
-            $projectName = $this->apiCaller->call($this->user, $url)['content']->name;
+            $project = $this->apiCaller->call($this->user, $url)['content'];
+            $projectName = $project->name;
+            $projectId = $project->id;
 
             $favorites = $profileProvider->getFavorites($this->user);
             $jiraFavorites = $favorites->getJira();
-            $jiraFavorites[$searchFilters['project']] = $projectName;
+            $jiraFavorites[$projectName] = $projectId;
             $favorites->setJira($jiraFavorites);
             $profileProvider->editFavorites($favorites);
         }
@@ -298,6 +299,13 @@ class ApiJira extends AbstractApi
         return $this->config->getUrl().$api;
     }
 
+    /**
+     * getFavorites API getter.
+     *
+     * @param int $board
+     *
+     * @return string
+     */
     private function getFavoriteApi($board)
     {
         $api = self::REST_AGILE.'board/'.$board;

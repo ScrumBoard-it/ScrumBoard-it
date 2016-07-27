@@ -137,7 +137,7 @@ class DefaultController extends Controller
      *
      * @return Response
      */
-    public function favorite(Request $request)
+    public function favoriteAction(Request $request)
     {
         $apiService = $this->get($this->getUser()->getApi());
         $profileService = $this->get('profile.provider');

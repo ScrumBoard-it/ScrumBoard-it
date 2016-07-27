@@ -16,6 +16,7 @@ use ScrumBoardItBundle;
 use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
 use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Mapping\Favorites;
+use ScrumBoardItBundle\Form\Type\Profile\FavoritesProfileType;
 
 /**
  * Profile Provider.
@@ -66,7 +67,15 @@ class ProfileProvider
                 $formType = JiraProfileType::class;
                 $entity = JiraConfiguration::class;
                 $options = array(
-                    'data' => $this->getJiraConfiguration($user), );
+                    'data' => $this->getJiraConfiguration($user),
+                );
+                break;
+            case 'favorites':
+                $formType = FavoritesProfileType::class;
+                $entity = Favorites::class;
+                $options = array(
+                    'data' => $this->getFavorites($user),
+                );
                 break;
             case 'general':
             default:
@@ -92,13 +101,21 @@ class ProfileProvider
         $data = $form->getData();
         switch ($form->getName()) {
             case 'general_profile':
-                $this->persistGeneralProfile($data, $user);
+                $this->persistGeneral($data, $user);
                 break;
             case 'jira_profile':
-                $this->persistJiraProfile($data);
+                $this->persistJira($data);
+                break;
+            case 'favorites_profile':
+                $this->persistFavorites($data, $user);
                 break;
             default: break;
         }
+    }
+
+    public function persistFavorites($data, User $user)
+    {
+        $this->em->flush($data);
     }
 
     /**
@@ -109,7 +126,7 @@ class ProfileProvider
      *
      * @throws \Exception
      */
-    private function persistGeneralProfile($data, User $user)
+    private function persistGeneral($data, User $user)
     {
         $encoder = $this->encoderService->getEncoder($user);
         $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
@@ -134,7 +151,7 @@ class ProfileProvider
      *
      * @throws \Exception
      */
-    private function persistJiraProfile(JiraConfiguration $jiraConfiguration)
+    private function persistJira(JiraConfiguration $jiraConfiguration)
     {
         if (empty($jiraConfiguration->getPrintedTag())) {
             $jiraConfiguration->setPrintedTag(self::DEFAULT_TAG);
@@ -209,6 +226,9 @@ class ProfileProvider
             case 'jira':
                 $include = 'jira';
                 break;
+            case 'favorites':
+                $include = 'favorites';
+                break;
             case 'general':
             default:
                 $include = 'general';
@@ -274,8 +294,7 @@ class ProfileProvider
                     'userId' => $user->getId(),
             ));
         } catch (\Exception $e) {
-            // throw new \Exception('Erreur lors de la récupération des favoris.');
-            throw $e;
+            throw new \Exception('Erreur lors de la récupération des favoris.');
         }
     }
 

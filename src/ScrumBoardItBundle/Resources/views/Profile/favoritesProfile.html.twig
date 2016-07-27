@@ -1,0 +1,24 @@
+<h2>Gérer les favoris</h2>
+<p>Désélectionnez les projets que vous voulez supprimer de la liste de vos favoris.</p>
+<div class="row form">
+    {% set hasForm = false %}
+        {% for bugtracker in form if 'token' not in bugtracker.vars.name %}
+            {% set hasForm = true %}
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <h4>{{ bugtracker.vars.label }}</h4>
+                    <table>
+                        {% for choice in bugtracker %}
+                            <tr><th>{{ form_row(choice) }}</th></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    {% if not hasForm %}
+        <div class="alert alert-info">
+            Vous n'avez enregistré aucun favori.<br/>
+            Pour en ajouter, cliquez sur le bouton étoile après après avoir sélectionné un projet.
+        </div>
+    {% endif %}
+</div>
