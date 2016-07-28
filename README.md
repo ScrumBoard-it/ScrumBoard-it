@@ -1,4 +1,7 @@
-SBI
+ScrumBoard-it
 ===
 
-A Symfony project created on April 5, 2016, 12:44 pm.
+Symfony3 Application.
+A tool to facilitate Scrum card printing on sticky notes from Atlassian Jira and GitHub.
+
+Note : you will need a database to run it locally.
