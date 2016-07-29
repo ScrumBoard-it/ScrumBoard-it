@@ -3,9 +3,9 @@
 namespace ScrumBoardItBundle\Exception;
 
 /**
- * Description of InvalidApiResponseException.
+ * Description of BadConnectionException.
  *
- * @author Johan Rouve <johan.rouve@gmail.com>
+ * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
 class BadConnectionException extends \Exception
 {

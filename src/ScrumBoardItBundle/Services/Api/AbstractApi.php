@@ -6,8 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle\Services\ApiCaller;
+use ScrumBoardItBundle\Services\Persist\Favorites;
+use ScrumBoardItBundle\Services\ProfileProvider;
+use ScrumBoardItBundle\Entity\Mapping\User;
 
 /**
  * Abstract Api.
@@ -16,6 +18,11 @@ use ScrumBoardItBundle\Services\ApiCaller;
  */
 abstract class AbstractApi
 {
+    /**
+     * @var User
+     */
+    protected $user;
+
     /**
      * Api configuration.
      *
@@ -29,29 +36,17 @@ abstract class AbstractApi
     protected $apiCaller;
 
     /**
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
      * Constructor.
      *
-     * @param TokenStorage  $token
-     * @param mixed         $config
-     * @param ApiCaller     $apiCaller
-     * @param EntityManager $em
+     * @param TokenStorage $token
+     * @param mixed        $config
+     * @param ApiCaller    $apiCaller
      */
-    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller)
     {
         $this->user = $token->getToken()->getUser();
         $this->config = $config;
         $this->apiCaller = $apiCaller;
-        $this->em = $em;
     }
 
     /**
@@ -65,18 +60,6 @@ abstract class AbstractApi
             'project' => null,
             'sprint' => null,
         ));
-    }
-
-    /**
-     * Get configuration.
-     *
-     * @return User
-     */
-    public function getDatabaseUser()
-    {
-        $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')->find($this->user->getId());
-
-        return $user;
     }
 
     /**
@@ -135,7 +118,7 @@ abstract class AbstractApi
     abstract public function getSelectedIssues(Request $request, $selected);
 
     /**
-     * Return the searc list.
+     * Return the search list.
      *
      * @param Request $request
      *
@@ -149,4 +132,12 @@ abstract class AbstractApi
      * @param array $selected
      */
     abstract public function addFlag(Request $request, $selected);
+
+    /**
+     * Add a project to the favorite list.
+     *
+     * @param Request         $request
+     * @param ProfileProvider $profileProvider
+     */
+    abstract public function addFavorite(Request $request, Favorites $favoritesService);
 }

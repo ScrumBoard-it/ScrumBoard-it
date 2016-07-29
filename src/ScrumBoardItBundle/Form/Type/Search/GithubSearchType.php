@@ -24,6 +24,7 @@ class GithubSearchType extends AbstractType
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
             'placeholder' => 'Choisissez un dépôt',
+            'preferred_choices' => $options['favorites']->getGitHub(),
         ))
             ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones actifs',
@@ -42,6 +43,7 @@ class GithubSearchType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'ScrumBoardItBundle\Entity\Search\SearchEntity',
+            'favorites' => array(),
         ));
     }
 

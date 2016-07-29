@@ -20,6 +20,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li class=""><a href="{{ path('profile') }}?page=general">Général</a></li>
                 <li class=""><a href="{{ path('profile') }}?page=jira">Jira</a></li>
+                <li class=""><a href="{{ path('profile') }}?page=favorites">Favoris</a></li>
             </ul>
         </div>
         <div class="col-md-10">
@@ -27,7 +28,7 @@
                 <div class="alert alert-danger">{{ error.message|trans({},'messages') }}</div>
             {% endif %}
             {% if info %}
-                <div class="alert alert-info">{{ info }}</div>
+                <div class="alert alert-success">{{ info }}</div>
             {% endif %}
         	<div id="" class="container well">
         		{{ form_start(form) }}

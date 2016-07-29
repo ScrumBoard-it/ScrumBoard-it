@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use ScrumBoardItBundle\Entity\Mapping\User;
 
 /**
  * Abstract Api Authenticator.
@@ -22,6 +23,9 @@ abstract class ApiAuthenticator extends AbstractAuthenticator
      */
     private $token;
 
+    /**
+     * @var User
+     */
     private $user;
 
     /**

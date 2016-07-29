@@ -7,6 +7,8 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
+use ScrumBoardItBundle\Entity\Mapping\User;
+use ScrumBoardItBundle\Services\Persist\Favorites;
 
 /**
  * GitHub service.
@@ -27,7 +29,7 @@ class ApiGithub extends AbstractApi
         do {
             $page = $this->apiCaller->call($this->user, $api);
             foreach ($page['content'] as $project) {
-                $projects['Propriétaire: '.$project->owner->login][$project->name] = $project->full_name;
+                $projects[$project->full_name] = $project->full_name;
                 if ($page['links'][0]['rel'] === 'first') {
                     $api = null;
                 } else {
@@ -215,6 +217,19 @@ class ApiGithub extends AbstractApi
                 $content = '["Printed"]';
                 $this->apiCaller->send($this->user, $url, $content, 1);
             }
+        }
+    }
+
+    public function addFavorite(Request $request, Favorites $favoritesService)
+    {
+        $project = $request->get('github_search')['project'];
+
+        if (!empty($project)) {
+            $favorites = $favoritesService->getEntity();
+            $githubFavorites = $favorites->getGithub();
+            $githubFavorites[$project] = $project;
+            $favorites->setGithub($githubFavorites);
+            $favoritesService->flushEntity($favorites);
         }
     }
 

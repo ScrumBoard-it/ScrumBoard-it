@@ -25,12 +25,12 @@ class ProfileController extends Controller
         }
         $page = $request->get('page', 'general');
         $profileService = $this->get('profile.provider');
-        $form = $profileService->getForm($request, $this->getUser(), $page);
+        $form = $profileService->getForm($request, $page);
         $info = null;
         $error = null;
         if ($form->isValid() && $form->isSubmitted()) {
             try {
-                $profileService->persist($form, $this->getUser());
+                $form = $profileService->submitForm($form);
                 $info = 'Les modifications ont été enregistrées.';
             } catch (\Exception $e) {
                 $error = $e;

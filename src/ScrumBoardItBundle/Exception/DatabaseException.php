@@ -3,15 +3,15 @@
 namespace ScrumBoardItBundle\Exception;
 
 /**
- * Description of InvalidApiResponseException.
+ * Description of DatabaseException.
  *
  * @author Brieuc Pouliquen <brieuc.pouliquen@canaltp.fr>
  */
-class InvalidApiResponseException extends \Exception
+class DatabaseException extends \Exception
 {
     public function __construct()
     {
-        $message = sprintf('Le service distant a rencontré une erreur. Veuillez réessayer.');
+        $message = sprintf('Erreur lors de la connexion à la base de données. Veuillez réessayer.');
         parent::__construct($message);
     }
 }

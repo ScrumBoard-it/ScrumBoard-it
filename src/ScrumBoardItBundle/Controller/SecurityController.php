@@ -65,15 +65,22 @@ class SecurityController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('profile.provider')->register($user);
+                $this->get('general.persist')->initiate(array(
+                    'user' => $user,
+                ));
                 $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $this->get('security.token_storage')->setToken($token);
                 $this->get('session')->set('_security_main', serialize($token));
+
+                $this->get('jira_configuration.persist')->initiate();
+                $this->get('favorites.persist')->initiate();
+                $this->get('user.provider')->loadUserByUsername($user->getUsername());
 
                 return $this->redirect('login');
             } catch (UniqueConstraintViolationException $e) {
                 $error = new \Exception("Désolé, ce nom d'utilisateur est déjà utilisé...");
             } catch (\Exception $e) {
+                dump($e);
                 $error = new \Exception("Une erreur s'est produite, veuillez réessayer.");
             }
         }

@@ -7,6 +7,8 @@ use ScrumBoardItBundle\Form\Type\Search\VisitorSearchType;
 use ScrumBoardItBundle\Entity\Issue\Task;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\HttpFoundation\Session\Session;
+use ScrumBoardItBundle\Services\Persist\Favorites;
 
 /**
  * Visitor service.
@@ -37,7 +39,12 @@ class ApiVisitor extends AbstractApi
     /**
      * @var TokenStorage
      */
-    protected $tokenStorage;
+    private $tokenStorage;
+
+    /**
+     * @var Session
+     */
+    private $session;
 
     /**
      * Constructor.
@@ -45,12 +52,12 @@ class ApiVisitor extends AbstractApi
      * @param RequestStack $requestStack
      * @param TokenStorage $tokenStorage
      */
-    public function __construct(RequestStack $requestStack, TokenStorage $tokenStorage)
+    public function __construct(Session $session, TokenStorage $tokenStorage)
     {
-        $session = $requestStack->getCurrentRequest()->getSession();
-        $this->printedIssues = $session->get('printed_issues', []);
-        $this->generateIssues();
+        $this->session = $session;
+        $this->printedIssues = $this->session->get('printed_issues', []);
         $this->tokenStorage = $tokenStorage;
+        $this->generateIssues();
     }
 
     /**
@@ -323,5 +330,16 @@ class ApiVisitor extends AbstractApi
         $user = $this->tokenStorage->getToken()->getUser();
 
         return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addFavorite(Request $request, Favorites $favoritesService)
+    {
+        $favorites = $favoritesService->getEntity();
+        $project = $request->get('visitor_search')['project'];
+        $favorites[$project] = $project;
+        $this->session->set('favorites', $favorites);
     }
 }

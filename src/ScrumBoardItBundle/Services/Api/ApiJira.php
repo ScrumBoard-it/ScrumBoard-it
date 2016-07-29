@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ScrumBoardItBundle\Services\ApiCaller;
-use Doctrine\ORM\EntityManager;
+use ScrumBoardItBundle\Services\Persist\Favorites;
 
 /**
  * Jira service.
@@ -24,10 +24,10 @@ class ApiJira extends AbstractApi
     const LABEL_POC = 'POC';
     const MAX_RESULTS = 50;
 
-    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller)
     {
-        parent::__construct($token, $config, $apiCaller, $em);
-        $this->config = $config->getJiraConfiguration($this->user);
+        parent::__construct($token, $config, $apiCaller);
+        $this->config = $config->get('user_configuration')['jira'];
     }
     /**
      * {@inheritdoc}
@@ -216,6 +216,27 @@ class ApiJira extends AbstractApi
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addFavorite(Request $request, Favorites $favoritesService)
+    {
+        $searchFilters = $this->initSearchFilters($request->get('jira_search'));
+
+        if (!empty($searchFilters['project'])) {
+            $url = $this->getFavoriteApi($searchFilters['project']);
+            $project = $this->apiCaller->call($this->user, $url)['content'];
+            $projectName = $project->name;
+            $projectId = $project->id;
+
+            $favorites = $favoritesService->getEntity();
+            $jiraFavorites = $favorites->getJira();
+            $jiraFavorites[$projectName] = $projectId;
+            $favorites->setJira($jiraFavorites);
+            $favoritesService->flushEntity($favorites);
+        }
+    }
+
+    /**
      * Sprint API getter.
      *
      * @param int $project
@@ -265,6 +286,20 @@ class ApiJira extends AbstractApi
     private function getFlagIssuesApi()
     {
         $api = self::REST_API.'issue/';
+
+        return $this->config->getUrl().$api;
+    }
+
+    /**
+     * getFavorites API getter.
+     *
+     * @param int $board
+     *
+     * @return string
+     */
+    private function getFavoriteApi($board)
+    {
+        $api = self::REST_AGILE.'board/'.$board;
 
         return $this->config->getUrl().$api;
     }
