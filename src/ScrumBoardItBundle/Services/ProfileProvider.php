@@ -4,19 +4,10 @@ namespace ScrumBoardItBundle\Services;
 
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use ScrumBoardItBundle\Form\Type\Profile\GeneralProfileType;
-use ScrumBoardItBundle\Form\Type\Profile\JiraProfileType;
-use ScrumBoardItBundle\Entity\Profile\GeneralProfileEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Form;
-use ScrumBoardItBundle\Entity\Mapping\User;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Doctrine\ORM\EntityManager;
-use ScrumBoardItBundle;
-use ScrumBoardItBundle\Entity\Mapping\JiraConfiguration;
-use ScrumBoardItBundle\Form\Type\ConfigurationType;
 use ScrumBoardItBundle\Entity\Mapping\Favorites;
-use ScrumBoardItBundle\Form\Type\Profile\FavoritesProfileType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Profile Provider.
@@ -26,30 +17,25 @@ use ScrumBoardItBundle\Form\Type\Profile\FavoritesProfileType;
 class ProfileProvider
 {
     /**
-     * @var string
-     */
-    const DEFAULT_TAG = 'Post-it';
-
-    /**
      * @var FormFactory
      */
     private $formFactory;
 
     /**
-     * @var EntityManager
+     * @var array
      */
-    private $em;
+    private $persistServices;
 
     /**
-     * @var EncoderFactoryInterface
+     * @var Session
      */
-    private $encoderService;
+    private $session;
 
-    public function __construct(FormFactory $formFactory, EntityManager $em, EncoderFactoryInterface $encoderService)
+    public function __construct(Session $session, FormFactory $formFactory, array $persistServices)
     {
+        $this->session = $session;
         $this->formFactory = $formFactory;
-        $this->em = $em;
-        $this->encoderService = $encoderService;
+        $this->persistServices = $persistServices;
     }
 
     /**
@@ -60,157 +46,38 @@ class ProfileProvider
      *
      * @return FormInterface
      */
-    public function getForm(Request $request, User $user, $page)
+    public function getForm(Request $request, $page)
     {
         switch ($page) {
             case 'jira':
-                $formType = JiraProfileType::class;
-                $entity = JiraConfiguration::class;
-                $options = array(
-                    'data' => $this->getJiraConfiguration($user),
-                );
+                $service = $this->persistServices['jira_configuration'];
+                $data = $service->getEntity();
                 break;
             case 'favorites':
-                $formType = FavoritesProfileType::class;
-                $entity = Favorites::class;
-                $options = array(
-                    'data' => $this->getFavorites($user),
-                );
+                $service = $this->persistServices['favorites'];
+                $data = $service->getEntity();
                 break;
             case 'general':
             default:
-                $formType = GeneralProfileType::class;
-                $entity = GeneralProfileEntity::class;
-                $options = array();
+                $service = $this->persistServices['general'];
+                $data = null;
                 break;
         }
-        $form = $this->formFactory->create($formType, new $entity(), $options);
+        $options = array(
+            'data' => $data,
+        );
+        $form = $this->formFactory->create($service->getFormConfiguration()['form'], $service->getFormConfiguration()['entity'], $options);
         $form->handleRequest($request);
 
         return $form;
     }
 
-    /**
-     * Persist data form.
-     *
-     * @param Form $form
-     * @param User $user
-     */
-    public function persist(Form $form, User $user)
+    public function submitForm(Form $form)
     {
-        $data = $form->getData();
-        switch ($form->getName()) {
-            case 'general_profile':
-                $this->persistGeneral($data, $user);
-                break;
-            case 'jira_profile':
-                $this->persistJira($data);
-                break;
-            case 'favorites_profile':
-                $this->persistFavorites($data, $user);
-                break;
-            default: break;
-        }
-    }
+        $service = explode('.', $form->getName())[0];
+        $this->persistServices[$service]->flushEntity($form->getData());
 
-    public function persistFavorites($data, User $user)
-    {
-        $this->em->flush($data);
-    }
-
-    /**
-     * Persist General data form.
-     *
-     * @param \stdClass $data
-     * @param User      $user
-     *
-     * @throws \Exception
-     */
-    private function persistGeneral($data, User $user)
-    {
-        $encoder = $this->encoderService->getEncoder($user);
-        $user = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
-            ->find($user->getId());
-        if ($encoder->isPasswordValid($user->getPassword(), $data->getOldPassword(), $user->getSalt())) {
-            $user->setPassword($encoder->encodePassword($data->getNewPassword(), $user->getSalt()));
-            $user->setPassword($user->getPassword());
-            try {
-                $this->em->flush();
-            } catch (\Exception $e) {
-                throw new \Exception('Une erreur est survenue, veuillez rééssayer.');
-            }
-        } else {
-            throw new \Exception('Mot de passe intial erroné.');
-        }
-    }
-
-    /**
-     * Persist Jira data form.
-     *
-     * @param JiraConfiguration $jiraConfiguration
-     *
-     * @throws \Exception
-     */
-    private function persistJira(JiraConfiguration $jiraConfiguration)
-    {
-        if (empty($jiraConfiguration->getPrintedTag())) {
-            $jiraConfiguration->setPrintedTag(self::DEFAULT_TAG);
-        }
-        try {
-            $this->em->flush();
-        } catch (\Exception $e) {
-            throw new \Exception('Une erreur est survenue, veuillez rééssayer.');
-        }
-    }
-
-    /**
-     * Jira configuration getter.
-     *
-     * @param User $user
-     *
-     * @throws \Exception
-     *
-     * @return object
-     */
-    public function getJiraConfiguration(User $user)
-    {
-        try {
-            return $this->em->getRepository('ScrumBoardItBundle:Mapping\JiraConfiguration')
-            ->findOneBy(array(
-                'userId' => $user->getId(),
-            ));
-        } catch (\Exception $e) {
-            throw new \Exception("Nous n'avons pas pu récupérer votre profil, veuillez rééssayer.");
-        }
-    }
-
-    /**
-     * Register new user.
-     *
-     * @param User $user
-     */
-    public function register(User $user)
-    {
-        $password = $this->encoderService->getEncoder($user)
-            ->encodePassword($user->getPlainPassword(), $user->getSalt());
-        $user->setPassword($password);
-        $user->addRole('IS_AUTHENTICATED_FULLY');
-        $this->em->persist($user);
-        $this->em->flush();
-
-        $userId = $this->em->getRepository('ScrumBoardItBundle:Mapping\User')
-            ->findOneByUsername($user->getUsername())
-            ->getId();
-
-        $jiraConfiguration = new JiraConfiguration();
-        $jiraConfiguration->setUserId($userId);
-        $this->em->persist($jiraConfiguration);
-
-        $favorites = new Favorites();
-        $favorites->setUserId($userId);
-        $this->em->persist($favorites);
-
-        $this->em->flush();
+        return $form;
     }
 
     /**
@@ -236,70 +103,5 @@ class ProfileProvider
         }
 
         return 'ScrumBoardItBundle:Profile:'.$include.'Profile.html.twig';
-    }
-
-    /**
-     * Set and return new template configuration.
-     *
-     * @param Request $request
-     * @param User    $user
-     *
-     * @return User
-     */
-    public function setTemplateConfiguration(Request $request, User $user)
-    {
-        $configurationForm = $this->formFactory->create(ConfigurationType::class, $user);
-        $configurationForm->handleRequest($request);
-        $user->setConfiguration(array(
-            'user_story' => $configurationForm->get('user_story')->getData(),
-            'sub_task' => $configurationForm->get('sub_task')->getData(),
-            'poc' => $configurationForm->get('poc')->getData(),
-        ));
-        $this->em->flush();
-
-        return $configurationForm;
-    }
-
-    /**
-     * Return an array of the user database configurations.
-     *
-     * @param User $user
-     *
-     * @return array
-     */
-    public function getUserConfiguration(User $user)
-    {
-        return array(
-            'jira' => $this->getJiraConfiguration($user),
-        );
-    }
-
-    /**
-     * Return the favorites user's projects.
-     *
-     * @param User $user
-     *
-     * @throws \Exception
-     *
-     * @return Favorites
-     */
-    public function getFavorites(User $user)
-    {
-        if ($user->getUsername() === 'visitor') {
-            return new Favorites();
-        }
-        try {
-            return $this->em->getRepository('ScrumBoardItBundle:Mapping\Favorites')
-                ->findOneBy(array(
-                    'userId' => $user->getId(),
-            ));
-        } catch (\Exception $e) {
-            throw new \Exception('Erreur lors de la récupération des favoris.');
-        }
-    }
-
-    public function editFavorites(Favorites $favorites)
-    {
-        $this->em->flush($favorites);
     }
 }

@@ -7,8 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ScrumBoardItBundle\Form\Type\Search\JiraSearchType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ScrumBoardItBundle\Services\ApiCaller;
-use Doctrine\ORM\EntityManager;
-use ScrumBoardItBundle\Services\ProfileProvider;
+use ScrumBoardItBundle\Services\Persist\Favorites;
 
 /**
  * Jira service.
@@ -25,10 +24,10 @@ class ApiJira extends AbstractApi
     const LABEL_POC = 'POC';
     const MAX_RESULTS = 50;
 
-    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller, EntityManager $em)
+    public function __construct(TokenStorage $token, $config, ApiCaller $apiCaller)
     {
-        parent::__construct($token, $config, $apiCaller, $em);
-        $this->config = $config->getJiraConfiguration($this->user);
+        parent::__construct($token, $config, $apiCaller);
+        $this->config = $config->get('user_configuration')['jira'];
     }
     /**
      * {@inheritdoc}
@@ -219,7 +218,7 @@ class ApiJira extends AbstractApi
     /**
      * {@inheritdoc}
      */
-    public function addFavorite(Request $request, ProfileProvider $profileProvider)
+    public function addFavorite(Request $request, Favorites $favoritesService)
     {
         $searchFilters = $this->initSearchFilters($request->get('jira_search'));
 
@@ -229,20 +228,12 @@ class ApiJira extends AbstractApi
             $projectName = $project->name;
             $projectId = $project->id;
 
-            $favorites = $profileProvider->getFavorites($this->user);
+            $favorites = $favoritesService->getEntity();
             $jiraFavorites = $favorites->getJira();
             $jiraFavorites[$projectName] = $projectId;
             $favorites->setJira($jiraFavorites);
-            $profileProvider->editFavorites($favorites);
+            $favoritesService->flushEntity($favorites);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFavorites(Request $request, ProfileProvider $profileProvider)
-    {
-        return $profileProvider->getFavorites($this->user)->getJira();
     }
 
     /**

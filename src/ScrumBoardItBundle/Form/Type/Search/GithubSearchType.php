@@ -24,7 +24,7 @@ class GithubSearchType extends AbstractType
             'label' => 'Dépôts',
             'choices' => $githubSearch->getProjects(),
             'placeholder' => 'Choisissez un dépôt',
-            'preferred_choices' => $options['favorites'],
+            'preferred_choices' => $options['favorites']->getGitHub(),
         ))
             ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones actifs',

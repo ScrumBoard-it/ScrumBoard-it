@@ -3,12 +3,7 @@ services:
        class: ScrumBoardItBundle\Security\User\UserProvider
        arguments:
            - '@doctrine.orm.entity_manager'
-   profile.provider:
-     class: ScrumBoardItBundle\Services\ProfileProvider
-     arguments:
-           - '@form.factory'
-           - '@doctrine.orm.entity_manager'
-           - '@security.encoder_factory'
+           - '@session'
    main.authenticator:
        class: ScrumBoardItBundle\Security\MainAuthenticator
        arguments:
@@ -24,7 +19,7 @@ services:
            - '@router'
            - '@api.caller'
            - '@security.token_storage'
-           - '@profile.provider'
+           - '@session'
    github.authenticator:
        class: ScrumBoardItBundle\Security\GitHubAuthenticator
        arguments:
@@ -36,7 +31,7 @@ services:
    discover.api:
        class: ScrumBoardItBundle\Services\Api\ApiVisitor
        arguments:
-           - '@request_stack'
+           - '@session'
            - '@security.token_storage'
    api.caller:
        class: ScrumBoardItBundle\Services\ApiCaller
@@ -44,9 +39,8 @@ services:
        class: ScrumBoardItBundle\Services\Api\ApiJira
        arguments:
            - '@security.token_storage'
-           - '@profile.provider'
+           - '@session'
            - '@api.caller'
-           - '@doctrine.orm.entity_manager'
    github.api:
        class: ScrumBoardItBundle\Services\Api\ApiGithub
        arguments:
@@ -55,3 +49,29 @@ services:
               host: https://api.github.com/
            - '@api.caller'
            - '@doctrine.orm.entity_manager'
+   general.persist:
+     class: ScrumBoardItBundle\Services\Persist\General
+     arguments:
+           - '@security.token_storage'
+           - '@doctrine.orm.entity_manager'
+           - '@security.encoder_factory'
+   jira_configuration.persist:
+     class: ScrumBoardItBundle\Services\Persist\JiraConfiguration
+     arguments:
+           - '@security.token_storage'
+           - '@doctrine.orm.entity_manager'
+   favorites.persist:
+     class: ScrumBoardItBundle\Services\Persist\Favorites
+     arguments:
+           - '@security.token_storage'
+           - '@doctrine.orm.entity_manager'
+           - '@session'
+   profile.provider:
+     class: ScrumBoardItBundle\Services\ProfileProvider
+     arguments:
+           - '@session'
+           - '@form.factory'
+           - 
+              general: '@general.persist'
+              jira_configuration: '@jira_configuration.persist'
+              favorites: '@favorites.persist'

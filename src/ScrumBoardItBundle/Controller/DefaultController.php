@@ -41,7 +41,7 @@ class DefaultController extends Controller
         $form = $this->createForm(BugtrackerType::class);
         $form->handleRequest($request);
 
-        $options = $this->get('profile.provider')->getUserConfiguration($this->getUser());
+        $options = $request->getSession()->get('user_configuration');
 
         // get the login error if there is one
         $error = $this->get('security.authentication_utils')->getLastAuthenticationError();
@@ -61,13 +61,12 @@ class DefaultController extends Controller
     {
         if (!empty($this->getUser()->getApi())) {
             $apiService = $this->get($this->getUser()->getApi());
-            $profileService = $this->get('profile.provider');
 
-            $configurationForm = $profileService->setTemplateConfiguration($request, $apiService->getDatabaseUser());
+            $configurationForm = $this->get('general.persist')->setTemplateConfiguration($request, $this->get('form.factory'));
 
             $apiSearch = $apiService->getSearchFilters($request);
             $issues = $apiService->searchIssues($apiSearch['search_filters']);
-            $favorites = $apiService->getFavorites($request, $profileService);
+            $favorites = $this->get('favorites.persist')->getEntity();
             $form = $this->createForm($apiService->getFormType(), new SearchEntity($apiSearch['search_filters']), array('favorites' => $favorites));
 
             return $this->render('ScrumBoardItBundle:Default:index.html.twig', array(
@@ -93,8 +92,7 @@ class DefaultController extends Controller
     {
         $apiService = $this->get($this->getUser()->getApi());
         $selected = $request->request->get('issues');
-        $user = $apiService->getDatabaseUser();
-        $configuration = $user->getConfiguration();
+        $configuration = $this->getUser()->getConfiguration();
 
         $templateForm = $this->createForm(ConfigurationType::class);
         $templates = array(
@@ -140,8 +138,7 @@ class DefaultController extends Controller
     public function favoriteAction(Request $request)
     {
         $apiService = $this->get($this->getUser()->getApi());
-        $profileService = $this->get('profile.provider');
-        $apiService->addFavorite($request, $profileService);
+        $apiService->addFavorite($request, $this->get('favorites.persist'));
 
         return $this->redirect('home');
     }

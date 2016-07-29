@@ -7,8 +7,8 @@ use ScrumBoardItBundle\Entity\Issue\Task;
 use ScrumBoardItBundle\Entity\Issue\SubTask;
 use ScrumBoardItBundle\Entity\Issue\IssueInterface;
 use ScrumBoardItBundle\Form\Type\Search\GithubSearchType;
-use ScrumBoardItBundle\Services\ProfileProvider;
 use ScrumBoardItBundle\Entity\Mapping\User;
+use ScrumBoardItBundle\Services\Persist\Favorites;
 
 /**
  * GitHub service.
@@ -220,25 +220,17 @@ class ApiGithub extends AbstractApi
         }
     }
 
-    public function addFavorite(Request $request, ProfileProvider $profileProvider)
+    public function addFavorite(Request $request, Favorites $favoritesService)
     {
         $project = $request->get('github_search')['project'];
 
         if (!empty($project)) {
-            $favorites = $profileProvider->getFavorites($this->user);
+            $favorites = $favoritesService->getEntity();
             $githubFavorites = $favorites->getGithub();
             $githubFavorites[$project] = $project;
             $favorites->setGithub($githubFavorites);
-            $profileProvider->editFavorites($favorites);
+            $favoritesService->flushEntity($favorites);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFavorites(Request $request, ProfileProvider $profileProvider)
-    {
-        return $profileProvider->getFavorites($this->user)->getGithub();
     }
 
     /**

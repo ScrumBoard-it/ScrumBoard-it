@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityManager;
 use ScrumBoardItBundle\Entity\Mapping\User;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * User Provider.
@@ -15,9 +16,20 @@ use ScrumBoardItBundle\Entity\Mapping\User;
  */
 class UserProvider implements UserProviderInterface
 {
-    public function __construct(EntityManager $em)
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @var Session
+     */
+    private $session;
+
+    public function __construct(EntityManager $em, Session $session)
     {
         $this->em = $em;
+        $this->session = $session;
     }
 
     /**
@@ -35,6 +47,14 @@ class UserProvider implements UserProviderInterface
         $user = $this->em
             ->getRepository('ScrumBoardItBundle:Mapping\User')
             ->findOneByUsername($username);
+        $userConfiguration = array(
+            'jira' => $this->em
+                ->getRepository('ScrumBoardItBundle:Mapping\JiraConfiguration')
+                ->findOneBy(array(
+                    'userId' => $user->getId(),
+                )),
+        );
+        $this->session->set('user_configuration', $userConfiguration);
 
         return $user;
     }
