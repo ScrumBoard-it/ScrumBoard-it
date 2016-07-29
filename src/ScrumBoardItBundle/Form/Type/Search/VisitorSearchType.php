@@ -25,7 +25,6 @@ class VisitorSearchType extends AbstractType
             'choices' => $visitorSearch->getProjects(),
             'placeholder' => 'Sélectionnez un projet',
             'preferred_choices' => $options['favorites'],
-
         ))
         ->add('sprint', ChoiceType::class, array(
             'label' => 'Milestones',
