@@ -63,7 +63,7 @@ class ApiJira extends AbstractApi
             $task->setProject($issue->fields->project->key);
             $task->setTitle($issue->fields->summary);
             $task->setDescription($issue->fields->description);
-            $task->setPrinted((!empty($issue->fields->labels[0]) && $issue->fields->labels[0] === $this->config->getPrintedTag()));
+            $task->setPrinted(is_array($issue->fields->labels) && in_array($this->config->getPrintedTag(), $issue->fields->labels));
             $task->setUserStory($issue->fields->issuetype->name === self::LABEL_US);
             $task->setProofOfConcept(in_array(self::LABEL_POC, $issue->fields->labels));
 
