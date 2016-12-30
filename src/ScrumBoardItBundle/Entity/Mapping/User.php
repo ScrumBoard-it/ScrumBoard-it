@@ -52,7 +52,12 @@ class User implements UserInterface, EquatableInterface
      *
      * @ORM\Column(name="configuration", type="array", nullable=true)
      */
-    private $configuration;
+    private $configuration = array(
+        'Userstory' => 0,
+        'Subtask' => 0,
+        'Task' => 0,
+        'Poc' => 0,
+    );
 
     /**
      * @var string
@@ -218,14 +223,6 @@ class User implements UserInterface, EquatableInterface
      */
     public function getConfiguration()
     {
-        if (empty($this->configuration)) {
-            $this->configuration = array(
-                'user_story' => 0,
-                'sub_task' => 0,
-                'poc' => 0,
-            );
-        }
-
         return $this->configuration;
     }
 

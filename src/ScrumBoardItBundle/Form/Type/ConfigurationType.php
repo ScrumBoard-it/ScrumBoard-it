@@ -15,33 +15,42 @@ class ConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user_story', ChoiceType::class, array(
+            ->add('Userstory', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => 'Choix du template des User Story: ',
+                'label' => 'Choix du template des User Story :',
                 'choices' => array(
                     'default' => 0,
                     'custom1' => 1,
                     'custom2' => 2,
+                    'custom3' => 3,
                 ),
-                'property_path' => 'configuration[user_story]',
+                'property_path' => 'configuration[Userstory]',
             ))
-            ->add('sub_task', ChoiceType::class, array(
+            ->add('Task', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => 'Choix du template des Subtask: ',
+                'label' => 'Choix du template des Taches :',
+                'choices' => array(
+                    'default' => 0,
+                ),
+                'property_path' => 'configuration[Task]',
+            ))
+            ->add('Subtask', ChoiceType::class, array(
+                'expanded' => true,
+                'label' => 'Choix du template des Subtask :',
                 'choices' => array(
                     'default' => 0,
                     'custom1' => 1,
                 ),
-                'property_path' => 'configuration[sub_task]',
+                'property_path' => 'configuration[Subtask]',
             ))
-            ->add('poc', ChoiceType::class, array(
+            ->add('Poc', ChoiceType::class, array(
                 'expanded' => true,
-                'label' => 'Choix du template des Poc: ',
+                'label' => 'Choix du template des Poc :',
                 'choices' => array(
                     'default' => 0,
                     'custom1' => 1,
                 ),
-                'property_path' => 'configuration[poc]',
+                'property_path' => 'configuration[Poc]',
             ));
     }
 

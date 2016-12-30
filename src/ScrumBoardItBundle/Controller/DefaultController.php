@@ -97,9 +97,10 @@ class DefaultController extends Controller
 
         $templateForm = $this->createForm(ConfigurationType::class);
         $templates = array(
-          'user_story' => $templateForm->get('user_story')[$configuration['user_story']],
-          'sub_task' => $templateForm->get('sub_task')[$configuration['sub_task']],
-          'poc' => $templateForm->get('poc')[$configuration['poc']],
+          'Userstory' => $templateForm->get('Userstory')[$configuration['Userstory']],
+          'Subtask' => $templateForm->get('Subtask')[$configuration['Subtask']],
+          'Task' => $templateForm->get('Task')[$configuration['Task']],
+          'Poc' => $templateForm->get('Poc')[$configuration['Poc']],
         );
 
         return $this->render('ScrumBoardItBundle:Print:tickets.html.twig', array(

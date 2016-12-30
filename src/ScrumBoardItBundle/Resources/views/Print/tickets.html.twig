@@ -9,19 +9,19 @@
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
 </head>
-<body>
+<body class="print">
     <div class="container">
         {% for issue in issues %}
             {% set type = issue.type|capitalize %}
             {% if issue.userStory %}
                 {% set type = 'Userstory' %}
-                {% set selectTemplate = templates['user_story'].config.options['label'] %}
+                {% set selectTemplate = templates[type].config.options['label'] %}
             {% elseif issue.proofOfConcept %}
                 {% set type = 'Poc' %}
-                {% set selectTemplate = templates['poc'].config.options['label'] %}
+                {% set selectTemplate = templates[type].config.options['label'] %}
             {% elseif issue.type == 'subtask' %}
                 {% set type = 'Subtask' %}
-                {% set selectTemplate = templates['sub_task'].config.options['label'] %}
+                {% set selectTemplate = templates[type].config.options['label'] %}
             {% else %}
                 {% set selectTemplate = 'default' %}
             {% endif %}

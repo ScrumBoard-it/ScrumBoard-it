@@ -224,9 +224,10 @@ class ProfileProvider
         $configurationForm = $this->formFactory->create(ConfigurationType::class, $user);
         $configurationForm->handleRequest($request);
         $user->setConfiguration(array(
-            'user_story' => $configurationForm->get('user_story')->getData(),
-            'sub_task' => $configurationForm->get('sub_task')->getData(),
-            'poc' => $configurationForm->get('poc')->getData(),
+            'Userstory' => $configurationForm->get('Userstory')->getData(),
+            'Subtask' => $configurationForm->get('Subtask')->getData(),
+            'Task' => $configurationForm->get('Task')->getData(),
+            'Poc' => $configurationForm->get('Poc')->getData(),
         ));
         $this->em->flush();
 

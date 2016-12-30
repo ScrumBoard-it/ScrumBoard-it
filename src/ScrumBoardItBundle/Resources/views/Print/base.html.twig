@@ -4,12 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}Patron - ScrumBoard-it{% endblock %}</title>
-{% stylesheets 'bundles/scrumboardit/css/print.css' filter='cssrewrite'
-%}
+{% stylesheets 'bundles/scrumboardit/css/print.css' filter='cssrewrite' %}
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
 </head>
-<body class="base">
+<body class="base print">
 	<div class="container">
 		<div class="page">
 			{% for i in 1..6 %}

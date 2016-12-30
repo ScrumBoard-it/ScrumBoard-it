@@ -2,14 +2,14 @@
     margin: 0;
 }
 
-body {
+body.print {
     margin: 0;
     padding: 0;
     font-family: Arial;
     font-size: 18pt;
 }
 
-.post-it table {
+.print .post-it table {
     border-collapse: collapse;
     margin-left: 8mm;
     bottom: 3mm;
@@ -17,24 +17,24 @@ body {
     background-color: inherit;
 }
 
-.post-it td {
+.print .post-it td {
     border: 1px solid black;
     padding-right: 20mm;
 }
 
-.container {
+.print .container {
     width: 210mm;
 }
 
-.base .post-it {
+.print.base .post-it {
     border: 1px solid #000;
 }
 
-.sf-toolbar {
+.print .sf-toolbar {
     display: none !important;
 }
 
-.post-it {
+.print .post-it {
     /*background-color: #fcdf03;*/
     background-color: #b4cf4a;
     width: 76mm;
@@ -48,23 +48,23 @@ body {
     margin-right : 10mm;
 }
 
-.post-it.userstory {
+.print .post-it.userstory {
     width: 127mm;
     background-color: #ffcc00;
     position: relative;
 }
 
-.post-it.poc {
+.print .post-it.poc {
     background-color: #9ee425;
     position: relative;
 }
 
-.post-it.subtask {
+.print .post-it.subtask {
     background-color: #ff2282;
     position: relative;
 }
 
-.post-it .header {
+.print .post-it .header {
     line-height: 12mm;
     margin: 0 auto;
     width: 90%;
@@ -72,33 +72,33 @@ body {
     border-bottom: 1px solid #000;
 }
 
-.post-it .header .id {
+.print .post-it .header .id {
     position: absolute;
     left: 0;
 }
 
-.post-it .header .comp {
+.print .post-it .header .comp {
     position: absolute;
     right: 0;
 }
 
-.post-it .header .bv {
+.print .post-it .header .bv {
     position: absolute;
     right: 0;
     padding-right: 10mm;
 }
 
-.post-it .content {
+.print .post-it .content {
     position: relative;
     overflow: hidden;
     max-height: 62mm;
 }
 
-.with-bottom .content {
+.print .with-bottom .content {
     max-height: 52mm;
 }
 
-.post-it .summary {
+.print .post-it .summary {
     margin: 0 auto;
     width: 90%;
     height: 10%;
@@ -106,7 +106,7 @@ body {
     font-size: 22pt;
 }
 
-.post-it .description {
+.print .post-it .description {
 	margin: 3mm auto;
 	width: 90%;
     height: 40mm;
@@ -115,11 +115,11 @@ body {
 	overflow: hidden;
 }
 
-.post-it .left {
+.print .post-it .left {
     float: left;
     position: absolute;
 }
-.poc .left {
+.print .poc .left {
     font-weight: bold;
     font-size: 25pt;
     border-right: 1px solid black;
@@ -128,20 +128,20 @@ body {
     height: 60mm;
 }
 
-.post-it .right {
+.print .post-it .right {
     position: relative;
     float: right;
     width: 85%;
 }
 
-.post-it .bottom .right {
+.print .post-it .bottom .right {
     right: 3mm;
     width: auto;
     bottom: 0;
     position: absolute;
 }
 
-.post-it .bottom {
+.print .post-it .bottom {
     bottom: 2mm;
     width: 90%;
     margin-left: 5%;

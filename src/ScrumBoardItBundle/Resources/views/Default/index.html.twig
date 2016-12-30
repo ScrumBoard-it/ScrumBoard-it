@@ -30,7 +30,7 @@
 
         <div id="configuration" class="well hidden">
             <div class="col-md-12">
-                <div class="context-menu-input">
+                <div class="context-menu-input print">
                     {{ form_start(configuration_form) }}
 
                         {% for type in configuration_form if 'token' not in type.vars.name %}
@@ -38,7 +38,20 @@
                             {% for choice in type %}
                                 {{ form_widget(choice) }}
                                 <label for="configuration_{{ type.vars.name }}_{{loop.index0 }}">
-                                    <img src="{{ asset('bundles/scrumboardit/images/templates/' ~type.vars.name~ '_template' ~ loop.index0 ~ '.png') }}"/>
+                                    {% include 'ScrumBoardItBundle::Print/' ~ type.vars.name ~ '/template_' ~ choice.vars.label ~'.html.twig' with {'issue': {
+                                        'type': type.vars.name|lower,
+                                        'title': 'Title',
+                                        'description': 'Description',
+                                        'number': '666',
+                                        'businessValue': 'BV',
+                                        'complexity': 'CT',
+                                        'timeBox': '6h',
+                                        'project': 'Project',
+                                        'story': 'ETQ...',
+                                        'shortTitle': 'shortTitle',
+                                        'shortDescription': 'shortDescription',
+                                        'returnOnInvestment': 'ROI',
+                                    }, 'type': type.vars.name|lower} only %}
                                 </label>
                             {% endfor %}
                         {% endfor %}

@@ -7,7 +7,7 @@ namespace ScrumBoardItBundle\Entity\Issue;
  *
  * @author Johan Rouve <johan.rouve@gmail.com>
  */
-class AbstractIssue implements IssueInterface, \JsonSerializable
+class AbstractIssue implements IssueInterface
 {
     /**
      * @var string
@@ -375,6 +375,20 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getStory()
+    {
+        $story = '';
+
+        if (preg_match('/(ETQ.+\n*\s*JS.+\n*\s*AD.+)\n/i', $this->description, $matches)) {
+            $story = $matches[1];
+        }
+
+        return $story;
+    }
+
+    /**
      * Description setter.
      *
      * @param string $description
@@ -433,27 +447,5 @@ class AbstractIssue implements IssueInterface, \JsonSerializable
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function jsonSerialize()
-    {
-        return array(
-            'type' => $this->getType(),
-            'link' => $this->getLink(),
-            'printed' => $this->isPrinted(),
-            'user_story' => $this->isUserStory(),
-            'proof_of_concept' => $this->isProofOfConcept(),
-            'project' => $this->getProject(),
-            'id' => $this->getId(),
-            'title' => $this->getTitle(),
-            'short_title' => $this->getShortTitle(),
-            'complexity' => $this->getComplexity(),
-            'business_Value' => $this->getBusinessValue(),
-            'description' => $this->getDescription(),
-            'short_description' => $this->getShortDescription(),
-            'time_box' => $this->getTimeBox(),
-        );
-    }
 }
+
