@@ -13,8 +13,8 @@
         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
       }
     },
-    "host": "api.scrumboard-it.io",
-    "basePath": "/v0",
+    "host": "j39egbas77.execute-api.us-east-1.amazonaws.com",
+    "basePath": "/dev",
     "tags": [
       {
         "name": "board",
@@ -26,7 +26,7 @@
       }
     ],
     "schemes": [
-      "http"
+      "https"
     ],
     "paths": {
       "/boards": {
