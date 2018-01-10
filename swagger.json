@@ -1,0 +1,87 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "ScrumBoard-it API",
+      "version": "0.1.0",
+      "title": "ScrumBoard-it",
+      "termsOfService": "http://scrumboard-it.io/terms/",
+      "contact": {
+        "email": "team@scrumboard-it.io"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "host": "api.scrumboard-it.io",
+    "basePath": "/v0",
+    "tags": [
+      {
+        "name": "board",
+        "description": "Agile boards",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://scrumboard-it.io"
+        }
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/boards": {
+        "get": {
+          "tags": [
+            "board"
+          ],
+          "summary": "List all accessible boards",
+          "operationId": "getBoards",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Board"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Board": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 42
+          },
+          "name": {
+            "type": "string",
+            "example": "Admin panel"
+          }
+        },
+        "xml": {
+          "name": "Board"
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    }
+  }
