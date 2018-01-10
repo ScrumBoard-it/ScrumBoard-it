@@ -1,4 +1,0 @@
-sbi:
-    resource: "@ScrumBoardItBundle/Controller/"
-    type:     annotation
-
