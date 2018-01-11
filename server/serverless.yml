@@ -1,4 +1,4 @@
-service: scrumboardit-server # NOTE: update this with your service name
+service: scrumboardit-server
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -7,26 +7,12 @@ service: scrumboardit-server # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs6.10
+  environment:
+    SERVICE_NAME: ${self:service}
 
 # you can overwrite defaults here
 #  stage: dev
 region: eu-central-1
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -52,6 +38,16 @@ functions:
 #    Define function environment variables here
 #    environment:
 #      variable2: value2
+
+plugins:
+  - serverless-plugin-optimize
+
+package:
+  individually: true
+
+custom:
+  optimize:
+    presets: ['flow']
 
 # you can add CloudFormation resource templates here
 #resources:

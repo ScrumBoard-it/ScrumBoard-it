@@ -1,0 +1,21 @@
+{
+  "name": "scrumboardit-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "boards.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flow": "flow"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.63.1",
+    "serverless-plugin-optimize": "^3.0.4-rc.1"
+  }
+}
