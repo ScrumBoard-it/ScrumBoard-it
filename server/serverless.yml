@@ -7,16 +7,10 @@ service: scrumboardit-server
 provider:
   name: aws
   runtime: nodejs6.10
+  region: eu-central-1
+#  stage: dev
   environment:
     SERVICE_NAME: ${self:service}
-
-# you can overwrite defaults here
-#  stage: dev
-region: eu-central-1
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
 
 # you can add packaging information here
 #package:
@@ -28,16 +22,23 @@ region: eu-central-1
 #    - exclude-me-dir/**
 
 functions:
-  boardsAll:
+  getBoards:
     handler: boards.all
+    timeout: 15s
     events:
       - http:
           path: boards
           method: get
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
+  getBoardById:
+    handler: boards.id
+    events:
+      - http:
+          path: boards/{boardId}
+          method: get
+          request:
+            parameters:
+              paths:
+                boardId: true
 
 plugins:
   - serverless-plugin-optimize

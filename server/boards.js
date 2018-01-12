@@ -1,46 +1,48 @@
 // @flow
 'use strict';
 
-const rp = require('request-promise');
+const http = require('request-promise');
 
 module.exports.all = (event: any, context: any, callback: (error: ?Error, data: ?LambdaResponse) => void) => {
   getNextBoards(event, [], null, callback)
 };
 
-function getNextBoards(event: any, previousBoards: Boards[], startAfter: ?string, callback: (error: ?any, data: ?LambdaResponse) => void): void {
-  let repositoriesFilter = [
-    "first: 100",
-    "affiliations:ORGANIZATION_MEMBER"
-  ];
-  if (startAfter) {
-    repositoriesFilter.push(`after: "${startAfter}"`);
-  }
+module.exports.id = (event: any, context: any, callback: (error: ?Error, data: ?LambdaResponse) => void) => {
+  const boardId: string = event.pathParameters.boardId
+  const query = `query {
+    node(id: "${boardId}") {
+      ... on Project {
+        id
+        name
+        owner {
+          ... on Repository {
+            nameWithOwner
+          }
+        }
+      }
+    }
+  }`;
 
+  queryGithub(event, query)
+    .then(rawData => {
+      const data: IdResponse = {
+        provider: 'Github',
+        board: extractBoard(rawData)
+      };
+
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(data),
+      });
+    })
+};
+
+function queryGithub(event: any, query: string): Promise<any> {
   let options = {
     method: 'POST',
     uri: 'https://api.github.com/graphql',
     body: {
-      query: `query {
-          viewer {
-          repositories(${repositoriesFilter.join(', ')}) {
-            pageInfo {
-              endCursor
-              hasNextPage
-              hasPreviousPage
-              startCursor
-            }
-            nodes {
-              nameWithOwner
-              projects(first:5, states:OPEN) {
-                nodes {
-                  id
-                  name
-                }
-              }
-            }
-          }
-        }
-      }`
+      query
     },
     headers: {
       'Authorization': `${getAuthorizationn(event)}`,
@@ -49,21 +51,57 @@ function getNextBoards(event: any, previousBoards: Boards[], startAfter: ?string
     json: true
   };
 
-  rp(options)
+  return http(options)
+}
+
+function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string, callback: (error: ?any, data: ?LambdaResponse) => void): void {
+  let repositoriesFilter = [
+    "first: 100",
+    "affiliations:ORGANIZATION_MEMBER"
+  ];
+  if (startAfter) {
+    repositoriesFilter.push(`after: "${startAfter}"`);
+  }
+
+  let query = `query {
+      viewer {
+      repositories(${repositoriesFilter.join(', ')}) {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+        nodes {
+          nameWithOwner
+          projects(first:5, states:OPEN) {
+            nodes {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }`;
+
+  queryGithub(event, query)
     .then(rawData => {
-      let pageBoards: Boards[] = extractBoards(rawData);
+      let pageBoards: Board[] = extractBoards(rawData);
       let hasNextPage: boolean = rawData.data.viewer.repositories.pageInfo.hasNextPage;
       let endCursor: string = rawData.data.viewer.repositories.pageInfo.endCursor;
-      let boards: Boards[] = previousBoards.concat(pageBoards);
+      let boards: Board[] = previousBoards.concat(pageBoards);
       if (hasNextPage) {
         getNextBoards(event, boards, endCursor, callback);
       } else {
+        const data: AllResponse = {
+          provider: 'Github',
+          boards
+        };
+        
         callback(null, {
           statusCode: 200,
-          body: JSON.stringify({
-            provider: 'Github',
-            boards
-          }),
+          body: JSON.stringify(data),
         });
       }
     })
@@ -78,8 +116,15 @@ function getNextBoards(event: any, previousBoards: Boards[], startAfter: ?string
     });
 }
 
-function extractBoards(rawData: any): Boards[] {
-  let boards: Boards[] = [];
+function extractBoard(rawData: any): Board {
+  return {
+    id: rawData.data.node.id,
+    name: `[${rawData.data.node.owner.nameWithOwner}] ${rawData.data.node.name}`
+  };
+}
+
+function extractBoards(rawData: any): Board[] {
+  let boards: Board[] = [];
 
   rawData.data.viewer.repositories.nodes.forEach(repositorie => {
     repositorie.projects.nodes.forEach(project => {
@@ -105,12 +150,22 @@ function getAuthorizationn(event: any): string {
   return authorization;
 }
 
+type AllResponse = {
+  provider: string,
+  boards: Board[]
+}
+
+type IdResponse = {
+  provider: string,
+  board: Board
+}
+
 type LambdaResponse = {
   statusCode: number,
   body: string
 }
 
-type Boards = {
+type Board = {
   id?: number,
   name: string,
 }
