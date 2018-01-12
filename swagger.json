@@ -1,87 +1,162 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "description": "ScrumBoard-it API",
-      "version": "0.1.0",
-      "title": "ScrumBoard-it",
-      "termsOfService": "http://scrumboard-it.io/terms/",
-      "contact": {
-        "email": "team@scrumboard-it.io"
-      },
-      "license": {
-        "name": "Apache 2.0",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
+  "swagger": "2.0",
+  "info": {
+    "description": "ScrumBoard-it API",
+    "version": "0.1.0",
+    "title": "ScrumBoard-it",
+    "termsOfService": "http://scrumboard-it.io/terms/",
+    "contact": {
+      "email": "team@scrumboard-it.io"
     },
-    "host": "j39egbas77.execute-api.us-east-1.amazonaws.com",
-    "basePath": "/dev",
-    "tags": [
-      {
-        "name": "board",
-        "description": "Agile boards",
-        "externalDocs": {
-          "description": "Find out more",
-          "url": "http://scrumboard-it.io"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "j39egbas77.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/dev",
+  "tags": [
+    {
+      "name": "board",
+      "description": "Agile boards",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://scrumboard-it.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/boards": {
+      "get": {
+        "tags": [
+          "board"
+        ],
+        "summary": "List all accessible boards",
+        "operationId": "getBoards",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "provider",
+                "boards"
+              ],
+              "properties": {
+                "provider": {
+                  "$ref": "#/definitions/Provider"
+                },
+                "boards": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Board"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
         }
       }
-    ],
-    "schemes": [
-      "https"
-    ],
-    "paths": {
-      "/boards": {
-        "get": {
-          "tags": [
-            "board"
-          ],
-          "summary": "List all accessible boards",
-          "operationId": "getBoards",
-          "produces": [
-            "application/xml",
-            "application/json"
-          ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "type": "array",
-                "items": {
+    },
+    "/boards/{boardId}": {
+      "get": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Find board by ID",
+        "operationId": "getBoardById",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "ID of the board to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "provider",
+                "board"
+              ],
+              "properties": {
+                "provider": {
+                  "$ref": "#/definitions/Provider"
+                },
+                "board": {
                   "$ref": "#/definitions/Board"
                 }
               }
-            },
-            "400": {
-              "description": "Invalid status value"
             }
-          }
-        }
-      }
-    },
-    "definitions": {
-      "Board": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 42
           },
-          "name": {
-            "type": "string",
-            "example": "Admin panel"
+          "400": {
+            "description": "Invalid status value"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Board": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 42
         },
-        "xml": {
-          "name": "Board"
+        "name": {
+          "type": "string",
+          "example": "Admin panel"
         }
       }
     },
-    "externalDocs": {
-      "description": "Find out more about Swagger",
-      "url": "http://swagger.io"
+    "Provider": {
+      "type": "string",
+      "enum": [
+        "Github"
+      ]
     }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
   }
+}
