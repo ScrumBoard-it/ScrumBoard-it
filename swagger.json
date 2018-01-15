@@ -131,9 +131,8 @@
       ],
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
-          "example": 42
+          "type": "string",
+          "example": "MDc6UHJvamVjdDIOTk4NA=="
         },
         "name": {
           "type": "string",

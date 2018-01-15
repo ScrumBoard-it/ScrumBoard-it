@@ -29,12 +29,14 @@ functions:
       - http:
           path: boards
           method: get
+          cors: true
   getBoardById:
     handler: boards.id
     events:
       - http:
           path: boards/{boardId}
           method: get
+          cors: true
           request:
             parameters:
               paths:

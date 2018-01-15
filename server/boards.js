@@ -32,6 +32,10 @@ module.exports.id = (event: any, context: any, callback: (error: ?Error, data: ?
 
       callback(null, {
         statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true
+        },
         body: JSON.stringify(data),
       });
     })
@@ -101,6 +105,10 @@ function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string,
         
         callback(null, {
           statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true
+          },
           body: JSON.stringify(data),
         });
       }
