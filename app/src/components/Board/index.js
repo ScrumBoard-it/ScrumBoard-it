@@ -5,7 +5,7 @@ class Board extends Component {
     return (
       <tr>
         <td>{this.props.id}</td>
-        <td><a href="#" data-id={this.props.id}>{this.props.name}</a></td>
+        <td><a data-id={this.props.id}>{this.props.name}</a></td>
       </tr>
     );
   }

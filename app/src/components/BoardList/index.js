@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Board from '../Board';
-import axios from 'axios';
 
 class BoardList extends Component {
   constructor(props) {
@@ -11,19 +10,21 @@ class BoardList extends Component {
   }
 
   componentDidMount() {
-    const url = 'https://w002fc2noj.execute-api.eu-central-1.amazonaws.com/dev/boards';
-    //const url = 'http://api.navitia.io/v1'
-    axios.request({
-      method: 'get',
-      url: url
+    const token = '';
+    const url = 'https://api.scrumboard-it.org/boards';
+    const headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + token);
+    
+    fetch(url, {
+      headers: headers
     }).then((response) => {
-      console.log(response.data);
+      return response.json();
+    }).then((json) => {
+      console.info(json);
+      this.setState({boards: json.boards});
     }).catch((error) => {
       console.error(error);
-    });
-    this.setState({boards: [
-      {id: 1, key: 1, title: 'Self'}
-    ]});
+    })
   }
 
   render() {
@@ -34,11 +35,11 @@ class BoardList extends Component {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Title</th>
+              <th>Name</th>
             </tr>
           </thead>
           <tbody>
-            {this.state.boards.map((item) => <Board id={item.id} key={item.key} name={item.title} />)}
+            {this.state.boards.map((item) => <Board id={item.id} key={item.key} name={item.name} />)}
           </tbody>
         </table>
       </div>
