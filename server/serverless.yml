@@ -24,7 +24,7 @@ provider:
 functions:
   getBoards:
     handler: boards.all
-    timeout: 15s
+    timeout: 15
     events:
       - http:
           path: boards
@@ -55,6 +55,7 @@ functions:
 
 plugins:
   - serverless-plugin-optimize
+  - serverless-domain-manager
 
 package:
   individually: true
@@ -62,3 +63,9 @@ package:
 custom:
   optimize:
     presets: ['flow']
+  customDomain:
+    domainName: api.scrumboard-it.org
+    certificateName: '*.scrumboard-it.org'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true

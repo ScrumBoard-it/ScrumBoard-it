@@ -4,24 +4,24 @@
     "description": "ScrumBoard-it API",
     "version": "0.1.0",
     "title": "ScrumBoard-it",
-    "termsOfService": "http://scrumboard-it.io/terms/",
+    "termsOfService": "https://scrumboard-it.org/terms/",
     "contact": {
-      "email": "team@scrumboard-it.io"
+      "email": "team@scrumboard-it.org"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "w002fc2noj.execute-api.eu-central-1.amazonaws.com",
-  "basePath": "/dev",
+  "host": "api.scrumboard-it.org",
+  "basePath": "",
   "tags": [
     {
       "name": "board",
       "description": "Agile boards",
       "externalDocs": {
         "description": "Find out more",
-        "url": "http://scrumboard-it.io"
+        "url": "https://scrumboard-it.org"
       }
     }
   ],
