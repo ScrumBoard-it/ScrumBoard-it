@@ -41,6 +41,52 @@ module.exports.id = (event: any, context: any, callback: (error: ?Error, data: ?
     })
 };
 
+module.exports.tasks = (event: any, context: any, callback: (error: ?Error, data: ?LambdaResponse) => void) => {
+  const boardId: string = event.pathParameters.boardId
+  const query = `query {
+    node(id: "${boardId}") {
+      ... on Project {
+        columns(first: 100) {
+          nodes {
+            cards(first: 100) {
+              edges {
+                node {
+                  id
+                  note
+                  content {
+                    ... on Issue {
+                      number
+                      title
+                      body
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }`;
+
+  queryGithub(event, query)
+    .then(rawData => {
+      const data: TasksResponse = {
+        provider: 'Github',
+        tasks: extractTasks(rawData)
+      };
+
+      callback(null, {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true
+        },
+        body: JSON.stringify(data),
+      });
+    })
+};
+
 function queryGithub(event: any, query: string): Promise<any> {
   let options = {
     method: 'POST',
@@ -131,6 +177,34 @@ function extractBoard(rawData: any): Board {
   };
 }
 
+function extractTasks(rawData: any): Task[] {
+  let tasks: Task[] = [];
+  
+  rawData.data.node.columns.nodes.forEach(column => {
+    column.cards.edges.forEach(edge => {
+      const card = edge.node
+      let task: Task = {
+        id: card.id,
+        description: "",
+      };
+
+      if (card.note) {
+        task.description = card.note;
+      } else if (card.content) {
+        const issue = card.content;
+
+        task.key = `#${issue.number}`;
+        task.title = issue.title;
+        task.description = issue.body;
+      }
+
+      tasks.push(task);
+    });
+  });
+
+  return tasks;
+}
+
 function extractBoards(rawData: any): Board[] {
   let boards: Board[] = [];
 
@@ -160,20 +234,35 @@ function getAuthorizationn(event: any): string {
 
 type AllResponse = {
   provider: string,
-  boards: Board[]
+  boards: Board[],
 }
 
 type IdResponse = {
   provider: string,
-  board: Board
+  board: Board,
+}
+
+type TasksResponse = {
+  provider: string,
+  tasks: Task[],
 }
 
 type LambdaResponse = {
   statusCode: number,
-  body: string
+  body: string,
 }
 
 type Board = {
-  id?: number,
+  id: string,
   name: string,
+}
+
+type Task = {
+  id: string,
+  key?: string,
+  value?: number,
+  estimation?: number,
+  roi?: number,
+  title?: string,
+  description: string,
 }
