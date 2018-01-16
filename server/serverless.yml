@@ -7,8 +7,8 @@ service: scrumboardit-server
 provider:
   name: aws
   runtime: nodejs6.10
-  region: eu-central-1
-#  stage: dev
+  # region: eu-central-1
+  # stage: dev
   environment:
     SERVICE_NAME: ${self:service}
 
