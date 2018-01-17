@@ -162,6 +162,10 @@ function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string,
     .catch(err => {
       callback(null, {
         statusCode: err.statusCode,
+        headers: {
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true
+        },
         body: JSON.stringify({
           provider: 'Github',
           error: err.error
