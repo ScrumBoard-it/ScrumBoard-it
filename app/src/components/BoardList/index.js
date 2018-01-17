@@ -1,5 +1,13 @@
-import React, { Component } from 'react';
-import Board from '../Board';
+import React from 'react';
+
+const Board = ({ id, name, onClick }) => {
+  return (
+    <tr>
+      <td>{id}</td>
+      <td><a onClick={() => {onClick(id)}}>{name}</a></td>
+    </tr>
+  );
+}
 
 const BoardList = ({ boards, onBoardClick }) => {
   return (
@@ -13,7 +21,7 @@ const BoardList = ({ boards, onBoardClick }) => {
           </tr>
         </thead>
         <tbody>
-          {boards.map((item) => <Board id={item.id} key={item.key} name={item.name} onClick={onBoardClick} />)}
+          {boards.map((board) => <Board id={board.id} key={board.id} name={board.name} onClick={onBoardClick} />)}
         </tbody>
       </table>
     </div>
