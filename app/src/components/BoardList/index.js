@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Board from '../Board';
 
-const BoardList = ({ boards }) => {
+const BoardList = ({ boards, onBoardClick }) => {
   return (
     <div>
       <p>Select a board:</p>
@@ -13,7 +13,7 @@ const BoardList = ({ boards }) => {
           </tr>
         </thead>
         <tbody>
-          {boards.map((item) => <Board id={item.id} key={item.key} name={item.name} />)}
+          {boards.map((item) => <Board id={item.id} key={item.key} name={item.name} onClick={onBoardClick} />)}
         </tbody>
       </table>
     </div>
