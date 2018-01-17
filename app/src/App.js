@@ -10,9 +10,10 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <AppBar title="ScrumBoard-it" />
-        <RaisedButton label="Default" />
-        <ConfigSteps />
+        <div className="fullHeight">
+          <AppBar title="ScrumBoard-it" />
+          <ConfigSteps />
+        </div>
       </MuiThemeProvider>
     );
   }

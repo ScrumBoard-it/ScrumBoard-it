@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import CircularProgress from 'material-ui/CircularProgress';
 
 import BoardList from '../../components/BoardList';
 import TaskListContainer from '../TaskListContainer';
@@ -59,7 +60,11 @@ class BoardListContainer extends Component {
           <TaskListContainer boardId={selectedBoardId} />
       )
     } else if (loading) {
-      return <p>Loading boards</p>
+      return (
+        <div className="center">
+          <CircularProgress />
+        </div>
+      )
     } else if (error){
       return <p>{error.message}</p>
     } else {
