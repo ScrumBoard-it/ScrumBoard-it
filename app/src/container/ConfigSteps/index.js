@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import BoardList from '../../components/BoardList';
-import TaskList from '../../components/TaskList';
+import BoardListContainer from '../../container/BoardListContainer';
 import ProviderConfig from '../../components/ProviderConfig';
 
 import { setConfig } from '../../actions';
@@ -26,12 +25,7 @@ const ConfigSteps = ({initialized, provider, onSubmitConfig}) => {
   if (!initialized) {
     return <ProviderConfig provider={provider} onSubmit={onSubmitConfig} />
   } else {
-    return (
-      <div>
-        <BoardList />
-        <TaskList tasks={[{name: 'toto'}]} />
-      </div>
-    )
+    return <BoardListContainer />
   }
 }
 
