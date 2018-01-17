@@ -10,15 +10,14 @@ const mapStateToProps = state => {
     boards: state.boards,
     loading: state.boardsLoading,
     error: state.boardsError,
+    providerConfig: state.providerConfig
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBoards: () => {
+    fetchBoards: ({ token }) => {
       dispatch(fetchBoards())
-
-      const token = '';
       
       fetch('https://api.scrumboard-it.org/boards', {
         headers: new Headers({
@@ -43,8 +42,8 @@ const mapDispatchToProps = dispatch => {
 
 class BoardListContainer extends Component {
   componentDidMount() {
-    const { fetchBoards } = this.props;
-    fetchBoards();
+    const { fetchBoards, providerConfig } = this.props;
+    fetchBoards(providerConfig);
   }
   
   render() {
