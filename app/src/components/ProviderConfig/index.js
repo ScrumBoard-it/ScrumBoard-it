@@ -1,15 +1,22 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
+import './ProviderConfig.css'
+
+const submitForm = (onSubmit) => {
+  onSubmit(document.getElementById("token").value)
+}
 
 const ProviderConfig = (({provider, onSubmit}) => {
   return (
-    <div>
-      <h2>{provider}</h2>
+    <Paper className="provider_config" zDepth={1}>
+      <h2>{provider.charAt(0).toUpperCase() + provider.slice(1)} configuration</h2>
       <form>
-        <label htmlFor="token">Token</label>
-        <input id="token" name="token" />
-        <input type="button" value="Next" onClick={() => {onSubmit(document.getElementById("token").value)}} />
+        <TextField id="token" floatingLabelText="Oauth token" fullWidth={true} />
+        <RaisedButton label="Next" primary={true} className="submit" onClick={() => {submitForm(onSubmit)}} />
       </form>
-    </div>
+    </Paper>
   );
 });
 

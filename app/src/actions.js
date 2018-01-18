@@ -3,6 +3,7 @@ export const FETCH_BOARDS_REQUEST = 'FETCH_BOARDS_REQUEST'
 export const FETCH_BOARDS_FAILURE = 'FETCH_BOARDS_FAILURE'
 export const FETCH_BOARDS_SUCCESS = 'FETCH_BOARDS_SUCCESS'
 export const SELECT_BOARD = 'SELECT_BOARD'
+export const UNSELECT_BOARD = 'UNSELECT_BOARD'
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST'
 export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE'
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS'
@@ -24,8 +25,12 @@ export function fetchBoardsSuccess(response) {
   return { type: FETCH_BOARDS_SUCCESS, response }
 }
 
-export function selectBoard(boardId) {
-  return { type: SELECT_BOARD, boardId }
+export function selectBoard(board) {
+  return { type: SELECT_BOARD, board }
+}
+
+export function unselectBoard() {
+  return { type: UNSELECT_BOARD }
 }
 
 export function fetchTasks(boardId) {

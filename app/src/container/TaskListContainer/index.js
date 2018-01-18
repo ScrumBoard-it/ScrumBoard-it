@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import CircularProgress from 'material-ui/CircularProgress';
 
 import TaskList from '../../components/TaskList';
 
@@ -8,10 +9,10 @@ import { fetchTasks, fetchTasksFailure, fetchTasksSuccess } from '../../actions'
 const mapStateToProps = state => {
   return {
     tasks: state.tasks,
-    loading: state.boardsLoading,
-    error: state.boardsError,
+    loading: state.tasksLoading,
+    error: state.tasksError,
     providerConfig: state.providerConfig,
-    boardId: state.selectedBoardId,
+    boardId: state.selectedBoard.id,
   }
 }
 
@@ -51,7 +52,8 @@ class TaskListContainer extends Component {
     const { tasks, loading, error } = this.props;
     
     if (loading) {
-      return <p>Loading tasks</p>
+      console.log("loading tasks")
+      return <CircularProgress />
     } else if (error){
       return <p>{error.message}</p>
     } else {

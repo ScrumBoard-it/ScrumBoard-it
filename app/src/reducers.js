@@ -1,4 +1,4 @@
-import { SET_CONFIG, FETCH_BOARDS_REQUEST, FETCH_BOARDS_FAILURE, FETCH_BOARDS_SUCCESS, SELECT_BOARD, FETCH_TASKS_FAILURE, FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS } from './actions';
+import { SET_CONFIG, FETCH_BOARDS_REQUEST, FETCH_BOARDS_FAILURE, FETCH_BOARDS_SUCCESS, SELECT_BOARD, UNSELECT_BOARD, FETCH_TASKS_FAILURE, FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS } from './actions';
 
 const providerConfigSerialized = localStorage.getItem('providerConfig')
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
   boards: [],
   boardsLoading: false,
   boardsError: null,
-  selectedBoardId: null,
+  selectedBoard: null,
   tasks: [],
   tasksLoading: false,
   tasksError: null,
@@ -44,7 +44,14 @@ export function reduceApp(state = initialState, action) {
       })
     case SELECT_BOARD:
       return Object.assign({}, state, {
-        selectedBoardId: action.boardId,
+        selectedBoard: action.board,
+      })
+    case UNSELECT_BOARD:
+      return Object.assign({}, state, {
+        selectedBoard: null,
+        tasks: [],
+        tasksLoading: false,
+        tasksError: null,
       })
     case FETCH_TASKS_REQUEST:
       return Object.assign({}, state, {

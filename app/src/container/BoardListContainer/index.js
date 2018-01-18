@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import CircularProgress from 'material-ui/CircularProgress';
+import FlatButton from 'material-ui/FlatButton';
+import FontIcon from 'material-ui/FontIcon';
 
 import BoardList from '../../components/BoardList';
 import TaskListContainer from '../TaskListContainer';
 
-import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard } from '../../actions';
+import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard } from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -13,7 +15,7 @@ const mapStateToProps = state => {
     loading: state.boardsLoading,
     error: state.boardsError,
     providerConfig: state.providerConfig,
-    selectedBoardId: state.selectedBoardId,
+    selectedBoard: state.selectedBoard,
   }
 }
 
@@ -40,8 +42,11 @@ const mapDispatchToProps = dispatch => {
         dispatch(fetchBoardsFailure(error));
       })
     },
-    selectBoard: (boardId) => {
-      dispatch(selectBoard(boardId))
+    selectBoard: (board) => {
+      dispatch(selectBoard(board))
+    },
+    backClick: () => {
+      dispatch(unselectBoard())
     },
   }
 }
@@ -53,18 +58,22 @@ class BoardListContainer extends Component {
   }
   
   render() {
-    const { boards, loading, error, selectBoard, selectedBoardId } = this.props;
+    const { boards, loading, error, selectBoard, selectedBoard, backClick } = this.props;
     
-    if (selectedBoardId) {
+    if (selectedBoard) {
       return (
-          <TaskListContainer boardId={selectedBoardId} />
-      )
-    } else if (loading) {
-      return (
-        <div className="center">
-          <CircularProgress />
+        <div>
+          <FlatButton
+            label={selectedBoard.name}
+            fullWidth={true}
+            icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
+            onClick={backClick}
+          />
+          <TaskListContainer boardId={selectedBoard} />
         </div>
       )
+    } else if (loading) {
+      return <CircularProgress />
     } else if (error){
       return <p>{error.message}</p>
     } else {
