@@ -59,6 +59,11 @@ module.exports.tasks = (event: any, context: any, callback: (error: ?Error, data
                       title
                       body
                     }
+                    ... on PullRequest {
+                      number
+                      title
+                      body
+                    }
                   }
                 }
               }
