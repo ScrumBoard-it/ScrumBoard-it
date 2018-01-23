@@ -1,17 +1,17 @@
-.BoardListContainer {
+.board-list-container {
     display: flex;
     flex: 1;
     align-self: stretch;
 }
 
-.BoardListContainer .left-panel {
+.board-list-container .left-panel {
     display: flex;
     flex: 1;
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.12) 6px 0 3px -3px;
 }
 
-.BoardListContainer .right-panel {
+.board-list-container .right-panel {
     display: flex;
     flex: 2;
     padding: 1em;
