@@ -1,4 +1,4 @@
-import { SET_CONFIG, FETCH_BOARDS_REQUEST, FETCH_BOARDS_FAILURE, FETCH_BOARDS_SUCCESS, SELECT_BOARD, UNSELECT_BOARD, FETCH_TASKS_FAILURE, FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, ADD_TASK_TO_POOL } from './actions';
+import { SET_CONFIG, FETCH_BOARDS_REQUEST, FETCH_BOARDS_FAILURE, FETCH_BOARDS_SUCCESS, SELECT_BOARD, UNSELECT_BOARD, FETCH_TASKS_FAILURE, FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, ADD_TASK_TO_POOL, REMOVE_TASK_FROM_POOL } from './actions';
 
 const providerConfigSerialized = localStorage.getItem('providerConfig')
 const initialState = {
@@ -75,6 +75,10 @@ export function reduceApp(state = initialState, action) {
     case ADD_TASK_TO_POOL:
       return Object.assign({}, state, {
         printPool: [...state.printPool, action.task],
+      })
+    case REMOVE_TASK_FROM_POOL:
+      return Object.assign({}, state, {
+        printPool: state.printPool.filter((task) => task !== action.task),
       })
     default:  
       return state

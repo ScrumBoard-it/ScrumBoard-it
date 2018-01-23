@@ -1,6 +1,5 @@
 import React from 'react';
 import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 
 const BoardList = ({ boards, onBoardClick }) => {
@@ -9,7 +8,7 @@ const BoardList = ({ boards, onBoardClick }) => {
       <p>Select a board:</p>
       <Paper zDepth={2}>
         <List>
-          {boards.map((board) => <div><ListItem primaryText={board.name} onClick={() => { onBoardClick(board) }} key={board.id} /></div>)}
+          {boards.map((board) => <div key={board.id}><ListItem primaryText={board.name} onClick={() => { onBoardClick(board) }} /></div>)}
         </List>
       </Paper>
     </div>

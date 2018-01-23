@@ -10,7 +10,7 @@ import BoardList from '../../components/BoardList';
 import PrintPreview from '../../components/PrintPreview';
 import TaskListContainer from '../TaskListContainer';
 
-import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard } from '../../actions';
+import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard, removeTaskFromPool } from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -52,6 +52,9 @@ const mapDispatchToProps = dispatch => {
     backClick: () => {
       dispatch(unselectBoard())
     },
+    removeFromPool: (task) => {
+      dispatch(removeTaskFromPool(task))
+    },
   }
 }
 
@@ -62,7 +65,7 @@ class BoardListContainer extends Component {
   }
 
   render() {
-    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool } = this.props;
+    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool, removeFromPool } = this.props;
     let content;
 
     if (selectedBoard) {
@@ -93,7 +96,7 @@ class BoardListContainer extends Component {
           {content}
         </div>
         <div className="right-panel">
-        <PrintPreview tasks={printPool} />
+        <PrintPreview tasks={printPool} onRemove={removeFromPool} />
         </div>
       </div>
     );
