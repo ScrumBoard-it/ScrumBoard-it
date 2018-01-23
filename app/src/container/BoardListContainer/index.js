@@ -71,14 +71,6 @@ class BoardListContainer extends Component {
     if (selectedBoard) {
       content = (
         <div className="full-height">
-          <div className="flex-container">
-            <FlatButton
-              label={selectedBoard.name}
-              fullWidth={true}
-              icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-              onClick={backClick}
-            />
-          </div>
           <TaskListContainer boardId={selectedBoard} />
         </div>
       )
