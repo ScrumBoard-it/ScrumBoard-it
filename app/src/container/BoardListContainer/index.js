@@ -88,7 +88,7 @@ class BoardListContainer extends Component {
     }
 
     return (
-      <div className="BoardListContainer">
+      <div className="board-list-container">
         <div className="left-panel no-print">
           {content}
         </div>

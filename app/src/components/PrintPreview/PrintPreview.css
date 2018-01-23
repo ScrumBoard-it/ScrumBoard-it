@@ -43,6 +43,5 @@
 .print .task .content .description {
 	margin: 3mm auto;
 	width: 90%;
-    font-size: 16pt;
-    font-family: monospace;
+    font-size: 15pt;
 }
