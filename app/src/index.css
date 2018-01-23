@@ -16,10 +16,22 @@ body {
   display: flex;
 }
 
-.fullHeight {
+.full-height {
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-screen {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .content {
@@ -27,4 +39,9 @@ body {
   align-items: center;
   justify-content: center;
   flex: 1;
+}
+
+.task-container {
+  margin-bottom: 0.5em;
+  width: 100%;
 }

@@ -10,7 +10,7 @@ const submitForm = (onSubmit) => {
 
 const ProviderConfig = (({provider, onSubmit}) => {
   return (
-    <Paper className="provider_config" zDepth={1}>
+    <Paper className="provider-config" zDepth={1}>
       <h2>{provider.charAt(0).toUpperCase() + provider.slice(1)} configuration</h2>
       <form>
         <TextField id="token" floatingLabelText="Oauth token" fullWidth={true} />

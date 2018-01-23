@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="fullHeight">
+        <div className="full-height">
           <AppBar title="ScrumBoard-it" showMenuIconButton={false}/>
           <div className="content">
             <ConfigSteps />

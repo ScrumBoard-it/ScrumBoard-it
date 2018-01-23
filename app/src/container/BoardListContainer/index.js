@@ -65,18 +65,20 @@ class BoardListContainer extends Component {
 
     if (selectedBoard) {
       content = (
-        <div>
-          <FlatButton
-            label={selectedBoard.name}
-            fullWidth={true}
-            icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-            onClick={backClick}
-          />
+        <div className="full-height">
+          <div className="flex-container">
+            <FlatButton
+              label={selectedBoard.name}
+              fullWidth={true}
+              icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
+              onClick={backClick}
+            />
+          </div>
           <TaskListContainer boardId={selectedBoard} />
         </div>
       )
     } else if (loading) {
-      content = <CircularProgress />
+      content = <div className="loading-screen"><CircularProgress /></div>
     } else if (error) {
       content = <p>{error.message}</p>
     } else {

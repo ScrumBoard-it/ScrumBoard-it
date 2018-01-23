@@ -1,20 +1,20 @@
-.provider_config {
+.provider-config {
     width: 50%;
     padding: 1em;
     align-self: center;
     justify-self: center;
 }
 
-.provider_config h2 {
+.provider-config h2 {
     margin: 0.6em 0;
 }
 
-.provider_config form {
+.provider-config form {
     display: flex;
     flex-direction: column;
 }
 
-.provider_config .submit {
+.provider-config .submit {
     margin-top: 1em;
     align-self: flex-end;
 }
