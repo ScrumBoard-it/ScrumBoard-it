@@ -1,0 +1,16 @@
+@page {
+    margin: 0;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.no-print {
+    display: none !important;
+}
+
+.print .container {
+    width: 210mm;
+}

@@ -1,0 +1,48 @@
+.print {
+    font-family: Arial;
+    font-size: 18pt;
+}
+
+.print .task {
+    background-color: #b4cf4a;
+    width: 76mm;
+    height: 76mm;
+    float: left;
+    page-break-inside: avoid;
+    overflow: hidden;
+    margin-top: 12mm;
+    margin-left: 10mm;
+    margin-right: 10mm;
+}
+
+.print .container {
+    overflow: auto;
+    zoom: 1;
+}
+
+.print .task .header {
+    line-height: 12mm;
+    margin: 0 auto;
+    width: 90%;
+    border-bottom: 1px solid #000;
+}
+
+.print .task .content {
+    position: relative;
+    overflow: hidden;
+    max-height: 62mm;
+    text-align: center;
+}
+
+.print .task .content .title {
+    margin: 0 auto;
+    width: 90%;
+    font-size: 22pt;
+}
+
+.print .task .content .description {
+	margin: 3mm auto;
+	width: 90%;
+    font-size: 16pt;
+    font-family: monospace;
+}

@@ -7,6 +7,7 @@ import FontIcon from 'material-ui/FontIcon';
 import './BoardListContainer.css';
 
 import BoardList from '../../components/BoardList';
+import PrintPreview from '../../components/PrintPreview';
 import TaskListContainer from '../TaskListContainer';
 
 import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard } from '../../actions';
@@ -18,6 +19,7 @@ const mapStateToProps = state => {
     error: state.boardsError,
     providerConfig: state.providerConfig,
     selectedBoard: state.selectedBoard,
+    printPool: state.printPool,
   }
 }
 
@@ -60,7 +62,7 @@ class BoardListContainer extends Component {
   }
 
   render() {
-    const { boards, loading, error, selectBoard, selectedBoard, backClick } = this.props;
+    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool } = this.props;
     let content;
 
     if (selectedBoard) {
@@ -87,10 +89,12 @@ class BoardListContainer extends Component {
 
     return (
       <div className="BoardListContainer">
-        <div className="left-panel">
+        <div className="left-panel no-print">
           {content}
         </div>
-        <div className="right-panel"></div>
+        <div className="right-panel">
+        <PrintPreview tasks={printPool} />
+        </div>
       </div>
     );
   }

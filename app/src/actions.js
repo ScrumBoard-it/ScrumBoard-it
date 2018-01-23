@@ -7,7 +7,7 @@ export const UNSELECT_BOARD = 'UNSELECT_BOARD'
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST'
 export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE'
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS'
-
+export const ADD_TASK_TO_POOL = 'ADD_TASK_TO_POOL'
 
 export function setConfig(token) {
   return { type: SET_CONFIG, token }
@@ -43,4 +43,8 @@ export function fetchTasksFailure(error) {
 
 export function fetchTasksSuccess(response) {
   return { type: FETCH_TASKS_SUCCESS, response }
+}
+
+export function addTaskToPool(task) {
+  return { type: ADD_TASK_TO_POOL, task }
 }

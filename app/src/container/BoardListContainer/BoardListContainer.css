@@ -15,4 +15,5 @@
     display: flex;
     flex: 2;
     padding: 1em;
+    overflow-y: auto;
 }

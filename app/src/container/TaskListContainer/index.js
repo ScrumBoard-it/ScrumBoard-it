@@ -4,11 +4,11 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import TaskList from '../../components/TaskList';
 
-import { fetchTasks, fetchTasksFailure, fetchTasksSuccess } from '../../actions';
+import { fetchTasks, fetchTasksFailure, fetchTasksSuccess, addTaskToPool } from '../../actions';
 
 const mapStateToProps = state => {
   return {
-    tasks: state.tasks,
+    tasks: state.tasks.filter((task) => state.printPool.indexOf(task) === -1),
     loading: state.tasksLoading,
     error: state.tasksError,
     providerConfig: state.providerConfig,
@@ -38,6 +38,9 @@ const mapDispatchToProps = dispatch => {
       }).catch((error) => {
         dispatch(fetchTasksFailure(error));
       })
+    },
+    onAddTask: (task) => {
+      dispatch(addTaskToPool(task));
     }
   }
 }
@@ -49,14 +52,14 @@ class TaskListContainer extends Component {
   }
   
   render() {
-    const { tasks, loading, error } = this.props;
+    const { tasks, onAddTask, loading, error } = this.props;
     
     if (loading) {
       return <div className="loading-screen"><CircularProgress /></div>
     } else if (error){
       return <p>{error.message}</p>
     } else {
-      return <TaskList tasks={tasks} />
+      return <TaskList tasks={tasks} onAdd={onAddTask} />
     }
   }
 }
