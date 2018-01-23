@@ -52,7 +52,6 @@ class TaskListContainer extends Component {
     const { tasks, loading, error } = this.props;
     
     if (loading) {
-      console.log("loading tasks")
       return <CircularProgress />
     } else if (error){
       return <p>{error.message}</p>

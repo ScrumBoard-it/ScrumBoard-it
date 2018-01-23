@@ -4,6 +4,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 
+import './BoardListContainer.css';
+
 import BoardList from '../../components/BoardList';
 import TaskListContainer from '../TaskListContainer';
 
@@ -23,7 +25,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchBoards: ({ token }) => {
       dispatch(fetchBoards())
-      
+
       fetch('https://api.scrumboard-it.org/boards', {
         headers: new Headers({
           'Authorization': `Bearer ${token}`,
@@ -56,12 +58,13 @@ class BoardListContainer extends Component {
     const { fetchBoards, providerConfig } = this.props;
     fetchBoards(providerConfig);
   }
-  
+
   render() {
     const { boards, loading, error, selectBoard, selectedBoard, backClick } = this.props;
-    
+    let content;
+
     if (selectedBoard) {
-      return (
+      content = (
         <div>
           <FlatButton
             label={selectedBoard.name}
@@ -73,12 +76,21 @@ class BoardListContainer extends Component {
         </div>
       )
     } else if (loading) {
-      return <CircularProgress />
-    } else if (error){
-      return <p>{error.message}</p>
+      content = <CircularProgress />
+    } else if (error) {
+      content = <p>{error.message}</p>
     } else {
-      return <BoardList boards={boards} onBoardClick={selectBoard} />
+      content = <BoardList boards={boards} onBoardClick={selectBoard} />
     }
+
+    return (
+      <div className="BoardListContainer">
+        <div className="left-panel">
+          {content}
+        </div>
+        <div className="right-panel"></div>
+      </div>
+    );
   }
 }
 
