@@ -112,7 +112,7 @@ function queryGithub(event: any, query: string): Promise<any> {
 function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string, callback: (error: ?any, data: ?LambdaResponse) => void): void {
   let repositoriesFilter = [
     "first: 100",
-    "affiliations:ORGANIZATION_MEMBER"
+    "affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]"
   ];
   if (startAfter) {
     repositoriesFilter.push(`after: "${startAfter}"`);
