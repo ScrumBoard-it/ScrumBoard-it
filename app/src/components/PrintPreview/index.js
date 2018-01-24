@@ -4,9 +4,14 @@ import {ActionDelete} from 'material-ui/svg-icons';
 
 import './PrintPreview.css'
 
-const PrintPreview = ({tasks, onRemove}) => {
+const PrintPreview = ({tasks, onRemove, showTasksBorders}) => {
+    let className = "print";
+    if (showTasksBorders) {
+        className += " base";
+    }
+
     return (
-        <div className="print preview">
+        <div className={className}>
             <div className="container">
                 { tasks.map((task) => (
                     <div className="task" key={task.id}>

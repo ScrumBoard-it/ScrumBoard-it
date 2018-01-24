@@ -16,6 +16,15 @@
     position: relative;
 }
 
+.print.base .task {
+    border: 1px solid #000;
+    background-color: transparent;
+}
+
+.print.base .task > *, .print.base .task:hover .btn-remove {
+    display: none;
+}
+
 .print .task .btn-remove {
     display: none;
     position: absolute;

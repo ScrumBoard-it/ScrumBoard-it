@@ -11,7 +11,7 @@ import TaskListContainer from '../TaskListContainer';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
-import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard, removeTaskFromPool } from '../../actions';
+import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard, removeTaskFromPool, togglePoolView } from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -21,6 +21,7 @@ const mapStateToProps = state => {
     providerConfig: state.providerConfig,
     selectedBoard: state.selectedBoard,
     printPool: state.printPool,
+    poolTemplateView: state.poolTemplateView,
   }
 }
 
@@ -56,6 +57,9 @@ const mapDispatchToProps = dispatch => {
     removeFromPool: (task) => {
       dispatch(removeTaskFromPool(task))
     },
+    togglePoolView: () => {
+      dispatch(togglePoolView())
+    },
   }
 }
 
@@ -66,7 +70,7 @@ class BoardListContainer extends Component {
   }
 
   render() {
-    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool, removeFromPool } = this.props;
+    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool, removeFromPool, togglePoolView, poolTemplateView } = this.props;
     let content;
 
     if (selectedBoard) {
@@ -83,6 +87,8 @@ class BoardListContainer extends Component {
       content = <BoardList boards={boards} onBoardClick={selectBoard} />
     }
 
+    const toggleLabel = (poolTemplateView)? "Show task view" : "Show template view";
+
     return (
       <div className="board-list-container">
         <div className="left-panel no-print">
@@ -93,11 +99,14 @@ class BoardListContainer extends Component {
             <Toolbar>
               <ToolbarGroup firstChild={true}></ToolbarGroup>
               <ToolbarGroup>
+                <RaisedButton label={toggleLabel} onClick={togglePoolView} />
                 <RaisedButton label="Print" primary={true} onClick={() => {window.print()}} />
               </ToolbarGroup>
             </Toolbar>
           </div>
-          <PrintPreview tasks={printPool} onRemove={removeFromPool} />
+          <div className="preview">
+            <PrintPreview tasks={printPool} onRemove={removeFromPool} showTasksBorders={poolTemplateView} />
+          </div>
         </div>
       </div>
     );
