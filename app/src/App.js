@@ -28,9 +28,10 @@ const BackButton = ({ backClick }) => {
   return (
     <FlatButton
       label="Boards"
+      labelStyle={{'color': '#ffffff'}}
       style={{'marginTop': '0.4em'}}
-      icon={<FontIcon className="material-icons button-icon">arrow_back</FontIcon>}  
-      hoverColor="#FFFFFF"
+      primary={true}
+      icon={<FontIcon className="material-icons" color="#ffffff">arrow_back</FontIcon>}
       onClick={backClick}
     />
   );
@@ -42,17 +43,15 @@ class App extends Component {
 
     const appBarProps = {};
     if (onTaskList) {
-      appBarProps.iconElementLeft = (<BackButton backClick={backClick} />)
+      appBarProps.iconElementLeft = (<BackButton backClick={backClick} />);
     } else {
-      appBarProps.showMenuIconButton = false
+      appBarProps.showMenuIconButton = false;
     }
 
     return (
       <MuiThemeProvider>
         <div className="full-height">
-          <AppBar title="ScrumBoard-it" className="no-print"
-            {...appBarProps}
-          />
+          <AppBar title="ScrumBoard-it" className="no-print" {...appBarProps} />
           <div className="center">
             <ConfigSteps />
           </div>
