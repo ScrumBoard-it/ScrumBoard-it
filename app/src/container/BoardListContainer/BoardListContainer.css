@@ -13,7 +13,16 @@
 
 .board-list-container .right-panel {
     display: flex;
+    flex-direction: column;
     flex: 2;
-    padding: 1em;
-    overflow-y: auto;
+}
+
+.board-list-container .right-panel .preview {
+    padding-bottom: 12mm;
+}
+
+@media screen {
+    .board-list-container .right-panel .preview {
+        overflow-y: auto;
+    }
 }

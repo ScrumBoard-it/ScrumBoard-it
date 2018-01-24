@@ -6,7 +6,7 @@ import './PrintPreview.css'
 
 const PrintPreview = ({tasks, onRemove}) => {
     return (
-        <div className="print">
+        <div className="print preview">
             <div className="container">
                 { tasks.map((task) => (
                     <div className="task" key={task.id}>

@@ -9,6 +9,8 @@ import './BoardListContainer.css';
 import BoardList from '../../components/BoardList';
 import PrintPreview from '../../components/PrintPreview';
 import TaskListContainer from '../TaskListContainer';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard, removeTaskFromPool } from '../../actions';
 
@@ -88,7 +90,15 @@ class BoardListContainer extends Component {
           {content}
         </div>
         <div className="right-panel">
-        <PrintPreview tasks={printPool} onRemove={removeFromPool} />
+          <div className="toolbar no-print">
+            <Toolbar>
+              <ToolbarGroup firstChild={true}></ToolbarGroup>
+              <ToolbarGroup>
+                <RaisedButton label="Print" primary={true} onClick={() => {window.print()}} />
+              </ToolbarGroup>
+            </Toolbar>
+          </div>
+          <PrintPreview tasks={printPool} onRemove={removeFromPool} />
         </div>
       </div>
     );
