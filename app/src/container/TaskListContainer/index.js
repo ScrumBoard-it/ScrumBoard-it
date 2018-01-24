@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 import TaskList from '../../components/TaskList';
 
-import { fetchTasks, fetchTasksFailure, fetchTasksSuccess, addTaskToPool } from '../../actions';
+import { fetchTasks, fetchTasksFailure, fetchTasksSuccess, addTaskToPool, openDialog, closeDialog } from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -13,6 +15,7 @@ const mapStateToProps = state => {
     error: state.tasksError,
     providerConfig: state.providerConfig,
     boardId: state.selectedBoard.id,
+    dialogOpen: state.dialogOpen,
   }
 }
 
@@ -29,6 +32,9 @@ const mapDispatchToProps = dispatch => {
         if (response.ok) {
           response.json().then((data) => {
             dispatch(fetchTasksSuccess(data));
+            if (data.tasks.length === 0) {
+              dispatch(openDialog());
+            }
           })
         } else {
           response.json().then((error) => {
@@ -41,7 +47,13 @@ const mapDispatchToProps = dispatch => {
     },
     onAddTask: (task) => {
       dispatch(addTaskToPool(task));
-    }
+    },
+    doOpenDialog: () => {
+      dispatch(openDialog());
+    },
+    doCloseDialog: () => {
+      dispatch(closeDialog());
+    },
   }
 }
 
@@ -52,14 +64,29 @@ class TaskListContainer extends Component {
   }
   
   render() {
-    const { tasks, onAddTask, loading, error } = this.props;
-    
+    const { tasks, onAddTask, loading, error, dialogOpen, doCloseDialog } = this.props;
+
+    const buttons = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onClick={doCloseDialog}
+      />,
+    ];
+
     if (loading) {
       return <div className="loading-screen"><CircularProgress /></div>
-    } else if (error){
+    } else if (error) {
       return <p>{error.message}</p>
     } else {
-      return <TaskList tasks={tasks} onAdd={onAddTask} />
+      return (
+        <div>
+          <Dialog title="No tasks" actions={buttons} modal={false} open={dialogOpen}>
+            This board has no task, create some tasks to view them here.
+          </Dialog>
+          <TaskList tasks={tasks} onAdd={onAddTask} />
+        </div>
+      );
     }
   }
 }

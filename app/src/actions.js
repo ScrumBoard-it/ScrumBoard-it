@@ -10,6 +10,8 @@ export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS'
 export const ADD_TASK_TO_POOL = 'ADD_TASK_TO_POOL'
 export const REMOVE_TASK_FROM_POOL = 'REMOVE_TASK_FROM_POOL'
 export const TOGGLE_POOL_VIEW = 'TOGGLE_POOL_VIEW'
+export const OPEN_DIALOG = 'OPEN_DIALOG'
+export const CLOSE_DIALOG = 'CLOSE_DIALOG'
 
 export function setConfig(token) {
   return { type: SET_CONFIG, token }
@@ -57,4 +59,12 @@ export function removeTaskFromPool(task) {
 
 export function togglePoolView() {
   return { type: TOGGLE_POOL_VIEW }
+}
+
+export function openDialog() {
+  return { type: OPEN_DIALOG }
+}
+
+export function closeDialog() {
+  return { type: CLOSE_DIALOG }
 }
