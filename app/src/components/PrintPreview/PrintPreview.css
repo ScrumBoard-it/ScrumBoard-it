@@ -39,6 +39,7 @@
 .print .container {
     overflow: auto;
     zoom: 1;
+    width: 210mm;
 }
 
 .print .task .header {
