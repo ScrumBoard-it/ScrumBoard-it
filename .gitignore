@@ -7,3 +7,7 @@ jspm_packages
 
 # IDE
 .vscode
+
+# Serverless secrets
+secrets.dev.yml
+secrets.prod.yml
