@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import CircularProgress from 'material-ui/CircularProgress';
-import FontIcon from 'material-ui/FontIcon';
 
 import './BoardListContainer.css';
 
@@ -11,7 +10,7 @@ import TaskListContainer from '../TaskListContainer';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
-import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, unselectBoard, removeTaskFromPool, togglePoolView } from '../../actions';
+import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, removeTaskFromPool, togglePoolView } from '../../actions';
 
 const mapStateToProps = state => {
   return {
@@ -51,9 +50,6 @@ const mapDispatchToProps = dispatch => {
     selectBoard: (board) => {
       dispatch(selectBoard(board))
     },
-    backClick: () => {
-      dispatch(unselectBoard())
-    },
     removeFromPool: (task) => {
       dispatch(removeTaskFromPool(task))
     },
@@ -70,7 +66,7 @@ class BoardListContainer extends Component {
   }
 
   render() {
-    const { boards, loading, error, selectBoard, selectedBoard, backClick, printPool, removeFromPool, togglePoolView, poolTemplateView } = this.props;
+    const { boards, loading, error, selectBoard, selectedBoard, printPool, removeFromPool, togglePoolView, poolTemplateView } = this.props;
     let content;
 
     if (selectedBoard) {

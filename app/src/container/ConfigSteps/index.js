@@ -2,9 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 import BoardListContainer from '../../container/BoardListContainer';
-import ProviderConfig from '../../components/ProviderConfig';
-
-import { setConfig } from '../../actions';
+import ProviderConfig from '../../container/ProviderConfig';
 
 const mapStateToProps = state => {
   return {
@@ -13,20 +11,12 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmitConfig: token => {
-      dispatch(setConfig(token))
-    }
-  }
-}
-
-const ConfigSteps = ({initialized, provider, onSubmitConfig}) => {
+const ConfigSteps = ({initialized, provider}) => {
   if (!initialized) {
-    return <ProviderConfig provider={provider} onSubmit={onSubmitConfig} />
+    return <ProviderConfig provider={provider} />
   } else {
     return <BoardListContainer />
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigSteps);
+export default connect(mapStateToProps)(ConfigSteps);
