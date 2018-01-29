@@ -17,7 +17,7 @@ let store = createStore(reduceApp)
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <div class="full-height">
+      <div className="full-height">
         <Route exact path="/" component={App}/>
         <Route path="/auth/github/callback" component={OAuthCallback}/>
       </div>
