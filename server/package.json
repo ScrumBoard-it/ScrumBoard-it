@@ -16,6 +16,8 @@
   "devDependencies": {
     "babel-preset-flow": "^6.23.0",
     "flow-bin": "^0.63.1",
-    "serverless-plugin-optimize": "^3.0.4-rc.1"
+    "serverless-domain-manager": "^2.2.2",
+    "serverless-plugin-optimize": "^3.0.4-rc.1",
+    "serverless-secrets-plugin": "^0.1.0"
   }
 }

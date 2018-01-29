@@ -173,6 +173,114 @@
           }
         }
       }
+    },
+    "/oauth/{provider}/config": {
+      "get": {
+        "tags": [
+          "oauth"
+        ],
+        "summary": "Authentication public config",
+        "operationId": "getAuthorizationConfig",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "Name of the provider",
+            "required": true,
+            "type": "string",
+            "enum": ["github"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "client_id"
+              ],
+              "properties": {
+                "client_id": {
+                  "type": "string",
+                  "example": "6f6efdfd73f205503f35"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/{provider}/token": {
+      "get": {
+        "tags": [
+          "oauth"
+        ],
+        "summary": "Authentication token bridge",
+        "operationId": "getAuthorizationToken",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "Name of the provider",
+            "required": true,
+            "type": "string",
+            "enum": ["github"]
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Temporary code returned by the provider",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token",
+                "type"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "c8e83273bb3b436a70b8e6e70160ec08c8e83273"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "bearer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "type": "object",
+              "required": [
+                "provider",
+                "error"
+              ],
+              "properties": {
+                "provider": {
+                  "$ref": "#/definitions/Provider"
+                },
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -234,7 +342,8 @@
     "Provider": {
       "type": "string",
       "enum": [
-        "Github"
+        "scrumboard-it",
+        "github"
       ]
     }
   },

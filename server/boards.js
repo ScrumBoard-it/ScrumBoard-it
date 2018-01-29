@@ -2,6 +2,7 @@
 'use strict';
 
 const http = require('request-promise');
+import type {LambdaResponse} from './types';
 
 module.exports.all = (event: any, context: any, callback: (error: ?Error, data: ?LambdaResponse) => void) => {
   getNextBoards(event, [], null, callback)
@@ -26,7 +27,7 @@ module.exports.id = (event: any, context: any, callback: (error: ?Error, data: ?
   queryGithub(event, query)
     .then(rawData => {
       const data: IdResponse = {
-        provider: 'Github',
+        provider: 'github',
         board: extractBoard(rawData)
       };
 
@@ -77,7 +78,7 @@ module.exports.tasks = (event: any, context: any, callback: (error: ?Error, data
   queryGithub(event, query)
     .then(rawData => {
       const data: TasksResponse = {
-        provider: 'Github',
+        provider: 'github',
         tasks: extractTasks(rawData)
       };
 
@@ -150,7 +151,7 @@ function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string,
         getNextBoards(event, boards, endCursor, callback);
       } else {
         const data: AllResponse = {
-          provider: 'Github',
+          provider: 'github',
           boards
         };
         
@@ -172,7 +173,7 @@ function getNextBoards(event: any, previousBoards: Board[], startAfter: ?string,
           "Access-Control-Allow-Credentials" : true
         },
         body: JSON.stringify({
-          provider: 'Github',
+          provider: 'github',
           error: err.error
         }),
       });
@@ -254,11 +255,6 @@ type IdResponse = {
 type TasksResponse = {
   provider: string,
   tasks: Task[],
-}
-
-type LambdaResponse = {
-  statusCode: number,
-  body: string,
 }
 
 type Board = {
