@@ -1,10 +1,10 @@
 import React from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import {ActionDelete} from 'material-ui/svg-icons';
+import { ActionDelete } from 'material-ui/svg-icons';
 
 import './PrintPreview.css'
 
-const PrintPreview = ({tasks, onRemove, showTasksBorders}) => {
+const PrintPreview = ({ tasks, onRemove, showTasksBorders }) => {
   let className = "print";
   if (showTasksBorders) {
     className += " base";
@@ -13,22 +13,22 @@ const PrintPreview = ({tasks, onRemove, showTasksBorders}) => {
   return (
     <div className={className}>
       <div className="container">
-        { tasks.map((task) => (
+        {tasks.map((task) => (
           <div className="task" key={task.id}>
             <div className="btn-remove no-print">
-              <FloatingActionButton mini={true} secondary={true} onClick={() => {onRemove(task)}}>
+              <FloatingActionButton mini={true} secondary={true} onClick={() => { onRemove(task) }}>
                 <ActionDelete />
               </FloatingActionButton>
             </div>
             {task.key &&
-            <div className="header">{task.key}</div>
+              <div className="header">{task.key}</div>
             }
             <div className="content">
               <div className="title">{task.title}</div>
               <div className="description">{task.description}</div>
             </div>
           </div>
-        )) }
+        ))}
       </div>
     </div>
   )

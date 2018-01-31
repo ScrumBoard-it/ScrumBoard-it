@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { ApiClient, BoardApi } from 'scrumboard-it-client';
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import './BoardListContainer.css';
 
 import BoardList from '../../components/BoardList';
 import PrintPreview from '../../components/PrintPreview';
 import TaskListContainer from '../TaskListContainer';
-import RaisedButton from 'material-ui/RaisedButton';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import { fetchBoards, fetchBoardsFailure, fetchBoardsSuccess, selectBoard, removeTaskFromPool, togglePoolView } from '../../actions';
 
@@ -29,23 +30,17 @@ const mapDispatchToProps = dispatch => {
     fetchBoards: ({ token }) => {
       dispatch(fetchBoards())
 
-      fetch('https://api.scrumboard-it.org/boards', {
-        headers: new Headers({
-          'Authorization': `Bearer ${token}`,
-        })
-      }).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            dispatch(fetchBoardsSuccess(data));
-          })
-        } else {
-          response.json().then((error) => {
-            dispatch(fetchBoardsFailure(error));
-          })
-        }
-      }).catch((error) => {
+      const defaultClient = ApiClient.instance;
+      let Bearer = defaultClient.authentications['Bearer'];
+      Bearer.apiKey = token
+      Bearer.apiKeyPrefix = 'Bearer'
+
+      const api = new BoardApi();
+      api.getBoards().then(function(data) {
+        dispatch(fetchBoardsSuccess(data));
+      }, function(error) {
         dispatch(fetchBoardsFailure(error));
-      })
+      });
     },
     selectBoard: (board) => {
       dispatch(selectBoard(board))
@@ -83,7 +78,7 @@ class BoardListContainer extends Component {
       content = <BoardList boards={boards} onBoardClick={selectBoard} />
     }
 
-    const toggleLabel = (poolTemplateView)? "Show task view" : "Show template view";
+    const toggleLabel = (poolTemplateView) ? "Show task view" : "Show template view";
 
     return (
       <div className="board-list-container">
@@ -96,7 +91,7 @@ class BoardListContainer extends Component {
               <ToolbarGroup firstChild={true}></ToolbarGroup>
               <ToolbarGroup>
                 <RaisedButton label={toggleLabel} onClick={togglePoolView} />
-                <RaisedButton label="Print" primary={true} onClick={() => {window.print()}} />
+                <RaisedButton label="Print" primary={true} onClick={() => { window.print() }} />
               </ToolbarGroup>
             </Toolbar>
           </div>

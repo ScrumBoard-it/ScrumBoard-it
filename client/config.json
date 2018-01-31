@@ -1,0 +1,7 @@
+{
+  "projectName": "scrumboard-it-client",
+  "projectVersion": "0.2.0",
+  "projectDescription": "ScrumBoard-it JS client",
+  "moduleName": "ScrumBoardIt",
+  "usePromises": true
+}

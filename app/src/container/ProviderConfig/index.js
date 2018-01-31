@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { OauthApi } from 'scrumboard-it-client';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
-import { fetchOauthConfig, fetchOauthConfigSuccess, fetchOauthConfigFailure } from './../../actions'
+
 import './ProviderConfig.css';
+
+import { fetchOauthConfig, fetchOauthConfigSuccess, fetchOauthConfigFailure } from './../../actions'
 
 const mapStateToProps = state => {
   return {
@@ -15,36 +18,29 @@ const mapStateToProps = state => {
     token: state.oauthToken,
     tokenLoading: state.oauthTokenLoading,
     tokenError: state.oauthTokenError,
+    provider: state.provider,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchOauthConfig: () => {
+    fetchOauthConfig: (provider) => {
       dispatch(fetchOauthConfig())
 
-      fetch('https://api.scrumboard-it.org/oauth/github/config')
-        .then((response) => {
-          if (response.ok) {
-            response.json().then((data) => {
-              dispatch(fetchOauthConfigSuccess(data));
-            })
-          } else {
-            response.json().then((error) => {
-              dispatch(fetchOauthConfigFailure(error));
-            })
-          }
-        }).catch((error) => {
-          dispatch(fetchOauthConfigFailure(error));
-        })
+      const api = new OauthApi();
+      api.getAuthorizationConfig(provider).then(function(data) {
+        dispatch(fetchOauthConfigSuccess(data));
+      }, function(error) {
+        dispatch(fetchOauthConfigFailure(error));
+      });
     }
   }
 }
 
 class ProviderConfig extends Component {
   componentDidMount() {
-    const { fetchOauthConfig } = this.props;
-    fetchOauthConfig();
+    const { fetchOauthConfig, provider } = this.props;
+    fetchOauthConfig(provider);
   }
 
   render() {

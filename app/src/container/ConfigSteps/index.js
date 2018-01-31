@@ -11,7 +11,7 @@ const mapStateToProps = state => {
   }
 }
 
-const ConfigSteps = ({initialized, provider}) => {
+const ConfigSteps = ({ initialized, provider }) => {
   if (!initialized) {
     return <ProviderConfig provider={provider} />
   } else {

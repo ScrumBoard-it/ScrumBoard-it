@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { ApiClient, BoardApi } from 'scrumboard-it-client';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import TaskList from '../../components/TaskList';
@@ -20,24 +21,18 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTasks: ({ token }, boardId) => {
       dispatch(fetchTasks())
-      
-      fetch(`https://api.scrumboard-it.org/boards/${boardId}/tasks`, {
-        headers: new Headers({
-          'Authorization': `Bearer ${token}`,
-        })
-      }).then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            dispatch(fetchTasksSuccess(data));
-          })
-        } else {
-          response.json().then((error) => {
-            dispatch(fetchTasksFailure(error));
-          })
-        }
-      }).catch((error) => {
+
+      const defaultClient = ApiClient.instance;
+      let Bearer = defaultClient.authentications['Bearer'];
+      Bearer.apiKey = token
+      Bearer.apiKeyPrefix = 'Bearer'
+
+      const api = new BoardApi();
+      api.getTasksByBoardId(boardId).then(function(data) {
+        dispatch(fetchTasksSuccess(data));
+      }, function(error) {
         dispatch(fetchTasksFailure(error));
-      })
+      });
     },
     onAddTask: (task) => {
       dispatch(addTaskToPool(task));
@@ -50,13 +45,13 @@ class TaskListContainer extends Component {
     const { fetchTasks, providerConfig, boardId } = this.props;
     fetchTasks(providerConfig, boardId);
   }
-  
+
   render() {
     const { tasks, onAddTask, loading, error } = this.props;
-    
+
     if (loading) {
       return <div className="loading-screen"><CircularProgress /></div>
-    } else if (error){
+    } else if (error) {
       return <p>{error.message}</p>
     } else {
       return <TaskList tasks={tasks} onAdd={onAddTask} />
